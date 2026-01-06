@@ -24,7 +24,7 @@ env.bak/
 venv.bak/
 
 # Ignore .lock files
-*.lock
+.lock
 
 
 # Temporary or backup files
