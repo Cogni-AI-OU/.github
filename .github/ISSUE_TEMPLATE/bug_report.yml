@@ -35,5 +35,5 @@ body:
     attributes:
       label: Additional Information
       description: |
-        Provide any additional information such as logs, screenshots, likes, scenarios
+        Provide any additional information such as logs, screenshots, links, scenarios
         in which the bug occurs so that it facilitates resolving the issue.
