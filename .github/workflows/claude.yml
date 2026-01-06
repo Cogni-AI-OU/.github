@@ -31,6 +31,9 @@ jobs:
       # Add new tools here as needed
       ALLOWED_TOOLS: >-
         Bash(git:*),
+        Bash(gh issue:*),
+        Bash(gh pr:*),
+        Bash(gh search:*),
         Bash(pre-commit run:*),
         Bash(jq:*),
         Bash(yq:*),
