@@ -33,7 +33,6 @@
     "ghcr.io/devcontainers/features/python:1": {},
     "ghcr.io/guiyomh/features/vim:0": {},
     "ghcr.io/jungaretti/features/make:1": {},
-    "ghcr.io/prulloac/devcontainer-features/pre-commit:1": {},
     "ghcr.io/jungaretti/features/ripgrep:1": {}
   },
 
