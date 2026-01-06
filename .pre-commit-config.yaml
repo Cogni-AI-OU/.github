@@ -68,7 +68,7 @@ repos:
       - id: forbid-binary
       - id: git-check     # Configure in .gitattributes
       - id: require-ascii
-        exclude: (.github/workflows/|.tours/|README\.md)
+        exclude: (.github/|.tours/|README\.md)
       - id: script-must-have-extension
 
   - repo: https://github.com/rhysd/actionlint
