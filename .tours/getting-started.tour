@@ -1,0 +1,120 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Getting Started with .github Repository",
+  "description": "A guided walkthrough of the organization-wide .github repository, covering community health files, coding standards, workflows, and key configurations.",
+  "steps": [
+    {
+      "file": "README.md",
+      "description": "## Welcome to Cogni AI OÜ's .github Repository\n\nThis is a special organization-wide repository that provides default community health files and configurations for all repositories in the Cogni AI OÜ organization.\n\n**Key Features:**\n- Default issue templates and PR templates\n- Organization-wide Code of Conduct\n- Reusable GitHub Actions workflows\n- Coding standards and formatting guidelines\n- Organization profile displayed on GitHub\n\n**How it works:** Files here automatically apply to all repositories that don't have their own versions. Changes here affect the entire organization.",
+      "line": 1,
+      "title": "Repository Overview"
+    },
+    {
+      "file": "profile/README.md",
+      "description": "## Organization Profile\n\nThis file defines the public-facing profile for Cogni AI OÜ that appears on the organization's GitHub page.\n\n**What's included:**\n- Company mission and values\n- What we do (AI research, innovation, collaboration)\n- How to collaborate with us\n- Links to important resources\n\nUpdate this file to change how the organization appears to visitors on GitHub.",
+      "line": 1,
+      "title": "Organization Profile"
+    },
+    {
+      "file": "CODE_OF_CONDUCT.md",
+      "description": "## Code of Conduct\n\nThe organization-wide Code of Conduct based on the Contributor Covenant.\n\n**Applies to:**\n- All repositories in the organization\n- All community interactions\n- Public and private spaces\n\n**Covers:**\n- Standards for behavior\n- Enforcement responsibilities\n- Consequences for violations\n\nThis automatically applies to all repositories that don't have their own Code of Conduct.",
+      "line": 1,
+      "title": "Code of Conduct"
+    },
+    {
+      "file": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "description": "## Issue Templates\n\nStandardized issue templates that help maintain consistency across all repositories.\n\n**Available templates:**\n- **bug_report.yml**: For reporting bugs with structured fields\n- **feature_request.yml**: For proposing new features\n\n**Benefits:**\n- Ensures all necessary information is collected\n- Makes it easier to triage and respond to issues\n- Provides a consistent user experience\n\nThese templates automatically appear in repositories that don't define their own.",
+      "line": 1,
+      "title": "Issue Templates"
+    },
+    {
+      "file": ".github/pull_request_template.md",
+      "description": "## Pull Request Template\n\nA standardized PR template that ensures all PRs include necessary information.\n\n**Includes:**\n- Description of changes\n- Type of change (bug fix, feature, etc.)\n- Testing checklist\n- Documentation updates\n- Reviewer checklist\n\nThis template automatically applies to all repositories without their own PR template.",
+      "line": 1,
+      "title": "Pull Request Template"
+    },
+    {
+      "file": ".github/workflows/check.yml",
+      "description": "## GitHub Actions Workflows\n\nReusable workflows that can be called from other repositories.\n\n**This Check workflow includes:**\n- **actionlint**: Validates GitHub Actions workflow syntax\n- **pre-commit**: Runs all pre-commit hooks including:\n  - yamllint, ansible-lint, markdownlint\n  - codespell, gitleaks (security)\n  - Code formatting (black for Python)\n  - File checks (trailing whitespace, EOF, etc.)\n\n**Usage:** Other repositories can call this workflow using `workflow_call` to standardize CI/CD processes.",
+      "line": 1,
+      "title": "GitHub Actions Workflows"
+    },
+    {
+      "file": ".pre-commit-config.yaml",
+      "description": "## Pre-commit Configuration\n\nDefines all the automated checks that run before code is committed.\n\n**Key hooks:**\n- **yamllint**: YAML syntax and style validation\n- **ansible-lint**: Ansible best practices\n- **markdownlint**: Markdown formatting\n- **codespell**: Spelling checker\n- **gitleaks**: Secret detection\n- **black**: Python code formatting\n- **flake8**: Python linting\n- **actionlint**: GitHub Actions validation\n\n**Run locally:** `pre-commit run -a` to check all files\n\nThis ensures code quality and consistency before changes are pushed.",
+      "line": 1,
+      "title": "Pre-commit Hooks"
+    },
+    {
+      "file": ".github/copilot-instructions.md",
+      "description": "## Copilot Instructions\n\nComprehensive coding standards and guidelines for GitHub Copilot and AI assistants.\n\n**Covers:**\n- Project overview and structure\n- Language-specific standards (Python, etc.)\n- Formatting guidelines (JSON, Markdown, YAML)\n- Troubleshooting common issues\n- Common tasks and workflows\n\n**Important sections:**\n- Python conventions (use Python 3.11+, uv script headers, PEP 8)\n- Markdown rules (120 char line length, proper headings)\n- YAML rules (2-space indentation, 120 char lines)\n- How to find and diagnose build errors\n\nThis file guides AI assistants to follow project conventions.",
+      "line": 1,
+      "title": "Copilot Instructions"
+    },
+    {
+      "file": ".github/instructions/README.md",
+      "description": "## Language-Specific Instructions\n\nDetailed coding standards and formatting rules for different file types.\n\n**Available instruction files:**\n- **ansible.instructions.md**: Ansible conventions and best practices\n- **blog.instructions.md**: Blog post content standards\n- **json.instructions.md**: JSON formatting standards\n- **markdown.instructions.md**: Markdown content rules\n- **readme.instructions.md**: README-specific guidelines\n- **yaml.instructions.md**: YAML formatting standards\n\nThese files provide detailed rules that are enforced by linters and pre-commit hooks.",
+      "line": 1,
+      "title": "Instructions Directory"
+    },
+    {
+      "file": ".github/instructions/markdown.instructions.md",
+      "description": "## Markdown Standards\n\nDetailed rules for markdown content across the organization.\n\n**Key rules:**\n- Use H1-H3 headings (avoid H4+)\n- Limit lines to 120 characters\n- Always specify language in code blocks\n- Use reference-style links for repeated URLs\n- Proper list formatting with blank lines\n\n**Validation:** Run `pre-commit run markdownlint -a` to check compliance\n\nThese rules ensure consistent, readable documentation across all repositories.",
+      "line": 1,
+      "title": "Markdown Standards"
+    },
+    {
+      "file": ".markdownlint.yaml",
+      "description": "## Markdownlint Configuration\n\nDefines the specific markdownlint rules enforced across the organization.\n\n**Configuration details:**\n- Line length: 120 characters max\n- Heading styles and spacing rules\n- List formatting requirements\n- Code block requirements\n- Table formatting rules\n\nThis file is referenced by the pre-commit hooks and ensures all markdown files follow consistent formatting.",
+      "line": 1,
+      "title": "Markdown Linting Config"
+    },
+    {
+      "file": ".yamllint",
+      "description": "## YAML Lint Configuration\n\nDefines YAML formatting and style rules.\n\n**Key settings:**\n- 2-space indentation\n- 120 character line length\n- Explicit boolean values (true/false)\n- No trailing spaces\n- Consistent brace and bracket spacing\n\n**Validation:** Run `pre-commit run yamllint -a` to check compliance\n\nThese rules ensure YAML files are consistent and maintainable.",
+      "line": 1,
+      "title": "YAML Linting Config"
+    },
+    {
+      "file": ".editorconfig",
+      "description": "## EditorConfig\n\nDefines basic formatting rules that work across different editors and IDEs.\n\n**Settings:**\n- UTF-8 encoding\n- LF line endings\n- Trim trailing whitespace\n- Insert final newline\n- 4-space indentation (default)\n- 2-space indentation for YAML and JSON\n\nMost modern editors automatically apply these settings when opening files.",
+      "line": 1,
+      "title": "Editor Configuration"
+    },
+    {
+      "file": "AGENTS.md",
+      "description": "## Agent Guidance\n\nQuick reference guide for Claude and other AI automation agents.\n\n**Contents:**\n- Quick start instructions\n- Links to detailed coding standards\n- Common tasks (linting, validation, testing)\n- References to other important files\n\n**Key commands:**\n- `pre-commit run -a`: Run all checks\n- `molecule test`: Run Molecule tests\n- `ansible-lint`: Validate Ansible playbooks\n\nThis provides a quick entry point for AI agents working in this repository.",
+      "line": 1,
+      "title": "AI Agent Guidance"
+    },
+    {
+      "file": "CLAUDE.md",
+      "description": "## Claude-Specific Configuration\n\nGuidance specific to Claude Code automation.\n\n**Covers:**\n- Claude Code workflow configuration\n- Environment variables and secrets\n- Model selection (default: claude-opus-4-5)\n- Allowed tools and MCP (Model Context Protocol)\n- Prompting best practices\n- Troubleshooting common issues\n\nThis file helps configure and optimize Claude Code for working with this repository.",
+      "line": 1,
+      "title": "Claude Configuration"
+    },
+    {
+      "file": ".github/agents/code-tour.agent.md",
+      "description": "## Custom Agents\n\nCustom agent configurations for specialized tasks.\n\n**code-tour.agent.md** is a custom agent designed to:\n- Create and update VS Code code tours\n- Document repository structure and workflows\n- Provide guided walkthroughs for new contributors\n\n**Other agent files:**\n- **README.md**: Overview of available agents\n- **FIREWALL.md**: Firewall configuration for agents\n\nCustom agents extend capabilities with domain-specific expertise.",
+      "line": 1,
+      "title": "Custom Agents"
+    },
+    {
+      "file": ".github/CONTRIBUTING.md",
+      "description": "## Contributing Guidelines\n\nInstructions for how to contribute to repositories in the organization.\n\n**Covers:**\n- How to submit bug reports\n- Coding conventions (2-space indentation, readability)\n- Proposing changes via Pull Requests\n- Continuous Integration requirements\n\n**Important:** All contributions must pass CI tests (pre-commit hooks and other automated checks).\n\nThis file automatically applies to all repositories without their own contributing guide.",
+      "line": 1,
+      "title": "Contributing Guide"
+    },
+    {
+      "file": ".github/CODEOWNERS",
+      "description": "## Code Owners\n\nDefines who is automatically requested to review PRs for specific files or directories.\n\n**How it works:**\n- Maps file patterns to teams or individuals\n- Automatically requests reviews on matching PRs\n- Ensures domain experts review relevant changes\n\n**Usage:** Add patterns and owners to ensure the right people review changes to critical files.",
+      "line": 1,
+      "title": "Code Owners"
+    },
+    {
+      "directory": ".github",
+      "description": "## Summary\n\nCongratulations! You've completed the tour of the .github repository.\n\n**What you've learned:**\n- This repository provides organization-wide defaults\n- Community health files (Code of Conduct, templates)\n- Coding standards and formatting rules\n- Automated checks via pre-commit and GitHub Actions\n- Configuration for AI agents and assistants\n\n**Next steps:**\n1. Review the files most relevant to your work\n2. Run `pre-commit run -a` to understand the checks\n3. Explore the instruction files in `.github/instructions/`\n4. Check out individual repositories to see how they use these defaults\n\n**Need help?** Refer to README.md or open an issue in the repository.",
+      "title": "Tour Complete!"
+    }
+  ]
+}
