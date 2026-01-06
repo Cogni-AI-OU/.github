@@ -140,7 +140,9 @@ jobs:
 
             if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
               echo "✓ pre-commit hooks are installed"
-            else
+            pip list \
+              | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
+              || { echo "Required Python packages are missing"; exit 1; }
               echo "✗ pre-commit hooks not installed (expected in CI)"
             fi
 
