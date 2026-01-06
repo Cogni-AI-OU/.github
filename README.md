@@ -1,5 +1,8 @@
 # Cogni AI OÜ - Organization Configuration
 
+[![CodeRabbit PR Reviews][coderabbit-image]][coderabbit-link]
+[![License][license-image]][license-link]
+
 This is a special `.github` repository that provides default community health
 files and configurations for all repositories in the Cogni AI OÜ organization.
 
@@ -38,3 +41,10 @@ For information about Cogni AI OÜ, our mission, and how to collaborate, see our
 
 - [How to Use the .github Repository](https://www.freecodecamp.org/news/how-to-use-the-dot-github-repository/)
 - [Creating a Default Community Health File](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
+
+<!-- Named links -->
+
+[coderabbit-image]: https://img.shields.io/coderabbit/prs/github/Cogni-AI-OU/.github?utm_source=oss&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+PR+Reviews
+[coderabbit-link]: https://github.com/Cogni-AI-OU/.github/pulls
+[license-image]: https://img.shields.io/badge/License-MIT-blue.svg
+[license-link]: https://tldrlegal.com/license/mit-license
