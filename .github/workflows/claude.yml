@@ -46,7 +46,7 @@ jobs:
       )
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Read-only; Claude comments via issues/PRs, not direct pushes
+      contents: write # Required for Claude to push code changes
       pull-requests: write
       issues: write
       id-token: write
