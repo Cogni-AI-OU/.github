@@ -1,60 +1,67 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this repository.
+This file provides Claude Code-specific guidance. For general agent instructions,
+see [AGENTS.md](AGENTS.md).
 
-## Quick Start
+## Claude Code Configuration
 
-- See [README.md](README.md) for setup and installation instructions
-- See [.tours/getting-started.tour](.tours/getting-started.tour) for a guided walkthrough
+Claude Code is configured via GitHub Actions workflows in this repository.
+The primary workflow is [.github/workflows/claude.yml](.github/workflows/claude.yml).
 
-## Instructions
+### Environment Variables
 
-For detailed coding standards and formatting guidelines, refer to:
+- `ANTHROPIC_API_KEY`: API key for Claude (stored as repository secret)
+- `ALLOWED_TOOLS`: Comma-separated list of tools Claude can use
 
-- [Copilot Instructions](.github/copilot-instructions.md) - Main coding standards
-- [Ansible](.github/instructions/ansible.instructions.md) - Ansible conventions
-- [JSON](.github/instructions/json.instructions.md) - JSON formatting standards
-- [Markdown](.github/instructions/markdown.instructions.md) - Markdown standards
-- [YAML](.github/instructions/yaml.instructions.md) - YAML formatting standards
+### Model Selection
 
-## Common Tasks
-
-### Linting and Validation
-
-```bash
-# Run all pre-commit checks
-pre-commit run -a
-
-# Run specific checks
-pre-commit run markdownlint -a
-pre-commit run yamllint -a
-ansible-lint
-```
-
-### Testing
-
-```bash
-# Run Molecule tests
-molecule test
-
-# Syntax check
-molecule syntax
-```
+By default, workflows use `claude-opus-4-5`. To change the model, update the
+`--model` argument in the workflow's `claude_args`.
 
 ## Tools
 
-Claude Code provides access to various tools for interacting with the repository and environment.
-
-### Model Context Protocol (MCP)
-
-MCP servers can be enabled to extend Claude's capabilities with additional tools and integrations.
-If MCP is enabled, you'll have access to specialized tools for:
-
-- External service integrations
-- Enhanced development workflows
-- Custom tool implementations
+Claude Code provides access to various tools for interacting with the repository
+and environment.
 
 ### Allowed Tools
 
+The allowed tools are defined in workflow files under the `ALLOWED_TOOLS`
+environment variable. Current categories include:
+
+- **Git operations**: `Bash(git:*)`
+- **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
+- **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
+
 If you need a tool that isn't in the allowed tools list, suggest adding it to
-[.github/workflows/claude.yml](.github/workflows/claude.yml) in the `ALLOWED_TOOLS` environment variable.
+the relevant workflow file in `.github/workflows/`.
+
+### Model Context Protocol (MCP)
+
+MCP servers extend Claude's capabilities with additional tools and integrations.
+When MCP is enabled via `--mcp-config`, you gain access to:
+
+- GitHub API integrations (issues, PRs, repositories)
+- External service integrations
+- Custom tool implementations
+
+MCP configuration is specified in workflow files using JSON format.
+
+## Prompting Best Practices
+
+When working with Claude in this repository:
+
+- Reference `AGENTS.md` for coding standards and formatting rules
+- Run `pre-commit run -a` before finalizing changes
+- Keep responses concise; avoid restating obvious context
+- Focus on actionable issues rather than stylistic preferences
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
+   via PR if needed.
+2. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
+   committing.
+3. **MCP connection errors**: Verify the MCP server URL and authentication in
+   workflow configuration.
