@@ -5,6 +5,7 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
+  workflow_call:
 
 concurrency:
   group: claude-review-${{ github.event.pull_request.number }}
@@ -36,6 +37,7 @@ jobs:
         Bash(git:*),
         Bash(jq:*),
         Bash(yq:*),
+        mcp__github_inline_comment__create_inline_comment
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -54,11 +56,12 @@ jobs:
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
 
-            Review this pull request. Focus only on:
+            Review this pull request. Focus mainly on:
             - Bugs, logic errors, or incorrect behavior
             - Security vulnerabilities
             - Performance issues with measurable impact
             - Missing error handling
+            - When identified issues could be fixed, include an inline link to fix it.
 
             Guidelines:
             - Be concise. Only comment on actual problems, not style preferences.
@@ -66,11 +69,18 @@ jobs:
             - If no significant issues exist, state that briefly.
             - Reference AGENTS.md if present for project conventions.
 
-            Use `gh pr comment` to post your review.
+            Use mcp__github_comment__update_claude_comment or `gh pr comment` to post your review.
 
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           claude_args: |
             --model claude-opus-4-5
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config '{ "mcpServers": { "github": { "type": "http", "url": "https://api.githubcopilot.com/mcp/" } } }'
+            --mcp-config '{
+              "mcpServers": {
+                "github": {
+                  "type": "http",
+                  "url": "https://api.githubcopilot.com/mcp/"
+                }
+              }
+            }'
