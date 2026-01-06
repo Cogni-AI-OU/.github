@@ -36,6 +36,11 @@ jobs:
           && contains(github.event.review.body, '@claude'))
         || (github.event_name == 'issues'
           && github.event.action == 'opened'
+          && (
+            github.event.issue.author_association == 'OWNER'
+            || github.event.issue.author_association == 'MEMBER'
+            || github.event.issue.author_association == 'COLLABORATOR'
+          )
           && (contains(github.event.issue.body, '@claude')
             || contains(github.event.issue.title, '@claude')))
       )
@@ -72,8 +77,6 @@ jobs:
           additional_permissions: |
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Optional: Trigger when specific user is assigned to an issue.
-          assignee_trigger: "claude-bot"
           claude_args: |
             --model claude-opus-4-5
             --max-turns 100
