@@ -44,6 +44,7 @@ jobs:
           && (contains(github.event.issue.body, '@claude')
             || contains(github.event.issue.title, '@claude')))
       )
+    name: Claude Code
     runs-on: ubuntu-latest
     permissions:
       contents: write # Required for Claude to push code changes
