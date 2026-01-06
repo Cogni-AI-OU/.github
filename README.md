@@ -1,12 +1,13 @@
-# Welcome to Cogni-AI-OU 🚀
+# Welcome to Cogni AI
 
 ## About Us
 
-Cogni-AI-OU is an innovative organization focused on advancing artificial intelligence and cognitive computing solutions.
+Cogni AI OÜ is an innovative company focused on advancing artificial intelligence and cognitive computing solutions.
 
 ## Our Mission
 
-We strive to develop intelligent systems that enhance human capabilities and solve complex problems through the power of AI.
+We strive to develop intelligent systems that enhance human capabilities
+and solve complex problems through the power of AI.
 
 ## What We Do
 
@@ -21,7 +22,3 @@ We welcome collaboration and contributions from the community. Check out our rep
 ## Connect With Us
 
 Feel free to explore our projects and reach out if you'd like to collaborate or learn more about our work.
-
----
-
-*Building the future with artificial intelligence*
