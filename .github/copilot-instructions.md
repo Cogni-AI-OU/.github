@@ -1,8 +1,17 @@
-# Copilot Instructions for ... Ops
+# Copilot Instructions
 
 ## Project Overview
 
-TBC
+This is the organization-wide `.github` repository. It provides
+default community health files, GitHub Actions workflows, issue/PR templates,
+and coding standards that apply across all repositories in the organization.
+
+Key contents:
+
+- **Community health files**: CODE_OF_CONDUCT.md, issue templates, PR templates
+- **Reusable workflows**: CI/CD, linting, automated reviews
+- **Organization profile**: Public-facing info in `profile/README.md`
+- **Agent configurations**: AGENTS.md, CLAUDE.md for AI coding assistants
 
 ### Getting started
 
@@ -31,11 +40,6 @@ TBC
 - Use `argparse` for CLI argument parsing.
 - Handle `BrokenPipeError` for CLI tools that might be piped to `head` or `grep`.
 
-### TBC API
-
-- Use the TBC SDK.
-- Handle API rate limits and errors gracefully.
-
 ## Formatting Guidelines
 
 ### JSON
@@ -62,7 +66,22 @@ Notes:
 
 ## Project Structure
 
-TBC
+```text
+.
+├── .github/
+│   ├── ISSUE_TEMPLATE/      # Issue templates (bug reports, feature requests)
+│   ├── instructions/         # Language-specific coding standards
+│   ├── workflows/            # GitHub Actions workflows
+│   ├── copilot-instructions.md
+│   └── pull_request_template.md
+├── .tours/                   # VS Code guided tours
+├── profile/
+│   └── README.md             # Organization profile (shown on GitHub org page)
+├── AGENTS.md                 # AI agent guidance
+├── CLAUDE.md                 # Claude-specific configuration
+├── CODE_OF_CONDUCT.md        # Community standards
+└── README.md                 # Repository documentation
+```
 
 ### Tours
 
@@ -117,4 +136,20 @@ If Copilot or automated checks behave unexpectedly:
 
 ## Common Tasks
 
-TBC
+### Updating Organization Defaults
+
+- Edit files in `.github/ISSUE_TEMPLATE/` to modify issue templates
+- Edit `.github/pull_request_template.md` for PR template changes
+- Update `profile/README.md` to change the organization's public profile
+
+### Adding or Modifying Workflows
+
+- Workflows in `.github/workflows/` can be reused via `workflow_call`
+- Test workflow changes on a feature branch before merging to main
+- Use `actionlint` to validate workflow syntax locally
+
+### Updating Coding Standards
+
+- Language-specific instructions are in `.github/instructions/`
+- Update `.markdownlint.yaml`, `.yamllint`, or `.editorconfig` for linting rules
+- Run `pre-commit run -a` to verify changes pass all checks
