@@ -119,6 +119,15 @@ To identify and diagnose the latest build errors:
    - **YAML linting errors:** Check `.yamllint` for rules; verify indentation and structure
    - **JSON formatting errors:** Use `jq . <file>` to validate JSON syntax
 
+## Copilot Agent
+
+- If you encounter firewall issues when using the GitHub Copilot Agent,
+  refer to <https://gh.io/copilot/firewall-config> for configuration details.
+  If you need to allowlist additional hosts, update your firewall configuration accordingly
+  and keep the list of allowed hosts in `.github/agents/FIREWALL.md` up to date.
+- Prefix shell commands with `time` to measure execution duration for better visibility.
+- When command takes too long, use `timeout` or similar approach to limit execution time.
+
 ### General Troubleshooting
 
 If Copilot or automated checks behave unexpectedly:
@@ -126,13 +135,6 @@ If Copilot or automated checks behave unexpectedly:
 - Re-run `pre-commit run -a` locally to surface formatting or linting issues.
 - Verify `.markdownlint.yaml` and `.yamllint` have not been modified incorrectly.
 - If problems persist, open an issue with details of the command run and any error output.
-
-## Copilot Agent
-
-- If you encounter firewall issues when using the GitHub Copilot Agent,
-  refer to <https://gh.io/copilot/firewall-config> for configuration details.
-  If you need to allowlist additional hosts, update your firewall configuration accordingly
-  and keep the list of allowed hosts in `.github/agents/FIREWALL.md` up to date.
 
 ## Common Tasks
 
