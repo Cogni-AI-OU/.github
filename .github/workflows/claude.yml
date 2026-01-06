@@ -37,7 +37,8 @@ jobs:
         Bash(pre-commit run:*),
         Bash(jq:*),
         Bash(yq:*),
-        Bash(npm:*)
+        Bash(npm run lint:*),
+        Bash(npm install)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
