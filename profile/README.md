@@ -6,7 +6,8 @@ Cogni AI OÜ is an innovative company focused on advancing artificial intelligen
 
 ## Our Mission
 
-We strive to develop intelligent systems that enhance human capabilities and solve complex problems through the power of AI.
+We strive to develop intelligent systems that enhance human capabilities and
+solve complex problems through the power of AI.
 
 ## What We Do
 
@@ -19,7 +20,10 @@ We strive to develop intelligent systems that enhance human capabilities and sol
 - Explore our repositories to see active projects and open issues.
 - Open a discussion or issue if you want to propose ideas or ask questions.
 - Submit pull requests for improvements, bug fixes, or documentation updates.
+- Review our [Code of Conduct](https://github.com/Cogni-AI-OU/.github/blob/main/CODE_OF_CONDUCT.md)
 
 ## Stay Connected
 
-We welcome collaboration and contributions from the community. Reach out through issues or discussions in our repositories if you'd like to collaborate or learn more about our work.
+We welcome collaboration and contributions from the community. Reach out through
+issues or discussions in our repositories if you'd like to collaborate or learn
+more about our work.
