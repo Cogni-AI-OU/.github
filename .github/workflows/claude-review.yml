@@ -1,5 +1,5 @@
 ---
-name: PR Review
+name: Claude Code Review
 
 on:
   pull_request:
@@ -10,11 +10,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  review:
+  claude-review:
+    # Skip if PR is authored by a bot
+    if: github.event.pull_request.user.type != 'Bot'
+    name: Claude Review
     runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
+      issues: read
       pull-requests: write
       id-token: write
     env:
