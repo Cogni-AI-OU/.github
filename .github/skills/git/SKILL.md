@@ -28,6 +28,21 @@ Non-Interactive Patterns
 - **Cherry-picking without conflicts**: `git cherry-pick -x <commit-sha>` (`-x` records original SHA for traceability)
 - **Stashing partial work** (non-interactive): `git stash push -m "wip-description" -- path/to/file` (use pathspec for selective stashing; avoid `-p` as it is interactive)
 
+Working with Shallow Clones
+---------------------------
+
+GitHub Actions and other CI environments often check out repositories as shallow clones (limited history).
+
+- **Detect shallow clone**:
+  - `test -f .git/shallow && echo "Shallow clone" || echo "Full clone"`
+  - `git rev-parse --is-shallow-repository` (outputs `true` or `false`)
+- **Unshallow repository**: `git fetch --unshallow` (retrieves complete history)
+- **Find commits not in current branch**:
+  - Check if commit exists: `git cat-file -e <commit-sha> 2>/dev/null && echo "Exists" || echo "Not found"`
+  - Search across all branches: `git log --all --oneline | grep <commit-sha-prefix>`
+  - Fetch specific PR: `git fetch origin pull/<pr-number>/head:pr-<pr-number>`
+  - List all branches containing commit: `git branch -a --contains <commit-sha>`
+
 Safety & Recovery
 -----------------
 
