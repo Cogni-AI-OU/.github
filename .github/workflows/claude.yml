@@ -76,6 +76,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Cache Claude Code
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.claude
+            ~/.local
+          key: claude-code-${{ runner.os }}-${{ hashFiles('.github/workflows/claude.yml') }}
+          restore-keys: |
+            claude-code-${{ runner.os }}-
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
