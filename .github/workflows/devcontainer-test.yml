@@ -35,7 +35,7 @@ jobs:
         id: image
         run: |
           # Transform repository name to valid Docker tag format
-          # Replace leading dot with underscore to make it valid
+          # Replace /. with /_ to handle repository names starting with a dot
           REPO_NAME="${{ github.repository }}"
           SAFE_REPO_NAME="${REPO_NAME//\/\./\/_}"
           echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> $GITHUB_OUTPUT
