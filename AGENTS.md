@@ -19,6 +19,14 @@ For detailed coding standards and formatting guidelines, refer to:
 
 ## Common Tasks
 
+### Before the changes
+
+Before committing the new changes, install pre-commit via pip and its hooks by:
+
+```bash
+pre-commit install
+```
+
 ### Linting and Validation
 
 ```bash
