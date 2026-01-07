@@ -97,7 +97,7 @@ When creating or updating a skill file, ensure the following format:
 
 - **Avoid Hardcoding**: Never embed specific values, file paths, repository
   names, user details, or tool versions; instead, use clear placeholders (e.g.,
-  `{REPO_NAME}`, `<target-branch>`, `{{variable}}`) or instruct the agent to
+- **Command-Line Tool Examples**: When the skill involves command-line tools,
   derive them dynamically via tools/read operations to maximize skill generality
   and cross-project reusability.
 
