@@ -143,7 +143,7 @@ jobs:
 
             echo "Checking Python packages from requirements.txt..."
             for pkg in ansible ansible-lint docker molecule pre-commit uv; do
-              if ! pip list | grep -qiE "^${pkg}[[:space:]]"; then
+              if ! python3 -m pip show "$pkg" &> /dev/null; then
                 echo "✗ Required Python package '$pkg' is missing"
                 exit 1
               fi
