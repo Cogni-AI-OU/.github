@@ -98,8 +98,10 @@ When creating or updating a skill file, ensure the following format:
 - **Avoid Hardcoding**: Never embed specific values, file paths, repository
   names, user details, or tool versions; instead, use clear placeholders (e.g.,
   `<repository-name>`, `<file-path>`, `<version>`).
+
 - **Command-Line Tool Examples**: When the skill involves command-line tools,
   derive them dynamically via tools/read operations to maximize skill generality
-  and cross-project reusability. Always provide useful examples of key commands—especially
-  for complex, multi-flag, piped, or non-standard operations—to ensure precise reproduction,
-  minimize agent misinterpretation, and reduce execution failures.
+  and cross-project reusability. Always provide useful examples of key
+  commands—especially for complex, multi-flag, piped, or non-standard
+  operations—to ensure precise reproduction, minimize agent misinterpretation,
+  and reduce execution failures.
