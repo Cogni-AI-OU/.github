@@ -83,24 +83,24 @@ Useful Diagnostic Commands
 
 ```python
 # When you have a GitHub Actions URL like:
-# https://github.com/{org}/.github/actions/runs/{rid}/job/{jid}
+# https://github.com/{org}/{repo}/actions/runs/{rid}/job/{jid}
 
 # Extract IDs: RUN_ID={rid}, JOB_ID={jid}
 
 # Get workflow run details
-github-mcp-server-actions_get(method="get_workflow_run", owner="{org}", repo=".github", resource_id="{rid}")
+github-mcp-server-actions_get(method="get_workflow_run", owner="{org}", repo="{repo}", resource_id="{rid}")
 
 # Get job details
-github-mcp-server-actions_get(method="get_workflow_job", owner="{org}", repo=".github", resource_id="{rid}")
+github-mcp-server-actions_get(method="get_workflow_job", owner="{org}", repo="{repo}", resource_id="{rid}")
 
 # Get job logs (most useful for diagnosis)
-github-mcp-server-get_job_logs(job_id={jid}, owner="{org}", repo=".github", return_content=true, tail_lines=100)
+github-mcp-server-get_job_logs(job_id={jid}, owner="{org}", repo="{repo}", return_content=true, tail_lines=100)
 
 # List all jobs in a workflow run
-github-mcp-server-actions_list(method="list_workflow_jobs", owner="{org}", repo=".github", resource_id="{rid}")
+github-mcp-server-actions_list(method="list_workflow_jobs", owner="{org}", repo="{repo}", resource_id="{rid}")
 
 # List recent workflow runs
-github-mcp-server-actions_list(method="list_workflow_runs", owner="{org}", repo=".github")
+github-mcp-server-actions_list(method="list_workflow_runs", owner="{org}", repo="{repo}")
 ```
 
 **gh CLI (fallback):**
