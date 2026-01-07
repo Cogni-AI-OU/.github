@@ -81,8 +81,8 @@ jobs:
         with:
           path: |
             ~/.claude
-            ~/.local
-          key: claude-code-${{ runner.os }}-${{ hashFiles('.github/workflows/claude.yml') }}
+            ~/.local/bin/claude
+          key: claude-code-${{ runner.os }}-v2.0.76
           restore-keys: |
             claude-code-${{ runner.os }}-
 
