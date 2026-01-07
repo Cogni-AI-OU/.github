@@ -6,12 +6,12 @@ on:
   pull_request:
     paths:
       - '.devcontainer/**'
-      - '.github/workflows/devcontainer-test.yml'
+      - '.github/workflows/devcontainer-ci.yml'
   push:
     branches: [main]
     paths:
       - '.devcontainer/**'
-      - '.github/workflows/devcontainer-test.yml'
+      - '.github/workflows/devcontainer-ci.yml'
   workflow_dispatch:
 
 jobs:
