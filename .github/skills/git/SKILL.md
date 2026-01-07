@@ -26,7 +26,7 @@ Non-Interactive Patterns
 - Later autosquash (requires interactive rebase—propose to user or defer to PR squash if agent cannot handle `-i`): `git rebase -i --autosquash origin/main`
 - **Rebasing feature branches**: `git fetch origin && git rebase origin/main --no-verify` (add `--no-verify` only if hooks block)
 - **Cherry-picking without conflicts**: `git cherry-pick -x <commit-sha>` (`-x` records original SHA for traceability)
-- **Stashing partial work** (non-interactive): `git stash push -m "wip-description" -p` (patch mode for selective stashing)
+- **Stashing partial work** (non-interactive): `git stash push -m "wip-description" -- path/to/file` (use pathspec for selective stashing; avoid `-p` as it is interactive)
 
 Safety & Recovery
 -----------------
