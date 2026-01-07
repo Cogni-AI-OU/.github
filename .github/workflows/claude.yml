@@ -82,7 +82,7 @@ jobs:
           path: |
             ~/.claude
             ~/.local/bin/claude
-          key: claude-code-${{ runner.os }}-v2.0.76
+          key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
 
