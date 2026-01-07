@@ -31,13 +31,20 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set image name
+        id: image
+        run: |
+          # Transform repository name to valid Docker tag format
+          # Replace leading dot with underscore to make it valid
+          REPO_NAME="${{ github.repository }}"
+          SAFE_REPO_NAME="${REPO_NAME//\/\./\/_}"
+          echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> $GITHUB_OUTPUT
+
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
-        env:
-          REPO_LOWER: ${{ github.repository }}
         with:
-          imageName: ghcr.io/${{ github.repository }}/devcontainer
-          cacheFrom: ghcr.io/${{ github.repository }}/devcontainer
+          imageName: ${{ steps.image.outputs.name }}
+          cacheFrom: ${{ steps.image.outputs.name }}
           push: filter
           refFilterForPush: refs/heads/main
           runCmd: |
