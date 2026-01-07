@@ -45,6 +45,26 @@ jobs:
 
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
+        env:
+          REQUIRED_COMMANDS: >-
+            pre-commit
+            python3
+            pip
+            node
+            npm
+            make
+            rg
+            docker
+            actionlint
+            gh
+            ansible
+          REQUIRED_PACKAGES: >-
+            ansible
+            ansible-lint
+            docker
+            molecule
+            pre-commit
+            uv
         with:
           imageName: ${{ steps.image.outputs.name }}
           cacheFrom: ${{ steps.image.outputs.name }}
@@ -52,21 +72,6 @@ jobs:
           refFilterForPush: refs/heads/main
           runCmd: |
             echo "Testing devcontainer build..."
-
-            # Define required command-line tools
-            REQUIRED_COMMANDS="
-              pre-commit
-              python3
-              pip
-              node
-              npm
-              make
-              rg
-              docker
-              actionlint
-              gh
-              ansible
-            "
 
             # Check all required commands are installed
             echo "Checking required command-line tools..."
@@ -77,16 +82,6 @@ jobs:
               fi
               echo "✓ $cmd is installed"
             done
-
-            # Define required Python packages
-            REQUIRED_PACKAGES="
-              ansible
-              ansible-lint
-              docker
-              molecule
-              pre-commit
-              uv
-            "
 
             # Check all required Python packages are installed
             echo "Checking required Python packages..."
