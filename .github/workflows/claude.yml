@@ -52,6 +52,7 @@ jobs:
       issues: write
       id-token: write
       actions: read # Required for Claude to read CI results on PRs
+      workflows: write # Required for Claude to create or update workflow files
     env:
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
