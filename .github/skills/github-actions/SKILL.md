@@ -91,7 +91,7 @@ Useful Diagnostic Commands
 github-mcp-server-actions_get(method="get_workflow_run", owner="{org}", repo="{repo}", resource_id="{rid}")
 
 # Get job details
-github-mcp-server-actions_get(method="get_workflow_job", owner="{org}", repo="{repo}", resource_id="{rid}")
+github-mcp-server-actions_get(method="get_workflow_job", owner="{org}", repo="{repo}", resource_id="{jid}")
 
 # Get job logs (most useful for diagnosis)
 github-mcp-server-get_job_logs(job_id={jid}, owner="{org}", repo="{repo}", return_content=true, tail_lines=100)
