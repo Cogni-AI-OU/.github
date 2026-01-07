@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD013 MD022 MD026 MD041 -->
+<!-- markdownlint-disable MD003 MD013 MD022 MD026 MD041 -->
 ---
 name: github-actions
 description: Diagnose GitHub Actions workflow failures by retrieving run statuses and logs using MCP tools or gh CLI.
