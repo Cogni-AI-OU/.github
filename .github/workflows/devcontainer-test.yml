@@ -130,14 +130,11 @@ jobs:
               echo "✗ ansible is not installed"
               exit 1
             fi
+echo "Checking Python packages from requirements.txt..."
+pip list \
+  | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
+  || { echo "Required Python packages are missing"; exit 1; }
 
-            echo "Checking Python packages from requirements.txt..."
-            pip list \
-              | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
-              || { echo "Required Python packages are missing"; exit 1; }
-
-            if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
-              echo "✓ Git pre-commit hooks are installed"
-            fi
-
-            echo "All DevContainer tests passed successfully! ✓"
+if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
+  echo "✓ pre-commit hooks are installed"
+fi
