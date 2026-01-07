@@ -129,3 +129,17 @@ Limitations
 - Private secrets are always redacted in logs
 - Large log output may truncate in terminal — prioritize failed-only retrieval
 - Cannot trigger new workflow runs autonomously
+
+Repository Context in CI
+-------------------------
+
+When working with GitHub Actions build logs and investigating issues:
+
+- **Shallow clones**: GitHub Actions often checks out repositories as shallow clones (limited history)
+  - Detect: `git rev-parse --is-shallow-repository` or `test -f .git/shallow`
+  - Fix: `git fetch --unshallow` to retrieve complete history
+- **Commits from other PRs/branches**: If a commit isn't found, it may be from a different PR or branch
+  - Search all branches: `git log --all --oneline | grep <commit-sha>`
+  - Fetch specific PR: `git fetch origin pull/<pr-number>/head:pr-<pr-number>`
+  - Check if commit exists: `git cat-file -e <commit-sha> 2>/dev/null`
+- **Cross-reference with PR**: When user mentions a commit from a PR URL, use the PR number to fetch it first
