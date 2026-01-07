@@ -53,10 +53,12 @@ repository standards.
 
 7. Keep total length to minimum.
 
-8. Use sections sparingly, in logical flow (e.g., Introduction → Activation
-   Triggers → Core Process → Diagnostics → Patterns → Limitations → Safety).
+8. Section Discipline: Use sections sparingly and only when they clearly improve
+  readability or organization; always follow a logical progression
+  (e.g., Brief Intro → When to Activate → Core Process → Diagnostics
+  → Patterns → What to Avoid → Limitations → Safety).
 
-9. Output only the complete, ready-to-commit SKILL.md content.
+10. Output only the complete, ready-to-commit SKILL.md content.
 
 ## Guidance on Creating or Updating Skills
 
@@ -98,3 +100,8 @@ When creating or updating a skill file, ensure the following format:
   `{REPO_NAME}`, `<target-branch>`, `{{variable}}`) or instruct the agent to
   derive them dynamically via tools/read operations to maximize skill generality
   and cross-project reusability.
+
+- *Command-Line Tool Examples*: When the skill involves command-line tools,
+  always provide useful examples of key commands—especially for complex, multi-flag,
+  piped, or non-standard operations—to ensure precise reproduction,
+  minimize agent misinterpretation, and reduce execution failures.
