@@ -72,7 +72,7 @@ jobs:
         Bash(npm run lint:*),
         Bash(npm install)
     steps:
-      - name: Debug workflow trigger
+      - name: Print workflow trigger
         env:
           EVENT_NAME: ${{ github.event_name }}
           EVENT_ACTION: ${{ github.event.action }}
