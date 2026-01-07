@@ -10,6 +10,7 @@ When to Activate
 ----------------
 
 - User reports a failing GitHub Actions workflow, CI failure, or red status check
+- User provides a GitHub Actions URL (e.g., `https://github.com/owner/repo/actions/runs/RUN_ID/job/JOB_ID`)
 - Pull request shows failed Actions checks
 - Task requires identifying or fixing a workflow failure
 - Error output references Actions job steps
@@ -17,22 +18,39 @@ When to Activate
 Step-by-Step Process
 --------------------
 
-1. Detect available tools for diagnosis.
+1. Extract IDs from GitHub Actions URL if provided.
+
+   If user provides a URL like `https://github.com/owner/repo/actions/runs/RUN_ID/job/JOB_ID`:
+   - Extract `RUN_ID` (e.g., 20788446025) from the URL path
+   - Extract `JOB_ID` (e.g., 59704352287) if present in the URL
+   - Skip to step 2 with these IDs ready to use
+
+2. Detect available tools for diagnosis.
 
    First, check for gh CLI: run_in_terminal `gh --version`.
    If successful, verify access: run_in_terminal `gh auth status`.
-   Prioritize MCP tools (e.g., `list_workflow_runs`, `summarize_job_log_failures`) if present — they provide the most token-efficient summaries.
+   Prioritize MCP tools (e.g., `list_workflow_runs`, `get_job_logs`) if present — they provide the most token-efficient access.
    If neither MCP nor authenticated gh is available, respond: 'Automated retrieval of workflow logs is not possible in this environment. Please share the workflow run URL, specific error messages, or screenshots for diagnosis.'
 
-2. Preferred path: Use MCP tools (if available).
+3. Preferred path: Use MCP tools (if available).
 
-   - Invoke `list_workflow_runs` with filters (current branch, PR number, or workflow name if known) to find recent runs.
-   - Identify failed runs (`conclusion: "failure"`). Note the latest `run_id`.
-   - Invoke `summarize_job_log_failures(run_id=RUN_ID)` for concise AI summary of failures.
-   - If more detail needed: invoke `list_workflow_jobs(run_id=RUN_ID)` → target failed `job_id`(s) → `get_job_logs(job_id=JOB_ID)`.
-   - Parse summary/logs for failing step, command, and error message.
+   **If you have RUN_ID and JOB_ID from URL:**
+   - Use `github-mcp-server-actions_get` with method `get_workflow_job` and `resource_id=JOB_ID` to get job details
+   - Use `github-mcp-server-get_job_logs` with `job_id=JOB_ID`, `return_content=true`, and `tail_lines=100` (or more) to retrieve logs
+   - Parse logs for failing step, command, and error message
 
-3. Fallback path: Use gh CLI (if available and authenticated).
+   **If you only have RUN_ID or need to find failures:**
+   - Use `github-mcp-server-actions_get` with method `get_workflow_run` and `resource_id=RUN_ID` to get run details
+   - Use `github-mcp-server-actions_list` with method `list_workflow_jobs` and `resource_id=RUN_ID` to list all jobs
+   - Identify failed jobs (`conclusion: "failure"`) and note their `job_id`
+   - Use `github-mcp-server-get_job_logs` for each failed job
+
+   **If you need to find recent runs:**
+   - Use `github-mcp-server-actions_list` with method `list_workflow_runs` and filters (current branch, PR number, or workflow name)
+   - Identify failed runs (`conclusion: "failure"`). Note the latest `run_id`
+   - Follow steps above to get job details and logs
+
+4. Fallback path: Use gh CLI (if available and authenticated).
 
    - Run_in_terminal `gh run list --limit 20` (adds `--branch $(git rev-parse --abbrev-ref HEAD)` if needed).
    - Identify the most recent failed `run_id` from output.
@@ -41,14 +59,14 @@ Step-by-Step Process
    - If ripgrep available: `gh run view <run_id> --log-failed | rg -i -C 10 "failed|error|exception|exit"`.
    - Capture and analyze output for root cause.
 
-4. With evidence from either path:
+5. With evidence from either path:
 
    - Trace error to specific step, dependency, environment, or configuration issue.
    - Correlate with common patterns (version mismatch, missing secret, cache failure, flaky test, timeout).
    - Propose precise code or workflow fixes.
    - If reproducible locally, recommend `act -j <job>` for validation.
 
-5. Before committing fixes, verify logically against observed error. Stage changes and re-run verification if possible.
+6. Before committing fixes, verify logically against observed error. Stage changes and re-run verification if possible.
 
 Finding Build Issues via `gh` Command
 -------------------------------------
@@ -63,9 +81,27 @@ Useful Diagnostic Commands
 
 **MCP tools (preferred):**
 
-- `list_workflow_runs(pull_request=PR_NUMBER)` or branch-filtered
-- `summarize_job_log_failures(run_id=RUN_ID)`
-- `get_job_logs(job_id=JOB_ID)`
+```python
+# When you have a GitHub Actions URL like:
+# https://github.com/Cogni-AI-OU/.github/actions/runs/20788446025/job/59704352287
+
+# Extract IDs: RUN_ID=20788446025, JOB_ID=59704352287
+
+# Get workflow run details
+github-mcp-server-actions_get(method="get_workflow_run", owner="Cogni-AI-OU", repo=".github", resource_id="20788446025")
+
+# Get job details
+github-mcp-server-actions_get(method="get_workflow_job", owner="Cogni-AI-OU", repo=".github", resource_id="59704352287")
+
+# Get job logs (most useful for diagnosis)
+github-mcp-server-get_job_logs(job_id=59704352287, owner="Cogni-AI-OU", repo=".github", return_content=true, tail_lines=100)
+
+# List all jobs in a workflow run
+github-mcp-server-actions_list(method="list_workflow_jobs", owner="Cogni-AI-OU", repo=".github", resource_id="20788446025")
+
+# List recent workflow runs
+github-mcp-server-actions_list(method="list_workflow_runs", owner="Cogni-AI-OU", repo=".github")
+```
 
 **gh CLI (fallback):**
 
