@@ -37,7 +37,7 @@ Safety & Recovery
 - Unpushed commits: `git log origin/$(git rev-parse --abbrev-ref HEAD)..HEAD`
 - **Reflog for recovery**: Reference `git reflog` before history-rewriting operations to enable rollback.
 - **Backup before destructive ops**: Create temp tag: `git tag backup/pre-op-$(date +%s)`
-- **Force push only when required** (e.g., after approved history rewrite): `git push --force-with-lease=origin <branch>`
+- **Force push only when required** (e.g., after approved history rewrite): `git push --force-with-lease origin <branch>`
 
 Useful Diagnostic Commands
 --------------------------
