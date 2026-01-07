@@ -37,7 +37,7 @@ Step-by-Step Process
    - Run_in_terminal `gh run list --limit 20` (adds `--branch $(git rev-parse --abbrev-ref HEAD)` if needed).
    - Identify the most recent failed `run_id` from output.
    - Run_in_terminal `gh run view <run_id> --log-failed` to get only failed job logs (avoids full output).
-   - If more context needed: `gh run view <run_id> --log | grep -C 10 -i 'error\|failed\|exception\|traceback\|exit code [^0]'`.
+   - If more context needed: `gh run view <run_id> --log | grep -EC 10 -i 'error|failed|exception|traceback|exit code [1-9][0-9]*'`.
    - If ripgrep available: `gh run view <run_id> --log-failed | rg -i -C 10 "failed|error|exception|exit"`.
    - Capture and analyze output for root cause.
 
