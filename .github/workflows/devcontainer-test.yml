@@ -135,14 +135,12 @@ jobs:
 
             echo "Checking Python packages from requirements.txt..."
             pip list \
-              | grep -E "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
-              || echo "Some Python packages may be missing"
+              | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
+              || { echo "Required Python packages are missing"; exit 1; }
 
             if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
               echo "✓ pre-commit hooks are installed"
-            pip list \
-              | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
-              || { echo "Required Python packages are missing"; exit 1; }
+            else
               echo "✗ pre-commit hooks not installed (expected in CI)"
             fi
 
