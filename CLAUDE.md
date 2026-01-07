@@ -8,6 +8,25 @@ see [AGENTS.md](AGENTS.md).
 Claude Code is configured via GitHub Actions workflows in this repository.
 The primary workflow is [.github/workflows/claude.yml](.github/workflows/claude.yml).
 
+### Triggering Claude
+
+Claude can be triggered by mentioning `@claude` in:
+
+- **PR comments**: Comment on a pull request with `@claude` followed by instructions
+- **Inline review comments**: Add `@claude` to a review comment on specific code lines
+- **Issue comments**: Comment on an issue with `@claude` followed by instructions
+- **New issues**: Create an issue with `@claude` in the title or body
+
+**Who can trigger Claude:**
+
+- Organization owners, members, and collaborators (on any PR/issue)
+- PR authors (on their own PRs only)
+- Issue authors (on their own issues only)
+
+**Security**: External contributors cannot trigger Claude on other people's PRs or
+issues. This prevents unauthorized API usage and ensures code changes are reviewed
+by trusted users.
+
 ### Environment Variables
 
 - `ANTHROPIC_API_KEY`: API key for Claude (stored as repository secret)

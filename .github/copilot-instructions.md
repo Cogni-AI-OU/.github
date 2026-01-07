@@ -96,25 +96,12 @@ Notes:
 
 To identify and diagnose the latest build errors:
 
-1. **Check GitHub Actions workflow status:**
-   - If you have access to GitHub MCP server tools, use `list_workflow_runs` to see recent workflow runs and their status
-   - Look for runs with `conclusion: "failure"` or `status: "completed"` with failures
-   - Note the `run_id` of failed runs (typically the "Check" workflow)
-
-2. **View detailed error logs:**
-   - If you have access to GitHub MCP server tools:
-     - Use `get_job_logs` with the `run_id` and `failed_only: true` to get logs for all failed jobs
-     - Alternatively, use `list_workflow_jobs` to identify specific failed jobs, then use `get_job_logs`
-       with the `job_id` to get detailed logs for a specific job
-     - Parse the logs to find error messages and failure patterns
-   - If GitHub MCP server is not available, explain that you cannot access the logs
-
-3. **Reproduce errors locally:**
+1. **Reproduce errors locally:**
    - For pre-commit errors: Run `pre-commit run -a` to check all files
    - For specific hooks: Run `pre-commit run <hook-name> -a` (e.g., `markdownlint`, `yamllint`)
    - For actionlint errors: Install actionlint and run it on workflow files
 
-4. **Common error patterns:**
+2. **Common error patterns:**
    - **Markdown linting errors:** Check `.markdownlint.yaml` for rules; errors show line numbers
    - **YAML linting errors:** Check `.yamllint` for rules; verify indentation and structure
    - **JSON formatting errors:** Use `jq . <file>` to validate JSON syntax

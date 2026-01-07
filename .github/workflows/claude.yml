@@ -3,13 +3,14 @@ name: Claude Code
 
 on:
   issue_comment:
-    types: [created]
+    types: [created, edited]
   pull_request_review_comment:
-    types: [created]
+    types: [created, edited]
   issues:
     types: [opened]
   pull_request_review:
     types: [submitted]
+  workflow_call:
 
 concurrency:
   group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
@@ -17,8 +18,9 @@ concurrency:
 
 jobs:
   claude:
-    # Security: Only allow org members/collaborators to trigger Claude
+    # Security: Only allow org members/collaborators OR PR/issue authors to trigger Claude
     # author_association values: OWNER, MEMBER, COLLABORATOR are trusted
+    # PR/issue authors can trigger Claude on their own PRs/issues
     # Note: For issues, only allow on creation (no assigned trigger)
     if: |
       (
@@ -27,11 +29,15 @@ jobs:
         github.event.comment.author_association == 'COLLABORATOR' ||
         github.event.review.author_association == 'OWNER' ||
         github.event.review.author_association == 'MEMBER' ||
-        github.event.review.author_association == 'COLLABORATOR'
+        github.event.review.author_association == 'COLLABORATOR' ||
+        (github.event.pull_request && github.event.pull_request.user.login == github.event.comment.user.login) ||
+        (github.event.pull_request && github.event.pull_request.user.login == github.event.review.user.login) ||
+        (github.event.issue && github.event.issue.user.login == github.event.comment.user.login)
       ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
         || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude'))
         || (github.event_name == 'pull_request_review'
+          && github.event.review.body != null
           && github.event.review.body != ''
           && contains(github.event.review.body, '@claude'))
         || (github.event_name == 'issues'
@@ -66,6 +72,26 @@ jobs:
         Bash(npm run lint:*),
         Bash(npm install)
     steps:
+      - name: Print workflow trigger
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_ACTION: ${{ github.event.action }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          COMMENT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
+          REVIEW_BODY: ${{ github.event.review.body }}
+          REVIEW_AUTHOR: ${{ github.event.review.user.login }}
+          REVIEW_AUTHOR_ASSOC: ${{ github.event.review.author_association }}
+        run: |
+          echo "Event name: $EVENT_NAME"
+          echo "Action: $EVENT_ACTION"
+          echo "Comment body: $COMMENT_BODY"
+          echo "Comment author: $COMMENT_AUTHOR"
+          echo "Comment author_association: $COMMENT_AUTHOR_ASSOC"
+          echo "Review body: $REVIEW_BODY"
+          echo "Review author: $REVIEW_AUTHOR"
+          echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
+
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
