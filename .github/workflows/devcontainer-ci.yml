@@ -1,5 +1,5 @@
 ---
-name: Test DevContainer
+name: Development Containers (CI)
 
 # yamllint disable-line rule:truthy
 on:
@@ -15,8 +15,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-devcontainer:
-    name: Test DevContainer Build
+  devcontainer-build:
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
