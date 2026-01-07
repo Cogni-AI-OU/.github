@@ -1,4 +1,5 @@
-<!-- markdownlint-disable MD022 MD026 MD041 -->
+<!-- markdownlint-disable MD003 MD022 MD026 MD041 -->
+
 ---
 name: skill-writer
 description: >-
@@ -7,15 +8,13 @@ description: >-
   official format, validation rules, and community best practices.
 ---
 
-Skill Writer
-============
+# Skill Writer
 
 Generate or update SKILL.md files for GitHub Copilot coding agents, ensuring
 precise activation, concise expert-level guidance, and full compliance with
 repository standards.
 
-When to Activate
-----------------
+## When to Activate
 
 - User explicitly asks to create or update a skill for a specific issue, topic
   or task.
@@ -28,8 +27,7 @@ When to Activate
   one) to incorporate the insight, ensuring future activations handle the case
   more efficiently.
 
-Core Process
-------------
+## Core Process
 
 1. Infer a unique, descriptive `name` in lowercase-hyphenated format that will
    exactly match the intended folder name.
@@ -62,8 +60,7 @@ Core Process
 
 9. Output only the complete, ready-to-commit SKILL.md content.
 
-Guidance on Creating or Updating Skills
-----------------------------------------
+## Guidance on Creating or Updating Skills
 
 When creating or updating a skill file, ensure the following format:
 
