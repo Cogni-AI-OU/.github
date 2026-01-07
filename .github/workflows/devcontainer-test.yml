@@ -137,9 +137,6 @@ jobs:
             pip list \
               | grep -qE "ansible|ansible-lint|docker|molecule|pre-commit|uv" \
             if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
-              echo "✓ pre-commit hooks are installed"
-            else
-              echo "✗ pre-commit hooks not installed (expected in CI)"
             fi
 
             pip list \
