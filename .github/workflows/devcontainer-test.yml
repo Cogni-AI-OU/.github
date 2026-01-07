@@ -35,10 +35,12 @@ jobs:
         id: image
         run: |
           # Transform repository name to valid Docker tag format
-          # Replace /. with /_ to handle repository names starting with a dot
+          # 1. Convert to lowercase (Docker tags must be lowercase)
+          # 2. Replace /. with /_ to handle repository names starting with a dot
           REPO_NAME="${{ github.repository }}"
-          SAFE_REPO_NAME="${REPO_NAME//\/\./\/_}"
-          echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> $GITHUB_OUTPUT
+          REPO_LOWER="${REPO_NAME,,}"
+          SAFE_REPO_NAME="${REPO_LOWER//\/\./\/_}"
+          echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> "$GITHUB_OUTPUT"
 
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
