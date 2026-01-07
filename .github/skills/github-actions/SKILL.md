@@ -56,7 +56,8 @@ Finding Build Issues via `gh` Command
 - Use `gh` command to interact with GitHub resources. For example:
   - `gh run list --limit 3` to list recent builds.
   - `gh run view <run_id> --log-failed` to view only failed job logs.
-  - `gh run view <run_id> --log | rg -iw "failed|error|exit"` to search full logs for key terms.
+  - `gh run view <run_id> --log | rg -C3 -iw "failed|error|exit"` to search full logs for key terms.
+- When reading long logs, use `sed` or `awk` to read content in smaller parts (e.g. `sed -n 100,200p`).
 
 Useful Diagnostic Commands
 --------------------------
