@@ -32,3 +32,4 @@ venv.bak/
 *.org
 *.orig
 *.swp
+actionlint
