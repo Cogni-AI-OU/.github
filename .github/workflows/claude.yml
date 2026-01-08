@@ -61,8 +61,6 @@ jobs:
       id-token: write
       actions: read # Required for Claude to read CI results on PRs
     env:
-      # GitHub CLI token for gh commands
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
       ALLOWED_TOOLS: >-
@@ -75,6 +73,8 @@ jobs:
         Bash(yq:*),
         Bash(npm run lint:*),
         Bash(npm install)
+      # GitHub CLI token for gh commands
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Print workflow trigger
         env:
