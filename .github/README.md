@@ -1,7 +1,6 @@
 # GitHub Workflows and Actions
 
-This directory contains GitHub Actions workflows and related configuration for
-the Cogni AI OÜ organization.
+This directory contains GitHub Actions workflows and related configuration.
 
 ## Problem Matchers
 
