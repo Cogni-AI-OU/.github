@@ -3,8 +3,7 @@
 # @docs: <https://lyz-code.github.io/yamlfix/>
 # This file should be in the root directory of the project
 
-# Ensure it matches with .yamlint.
-line_length = 120
+line_length = 110
 
 # Preserve block scalar format (|- and |)
 # This prevents conversion to quoted strings with escaped newlines

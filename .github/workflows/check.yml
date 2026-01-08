@@ -1,12 +1,10 @@
 ---
 name: Check
-
 # yamllint disable-line rule:truthy
 on:
   pull_request:
   push:
   workflow_call:
-
 jobs:
   actionlint:
     name: actionlint
@@ -35,5 +33,5 @@ jobs:
             pre-commit|
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - uses: pre-commit/action@v3.0.1
