@@ -1,27 +1,41 @@
 {
   "problemMatcher": [
     {
-      "owner": "pre-commit-generic",
+      "owner": "pre-commit-flake8",
       "severity": "error",
       "pattern": [
         {
-          "regexp": "^([^:]+):(\\d+):(\\d+): (.+)$",
+          "regexp": "^(.+?):(\\d+):(\\d+):\\s+(\\w\\d+)\\s+(.+)$",
           "file": 1,
           "line": 2,
           "column": 3,
-          "message": 4
+          "code": 4,
+          "message": 5
         }
       ]
     },
     {
-      "owner": "pre-commit-no-column",
-      "severity": "error",
+      "owner": "pre-commit-codespell",
+      "severity": "warning",
       "pattern": [
         {
-          "regexp": "^([^:]+):(\\d+) (.+)$",
+          "regexp": "^(.+?):(\\d+):\\s+(.+\\s+==>\\s+.+)$",
           "file": 1,
           "line": 2,
           "message": 3
+        }
+      ]
+    },
+    {
+      "owner": "pre-commit-generic",
+      "severity": "error",
+      "pattern": [
+        {
+          "regexp": "^(.+?):(\\d+)(?::(\\d+))?:\\s+(.+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
         }
       ]
     }
