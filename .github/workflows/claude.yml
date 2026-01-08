@@ -18,9 +18,9 @@ concurrency:
 
 jobs:
   claude:
-    # Security: Only allow org members/collaborators OR PR/issue authors to trigger Claude
-    # author_association values: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR are trusted
-    # PR/issue authors can trigger Claude on their own PRs/issues
+    # Security: NONE and FIRST_TIME_CONTRIBUTOR are NOT allowed (untrusted external users).
+    # Allowed: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, or PR/issue authors on their own content.
+    # CONTRIBUTOR is needed for draft PRs where GitHub restricts author_association.
     # Note: For issues, only allow on creation (no assigned trigger)
     # Note: CONTRIBUTOR is included to support draft PRs where GitHub may restrict author_association
     if: |
