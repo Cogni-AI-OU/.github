@@ -13,7 +13,6 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "AndrePimenta.claude-code-chat",
         "DavidAnson.vscode-markdownlint",
         "GitHub.copilot",
         "GitHub.copilot-chat",
