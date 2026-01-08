@@ -46,8 +46,8 @@ complex challenges independently while maintaining awareness of your context win
 # Check file size first
 wc -l <file> || stat -c%s <file>
 # For files >500 lines, use filtering:
-head -n 100 <file>    # View beginning
-tail -n 100 <file>    # View ending
+head -n 50 <file>    # View beginning
+tail -n 50 <file>    # View ending
 sed -n '100,200p' <file>  # View specific range
 grep -n "pattern" <file>   # Search for specific content
 ```
@@ -70,7 +70,10 @@ grep -n "pattern" <file>   # Search for specific content
 2. **For files >200 lines**:
    - Use `head`/`tail` to inspect ends
    - Use `grep` to find relevant sections
+   - Use `awk` to filter by columns or by conditions
    - Use `sed -n 'start,end p'` for specific ranges
+   - Use `nl` to be aware of line numbers
+   - Use `ex` to modify files.
    - Only read full file if absolutely necessary
 3. **For files >1000 lines**: NEVER dump entire content
    - Use targeted searches
@@ -84,21 +87,13 @@ grep -n "pattern" <file>   # Search for specific content
 #### Command Failure Recovery Process
 
 1. **Check if command exists**: `which <command> || command -v <command>`
-2. **If not found, try to install it**:
-
-   ```bash
-   # Debian/Ubuntu
-   apt-get update && apt-get install -y <package>
-   # Or check if it's available
-   apt-cache search <package>
-   ```
-
+2. **If not found, try to install it**.
 3. **Try alternative commands**:
    - `wc -l` fails → try `cat <file> | wc -l`
    - `grep` fails → try `awk` or `sed`
    - `jq` not available → try `python -m json.tool`
    - `yq` not available → try `python -c "import yaml"`
-
+   - MCP not available → try `gh`
 4. **Check permissions**: `ls -la <file>` before trying to read/write
 5. **Verify paths exist**: `test -f <file> && echo "exists" || echo "not found"`
 
