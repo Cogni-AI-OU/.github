@@ -4,14 +4,14 @@
 # This file should be in the root directory of the project
 
 # Ensure it matches with .yamlint.
-line_length: 120
+line_length = 120
 
 # Preserve block scalar format (|- and |)
 # This prevents conversion to quoted strings with escaped newlines
-preserve_block_scalars: true
+preserve_block_scalars = true
 
 # Maintain original formatting
-preserve_formatting: true
+preserve_formatting = true
 
 # Force sequences to use block style (multi-line lists)
-sequence_style: block
+sequence_style = "block_style"
