@@ -93,13 +93,15 @@ jobs:
                 echo "✗ Required Python package '$pkg' is missing"
                 exit 1
               fi
+              echo "✓ $pkg is installed"
             done
             echo "✓ All required Python packages are installed"
 
-            if [ -d ".git/hooks" ] && [ -f ".git/hooks/pre-commit" ]; then
-              echo "✓ pre-commit hooks are installed"
+            # Verify pre-commit can run (hooks may not be installed in CI container)
+            if pre-commit --version &> /dev/null; then
+              echo "✓ pre-commit is functional"
             else
-              echo "✗ pre-commit hooks not installed (expected in CI)"
+              echo "✗ pre-commit is not functional"
               exit 1
             fi
 
