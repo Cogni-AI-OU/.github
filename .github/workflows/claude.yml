@@ -36,7 +36,7 @@ jobs:
         (github.event.issue && github.event.issue.user.login == github.event.comment.user.login)
       ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
-        || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude'))
+        || github.event_name == 'pull_request_review_comment'
         || (github.event_name == 'pull_request_review'
           && github.event.review.body != null
           && github.event.review.body != ''
@@ -80,6 +80,7 @@ jobs:
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
           COMMENT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
+          COMMENT_IN_REPLY_TO: ${{ github.event.comment.in_reply_to_id }}
           REVIEW_BODY: ${{ github.event.review.body }}
           REVIEW_AUTHOR: ${{ github.event.review.user.login }}
           REVIEW_AUTHOR_ASSOC: ${{ github.event.review.author_association }}
@@ -89,16 +90,54 @@ jobs:
           echo "Comment body: $COMMENT_BODY"
           echo "Comment author: $COMMENT_AUTHOR"
           echo "Comment author_association: $COMMENT_AUTHOR_ASSOC"
+          echo "Comment in_reply_to_id: $COMMENT_IN_REPLY_TO"
           echo "Review body: $REVIEW_BODY"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
 
+      - name: Check if comment should trigger Claude
+        id: check_trigger
+        if: github.event_name == 'pull_request_review_comment'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          IN_REPLY_TO_ID: ${{ github.event.comment.in_reply_to_id }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          SHOULD_TRIGGER="false"
+
+          # Check if current comment contains @claude
+          if echo "$COMMENT_BODY" | grep -q '@claude'; then
+            echo "Current comment contains @claude"
+            SHOULD_TRIGGER="true"
+          # Check if this is a reply to a comment containing @claude
+          elif [ -n "$IN_REPLY_TO_ID" ] && [ "$IN_REPLY_TO_ID" != "null" ]; then
+            echo "This is a reply to comment ID: $IN_REPLY_TO_ID"
+            # Fetch the parent comment
+            PARENT_COMMENT=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" --jq '.body' 2>/dev/null || echo "")
+            echo "Parent comment body: $PARENT_COMMENT"
+            if echo "$PARENT_COMMENT" | grep -q '@claude'; then
+              echo "Parent comment contains @claude"
+              SHOULD_TRIGGER="true"
+            fi
+          fi
+
+          echo "should_trigger=$SHOULD_TRIGGER" >> "$GITHUB_OUTPUT"
+          echo "Should trigger Claude: $SHOULD_TRIGGER"
+
       - name: Checkout repository
+        if: |
+          github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true'
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Cache Claude Code
+        if: |
+          github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true'
         uses: actions/cache@v4
         with:
           path: |
@@ -109,6 +148,9 @@ jobs:
             claude-code-${{ runner.os }}-
 
       - name: Run Claude Code
+        if: |
+          github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true'
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
