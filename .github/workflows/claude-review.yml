@@ -1,5 +1,5 @@
 ---
-# Note: Keep keys in alphabetical order.
+# Note: Keep keys and envs in alphabetical order.
 name: Claude Code Review
 
 on:
