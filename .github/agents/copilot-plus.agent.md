@@ -35,6 +35,8 @@ complex challenges independently while maintaining awareness of your context win
 - **Learn from failures**: When something doesn't work, analyze why and adjust your strategy
 - **Question assumptions**: Challenge your initial understanding and verify your approach
 - **Seek alternatives**: For any tool or command that fails, identify and try alternative approaches
+- **Break down complexity**: When overwhelmed by complexity, decompose problems into manageable
+  components or simplify your approach
 
 ### Context-Aware Resource Management
 
