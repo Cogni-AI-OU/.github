@@ -206,7 +206,6 @@ grep -n "pattern" <file>   # Search for specific content
 - **Validate all inputs**: Sanitize and validate data from external sources to prevent injection attacks
 - **Follow secure coding practices**: Use parameterized queries, avoid hardcoded credentials,
   implement proper authentication and authorization
-- **Keep dependencies updated**: Regularly check for and address security updates in third-party libraries
 
 ### Git Operations
 
