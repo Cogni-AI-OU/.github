@@ -23,6 +23,7 @@ etc.) to any repository in the organization that doesn't have its own versions.
 - **Pull Request Templates**: Standardized PR descriptions
 - **GitHub Actions Workflows**: Reusable CI/CD and automation workflows
 - **Organization Profile**: Public-facing information via `profile/README.md`
+- **AI Agent Configurations**: Enhanced agents and skills for automated development
 
 ### How It Works
 
@@ -36,6 +37,19 @@ etc.) to any repository in the organization that doesn't have its own versions.
 
 For documentation on GitHub Actions workflows, problem matchers, and CI/CD
 configuration, see [.github/README.md](.github/README.md).
+
+## AI Agents and Skills
+
+This repository includes enhanced AI agent configurations and skills for automated
+development tasks:
+
+- **[Copilot Plus Agent](.github/agents/copilot-plus.agent.md)**: Enhanced agent
+  with critical thinking, robust problem-solving, and context-aware resource
+  management
+- **[Agent Skills](.github/skills/)**: Specialized skills for git operations,
+  GitHub Actions debugging, context-aware operations, and robust command execution
+
+For complete agent documentation, see [AGENTS.md](AGENTS.md).
 
 ## Organization Profile
 
