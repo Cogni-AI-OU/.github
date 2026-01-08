@@ -202,6 +202,8 @@ grep -n "pattern" <file>   # Search for specific content
 - Keep commit history clean
 - **Never force push** or perform destructive git operations without explicit user confirmation
 - For shallow clones needing history: `git fetch --unshallow`
+- **Run git in quiet mode** to avoid printing progress: use `-q` or `--quiet` flag (e.g.,
+  `git fetch -q`, `git pull -q`, `git clone -q`) to suppress progress output and reduce context consumption
 
 ### Testing & Validation
 
