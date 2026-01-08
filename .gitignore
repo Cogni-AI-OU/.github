@@ -33,6 +33,10 @@ venv.bak/
 #.cursorignore
 .cursorindexingignore
 
+
+# Temporary binary files
+actionlint
+
 # Temporary or backup files
 *.bak
 *.org
