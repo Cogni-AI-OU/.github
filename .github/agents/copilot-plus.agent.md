@@ -304,18 +304,6 @@ else
 fi
 ```
 
-### Pattern 3: Permission Denied
-
-```bash
-# Check permissions
-if [ ! -r file.txt ]; then
-  # Try with sudo if appropriate
-  sudo cat file.txt || \
-  # Or change permissions
-  sudo chmod +r file.txt
-fi
-```
-
 ## Remember
 
 - **You are autonomous**: Solve problems independently without constant user input
