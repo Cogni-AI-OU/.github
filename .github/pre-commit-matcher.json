@@ -1,7 +1,8 @@
 {
   "problemMatcher": [
     {
-      "owner": "precommit-flake8",
+      "owner": "pre-commit-flake8",
+      "severity": "error",
       "pattern": [
         {
           "regexp": "^(.+?):(\\d+):(\\d+):\\s+(\\w\\d+)\\s+(.+)$",
@@ -14,7 +15,8 @@
       ]
     },
     {
-      "owner": "precommit-codespell",
+      "owner": "pre-commit-codespell",
+      "severity": "warning",
       "pattern": [
         {
           "regexp": "^(.+?):(\\d+):\\s+(.+\\s+==>\\s+.+)$",
@@ -25,7 +27,8 @@
       ]
     },
     {
-      "owner": "precommit-generic",
+      "owner": "pre-commit-generic",
+      "severity": "error",
       "pattern": [
         {
           "regexp": "^(.+?):(\\d+)(?::(\\d+))?:\\s+(.+)$",
