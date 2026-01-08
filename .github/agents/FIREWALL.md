@@ -2,6 +2,13 @@
 
 If your agent runs behind a restrictive firewall, allow these hosts. Always check the official guidance for updates.
 
+## Important Note
+
+Even with firewall allowlist configuration, some network environments use DNS monitoring proxies that may block
+direct API calls (e.g., `curl https://api.github.com/...`). In such cases, **always use the `gh` CLI tool** to
+interact with GitHub resources instead of direct HTTP requests. The `gh` CLI is designed to work better in
+restricted network environments and provides proper authentication handling.
+
 ```plaintext
 api.github.com
 codeload.github.com

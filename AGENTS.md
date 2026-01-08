@@ -75,12 +75,69 @@ molecule syntax
 
 ## Troubleshooting
 
+### Accessing GitHub Actions Job Logs
+
+To access job logs for GitHub Actions workflow runs, **NEVER use direct API calls**
+(e.g., `curl https://api.github.com/repos/.../actions/runs/.../jobs`). These may be blocked by DNS monitoring
+proxies.
+
+Instead, use the `gh` CLI tool:
+
+```bash
+# List recent workflow runs
+gh run list --limit 10
+
+# View a specific run (includes all jobs)
+gh run view <RUN_ID> --log
+
+# View a specific job within a run
+gh run view <RUN_ID> --job <JOB_ID> --log
+
+# Get job information in JSON format
+gh run view <RUN_ID> --json jobs --jq '.jobs[]'
+
+# Filter for failed jobs
+gh run view <RUN_ID> --json jobs --jq '.jobs[] | select(.conclusion=="failure")'
+```
+
+For more information on `gh run` commands, see: `gh run --help`
+
 ### GitHub Build issues
 
-- Use `gh` command to interact with GitHub resources. For example:
+- **ALWAYS** use the `gh` command to interact with GitHub resources instead of direct API calls.
+- Direct API calls (e.g., `curl https://api.github.com/...`) may be blocked by DNS monitoring proxies.
 
-  - `gh run list --limit 3` to list recent builds.
-  - `gh run view {ID} --log | rg -iw "failed|error|exit"` to look for build errors.
+Examples:
+
+- List recent workflow runs:
+
+  ```bash
+  gh run list --limit 3
+  ```
+
+- View logs for a specific workflow run:
+
+  ```bash
+  gh run view {RUN_ID} --log
+  ```
+
+- Search for errors in workflow logs:
+
+  ```bash
+  gh run view {RUN_ID} --log | rg -iw "failed|error|exit"
+  ```
+
+- Get job details for a workflow run:
+
+  ```bash
+  gh run view {RUN_ID} --log --job {JOB_ID}
+  ```
+
+- List jobs for a specific run:
+
+  ```bash
+  gh run view {RUN_ID} --json jobs --jq '.jobs[] | "\(.name) (\(.id)): \(.conclusion)"'
+  ```
 
 ### Firewall issues
 
