@@ -46,6 +46,7 @@ jobs:
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
         env:
+          # Keep the commands and packages in lexicographical order.
           REQUIRED_COMMANDS: >-
             pre-commit
             python3
