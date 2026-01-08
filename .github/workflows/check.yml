@@ -38,4 +38,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Add Problem Matcher for pre-commit
+        run: |
+          echo "::add-matcher::.github/precommit-matcher.json"
+        shell: bash
       - uses: pre-commit/action@v3.0.1
