@@ -1,21 +1,24 @@
 ---
 name: Claude Code
-
 on:
   issue_comment:
-    types: [created, edited]
+    types:
+      - created
+      - edited
   pull_request_review_comment:
-    types: [created, edited]
+    types:
+      - created
+      - edited
   issues:
-    types: [opened]
+    types:
+      - opened
   pull_request_review:
-    types: [submitted]
+    types:
+      - submitted
   workflow_call:
-
 concurrency:
   group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
   cancel-in-progress: true
-
 jobs:
   claude:
     # Security: NONE and FIRST_TIME_CONTRIBUTOR are NOT allowed (untrusted external users).
@@ -54,11 +57,11 @@ jobs:
     name: Claude Code
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required for Claude to push code changes
+      contents: write  # Required for Claude to push code changes
       pull-requests: write
       issues: write
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read  # Required for Claude to read CI results on PRs
     env:
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
@@ -92,12 +95,10 @@ jobs:
           echo "Review body: $REVIEW_BODY"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
-
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Cache Claude Code
         uses: actions/cache@v4
         with:
@@ -107,7 +108,6 @@ jobs:
           key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
-
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
@@ -125,7 +125,6 @@ jobs:
 
           # Optional: Customize the trigger phrase (default: @claude)
           # trigger_phrase: "/claude"
-
 
           # Optional: Configure Claude's behavior with CLI arguments
           # claude_args: |
