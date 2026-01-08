@@ -2,6 +2,7 @@
   "problemMatcher": [
     {
       "owner": "pre-commit-generic",
+      "severity": "error",
       "pattern": [
         {
           "regexp": "^(.+?):(\\d+):(\\d+): (.+)$",
@@ -14,6 +15,7 @@
     },
     {
       "owner": "pre-commit-no-column",
+      "severity": "error",
       "pattern": [
         {
           "regexp": "^(.+?):(\\d+) (.+)$",
