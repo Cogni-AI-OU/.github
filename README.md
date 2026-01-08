@@ -32,29 +32,10 @@ etc.) to any repository in the organization that doesn't have its own versions.
    repository
 3. Changes here automatically apply organization-wide
 
-## Problem Matchers
+## GitHub Actions
 
-This repository includes GitHub Actions problem matchers to improve CI/CD
-feedback:
-
-- **actionlint-matcher.json**: Captures errors from actionlint workflow linting
-- **pre-commit-matcher.json**: Captures errors from pre-commit hooks
-
-Problem matchers automatically annotate files with errors and warnings in pull
-requests, making it easier to identify and fix issues. They are configured in
-the `.github/workflows/check.yml` workflow.
-
-### Pre-commit Problem Matcher
-
-The pre-commit problem matcher supports two output formats:
-
-1. **Generic format** (`file:line:col: message`): Used by flake8, actionlint,
-   and other tools that provide column information
-2. **No-column format** (`file:line message`): Used by markdownlint and other
-   tools that only provide line numbers
-
-Note: Some hooks like yamllint and ansible-lint already output GitHub Actions
-annotations directly and don't need the problem matcher.
+For documentation on GitHub Actions workflows, problem matchers, and CI/CD
+configuration, see [.github/README.md](.github/README.md).
 
 ## Organization Profile
 
