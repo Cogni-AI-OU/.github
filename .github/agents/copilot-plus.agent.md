@@ -226,7 +226,14 @@ grep -n "pattern" <file>   # Search for specific content
 
 ### Efficient File Navigation
 
+**Prefer `ls` over `ls -la`** unless you specifically need hidden files or detailed permissions.
+The simpler output is easier to read and consumes less context.
+
 ```bash
+# List files (prefer simple ls)
+ls                    # Default - clean, minimal output
+ls -la                # Only when you need hidden files or permissions
+
 # Find files by pattern
 find . -name "*.py" -type f | head -20
 
