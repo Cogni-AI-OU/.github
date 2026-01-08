@@ -40,7 +40,7 @@ repository standards.
    formatting).
 
 4. Structure the file exactly as:
-   - First line: `<!-- markdownlint-disable MD022 MD026 MD041 -->`
+   - First line: `<!-- markdownlint-disable MD003 MD022 MD026 MD041 -->`
    - YAML frontmatter block
    - Pure Markdown body with minimal, value-adding sections only
 
