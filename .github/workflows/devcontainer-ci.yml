@@ -48,17 +48,17 @@ jobs:
         env:
           # Keep the commands and packages in lexicographical order.
           REQUIRED_COMMANDS: >-
-            pre-commit
-            python3
-            pip
+            actionlint
+            ansible
+            docker
+            gh
+            make
             node
             npm
-            make
+            pip
+            pre-commit
+            python3
             rg
-            docker
-            actionlint
-            gh
-            ansible
           REQUIRED_PACKAGES: >-
             ansible
             ansible-lint
