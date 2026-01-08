@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD060 -->
 # Agent Skills
 
 Agent Skills are folders of instructions, scripts, and resources that GitHub
