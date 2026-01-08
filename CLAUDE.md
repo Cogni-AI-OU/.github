@@ -55,12 +55,17 @@ and environment.
 The allowed tools are defined in workflow files under the `ALLOWED_TOOLS`
 environment variable. Current categories include:
 
-- **Git operations**: `Bash(git:*)`
+- **Git operations**: `Bash(git:*)` - Full access for commits and pushes
 - **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
 - **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
 
 If you need a tool that isn't in the allowed tools list, suggest adding it to
 the relevant workflow file in `.github/workflows/`.
+
+**Note on git access**: You have broad git access to commit and push changes.
+The workflow has strict access controls ensuring only trusted users can trigger you.
+Repository administrators are responsible for configuring branch protection and
+monitoring commit activity.
 
 ### Model Context Protocol (MCP)
 

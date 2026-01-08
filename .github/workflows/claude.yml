@@ -68,6 +68,13 @@ jobs:
     env:
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
+      #
+      # SECURITY NOTE: Bash(git:*) grants broad git access for autonomous commits/pushes.
+      # This is intentional and required for Claude to modify code, but requires safeguards:
+      # - Repository branch protection rules (require reviews, status checks)
+      # - GitHub audit log monitoring for github-actions[bot] activity
+      # - CODEOWNERS files for sensitive directories
+      # See .github/README.md and CLAUDE.md for detailed security guidance.
       ALLOWED_TOOLS: >-
         Bash(git:*),
         Bash(gh issue:*),
