@@ -39,7 +39,7 @@ grep "ERROR" large_file.log | head -20  # Search for specific content
 
 Handles commands that produce large output:
 
-**Example: Package Installation**
+#### Example: Package Installation
 
 ```bash
 # Check output size first
@@ -49,7 +49,7 @@ npm install 2>&1 | wc -l
 npm install 2>&1 | grep -E "error|warn" -i || echo "Install successful"
 ```
 
-**Example: Log Analysis**
+#### Example: Log Analysis
 
 ```bash
 # Don't dump entire log
@@ -63,7 +63,7 @@ docker logs container 2>&1 | grep -i error | head -50
 
 Automatically handles missing commands:
 
-**Example: JSON Processing**
+#### Example: JSON Processing
 
 ```bash
 # Copilot Plus checks if jq exists
@@ -76,7 +76,7 @@ fi
 jq . file.json 2>/dev/null || python3 -m json.tool < file.json
 ```
 
-**Example: YAML Processing**
+#### Example: YAML Processing
 
 ```bash
 # Try yq, fallback to python
@@ -88,7 +88,7 @@ python3 -c "import yaml; print(yaml.safe_load(open('file.yaml')))"
 
 Never gives up when facing challenges:
 
-**Example: File Not Readable**
+#### Example: File Not Readable
 
 ```bash
 # Try reading file
@@ -101,7 +101,7 @@ fi
 cat file.txt
 ```
 
-**Example: Command Not Found**
+#### Example: Command Not Found
 
 ```bash
 # Check if command exists
@@ -312,7 +312,7 @@ output=$(command 2>&1) || {
 
 After completing tasks, Copilot Plus updates documentation:
 
-**Example 1: New Command Pattern**
+### Example 1: New Command Pattern
 
 If a new workaround is discovered:
 
@@ -325,7 +325,7 @@ When processing YAML files and yq is not available:
 python3 -c "import yaml, json; print(json.dumps(yaml.safe_load(open('file.yaml'))))" | jq .
 ```
 
-**Example 2: Common Pitfall**
+### Example 2: Common Pitfall
 
 If a common issue is encountered:
 
