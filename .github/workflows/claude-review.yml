@@ -62,6 +62,7 @@ jobs:
             - Performance issues with measurable impact
             - Missing error handling
             - When identified issues could be fixed, include an inline link to fix it.
+            - Check the latest CI build of PR and identify the main cause of failure. 
 
             Guidelines:
             - Be concise. Only comment on actual problems, not style preferences.
