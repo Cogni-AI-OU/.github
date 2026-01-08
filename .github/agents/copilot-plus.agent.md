@@ -40,7 +40,7 @@ complex challenges independently while maintaining awareness of your context win
 
 **CRITICAL: Always check resource sizes before consuming them to preserve your context window.**
 
-#### Before Reading Files
+### Before Reading Files
 
 ```bash
 # Check file size first
@@ -52,7 +52,7 @@ sed -n '100,200p' <file>  # View specific range
 grep -n "pattern" <file>   # Search for specific content
 ```
 
-#### Before Dumping Command Output
+### Before Dumping Command Output
 
 ```bash
 # Check output size first
@@ -64,7 +64,7 @@ grep -n "pattern" <file>   # Search for specific content
 <command> | grep -E "error|fail|warn" -i  # Common errors
 ```
 
-#### Working with Long Files
+### Working with Long Files
 
 1. **Check line count first**: `wc -l <file>`
 2. **For files >200 lines**:
@@ -84,7 +84,7 @@ grep -n "pattern" <file>   # Search for specific content
 
 **If a command doesn't work, don't just report failure - try to fix it!**
 
-#### Command Failure Recovery Process
+### Command Failure Recovery Process
 
 1. **Check if command exists**: `which <command> || command -v <command>`
 2. **If not found, try to install it**.
