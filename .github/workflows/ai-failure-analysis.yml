@@ -25,30 +25,61 @@ on:
 
           Use GitHub workflow annotation format for specific issues:
           ::error file=<path>,line=<num>::<message>
+      model:
+        description: 'AI model to use for analysis'
+        required: false
+        type: string
+        default: 'grok-code-fast-1'
 
 jobs:
   analyze:
     name: AI Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       models: read  # Required for AI inference
     steps:
       - name: AI Analysis of Build Failure
         id: ai-analysis
+        continue-on-error: true
         uses: actions/ai-inference@v1
         with:
-          model: grok-code-fast-1
+          model: ${{ inputs.model }}
           prompt: |
             ${{ inputs.analysis-prompt }}
 
             Error output:
             ${{ inputs.error-logs }}
       - name: Write AI Analysis to Summary
+        if: steps.ai-analysis.outcome == 'success'
         run: |
           {
-            echo "## AI Analysis of ${{ inputs.job-name }} Failure"
+            echo "## 🤖 AI Analysis of ${{ inputs.job-name }} Failure"
+            echo ""
+            echo "**Model:** \`${{ inputs.model }}\`"
             echo ""
             echo "${{ steps.ai-analysis.outputs.response }}"
+            echo ""
+            echo "---"
+            echo "*AI-generated analysis may not be perfect. Please verify suggestions before applying.*"
+          } >> "$GITHUB_STEP_SUMMARY"
+        shell: bash
+      - name: Report AI Analysis Failure
+        if: steps.ai-analysis.outcome == 'failure'
+        run: |
+          {
+            echo "## ⚠️ AI Analysis of ${{ inputs.job-name }} Failure"
+            echo ""
+            echo "AI analysis failed to complete. Please review the error logs manually."
+            echo ""
+            echo "<details>"
+            echo "<summary>Error Logs</summary>"
+            echo ""
+            echo "\`\`\`"
+            echo "${{ inputs.error-logs }}"
+            echo "\`\`\`"
+            echo ""
+            echo "</details>"
           } >> "$GITHUB_STEP_SUMMARY"
         shell: bash
