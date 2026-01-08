@@ -3,6 +3,17 @@
 This folder contains custom agents designed to enhance your development workflow.
 These agents are tailored to specific tasks and integrate seamlessly with GitHub Copilot and MCP servers.
 
+## Featured Agent
+
+**[Copilot Plus](copilot-plus.agent.md)** - Enhanced agent with critical thinking, robust problem-solving,
+and context-aware resource management. Features:
+
+- Automatic file size checking before viewing
+- Smart filtering for long outputs
+- Command installation fallback logic
+- Self-improvement capabilities
+- Never-give-up problem-solving approach
+
 ## How to Use Custom Agents
 
 ### Installation

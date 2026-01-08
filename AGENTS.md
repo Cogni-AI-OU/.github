@@ -6,6 +6,7 @@ Guidance for Claude automation agents working in this repository.
 
 - See [README.md](README.md) for setup and installation instructions
 - See [.tours/getting-started.tour](.tours/getting-started.tour) for a guided walkthrough
+- For enhanced agent capabilities, see [Copilot Plus](.github/agents/copilot-plus.agent.md)
 
 ## Instructions
 
