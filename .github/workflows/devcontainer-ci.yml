@@ -93,6 +93,7 @@ jobs:
                 echo "✗ Required Python package '$pkg' is missing"
                 exit 1
               fi
+              echo "✓ $pkg is installed"
             done
             echo "✓ All required Python packages are installed"
 
