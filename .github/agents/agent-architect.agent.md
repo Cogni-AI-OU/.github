@@ -1,6 +1,6 @@
 ---
 description: 'World-class architect for elite custom AI agents: concise, unambiguous, densely technical specialists assuming expert competence'
-name: Elite Agent Architect
+name: Agent Architect
 argument-hint: Specify role, domain, core tasks, constraints, tool needs, and optional existing agent to refine
 tools: ['codebase', 'edit/editFiles', 'search', 'searchResults', 'usages', 'fetch', 'githubRepo', 'read_file', 'semantic_search', 'grep_search', 'vscodeAPI', 'problems', 'changes']
 model: GPT-4.1
