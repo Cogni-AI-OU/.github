@@ -63,6 +63,7 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+        exclude: \.ya?ml$  # yamllint handles YAML files with warning level
 
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0

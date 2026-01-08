@@ -19,6 +19,8 @@ rules:
   octal-values:
     forbid-implicit-octal: true
     forbid-explicit-octal: true
+  trailing-spaces:
+    level: warning
   truthy:
     ignore: |
       .github/workflows/*.yml
