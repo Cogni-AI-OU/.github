@@ -32,6 +32,11 @@ etc.) to any repository in the organization that doesn't have its own versions.
    repository
 3. Changes here automatically apply organization-wide
 
+## GitHub Actions
+
+For documentation on GitHub Actions workflows, problem matchers, and CI/CD
+configuration, see [.github/README.md](.github/README.md).
+
 ## Organization Profile
 
 For information about Cogni AI OÜ, our mission, and how to collaborate, see our

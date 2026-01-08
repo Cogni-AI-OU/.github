@@ -1,0 +1,29 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "pre-commit-generic",
+      "severity": "error",
+      "pattern": [
+        {
+          "regexp": "^([^:]+):(\\d+):(\\d+): (.+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      ]
+    },
+    {
+      "owner": "pre-commit-no-column",
+      "severity": "error",
+      "pattern": [
+        {
+          "regexp": "^([^:]+):(\\d+) (.+)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        }
+      ]
+    }
+  ]
+}
