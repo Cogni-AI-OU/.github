@@ -24,6 +24,8 @@ jobs:
       pull-requests: write
       id-token: write
     env:
+      # GitHub CLI token for gh commands
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
       ALLOWED_TOOLS: >-
