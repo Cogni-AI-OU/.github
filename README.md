@@ -61,9 +61,16 @@ For information about Cogni AI OÜ, our mission, and how to collaborate, see our
 - [How to Use the .github Repository](https://www.freecodecamp.org/news/how-to-use-the-dot-github-repository/)
 - [Creating a Default Community Health File](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
 
+## License
+
+MIT
+
+See: [LICENSE](./LICENSE)
+
+
 <!-- Named links -->
 
 [pr-reviews-image]: https://img.shields.io/github/issues-pr/Cogni-AI-OU/.github?label=PR+Reviews&logo=github
 [pr-reviews-link]: https://github.com/Cogni-AI-OU/.github/pulls
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
-[license-link]: https://tldrlegal.com/license/mit-license
+[license-link]: LICENSE
