@@ -123,6 +123,9 @@ jobs:
             # Fetch the parent comment and its author
             PARENT_DATA=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" \
               --jq '{body: .body, user: .user.login}' 2>/dev/null || echo '{}')
+            if [ "$PARENT_DATA" = "{}" ]; then
+              echo "Failed to fetch parent comment"
+            fi
             PARENT_COMMENT=$(echo "$PARENT_DATA" | jq -r '.body // ""')
             PARENT_AUTHOR=$(echo "$PARENT_DATA" | jq -r '.user // ""')
             echo "Parent comment body: $PARENT_COMMENT"
