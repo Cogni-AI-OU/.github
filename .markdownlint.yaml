@@ -9,7 +9,9 @@ MD013:
   line_length: 120
 # MD033 no-inline-html - Inline HTML
 MD033:
-  allowed_elements: [details, reasoning]
+  allowed_elements:
+    - details
+    - reasoning
 # MD046 code-block-style - Code block style
 MD046:
   style: consistent

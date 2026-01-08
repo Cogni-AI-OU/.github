@@ -1,6 +1,5 @@
 ---
 name: Check
-
 # yamllint disable-line rule:truthy
 on:
   pull_request:
@@ -8,7 +7,6 @@ on:
   schedule:
     - cron: '0 0 * * 1'  # Run every Monday at 00:00 UTC
   workflow_call:
-
 jobs:
   actionlint:
     name: actionlint
@@ -37,7 +35,7 @@ jobs:
             pre-commit|
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - name: Add Problem Matcher for pre-commit
         run: |
           echo "::add-matcher::.github/pre-commit-matcher.json"
