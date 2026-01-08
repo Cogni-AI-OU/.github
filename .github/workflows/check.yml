@@ -15,7 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      models: read  # Required for AI inference
+    outputs:
+      outcome: ${{ steps.actionlint.outcome }}
+      error-logs: ${{ steps.capture-logs.outputs.logs }}
     steps:
       - uses: actions/checkout@v5
       - uses: reviewdog/action-actionlint@v1
@@ -33,40 +35,36 @@ jobs:
           actionlint 2>&1 | head -100 >> "$GITHUB_OUTPUT" || true
           echo "EOF" >> "$GITHUB_OUTPUT"
         shell: bash
-      - name: AI Analysis of Build Failure
-        if: steps.actionlint.outcome == 'failure'
-        id: ai-analysis
-        uses: actions/ai-inference@v1
-        with:
-          model: gpt-4o-mini
-          prompt: |
-            Analyze this GitHub Actions workflow lint failure and identify the main cause.
-            Provide a concise analysis with:
-            1. The specific file(s) and line(s) causing the issue
-            2. What the error means
-            3. How to fix it
-
-            Error output:
-            ${{ steps.capture-logs.outputs.logs }}
-      - name: Write AI Analysis to Summary
-        if: steps.actionlint.outcome == 'failure'
-        run: |
-          {
-            echo "## AI Analysis of actionlint Failure"
-            echo ""
-            echo "${{ steps.ai-analysis.outputs.response }}"
-          } >> "$GITHUB_STEP_SUMMARY"
-        shell: bash
       - name: Fail job if actionlint failed
         if: steps.actionlint.outcome == 'failure'
         run: exit 1
         shell: bash
+
+  actionlint-analysis:
+    name: AI Analysis of actionlint
+    needs: actionlint
+    if: needs.actionlint.outputs.outcome == 'failure'
+    uses: ./.github/workflows/ai-failure-analysis.yml
+    permissions:
+      contents: read
+      models: read
+    with:
+      job-name: actionlint
+      error-logs: ${{ needs.actionlint.outputs.error-logs }}
+      analysis-prompt: |
+        Analyze this GitHub Actions workflow lint failure and identify the main cause.
+        Provide a concise analysis with:
+        1. The specific file(s) and line(s) causing the issue
+        2. What the error means
+        3. How to fix it
   pre-commit:
     name: Pre-commit
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      models: read  # Required for AI inference
+    outputs:
+      outcome: ${{ steps.pre-commit.outcome }}
+      error-logs: ${{ steps.capture-logs.outputs.logs }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/cache@v4
@@ -89,34 +87,28 @@ jobs:
           pre-commit run --all-files 2>&1 | head -100 >> "$GITHUB_OUTPUT" || true
           echo "EOF" >> "$GITHUB_OUTPUT"
         shell: bash
-      - name: AI Analysis of Build Failure
-        if: steps.pre-commit.outcome == 'failure'
-        id: ai-analysis
-        uses: actions/ai-inference@v1
-        with:
-          model: gpt-4o-mini
-          prompt: |
-            Analyze this pre-commit hook failure and identify the main cause.
-            Provide a concise analysis with:
-            1. Which hook(s) failed and on which file(s)
-            2. What the error means
-            3. How to fix it (e.g., specific commands to run or changes to make)
-
-            Use GitHub workflow annotation format for specific issues:
-            ::error file=<path>,line=<num>::<message>
-
-            Error output:
-            ${{ steps.capture-logs.outputs.logs }}
-      - name: Write AI Analysis to Summary
-        if: steps.pre-commit.outcome == 'failure'
-        run: |
-          {
-            echo "## AI Analysis of Pre-commit Failure"
-            echo ""
-            echo "${{ steps.ai-analysis.outputs.response }}"
-          } >> "$GITHUB_STEP_SUMMARY"
-        shell: bash
       - name: Fail job if pre-commit failed
         if: steps.pre-commit.outcome == 'failure'
         run: exit 1
         shell: bash
+
+  pre-commit-analysis:
+    name: AI Analysis of pre-commit
+    needs: pre-commit
+    if: needs.pre-commit.outputs.outcome == 'failure'
+    uses: ./.github/workflows/ai-failure-analysis.yml
+    permissions:
+      contents: read
+      models: read
+    with:
+      job-name: pre-commit
+      error-logs: ${{ needs.pre-commit.outputs.error-logs }}
+      analysis-prompt: |
+        Analyze this pre-commit hook failure and identify the main cause.
+        Provide a concise analysis with:
+        1. Which hook(s) failed and on which file(s)
+        2. What the error means
+        3. How to fix it (e.g., specific commands to run or changes to make)
+
+        Use GitHub workflow annotation format for specific issues:
+        ::error file=<path>,line=<num>::<message>

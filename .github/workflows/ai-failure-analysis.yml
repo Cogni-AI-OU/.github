@@ -1,0 +1,54 @@
+---
+name: AI Failure Analysis
+
+on:
+  workflow_call:
+    inputs:
+      job-name:
+        description: 'Name of the job that failed (for display purposes)'
+        required: true
+        type: string
+      error-logs:
+        description: 'Error logs from the failed job'
+        required: true
+        type: string
+      analysis-prompt:
+        description: 'Custom prompt for AI analysis'
+        required: false
+        type: string
+        default: |
+          Analyze this build failure and identify the main cause.
+          Provide a concise analysis with:
+          1. The specific file(s) and line(s) causing the issue
+          2. What the error means
+          3. How to fix it (e.g., specific commands to run or changes to make)
+
+          Use GitHub workflow annotation format for specific issues:
+          ::error file=<path>,line=<num>::<message>
+
+jobs:
+  analyze:
+    name: AI Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      models: read  # Required for AI inference
+    steps:
+      - name: AI Analysis of Build Failure
+        id: ai-analysis
+        uses: actions/ai-inference@v1
+        with:
+          model: grok-code-fast-1
+          prompt: |
+            ${{ inputs.analysis-prompt }}
+
+            Error output:
+            ${{ inputs.error-logs }}
+      - name: Write AI Analysis to Summary
+        run: |
+          {
+            echo "## AI Analysis of ${{ inputs.job-name }} Failure"
+            echo ""
+            echo "${{ steps.ai-analysis.outputs.response }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+        shell: bash
