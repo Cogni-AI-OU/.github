@@ -109,7 +109,6 @@ jobs:
           echo "Review body length: ${#REVIEW_BODY} characters (redacted for security)"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
-
       - name: Check if comment should trigger Claude
         id: check_trigger
         if: github.event_name == 'pull_request_review_comment'
@@ -148,10 +147,8 @@ jobs:
               SHOULD_TRIGGER="true"
             fi
           fi
-
           echo "should_trigger=$SHOULD_TRIGGER" >> "$GITHUB_OUTPUT"
           echo "Should trigger Claude: $SHOULD_TRIGGER"
-
       - name: Checkout repository
         if: |
           github.event_name != 'pull_request_review_comment' ||
