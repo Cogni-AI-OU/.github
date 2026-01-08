@@ -16,6 +16,9 @@ Claude can be triggered by mentioning `@claude` in:
 - **Inline review comments**: Add `@claude` to a review comment on specific code lines
 - **Issue comments**: Comment on an issue with `@claude` followed by instructions
 - **New issues**: Create an issue with `@claude` in the title or body
+- **Reply to Claude's comments**: Reply to any comment from `github-actions[bot]`
+  (which is how Claude posts comments) to continue the conversation without needing
+  to mention `@claude` again
 
 **Who can trigger Claude:**
 
@@ -26,6 +29,11 @@ Claude can be triggered by mentioning `@claude` in:
 **Security**: External contributors cannot trigger Claude on other people's PRs or
 issues. This prevents unauthorized API usage and ensures code changes are reviewed
 by trusted users.
+
+**Note**: Claude's comments appear under the `github-actions[bot]` user because
+they are posted through the GitHub Actions workflow. This is a limitation of the
+`anthropics/claude-code-action` and cannot be changed to display as `claude[bot]`
+at the workflow configuration level.
 
 ### Environment Variables
 

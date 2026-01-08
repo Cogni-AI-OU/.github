@@ -117,14 +117,22 @@ jobs:
           if echo "$COMMENT_BODY" | grep -q '@claude'; then
             echo "Current comment contains @claude"
             SHOULD_TRIGGER="true"
-          # Check if this is a reply to a comment containing @claude
+          # Check if this is a reply to a comment containing @claude or from github-actions[bot]
           elif [ -n "$IN_REPLY_TO_ID" ] && [ "$IN_REPLY_TO_ID" != "null" ]; then
             echo "This is a reply to comment ID: $IN_REPLY_TO_ID"
-            # Fetch the parent comment
-            PARENT_COMMENT=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" --jq '.body' 2>/dev/null || echo "")
+            # Fetch the parent comment and its author
+            PARENT_DATA=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" \
+              --jq '{body: .body, user: .user.login}' 2>/dev/null || echo '{}')
+            PARENT_COMMENT=$(echo "$PARENT_DATA" | jq -r '.body // ""')
+            PARENT_AUTHOR=$(echo "$PARENT_DATA" | jq -r '.user // ""')
             echo "Parent comment body: $PARENT_COMMENT"
+            echo "Parent comment author: $PARENT_AUTHOR"
+            # Trigger if parent contains @claude or is from github-actions[bot] (Claude's comments)
             if echo "$PARENT_COMMENT" | grep -q '@claude'; then
               echo "Parent comment contains @claude"
+              SHOULD_TRIGGER="true"
+            elif [ "$PARENT_AUTHOR" = "github-actions[bot]" ]; then
+              echo "Parent comment is from github-actions[bot] (Claude)"
               SHOULD_TRIGGER="true"
             fi
           fi
