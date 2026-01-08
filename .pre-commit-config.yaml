@@ -77,7 +77,8 @@ repos:
     hooks:
       - id: yamlfix
         # Excluded due to https://github.com/lyz-code/yamlfix/issues/310 which breaks multiline formatting.
-        exclude: \.github/workflows/claude-review\.yml
+        # Also excluding workflows that require blank lines for readability.
+        exclude: (\.github/workflows/claude-review\.yml|\.github/workflows/claude\.yml)
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
