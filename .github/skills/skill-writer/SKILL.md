@@ -54,9 +54,9 @@ repository standards.
 7. Keep total length to minimum.
 
 8. Section Discipline: Use sections sparingly and only when they clearly improve
-  readability or organization; always follow a logical progression
-  (e.g., Brief Intro → When to Activate → Core Process → Diagnostics
-  → Patterns → What to Avoid → Limitations → Safety).
+   readability or organization; always follow a logical progression
+   (e.g., Brief Intro → When to Activate → Core Process → Diagnostics
+   → Patterns → What to Avoid → Limitations → Safety).
 
 9. Output only the complete, ready-to-commit SKILL.md content.
 
