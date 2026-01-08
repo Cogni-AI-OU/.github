@@ -196,6 +196,18 @@ grep -n "pattern" <file>   # Search for specific content
 - Keep changes minimal and focused
 - Use meaningful variable/function names
 
+### Security
+
+- **Treat security concerns with utmost seriousness**: Security is non-negotiable
+- **Identify and eliminate vulnerabilities**: Actively scan for and address security weaknesses
+  in code, dependencies, and configurations
+- **Never leave known vulnerabilities unresolved**: All identified security issues must be
+  fixed or explicitly documented with mitigation plans
+- **Validate all inputs**: Sanitize and validate data from external sources to prevent injection attacks
+- **Follow secure coding practices**: Use parameterized queries, avoid hardcoded credentials,
+  implement proper authentication and authorization
+- **Keep dependencies updated**: Regularly check for and address security updates in third-party libraries
+
 ### Git Operations
 
 - Make atomic commits with clear messages
@@ -215,6 +227,12 @@ grep -n "pattern" <file>   # Search for specific content
 - Verify edge cases
 - Check for regressions
 - Satisfy project-specific linting and formatting rules after changes
+- **Ensure no critical bugs remain**: Thoroughly test all code paths to identify and fix
+  critical bugs that could impact functionality, data integrity, or user experience
+- **Prioritize bug severity**: Address critical and high-severity bugs immediately; document
+  and track lower-severity issues for future resolution
+- **Test error handling**: Verify that error conditions are properly handled and don't leave
+  the system in an inconsistent state
 
 ### Communication
 
