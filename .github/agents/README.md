@@ -52,3 +52,35 @@ See [FIREWALL.md](FIREWALL.md) for recommended hosts to allow and the official g
 
 - Merge the agent configuration file into the default branch of your repository.
 - Access installed agents through the VS Code Chat interface, Copilot CLI, or assign them in CCA.
+
+## Security Considerations
+
+### Claude Code Agent Git Access
+
+When using Claude Code (triggered via `@claude` in comments), the agent has broad
+git access via `Bash(git:*)` to enable autonomous code changes. This requires
+proper repository safeguards.
+
+**Access controls in place:**
+
+- Only trusted users (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR) can trigger Claude
+- PR/issue authors can only trigger Claude on their own content
+- External contributors are explicitly blocked
+
+**Required repository protections:**
+
+Repository administrators must configure:
+
+1. **Branch protection rules** on main/protected branches requiring PR reviews
+   and status checks
+2. **GitHub audit log monitoring** for `github-actions[bot]` commit activity
+3. **CODEOWNERS** files for sensitive directories requiring specific approvals
+
+**Best practices:**
+
+- Review Claude's commits before merging PRs
+- Use draft PRs for Claude's work requiring explicit promotion
+- Monitor workflow logs for unexpected behavior
+- Rotate `ANTHROPIC_API_KEY` periodically
+
+See [.github/README.md](../README.md#security) for detailed security configuration.

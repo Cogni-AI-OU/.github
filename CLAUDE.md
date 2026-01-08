@@ -55,43 +55,17 @@ and environment.
 The allowed tools are defined in workflow files under the `ALLOWED_TOOLS`
 environment variable. Current categories include:
 
-- **Git operations**: `Bash(git:*)` - Broad access for commits and pushes
+- **Git operations**: `Bash(git:*)` - Full access for commits and pushes
 - **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
 - **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
 
 If you need a tool that isn't in the allowed tools list, suggest adding it to
 the relevant workflow file in `.github/workflows/`.
 
-#### Git Access Security
-
-The `Bash(git:*)` permission is intentionally broad to enable Claude to autonomously
-commit and push code changes. While this is powerful, it requires proper repository
-safeguards:
-
-**Why broad git access is needed:**
-
-- Claude commits changes directly to branches
-- Claude pushes to remote branches to update PRs
-- Restricting to read-only would prevent code modification functionality
-
-**Security safeguards in place:**
-
-1. **Strict access control**: Only trusted users (OWNER, MEMBER, COLLABORATOR,
-   CONTRIBUTOR) can trigger Claude
-2. **Author restrictions**: PR/issue authors can only trigger Claude on their own content
-3. **External user blocking**: FIRST_TIME_CONTRIBUTOR and NONE associations are denied
-4. **Audit trail**: All Claude commits appear under `github-actions[bot]` for tracking
-
-**Repository administrator responsibilities:**
-
-To safely use Claude with git access, administrators must configure:
-
-- **Branch protection** requiring PR reviews and status checks
-- **GitHub audit log** monitoring for `github-actions[bot]` activity
-- **CODEOWNERS** files for sensitive directories
-- **Required approvals** before merging Claude's changes
-
-See [.github/README.md](.github/README.md#security) for detailed configuration guidance.
+**Note on git access**: You have broad git access to commit and push changes.
+The workflow has strict access controls ensuring only trusted users can trigger you.
+Repository administrators are responsible for configuring branch protection and
+monitoring commit activity.
 
 ### Model Context Protocol (MCP)
 
