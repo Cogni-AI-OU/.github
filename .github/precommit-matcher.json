@@ -28,7 +28,7 @@
       "owner": "precommit-generic",
       "pattern": [
         {
-          "regexp": "^(.+?):(\\d+):(?:(\\d+):)?\\s+(.+)$",
+          "regexp": "^(.+?):(\\d+)(?::(\\d+))?:\\s+(.+)$",
           "file": 1,
           "line": 2,
           "column": 3,
