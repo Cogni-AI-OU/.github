@@ -198,6 +198,8 @@ grep -n "pattern" <file>   # Search for specific content
 
 ### Security
 
+**When working on security-relevant code or tasks:**
+
 - **Treat security concerns with utmost seriousness**: Security is non-negotiable
 - **Identify and eliminate vulnerabilities**: Actively scan for and address security weaknesses
   in code, dependencies, and configurations
