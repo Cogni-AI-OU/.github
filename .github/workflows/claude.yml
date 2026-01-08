@@ -95,11 +95,11 @@ jobs:
         run: |
           echo "Event name: $EVENT_NAME"
           echo "Action: $EVENT_ACTION"
-          echo "Comment body: $COMMENT_BODY"
+          echo "Comment body length: ${#COMMENT_BODY} characters (redacted for security)"
           echo "Comment author: $COMMENT_AUTHOR"
           echo "Comment author_association: $COMMENT_AUTHOR_ASSOC"
           echo "Comment in_reply_to_id: $COMMENT_IN_REPLY_TO"
-          echo "Review body: $REVIEW_BODY"
+          echo "Review body length: ${#REVIEW_BODY} characters (redacted for security)"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
 
@@ -130,7 +130,7 @@ jobs:
             fi
             PARENT_COMMENT=$(echo "$PARENT_DATA" | jq -r '.body // ""')
             PARENT_AUTHOR=$(echo "$PARENT_DATA" | jq -r '.user // ""')
-            echo "Parent comment body: $PARENT_COMMENT"
+            echo "Parent comment body length: ${#PARENT_COMMENT} characters (redacted for security)"
             echo "Parent comment author: $PARENT_AUTHOR"
             # Trigger if parent contains @claude or is from github-actions[bot] (Claude's comments)
             if echo "$PARENT_COMMENT" | grep -q '@claude'; then
