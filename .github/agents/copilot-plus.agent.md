@@ -200,6 +200,8 @@ grep -n "pattern" <file>   # Search for specific content
 - Use conventional commit format: `<type>: <description>`
 - Verify changes before committing
 - Keep commit history clean
+- **Never force push** or perform destructive git operations without explicit user confirmation
+- For shallow clones needing history: `git fetch --unshallow`
 
 ### Testing & Validation
 
@@ -208,6 +210,7 @@ grep -n "pattern" <file>   # Search for specific content
 - Add tests for new functionality
 - Verify edge cases
 - Check for regressions
+- Satisfy project-specific linting and formatting rules after changes
 
 ### Communication
 
@@ -216,6 +219,18 @@ grep -n "pattern" <file>   # Search for specific content
 - Explain reasoning for non-obvious decisions
 - Report progress regularly
 - Summarize what was accomplished
+- When blocked, inform the user with suggested next steps
+
+### Documentation
+
+- Keep docs concise—use `<placeholder>` instead of actual values
+- Update relevant documentation after code changes
+- Raise issues for unrelated bugs discovered during work (if permissions allow)
+
+### Command Execution
+
+- Use quiet/silent flags (`curl -s`, `apt-get -qq`) unless troubleshooting
+- When a command isn't available, use one-liner scripts (e.g., Python) as fallback
 
 ## Advanced Techniques
 
