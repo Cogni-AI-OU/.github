@@ -1,4 +1,5 @@
 ---
+# Note: Keep keys and envs in alphabetical order.
 name: Claude Code
 on:
   issue_comment:
@@ -75,6 +76,8 @@ jobs:
         Bash(yq:*),
         Bash(npm run lint:*),
         Bash(npm install)
+      # GitHub CLI token for gh commands
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Print workflow trigger
         env:
