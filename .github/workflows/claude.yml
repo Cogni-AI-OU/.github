@@ -41,13 +41,18 @@ jobs:
         github.event.review.author_association == 'MEMBER' ||
         github.event.review.author_association == 'COLLABORATOR' ||
         github.event.review.author_association == 'CONTRIBUTOR' ||
-        (github.event.issue.pull_request && github.event.issue.user.login == github.event.comment.user.login) ||
+        (github.event.issue.pull_request && github.event.issue.user.login == github.actor) ||
         (github.event.pull_request && github.event.pull_request.user.login == github.event.review.user.login) ||
         (github.event.pull_request && github.event.pull_request.user.login == github.event.comment.user.login) ||
-        (github.event.issue && github.event.issue.user.login == github.event.comment.user.login)
+        (github.event.issue && github.event.issue.user.login == github.actor)
       ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
-        || github.event_name == 'pull_request_review_comment'
+        || (github.event_name == 'pull_request_review_comment'
+          && (
+            contains(github.event.comment.body, '@claude')
+            || (github.event.comment.in_reply_to_id != null && github.event.comment.in_reply_to_id != 'null')
+          )
+        )
         || (github.event_name == 'pull_request_review'
           && github.event.review.body != null
           && github.event.review.body != ''
