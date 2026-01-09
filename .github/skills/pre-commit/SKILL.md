@@ -174,13 +174,13 @@ for file in "$@"; do
 done
 ```
 
-2. Make executable:
+1. Make executable:
 
 ```bash
 chmod +x .github/scripts/check-copyright.sh
 ```
 
-3. Add to `.pre-commit-config.yaml`:
+1. Add to `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: local
@@ -220,13 +220,13 @@ if __name__ == '__main__':
     sys.exit(0 if all_valid else 1)
 ```
 
-2. Make executable:
+1. Make executable:
 
 ```bash
 chmod +x .github/scripts/validate-yaml-keys.py
 ```
 
-3. Add to `.pre-commit-config.yaml`:
+1. Add to `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: local
