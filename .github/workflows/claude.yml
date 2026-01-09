@@ -205,6 +205,7 @@ jobs:
             --model claude-opus-4-5
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
+            --mcp-config-file .github/mcp-config.json
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
