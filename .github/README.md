@@ -2,6 +2,13 @@
 
 This directory contains GitHub Actions workflows and related configuration.
 
+## Workflow Templates
+
+The `workflow-templates/` directory contains reference workflows that are not
+actively executed but are preserved for future use or copying to other
+repositories. These templates can be customized and moved to the `workflows/`
+directory when needed.
+
 ## Problem Matchers
 
 GitHub Actions problem matchers automatically annotate files with errors and
