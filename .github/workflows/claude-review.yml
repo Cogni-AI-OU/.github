@@ -6,15 +6,25 @@ on:
   pull_request:
     types: [opened, synchronize]
   workflow_call:
+  workflow_dispatch:
+    inputs:
+      additional_prompt:
+        description: 'Additional instructions to append to the review prompt'
+        required: false
+        type: string
+      pr_number:
+        description: 'Pull request number to review'
+        required: true
+        type: number
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
+  group: claude-review-${{ github.event.pull_request.number || inputs.pr_number }}
   cancel-in-progress: true
 
 jobs:
   claude-review:
-    # Skip if PR is authored by a bot
-    if: github.event.pull_request.user.type != 'Bot'
+    # Skip if PR is authored by a bot (only applies to pull_request events)
+    if: github.event_name != 'pull_request' || github.event.pull_request.user.type != 'Bot'
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
@@ -57,7 +67,7 @@ jobs:
 
           prompt: |
             REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
+            PR NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
 
             Review this pull request. Focus mainly on:
             - Bugs, logic errors, or incorrect behavior
@@ -74,6 +84,10 @@ jobs:
             - Reference AGENTS.md if present for project conventions.
 
             Use mcp__github_comment__update_claude_comment or `gh pr comment` to post your review.
+            ${{ inputs.additional_prompt && format('
+
+            ADDITIONAL INSTRUCTIONS:
+            {0}', inputs.additional_prompt) || '' }}
 
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
