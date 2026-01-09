@@ -118,8 +118,10 @@ claude_args: |
 - HTTP-based MCP servers (using `"type": "http"`) may work with inline config
   but can fail with file-based config due to how the Claude Code process loads
   external files.
-- The config file in this repository is currently empty (`{"mcpServers": {}}`)
-  as the built-in servers are sufficient for GitHub operations.
+- **Current configuration**: This repository uses inline `--mcp-config` for the
+  GitHub Copilot MCP endpoint (see `.github/workflows/claude-review.yml`) as it's
+  an HTTP-based server. File-based config is available for custom command-based
+  MCP servers if needed.
 
 Follow the instructions in the agent's documentation to configure the necessary MCP servers.
 
