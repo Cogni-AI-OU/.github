@@ -16,6 +16,38 @@ on:
   schedule:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
   workflow_dispatch:
+    inputs:
+      required_commands:
+        description: 'Space-separated list of required command-line tools'
+        required: false
+        type: string
+        default: ''
+      required_packages:
+        description: 'Space-separated list of required Python packages'
+        required: false
+        type: string
+        default: ''
+env:
+  # Keep the commands and packages in lexicographical order.
+  REQUIRED_COMMANDS: >-
+    ${{ inputs.required_commands != '' && inputs.required_commands || 'actionlint
+    ansible
+    docker
+    gh
+    make
+    node
+    npm
+    pip
+    pre-commit
+    python3
+    rg' }}
+  REQUIRED_PACKAGES: >-
+    ${{ inputs.required_packages != '' && inputs.required_packages || 'ansible
+    ansible-lint
+    docker
+    molecule
+    pre-commit
+    uv' }}
 jobs:
   devcontainer-build:
     name: Build & Test
@@ -44,27 +76,6 @@ jobs:
           echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> "$GITHUB_OUTPUT"
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
-        env:
-          # Keep the commands and packages in lexicographical order.
-          REQUIRED_COMMANDS: >-
-            actionlint
-            ansible
-            docker
-            gh
-            make
-            node
-            npm
-            pip
-            pre-commit
-            python3
-            rg
-          REQUIRED_PACKAGES: >-
-            ansible
-            ansible-lint
-            docker
-            molecule
-            pre-commit
-            uv
         with:
           imageName: ${{ steps.image.outputs.name }}
           cacheFrom: ${{ steps.image.outputs.name }}
