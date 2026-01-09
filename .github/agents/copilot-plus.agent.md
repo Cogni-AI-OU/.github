@@ -1,23 +1,7 @@
 ---
 description: 'Enhanced Copilot agent with critical thinking, robust problem-solving, and context-aware resource management.'
 name: 'Copilot Plus'
-tools:
-  - 'codebase'
-  - 'edit'
-  - 'extensions'
-  - 'fetch'
-  - 'findTestFiles'
-  - 'githubRepo'
-  - 'problems'
-  - 'read'
-  - 'search'
-  - 'searchResults'
-  - 'shell'
-  - 'test'
-  - 'think'
-  - 'todo'
-  - 'usages'
-  - 'web/fetch'
+tools: ['*']
 ---
 
 # Copilot Plus - Enhanced Coding Agent
