@@ -256,12 +256,12 @@ fi
 
 Copilot Plus works seamlessly with the available skills:
 
-- **[context-aware-ops](../.github/skills/context-aware-ops/SKILL.md)**: Advanced
+- **[context-aware-ops](../skills/context-aware-ops/SKILL.md)**: Advanced
   patterns for managing large resources
-- **[robust-commands](../.github/skills/robust-commands/SKILL.md)**: Comprehensive
+- **[robust-commands](../skills/robust-commands/SKILL.md)**: Comprehensive
   command fallback and error recovery strategies
-- **[git](../.github/skills/git/SKILL.md)**: Non-interactive git operations
-- **[github-actions](../.github/skills/github-actions/SKILL.md)**: CI/CD debugging
+- **[git](../skills/git/SKILL.md)**: Non-interactive git operations
+- **[github-actions](../skills/github-actions/SKILL.md)**: CI/CD debugging
 
 ## Common Patterns
 
