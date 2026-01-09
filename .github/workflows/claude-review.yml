@@ -80,11 +80,3 @@ jobs:
           claude_args: |
             --model claude-opus-4-5
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config '{
-              "mcpServers": {
-                "github": {
-                  "type": "http",
-                  "url": "https://api.githubcopilot.com/mcp/"
-                }
-              }
-            }'
