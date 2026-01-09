@@ -28,9 +28,50 @@ concurrency:
   cancel-in-progress: true
 jobs:
   claude:
-    # Security: NONE and FIRST_TIME_CONTRIBUTOR are NOT allowed (untrusted external users).
-    # Allowed: OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, or PR/issue authors on their own content.
-    # CONTRIBUTOR is needed for draft PRs where GitHub restricts author_association.
+    # Security gate: This complex condition ensures only trusted users can trigger Claude.
+    # The logic has two main parts connected by AND (&&):
+    #
+    # PART 1: Author authorization (first parenthesized block)
+    # -------------------------------------------------------
+    # Checks if the actor is authorized based on their association with the repository:
+    #
+    # - OWNER: Repository owner (highest trust level)
+    # - MEMBER: Organization member (high trust level)
+    # - COLLABORATOR: Repository collaborator (medium-high trust level)
+    # - CONTRIBUTOR: Has had PRs merged before (medium trust level)
+    #   Note: CONTRIBUTOR is needed for draft PRs where GitHub restricts author_association
+    #
+    # Explicitly BLOCKED associations (not listed = denied):
+    # - FIRST_TIME_CONTRIBUTOR: First PR from external user (low trust - no CI resources)
+    # - NONE: No prior interaction (no trust - prevents abuse)
+    #
+    # Additional authorization for PR/issue authors:
+    # - PR/issue authors are allowed to trigger Claude on their own content even if they
+    #   don't have one of the associations above (enables self-service debugging)
+    #
+    # PART 2: Trigger condition (second parenthesized block)
+    # -------------------------------------------------------
+    # Checks if the event should actually trigger Claude based on content and context:
+    #
+    # A) issue_comment events: Comment must contain '@claude' mention
+    #
+    # B) pull_request_review_comment events: Either of these conditions:
+    #    - Comment contains '@claude' mention, OR
+    #    - Comment is a reply to another comment (in_reply_to_id is set)
+    #      This enables conversation threads with Claude without requiring '@claude'
+    #      in every reply (checked dynamically in 'Check if comment should trigger Claude' step)
+    #
+    # C) pull_request_review events: All of these conditions:
+    #    - Review body is not null and not empty (actual content exists)
+    #    - Review body contains '@claude' mention
+    #
+    # D) issues events (newly opened issues only): All of these conditions:
+    #    - Action is 'opened' (not edited, closed, etc.)
+    #    - Author has OWNER, MEMBER, or COLLABORATOR association (higher bar for auto-trigger)
+    #    - Issue body or title contains '@claude' mention
+    #
+    # Note: Inline comments between conditions are not possible in YAML multiline strings,
+    # so this documentation is placed before the conditional expression.
     if: |
       (
         github.event.comment.author_association == 'OWNER' ||
