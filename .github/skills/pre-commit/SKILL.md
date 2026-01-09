@@ -79,7 +79,7 @@ Pre-commit hooks reference external dotfiles for linting rules. Key dependencies
 | `detect-secrets` | Optional `.secrets.baseline` | Secret detection baseline | Can store known false positives |
 | All hooks | `.editorconfig` | Cross-editor consistency | Indent size: 2 for YAML/JSON, 4 for others; LF line endings |
 
-**Why trailing-whitespace excludes YAML**: `.pre-commit-config.yaml` excludes `\.ya?ml$` from `trailing-whitespace` because yamllint handles YAML files with warning-level enforcement, avoiding duplicate checks.
+**Why trailing-whitespace excludes YAML**: The `trailing-whitespace` hook in the repository's `.pre-commit-config.yaml` excludes `\.ya?ml$` (YAML files) because yamllint handles trailing spaces for YAML files with warning-level enforcement, avoiding duplicate checks.
 
 ## File Exclusions and Filters
 
@@ -103,7 +103,7 @@ Pre-commit hooks reference external dotfiles for linting rules. Key dependencies
   exclude: (\.github/workflows/claude-review\.yml|\.github/workflows/claude\.yml)
 ```
 
-**Why exclude workflows**: Specific workflows require blank lines for readability, which conflicts with yamlfix's aggressive formatting. See <https://github.com/lyz-code/yamlfix/issues/310>.
+**Why exclude workflows**: The `claude-review.yml` and `claude.yml` workflows in `.github/workflows/` require blank lines between job steps for readability. These blank lines conflict with yamlfix's aggressive formatting rules that remove them. See <https://github.com/lyz-code/yamlfix/issues/310> for details on this known formatting issue.
 
 ## Optional Configuration Files
 
