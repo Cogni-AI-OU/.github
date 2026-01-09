@@ -72,14 +72,36 @@ monitoring commit activity.
 ### Model Context Protocol (MCP)
 
 MCP servers extend Claude's capabilities with additional tools and integrations.
-When MCP is enabled via `--mcp-config-file`, you gain access to:
 
-- GitHub API integrations (issues, PRs, repositories)
-- External service integrations
-- Custom tool implementations
+**Built-in MCP Servers:**
 
-MCP configuration is maintained in a separate config file (`.github/mcp-config.json`)
-and referenced in workflow files using the `--mcp-config-file` flag.
+The Claude Code Action automatically provides these MCP servers:
+
+- `github_comment`: Post and update PR/issue comments
+- `github_inline_comment`: Create inline code review comments
+
+**Custom MCP Servers:**
+
+You can add custom MCP servers via `.github/mcp-config.json`. The file uses the
+standard MCP server configuration format:
+
+```json
+{
+  "mcpServers": {
+    "server_name": {
+      "command": "node",
+      "args": ["path/to/server.js"],
+      "env": {
+        "API_KEY": "..."
+      }
+    }
+  }
+}
+```
+
+**Note:** The config file is currently empty (`{}`) as the built-in MCP servers
+provide all necessary GitHub integrations. Add custom servers only if you need
+additional external service integrations.
 
 ## Prompting Best Practices
 
