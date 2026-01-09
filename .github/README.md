@@ -2,6 +2,26 @@
 
 This directory contains GitHub Actions workflows and related configuration.
 
+## Workflows
+
+### Check Workflow
+
+The `check.yml` workflow runs on pull requests, pushes, and weekly schedule to
+ensure code quality and correctness.
+
+Jobs:
+
+- **actionlint**: Validates GitHub Actions workflow files
+- **link-checker**: Checks for broken links in Markdown files using Lychee
+- **pre-commit**: Runs pre-commit hooks for code formatting and linting
+
+#### Link Checker
+
+The link checker job uses [Lychee](https://github.com/lycheeverse/lychee) to
+scan all Markdown files for broken links. It includes caching to avoid rate
+limits and can be configured via `.lycheeignore` at the repository root to
+exclude specific URLs or patterns.
+
 ## Problem Matchers
 
 GitHub Actions problem matchers automatically annotate files with errors and
