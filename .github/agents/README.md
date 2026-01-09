@@ -89,3 +89,22 @@ Repository administrators must configure:
 - Rotate `ANTHROPIC_API_KEY` periodically
 
 See [.github/README.md](../README.md#security) for detailed security configuration.
+
+## Troubleshooting
+
+### Claude Not Responding to Comments
+
+If Claude isn't responding to your comments, verify:
+
+1. **Permissions**: You must have one of these roles:
+   - Repository OWNER, MEMBER, COLLABORATOR, or CONTRIBUTOR
+   - PR/issue author (on your own content only)
+
+2. **Trigger conditions** for PR review comments:
+   - Your comment contains `@claude`, OR
+   - You're replying to a comment from `github-actions[bot]` (Claude's responses), OR
+   - You're replying to a comment that contains `@claude`
+
+The workflow uses a two-stage filter to prevent abuse while allowing natural
+conversation flow. Check the [Actions tab](../../actions) for workflow run details
+if Claude doesn't respond as expected.

@@ -93,9 +93,11 @@ When working with Claude in this repository:
 
 ### Common Issues
 
-1. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
+1. **Workflow not triggering**: The workflow triggers for `@claude` mentions or replies
+   to comments from `github-actions[bot]`. Check workflow logs for permission issues.
+2. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
    via PR if needed.
-2. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
+3. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
    committing.
-3. **MCP connection errors**: Verify the MCP server URL and authentication in
+4. **MCP connection errors**: Verify the MCP server URL and authentication in
    workflow configuration.
