@@ -21,6 +21,25 @@ jobs:
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
         shell: bash
+  link-checker:
+    name: Link Checker
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6.0.1
+      - name: Restore lychee cache
+        uses: actions/cache@v5.0.1
+        with:
+          key: cache-lychee-${{ github.sha }}
+          path: .lycheecache
+          restore-keys: |
+            cache-lychee-
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@2e1c11e25535816733eb5d2f3e89b0da6ce0a5ec # v2.2.0
+        with:
+          args: --cache --max-cache-age 1d --verbose --no-progress './**/*.md'
+          fail: true
   pre-commit:
     name: Pre-commit
     runs-on: ubuntu-latest
