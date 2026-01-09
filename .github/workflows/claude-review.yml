@@ -6,6 +6,15 @@ on:
   pull_request:
     types: [opened, synchronize]
   workflow_call:
+    inputs:
+      additional_prompt:
+        description: 'Additional instructions to append to the review prompt'
+        required: false
+        type: string
+      pr_number:
+        description: 'Pull request number to review (required for workflow_call)'
+        required: false
+        type: number
   workflow_dispatch:
     inputs:
       additional_prompt:
