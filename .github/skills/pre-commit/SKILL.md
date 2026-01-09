@@ -81,30 +81,6 @@ Pre-commit hooks reference external dotfiles for linting rules. Key dependencies
 
 **Why trailing-whitespace excludes YAML**: The `trailing-whitespace` hook in the repository's `.pre-commit-config.yaml` excludes `\.ya?ml$` (YAML files) because yamllint handles trailing spaces for YAML files with warning-level enforcement, avoiding duplicate checks.
 
-## File Exclusions and Filters
-
-**require-ascii exclusion**:
-
-```yaml
-- id: require-ascii
-  exclude: (.github/|.tours/|README\.md|SKILL\.md)
-```
-
-**Why exclude these paths**:
-
-- `.github/`: Agent configurations and instructions may contain unicode characters (e.g., em dashes, smart quotes) for readability.
-- `.tours/`: VS Code tour files may include unicode symbols for visual clarity.
-- `README.md` and `SKILL.md`: Documentation files benefit from unicode (e.g., arrows →, checkmarks ✓) for improved presentation.
-
-**yamlfix exclusion**:
-
-```yaml
-- id: yamlfix
-  exclude: (\.github/workflows/claude-review\.yml|\.github/workflows/claude\.yml)
-```
-
-**Why exclude workflows**: The `claude-review.yml` and `claude.yml` workflows in `.github/workflows/` require blank lines between job steps for readability. These blank lines conflict with yamlfix's aggressive formatting rules that remove them. See <https://github.com/lyz-code/yamlfix/issues/310> for details on this known formatting issue.
-
 ## Optional Configuration Files
 
 Some hooks support optional config files to customize behavior beyond defaults:
