@@ -50,7 +50,6 @@ jobs:
         || (github.event_name == 'pull_request_review_comment'
           && (
             contains(github.event.comment.body, '@claude')
-            # Truthy check: in_reply_to_id is empty string when not a reply, numeric ID when it is
             || github.event.comment.in_reply_to_id
           )
         )
