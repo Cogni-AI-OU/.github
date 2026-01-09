@@ -25,6 +25,11 @@ and context-aware resource management. Features:
 
 For more details, see the [About](https://gh.io/customagents) and [Custom Agents Documentation](https://gh.io/customagents/config).
 
+Additional documentation:
+
+- [About custom agents](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents)
+- [Create custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+
 For a collection of awesome custom agents, visit the [GitHub Awesome Copilot repository](https://github.com/github/awesome-copilot).
 
 For information on supported AI models, see [Supported Models](https://docs.github.com/en/copilot/reference/ai-models/supported-models).
