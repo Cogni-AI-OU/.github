@@ -227,6 +227,8 @@ grep -n "pattern" <file>   # Search for specific content
 - Report progress regularly
 - Summarize what was accomplished
 - When blocked, inform the user with suggested next steps
+- For DNS or firewall blocks, suggest adding it to the allowlist
+  as per <https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-firewall> 
 
 ### Documentation
 
