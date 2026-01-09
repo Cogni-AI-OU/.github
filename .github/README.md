@@ -2,6 +2,45 @@
 
 This directory contains GitHub Actions workflows and related configuration.
 
+## Active Workflows
+
+### Claude Code Review (`claude-review.yml`)
+
+Automated and manual PR code review workflow using Claude AI.
+
+**Automatic Triggers:**
+
+- Runs automatically on pull request open/sync events
+- Skips bot-authored PRs to avoid review loops
+
+**Manual Trigger (workflow_dispatch):**
+
+Users can manually trigger reviews via the GitHub Actions UI:
+
+1. Navigate to Actions → "Claude Code Review"
+2. Click "Run workflow"
+3. Provide required inputs:
+   - **pr_number** (required): Pull request number to review (e.g., 123)
+   - **additional_prompt** (optional): Custom instructions appended to the base review prompt
+     (e.g., "Focus on SQL injection vulnerabilities in authentication")
+
+**Reusable Workflow (workflow_call):**
+
+Can be called from other workflows:
+
+```yaml
+jobs:
+  custom-review:
+    uses: ./.github/workflows/claude-review.yml
+    with:
+      pr_number: ${{ github.event.pull_request.number }}  # Optional if called with pull_request event
+      additional_prompt: 'Focus on performance optimization'
+    secrets: inherit
+```
+
+The workflow uses Claude Opus 4.5 and focuses on bugs, security vulnerabilities, performance
+issues, and missing error handling.
+
 ## Workflow Templates
 
 The `workflow-templates/` directory contains reference workflows that are not
