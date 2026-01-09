@@ -22,7 +22,7 @@ on:
         required: false
         type: string
         default: ''
-      required_packages:
+      required_python_packages:
         description: 'Space-separated list of required Python packages'
         required: false
         type: string
@@ -41,8 +41,8 @@ env:
     pre-commit
     python3
     rg' }}
-  REQUIRED_PACKAGES: >-
-    ${{ inputs.required_packages != '' && inputs.required_packages || 'ansible
+  REQUIRED_PYTHON_PACKAGES: >-
+    ${{ inputs.required_python_packages != '' && inputs.required_python_packages || 'ansible
     ansible-lint
     docker
     molecule
@@ -96,7 +96,7 @@ jobs:
 
             # Check all required Python packages are installed
             echo "Checking required Python packages..."
-            for pkg in $REQUIRED_PACKAGES; do
+            for pkg in $REQUIRED_PYTHON_PACKAGES; do
               if ! python3 -m pip show "$pkg" &> /dev/null; then
                 echo "✗ Required Python package '$pkg' is missing"
                 exit 1
