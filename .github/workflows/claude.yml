@@ -154,12 +154,13 @@ jobs:
                 PARENT_AUTHOR=$(echo "$PARENT_DATA" | jq -r '.user // ""')
                 echo "Parent comment body length: ${#PARENT_COMMENT} characters (redacted for security)"
                 echo "Parent comment author: $PARENT_AUTHOR"
-                # Trigger if parent contains @claude or is from github-actions[bot] (Claude's comments)
+                # Trigger if parent contains @claude or is from github-actions[bot] AND is a Claude comment
                 if echo "$PARENT_COMMENT" | grep -q '@claude'; then
                   echo "Parent comment contains @claude"
                   SHOULD_TRIGGER="true"
-                elif [ "$PARENT_AUTHOR" = "github-actions[bot]" ]; then
-                  echo "Parent comment is from github-actions[bot] (Claude)"
+                elif [ "$PARENT_AUTHOR" = "github-actions[bot]" ] && \
+                     echo "$PARENT_COMMENT" | grep -q 'claude-code-action'; then
+                  echo "Parent is Claude (github-actions[bot] with claude-code-action marker)"
                   SHOULD_TRIGGER="true"
                 fi
               fi
