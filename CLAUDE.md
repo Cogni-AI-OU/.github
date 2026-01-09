@@ -91,15 +91,8 @@ When working with Claude in this repository:
 
 ### Common Issues
 
-1. **Claude not responding to comments**: Verify you have the required permissions
-   (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, or PR/issue author). For PR review
-   comments, Claude triggers when:
-   - Your comment contains `@claude`, OR
-   - You're replying to a comment from `github-actions[bot]` (Claude's responses), OR
-   - You're replying to a comment that contains `@claude`
-   
-   Note: The workflow uses a two-stage filter to prevent abuse while allowing
-   natural conversation flow.
+1. **Workflow not triggering**: The workflow triggers for `@claude` mentions or replies
+   to comments from `github-actions[bot]`. Check workflow logs for permission issues.
 2. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
    via PR if needed.
 3. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
