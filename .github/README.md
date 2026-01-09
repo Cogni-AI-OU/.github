@@ -22,6 +22,23 @@ scan all Markdown files for broken links. It includes caching to avoid rate
 limits and can be configured via `.lycheeignore` at the repository root to
 exclude specific URLs or patterns.
 
+**Local Testing**: You can test links locally using `linkcheckmd` (a Python
+alternative to Lychee):
+
+```bash
+# Install from requirements.txt
+pip install -r .devcontainer/requirements.txt
+
+# Check a single file
+python -m linkcheckmd path/to/file.md
+
+# Check all markdown files in a directory
+python -m linkcheckmd .
+```
+
+The tool checks both local file references and remote URLs, making it easy to
+catch broken links before pushing changes.
+
 ## Problem Matchers
 
 GitHub Actions problem matchers automatically annotate files with errors and
