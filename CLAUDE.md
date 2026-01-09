@@ -91,9 +91,14 @@ When working with Claude in this repository:
 
 ### Common Issues
 
-1. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
+1. **Claude not responding to comments**: Verify you have the required permissions
+   (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR, or PR/issue author). Check that either:
+   - Your comment contains `@claude`, OR
+   - You're replying to a comment from `github-actions[bot]`, OR
+   - You're replying to a comment that contains `@claude`
+2. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
    via PR if needed.
-2. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
+3. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
    committing.
-3. **MCP connection errors**: Verify the MCP server URL and authentication in
+4. **MCP connection errors**: Verify the MCP server URL and authentication in
    workflow configuration.
