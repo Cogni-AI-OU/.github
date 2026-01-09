@@ -2,6 +2,7 @@
 ---
 name: pre-commit
 description: Guide for using pre-commit hooks to validate code formatting, linting, and security checks before commits.
+license: MIT
 ---
 
 Expert guide for pre-commit framework usage, configuration, and custom hook development. Focus on autonomous validation, diagnostics, and fix workflows.
