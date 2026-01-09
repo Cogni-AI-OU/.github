@@ -72,13 +72,14 @@ monitoring commit activity.
 ### Model Context Protocol (MCP)
 
 MCP servers extend Claude's capabilities with additional tools and integrations.
-When MCP is enabled via `--mcp-config`, you gain access to:
+When MCP is enabled via `--mcp-config-file`, you gain access to:
 
 - GitHub API integrations (issues, PRs, repositories)
 - External service integrations
 - Custom tool implementations
 
-MCP configuration is specified in workflow files using JSON format.
+MCP configuration is maintained in a separate config file (`.github/mcp-config.json`)
+and referenced in workflow files using the `--mcp-config-file` flag.
 
 ## Prompting Best Practices
 
