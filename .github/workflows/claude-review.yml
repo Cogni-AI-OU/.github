@@ -37,7 +37,8 @@ jobs:
         Bash(git:*),
         Bash(jq:*),
         Bash(yq:*),
-        mcp__github_inline_comment__create_inline_comment
+        mcp__github_inline_comment__create_inline_comment,
+        mcp__github_comment__update_claude_comment
       # GitHub CLI token for gh commands
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:

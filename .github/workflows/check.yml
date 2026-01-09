@@ -15,21 +15,21 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6.0.1
-      - uses: reviewdog/action-actionlint@v1.69.1
+      - uses: actions/checkout@v5
       - name: Add Problem Matcher for actionlint
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
         shell: bash
+      - uses: reviewdog/action-actionlint@v1
   link-checker:
     name: Link Checker
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v5
       - name: Restore lychee cache
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v4
         with:
           key: cache-lychee-${{ github.sha }}
           path: .lycheecache
@@ -46,14 +46,14 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6.0.1
-      - uses: actions/cache@v5.0.1
+      - uses: actions/checkout@v5
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: |
             pre-commit|
-      - uses: actions/setup-python@v6.1.0
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Add Problem Matcher for pre-commit

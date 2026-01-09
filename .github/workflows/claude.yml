@@ -18,7 +18,13 @@ on:
       - submitted
   workflow_call:
 concurrency:
-  group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
+  # Include comment/review ID to prevent different comments from cancelling each other
+  # while still cancelling duplicate runs of the same comment (e.g., from rapid edits).
+  # Falls back to run_id for workflow_call events that have no issue/PR/comment context.
+  group: >-
+    claude-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}-${{
+      github.event.comment.id || github.event.review.id || github.run_id
+    }}
   cancel-in-progress: true
 jobs:
   claude:
@@ -35,12 +41,18 @@ jobs:
         github.event.review.author_association == 'MEMBER' ||
         github.event.review.author_association == 'COLLABORATOR' ||
         github.event.review.author_association == 'CONTRIBUTOR' ||
-        (github.event.pull_request && github.event.pull_request.user.login == github.event.comment.user.login) ||
+        (github.event.issue.pull_request && github.event.issue.user.login == github.actor) ||
         (github.event.pull_request && github.event.pull_request.user.login == github.event.review.user.login) ||
-        (github.event.issue && github.event.issue.user.login == github.event.comment.user.login)
+        (github.event.pull_request && github.event.pull_request.user.login == github.event.comment.user.login) ||
+        (github.event.issue && github.event.issue.user.login == github.actor)
       ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
-        || github.event_name == 'pull_request_review_comment'
+        || (github.event_name == 'pull_request_review_comment'
+          && (
+            contains(github.event.comment.body, '@claude')
+            || github.event.comment.in_reply_to_id
+          )
+        )
         || (github.event_name == 'pull_request_review'
           && github.event.review.body != null
           && github.event.review.body != ''
@@ -66,6 +78,13 @@ jobs:
     env:
       # Allowed tools for Claude (comma-separated list)
       # Add new tools here as needed
+      #
+      # SECURITY NOTE: Bash(git:*) grants broad git access for autonomous commits/pushes.
+      # This is intentional and required for Claude to modify code, but requires safeguards:
+      # - Repository branch protection rules (require reviews, status checks)
+      # - GitHub audit log monitoring for github-actions[bot] activity
+      # - CODEOWNERS files for sensitive directories
+      # See .github/README.md and CLAUDE.md for detailed security guidance.
       ALLOWED_TOOLS: >-
         Bash(git:*),
         Bash(gh issue:*),
@@ -93,11 +112,11 @@ jobs:
         run: |
           echo "Event name: $EVENT_NAME"
           echo "Action: $EVENT_ACTION"
-          echo "Comment body: $COMMENT_BODY"
+          echo "Comment body length: ${#COMMENT_BODY} characters (redacted for security)"
           echo "Comment author: $COMMENT_AUTHOR"
           echo "Comment author_association: $COMMENT_AUTHOR_ASSOC"
           echo "Comment in_reply_to_id: $COMMENT_IN_REPLY_TO"
-          echo "Review body: $REVIEW_BODY"
+          echo "Review body length: ${#REVIEW_BODY} characters (redacted for security)"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
 
@@ -117,15 +136,34 @@ jobs:
           if echo "$COMMENT_BODY" | grep -q '@claude'; then
             echo "Current comment contains @claude"
             SHOULD_TRIGGER="true"
-          # Check if this is a reply to a comment containing @claude
+          # Check if this is a reply to a comment containing @claude or from github-actions[bot]
           elif [ -n "$IN_REPLY_TO_ID" ] && [ "$IN_REPLY_TO_ID" != "null" ]; then
             echo "This is a reply to comment ID: $IN_REPLY_TO_ID"
-            # Fetch the parent comment
-            PARENT_COMMENT=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" --jq '.body' 2>/dev/null || echo "")
-            echo "Parent comment body: $PARENT_COMMENT"
-            if echo "$PARENT_COMMENT" | grep -q '@claude'; then
-              echo "Parent comment contains @claude"
-              SHOULD_TRIGGER="true"
+
+            # Check if jq is available
+            if ! command -v jq >/dev/null 2>&1; then
+              echo "Warning: jq not found, skipping parent comment check"
+            else
+              # Fetch the parent comment and its author
+              PARENT_DATA=$(gh api "/repos/$REPO/pulls/comments/$IN_REPLY_TO_ID" \
+                --jq '{body: .body, user: .user.login}' 2>/dev/null || echo '{}')
+              if [ "$PARENT_DATA" = "{}" ]; then
+                echo "Failed to fetch parent comment"
+              else
+                PARENT_COMMENT=$(echo "$PARENT_DATA" | jq -r '.body // ""')
+                PARENT_AUTHOR=$(echo "$PARENT_DATA" | jq -r '.user // ""')
+                echo "Parent comment body length: ${#PARENT_COMMENT} characters (redacted for security)"
+                echo "Parent comment author: $PARENT_AUTHOR"
+                # Trigger if parent contains @claude or is from github-actions[bot] AND is a Claude comment
+                if echo "$PARENT_COMMENT" | grep -q '@claude'; then
+                  echo "Parent comment contains @claude"
+                  SHOULD_TRIGGER="true"
+                elif [ "$PARENT_AUTHOR" = "github-actions[bot]" ] && \
+                     echo "$PARENT_COMMENT" | grep -q 'claude-code-action'; then
+                  echo "Parent is Claude (github-actions[bot] with claude-code-action marker)"
+                  SHOULD_TRIGGER="true"
+                fi
+              fi
             fi
           fi
 
@@ -161,6 +199,8 @@ jobs:
           additional_permissions: |
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           claude_args: |
             --model claude-opus-4-5
             --max-turns 100
