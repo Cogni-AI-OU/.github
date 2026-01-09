@@ -5,16 +5,19 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
+  push:
+    paths:
+      - '.github/workflows/claude-review.yml'
   workflow_call:
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
+  group: claude-review-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
   claude-review:
     # Skip if PR is authored by a bot
-    if: github.event.pull_request.user.type != 'Bot'
+    if: github.event_name != 'pull_request' || github.event.pull_request.user.type != 'Bot'
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
