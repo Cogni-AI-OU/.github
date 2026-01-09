@@ -36,6 +36,26 @@ annotations directly and don't need the problem matcher.
 Problem matchers are registered in the `.github/workflows/check.yml` workflow
 before running the corresponding tools.
 
+### Using Matchers in Reusable Workflows
+
+When using the `check.yml` workflow as a reusable workflow (via `workflow_call`),
+the matcher files are automatically provided from this repository. You don't need
+to copy the matcher files to your repository.
+
+If you want to use custom matcher files, you can specify them using the inputs:
+
+```yaml
+jobs:
+  check:
+    uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
+    with:
+      actionlint-matcher-path: .github/custom-actionlint-matcher.json
+      pre-commit-matcher-path: .github/custom-pre-commit-matcher.json
+```
+
+If these inputs are not provided, the workflow will automatically use the default
+matcher files from this repository.
+
 ## Security
 
 ### Claude Workflow Git Access
