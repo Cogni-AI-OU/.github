@@ -84,14 +84,14 @@ on top of the updated target branch:
 
 ### Key Points
 
-- ❌ **Never** use `git merge <target-branch>` for branch integration
-- ✅ **Always** create backup tags before destructive operations
-- ✅ **Always** verify with `git diff` that only your changes remain
-- ⚠️ **Use** `GIT_EDITOR=true` for non-interactive cherry-pick operations
+- **Never** use `git merge <target-branch>` for branch integration
+- **Always** create backup tags before destructive operations
+- **Always** verify with `git diff` that only your changes remain
+- **Use** `GIT_EDITOR=true` for non-interactive cherry-pick operations
 
 ### Critical: Using `report_progress` Tool
 
-**⚠️ CRITICAL WARNING**: The `report_progress` tool automatically rebases your branch against the remote
+**CRITICAL WARNING**: The `report_progress` tool automatically rebases your branch against the remote
 tracking branch. This **WILL CRASH** the session if your local history has diverged from remote.
 
 **When Crash Occurs:**
@@ -120,6 +120,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 - Org profile and collaboration info: [profile/README.md](profile/README.md)
 - Claude-specific guidance: [CLAUDE.md](CLAUDE.md)
 - Community standards: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- Main documentation: [README.md](README.md)
 
 ## Troubleshooting
 

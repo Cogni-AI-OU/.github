@@ -65,7 +65,7 @@ built-in MCP servers for GitHub operations (`github_comment` and
 You can add custom MCP servers for additional integrations. There are two ways
 to configure MCP servers:
 
-**Method 1: Inline configuration (recommended for simple setups)**
+##### Method 1: Inline configuration (recommended for simple setups)
 
 Pass MCP config directly in the workflow file using `--mcp-config`:
 
@@ -85,7 +85,7 @@ claude_args: |
   }'
 ```
 
-**Method 2: File-based configuration**
+##### Method 2: File-based configuration
 
 Create `.github/mcp-config.json` and reference it in your workflow:
 
