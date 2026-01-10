@@ -5,16 +5,23 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
+  push:
+    paths:
+      - '.github/workflows/claude-review.yml'
   workflow_call:
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
+  group: >-
+    claude-review-${{ github.event_name }}-${{
+      github.event.pull_request.number || github.sha
+    }}
   cancel-in-progress: true
 
 jobs:
   claude-review:
-    # Skip if PR is authored by a bot
-    if: github.event.pull_request.user.type != 'Bot'
+    # Only run on pull requests, skip if authored by a bot
+    # Push events will validate workflow syntax without running the job
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot'
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
@@ -80,11 +87,3 @@ jobs:
           claude_args: |
             --model claude-opus-4-5
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config '{
-              "mcpServers": {
-                "github": {
-                  "type": "http",
-                  "url": "https://api.githubcopilot.com/mcp/"
-                }
-              }
-            }'
