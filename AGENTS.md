@@ -143,22 +143,62 @@ If conflicts occur during cherry-picking:
 
 ### When Using `report_progress` Tool
 
-The `report_progress` tool automatically attempts to rebase your branch against the remote tracking branch.
-This can cause issues when:
+**CRITICAL WARNING**: The `report_progress` tool automatically attempts to rebase your branch against the remote
+tracking branch. This **WILL CRASH** the session when:
 
 - **You've rewritten history** (e.g., using `git reset --hard` + `git cherry-pick`)
 - **Your branch has diverged** from the remote (e.g., after rebasing locally)
-- **The remote has many commits** that would cause rebase conflicts
+- **The remote has many commits** that would trigger rebase conflicts
 
-**Best Practice**: Complete all git operations manually (fetch, reset, cherry-pick, verify) BEFORE
-calling `report_progress`. The tool will then simply push your clean, ready commits.
+**The crash occurs because:**
 
-If `report_progress` fails with rebase errors:
+1. `report_progress` switches to your branch
+2. It attempts `git rebase origin/<your-branch>` automatically
+3. If your local history diverged from remote (e.g., after `git reset --hard`), this creates conflicts
+4. The tool cannot resolve conflicts interactively, so it fails and crashes the session
+
+### Prevention Strategies
+
+**Option 1: Use a New Branch Name** (Recommended when history was rewritten)
+
+After using `git reset --hard` and cherry-picking, create a new branch instead of reusing the old one:
+
+```bash
+# After your reset + cherry-pick workflow
+git checkout -b <feature-name>-rebased
+
+# Now safe to call report_progress - no divergence, no auto-rebase needed
+```
+
+This avoids the force-push issue entirely and prevents `report_progress` from attempting to rebase.
+
+**Option 2: Complete Git Operations Before `report_progress`**
+
+If you must reuse the same branch name:
+
+1. Complete all git operations manually (fetch, reset, cherry-pick, verify)
+2. **DO NOT** call `report_progress` after `git reset --hard` on a pushed branch
+3. Instead, ask the user to manually force-push: `git push --force-with-lease origin <branch-name>`
+4. Document what you prepared so the user knows the branch is ready
+
+### If `report_progress` Fails with Rebase Errors
+
+If you already called it and it's failing:
 
 1. **Abort the rebase**: `git rebase --abort`
-2. **Verify your local branch is correct**: `git diff origin/<target-branch>..HEAD`
-3. **Ask the user** to manually push if you cannot force-push: `git push --force-with-lease origin <branch-name>`
-4. **Document** what you prepared so the user knows the branch is ready to push
+2. **Verify your local branch is correct**: `git diff origin/<target-branch>..HEAD --stat`
+3. **Document what you prepared**: Explain the commits are ready, just need manual push
+4. **Ask the user** to push manually: `git push --force-with-lease origin <branch-name>`
+5. **Alternative**: Create new branch and push that instead: `git checkout -b <branch>-rebased && git push origin <branch>-rebased`
+
+### Error Pattern Recognition
+
+If you see these errors, you've hit the auto-rebase issue:
+
+- `error: could not apply <commit>...`
+- `CONFLICT (content): Merge conflict in <file>`
+- `Rebasing (1/XXX)` with many commits (e.g., 113 commits)
+- `hint: Resolve all conflicts manually...` followed by crash
 
 ### Example: Integrating Dev Changes
 
