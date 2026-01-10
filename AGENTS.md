@@ -44,7 +44,7 @@ ansible-lint
 
 - When task is not clear, check further relevant information for better clarity.
 - If triggered by a short comment, check if parent's comment exist and consist further information.
-- If none of above helps, and task is ambigious, comminicate to the user with potential options.
+- If none of above helps, and task is ambiguous, comminicate to the user with potential options.
 
 ### Testing
 

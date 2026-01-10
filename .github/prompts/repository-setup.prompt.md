@@ -83,6 +83,7 @@ create or update it as needed with repository-specific customizations.
   - Purpose: Runs pre-commit checks and actionlint in CI
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
+
     ```yaml
     ---
     name: Check
@@ -93,6 +94,7 @@ create or update it as needed with repository-specific customizations.
       check:
         uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
     ```
+
   - Customize: Add additional jobs if needed for project-specific checks
 
 - [ ] **`.github/workflows/claude.yml`**
@@ -101,6 +103,7 @@ create or update it as needed with repository-specific customizations.
   - Purpose: Claude Code automation for AI-assisted development
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
+
     ```yaml
     ---
     name: Claude Code
@@ -118,6 +121,7 @@ create or update it as needed with repository-specific customizations.
         uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
         secrets: inherit
     ```
+
   - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
 
 - [ ] **`.github/workflows/claude-review.yml`**
@@ -126,6 +130,7 @@ create or update it as needed with repository-specific customizations.
   - Purpose: Automated PR review using Claude
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
+
     ```yaml
     ---
     name: Claude Code Review
@@ -137,6 +142,7 @@ create or update it as needed with repository-specific customizations.
         uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
         secrets: inherit
     ```
+
   - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
@@ -145,6 +151,7 @@ create or update it as needed with repository-specific customizations.
   - Purpose: Tests devcontainer builds and validates required tools
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
+
     ```yaml
     ---
     name: Development Containers (CI)
@@ -162,6 +169,7 @@ create or update it as needed with repository-specific customizations.
       devcontainer-build:
         uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
     ```
+
   - Customize: Add repository-specific required commands/packages via workflow inputs
 
 - [ ] **`.github/actionlint-matcher.json`**
@@ -357,6 +365,7 @@ When creating GitHub Actions workflows, use `workflow_call` to reference workflo
 - Reduced duplication
 
 Example pattern:
+
 ```yaml
 jobs:
   job-name:
@@ -403,21 +412,25 @@ This should be documented in README.md under development setup.
 ### Language-Specific Considerations
 
 #### Python Projects
+
 - Add `black`, `flake8`, `mypy` to pre-commit config
 - Include `requirements.txt` or `pyproject.toml`
 - Add Python version specification
 
 #### Node.js Projects
+
 - Add `eslint`, `prettier` to pre-commit config
 - Include `.nvmrc` for Node version
 - Add `package.json` scripts for lint/test/build
 
 #### Go Projects
+
 - Add `gofmt`, `golint` to pre-commit config
 - Include `go.mod` and `go.sum`
 - Document Go version requirements
 
 #### Java Projects
+
 - Add `checkstyle`, `spotless` configuration
 - Include Maven or Gradle configuration
 - Document Java version requirements
