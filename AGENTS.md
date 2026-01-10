@@ -20,13 +20,13 @@ For detailed coding standards and formatting guidelines, refer to:
 
 ## Common Tasks
 
-### Before the changes
+### Before commit
 
-Before committing the new changes, install pre-commit via pip and its hooks by:
+Before each commit change:
 
-```bash
-pre-commit install
-```
+- Verify your expected changes by `git diff --no-color`.
+- Use linting and validation tools used by project to confirm your changes meet the coding standard.
+- If repo uses git hooks, run them to validate your changes.
 
 ### Linting and Validation
 
@@ -39,6 +39,12 @@ pre-commit run markdownlint -a
 pre-commit run yamllint -a
 ansible-lint
 ```
+
+### Understanding the task
+
+- When task is not clear, check further relevant information for better clarity.
+- If triggered by a short comment, check if parent's comment exist and consist further information.
+- If none of above helps, and task is ambigious, comminicate to the user with potential options.
 
 ### Testing
 
