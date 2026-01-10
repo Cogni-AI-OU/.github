@@ -100,6 +100,12 @@
       "title": "Custom Agents"
     },
     {
+      "file": ".github/prompts/repository-setup.prompt.md",
+      "description": "## Agent Prompts\n\nReady-to-use prompts for common repository management tasks.\n\n**repository-setup.prompt.md** provides:\n- Comprehensive checklist for repository standardization\n- Step-by-step guide for creating/updating configuration files\n- Links to all template files in this .github repository\n- Instructions for setting up workflows, devcontainers, and documentation\n\n**Usage:**\n- Reference directly: `@claude follow .github/prompts/repository-setup.prompt.md`\n- Use phases independently for specific tasks\n- Customize for repository-specific needs\n\nThis prompt helps maintain consistency across all organization repositories.",
+      "line": 1,
+      "title": "Agent Prompts"
+    },
+    {
       "file": ".github/CONTRIBUTING.md",
       "description": "## Contributing Guidelines\n\nInstructions for how to contribute to repositories in the organization.\n\n**Covers:**\n- How to submit bug reports\n- Coding conventions (2-space indentation, readability)\n- Proposing changes via Pull Requests\n- Continuous Integration requirements\n\n**Important:** All contributions must pass CI tests (pre-commit hooks and other automated checks).\n\nThis file automatically applies to all repositories without their own contributing guide.",
       "line": 1,
