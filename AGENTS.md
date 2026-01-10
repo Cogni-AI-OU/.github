@@ -68,6 +68,53 @@ molecule syntax
 - Update `.markdownlint.yaml`, `.yamllint`, or `.editorconfig` for linting rules
 - Run `pre-commit run -a` to verify changes pass all checks
 
+## Integrating Changes from Target Branch
+
+Recommended way is to use the **cherry-pick workflow** to rebase your commits
+on top of the updated target branch:
+
+1. Identify your feature commits
+2. Fetch the latest target branch
+3. Reset your branch to target (with backup)
+4. Cherry-pick your feature commits
+5. Verify only your changes remain
+
+**For detailed step-by-step instructions with commands**, see:
+[`.github/skills/git/SKILL.md` - "Integrating Changes from Target Branch"](.github/skills/git/SKILL.md#integrating-changes-from-target-branch-avoiding-merge-commits)
+
+### Key Points
+
+- ❌ **Never** use `git merge <target-branch>` for branch integration
+- ✅ **Always** create backup tags before destructive operations
+- ✅ **Always** verify with `git diff` that only your changes remain
+- ⚠️ **Use** `GIT_EDITOR=true` for non-interactive cherry-pick operations
+
+### Critical: Using `report_progress` Tool
+
+**⚠️ CRITICAL WARNING**: The `report_progress` tool automatically rebases your branch against the remote
+tracking branch. This **WILL CRASH** the session if your local history has diverged from remote.
+
+**When Crash Occurs:**
+
+After using `git reset --hard` to rewrite history, your local branch diverges from remote. When `report_progress`
+tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot resolve, crashing the session.
+
+**Prevention (Choose One):**
+
+1. **Use new branch name** after rewriting history: `git checkout -b <feature>-v2` (safest)
+2. **Complete git operations manually**, then ask user for manual push (never call `report_progress` after `git reset --hard`)
+
+**If Already Crashed:**
+
+1. Run `git rebase --abort`
+2. Create new branch: `git checkout -b <feature>-v2`
+3. Push new branch: `git push origin <feature>-v2`
+
+**Error Patterns:** `Rebasing (1/XXX)` with large numbers, `CONFLICT (content)`, session crash with `GitError`
+
+**For complete details**, see:
+[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools)
+
 ## References
 
 - Org profile and collaboration info: [profile/README.md](profile/README.md)
