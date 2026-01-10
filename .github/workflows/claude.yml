@@ -17,6 +17,12 @@ on:
     types:
       - submitted
   workflow_call:
+    inputs:
+      model:
+        description: 'Claude model to use (claude-opus-4-5, claude-sonnet-4-5, claude-haiku-4-5)'
+        default: 'claude-opus-4-5'
+        required: false
+        type: string
 concurrency:
   group: claude-${{ github.event.issue.number || github.event.pull_request.number }}
   cancel-in-progress: true
@@ -162,7 +168,7 @@ jobs:
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_args: |
-            --model claude-opus-4-5
+            --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
