@@ -92,10 +92,11 @@ jobs:
             - Check the latest CI build of PR and identify the main cause of failure.
 
             Guidelines:
-            - Be concise. Only comment on actual problems, not style preferences.
+            - Be concise. Only comment on high-value issues, not style preferences.
             - Skip praise, summaries, and obvious observations.
             - If no significant issues exist, state that briefly.
             - Reference AGENTS.md if present for project conventions.
+            - Suggest committable suggestion for simple fixes.
 
             Use mcp__github_comment__update_claude_comment or `gh pr comment` to post your review.
 
