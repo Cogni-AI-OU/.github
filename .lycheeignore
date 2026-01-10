@@ -1,0 +1,13 @@
+# Lychee ignore patterns for link checking
+# Patterns in this file will be excluded from link checking
+
+# Localhost and example URLs
+http://localhost
+https://localhost
+http://127.0.0.1
+https://127.0.0.1
+http://example.com
+https://example.com
+
+# URLs that require authentication or may block automated requests
+# Add patterns here as needed based on actual link check failures
