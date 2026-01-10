@@ -7,6 +7,7 @@ Guidance for Claude automation agents working in this repository.
 - See [README.md](README.md) for setup and installation instructions
 - See [.tours/getting-started.tour](.tours/getting-started.tour) for a guided walkthrough
 - For enhanced agent capabilities, see [Copilot Plus](.github/agents/copilot-plus.agent.md)
+- For ready-to-use prompts, see [Agent Prompts](.github/prompts/)
 
 ## Instructions
 
@@ -67,6 +68,13 @@ molecule syntax
 - Language-specific instructions are in `.github/instructions/`
 - Update `.markdownlint.yaml`, `.yamllint`, or `.editorconfig` for linting rules
 - Run `pre-commit run -a` to verify changes pass all checks
+
+### Using Agent Prompts
+
+- Pre-built prompts for common tasks are in `.github/prompts/`
+- **Repository Setup**: Use `repository-setup.prompt.md` to standardize any repository
+- Reference prompts directly: `@claude follow .github/prompts/repository-setup.prompt.md`
+- See [.github/prompts/README.md](.github/prompts/README.md) for detailed usage
 
 ## References
 

@@ -48,6 +48,8 @@ development tasks:
   management
 - **[Agent Skills](.github/skills/)**: Specialized skills for git operations,
   GitHub Actions debugging, context-aware operations, and robust command execution
+- **[Agent Prompts](.github/prompts/)**: Ready-to-use prompts for common tasks
+  like repository setup and standardization
 
 For complete agent documentation, see [AGENTS.md](AGENTS.md).
 
