@@ -70,13 +70,8 @@ molecule syntax
 
 ## Integrating Changes from Target Branch
 
-When asked to "integrate changes from the target branch" (e.g., `dev` or `main`) into your feature branch,
-**DO NOT** use `git merge`. Merging creates a merge commit that includes all commits from the target branch,
-making it impossible for reviewers to see only your changes.
-
-### Correct Approach
-
-Use the **cherry-pick workflow** to rebase your commits on top of the updated target branch:
+Recommended way is to use the **cherry-pick workflow** to rebase your commits
+on top of the updated target branch:
 
 1. Identify your feature commits
 2. Fetch the latest target branch
