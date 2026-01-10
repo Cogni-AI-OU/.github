@@ -51,6 +51,9 @@ env:
 jobs:
   devcontainer-build:
     name: Build & Test
+    permissions:
+      contents: read
+      packages: write  # Enables push to GHCR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -74,6 +77,20 @@ jobs:
           # Remove /. pattern to handle repos like "org/.github" -> "org/github"
           SAFE_REPO_NAME="${REPO_LOWER//\/\./\/}"
           echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> "$GITHUB_OUTPUT"
+      - name: Check cache image existence
+        id: cache_check
+        continue-on-error: true
+        run: |
+          IMAGE_NAME="${{ steps.image.outputs.name }}"
+          echo "Checking if cache image exists: ${IMAGE_NAME}:latest"
+          if docker pull "${IMAGE_NAME}:latest" 2>/dev/null; then
+            echo "✓ Cache image found: ${IMAGE_NAME}:latest"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "⚠ Cache image not found: ${IMAGE_NAME}:latest"
+            echo "⚠ Build will proceed without cache (first build or image expired)"
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
         with:
