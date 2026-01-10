@@ -5,16 +5,23 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
+  push:
+    paths:
+      - '.github/workflows/claude-review.yml'
   workflow_call:
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
+  group: >-
+    claude-review-${{ github.event_name }}-${{
+      github.event.pull_request.number || github.sha
+    }}
   cancel-in-progress: true
 
 jobs:
   claude-review:
-    # Skip if PR is authored by a bot
-    if: github.event.pull_request.user.type != 'Bot'
+    # Only run on pull requests, skip if authored by a bot
+    # Push events will validate workflow syntax without running the job
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot'
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
@@ -25,8 +32,23 @@ jobs:
       id-token: write
     env:
       # Allowed tools for Claude (comma-separated list)
-      # Add new tools here as needed
+      # Based on tag mode requirements from anthropics/claude-code-action
+      # Core file operation tools
       ALLOWED_TOOLS: >-
+        Edit,
+        MultiEdit,
+        Glob,
+        Grep,
+        LS,
+        Read,
+        Write,
+        Bash(git add:*),
+        Bash(git commit:*),
+        Bash(git push:*),
+        Bash(git status:*),
+        Bash(git diff:*),
+        Bash(git log:*),
+        Bash(git rm:*),
         Bash(gh issue list:*),
         Bash(gh issue view:*),
         Bash(gh pr comment:*),
@@ -34,9 +56,12 @@ jobs:
         Bash(gh pr list:*),
         Bash(gh pr view:*),
         Bash(gh search:*),
-        Bash(git:*),
         Bash(jq:*),
         Bash(yq:*),
+        mcp__github_comment__update_claude_comment,
+        mcp__github_ci__get_ci_status,
+        mcp__github_ci__get_workflow_run_details,
+        mcp__github_ci__download_job_log,
         mcp__github_inline_comment__create_inline_comment
       # GitHub CLI token for gh commands
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,11 +104,3 @@ jobs:
           claude_args: |
             --model claude-opus-4-5
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config '{
-              "mcpServers": {
-                "github": {
-                  "type": "http",
-                  "url": "https://api.githubcopilot.com/mcp/"
-                }
-              }
-            }'

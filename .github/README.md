@@ -2,6 +2,13 @@
 
 This directory contains GitHub Actions workflows, agent prompts, and related configuration.
 
+## Workflow Templates
+
+The `workflow-templates/` directory contains reference workflows that are not
+actively executed but are preserved for future use or copying to other
+repositories. These templates can be customized and moved to the `workflows/`
+directory when needed.
+
 ## Problem Matchers
 
 GitHub Actions problem matchers automatically annotate files with errors and
@@ -49,3 +56,49 @@ standardize this repository.
 ```
 
 For detailed usage instructions, see [prompts/README.md](prompts/README.md).
+
+## Security
+
+### Claude Workflow Git Access
+
+The Claude Code workflow (`claude.yml`) grants intentionally broad git access
+via `Bash(git:*)` to enable autonomous code changes. This permission is necessary
+for Claude to commit and push changes, but requires proper safeguards.
+
+#### Security Controls
+
+**Access Control:**
+
+- Only trusted users can trigger Claude (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR)
+- PR/issue authors can only trigger on their own content
+- External contributors (FIRST_TIME_CONTRIBUTOR, NONE) are explicitly blocked
+
+**Required Repository Protections:**
+
+To safely use Claude with git access, repository administrators must configure:
+
+1. **Branch Protection Rules** on main/protected branches:
+   - Require pull request reviews before merging
+   - Require status checks to pass (e.g., linting, tests)
+   - Require conversation resolution before merging
+   - Do not allow bypassing the above settings
+
+2. **GitHub Audit Logs** (organization-level):
+   - Enable and regularly review audit logs
+   - Monitor commits made by `github-actions[bot]` (Claude's identity)
+   - Set up alerts for suspicious patterns (rapid commits, deleted branches, etc.)
+
+3. **Protected Branch Policies**:
+   - Restrict who can push to protected branches
+   - Consider requiring deployment approvals for production branches
+   - Use CODEOWNERS to require specific reviewer approval for sensitive files
+
+#### Best Practices
+
+- Review Claude's commits before merging PRs
+- Use draft PRs for Claude's work to require explicit promotion
+- Regularly audit Claude's tool usage and permissions
+- Rotate `ANTHROPIC_API_KEY` periodically
+- Monitor workflow run logs for unexpected behavior
+
+For more details, see [CLAUDE.md](../CLAUDE.md).
