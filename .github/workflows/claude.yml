@@ -20,6 +20,12 @@ on:
     types:
       - submitted
   workflow_call:
+    inputs:
+      model:
+        description: 'Claude model to use'
+        required: false
+        type: string
+        default: 'claude-opus-4-5'
 concurrency:
   # Include comment/review ID to prevent different comments from cancelling each other
   # while still cancelling duplicate runs of the same comment (e.g., from rapid edits).
@@ -262,11 +268,10 @@ jobs:
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           claude_args: |
-            --model claude-opus-4-5
+            --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
