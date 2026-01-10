@@ -5,9 +5,6 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize]
-  push:
-    paths:
-      - '.github/workflows/claude-review.yml'
   workflow_call:
 
 concurrency:
