@@ -10,8 +10,8 @@ applyTo:
 
 The following markdown content rules are enforced in the validators:
 
-1. **Headings**: Use H1 (`#`), H2 (`##`), and H3 (`###`) heading levels to structure your content.
-   Avoid H4 (`####`) and deeper levels, as they suggest the content needs better organization or
+1. **Headings**: Use H1 (`#`), H2 (`##`), and H3 (`###`) heading levels to structure content.
+   Avoid H4 (`####`) and deeper levels, as they suggest content needs better organization or
    should be split into separate documents.
 2. **Lists**: Use bullet points or numbered lists for lists. Ensure proper indentation and spacing.
 3. **Code Blocks**: Use fenced code blocks for code snippets. Always specify the language for syntax
@@ -55,8 +55,9 @@ The project enforces the following markdownlint rules:
 - Keep line length <=120 characters.
 - Surround headings and lists with blank lines; fence code blocks with blank lines.
 - Avoid trailing spaces; ensure a single trailing newline.
-- Table column style (MD060): follow the style defined in `.markdownlint.yaml`;
-  align pipes when `aligned` is required and remove extra spaces when `compact` is configured.
+- Table column style (MD060): follow the style defined in `.markdownlint.yaml`.
+  The default style is `compact`, which requires spaces around pipes in both header separators and data rows.
+  Example: `| ----- | ----------- |` not `|-------|-------------|`.
   Reflow columns with a markdown table formatter (for example, VS Code "Format Table"
   or `npx markdown-table`) to keep pipes consistent.
 - Avoid hard tabs (MD010/no-hard-tabs).

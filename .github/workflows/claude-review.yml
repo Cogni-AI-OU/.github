@@ -6,27 +6,62 @@ on:
   pull_request:
     types: [opened, synchronize]
   workflow_call:
+    inputs:
+      additional_prompt:
+        description: 'Additional instructions to append to the review prompt'
+        required: false
+        type: string
+        default: ''
+      model:
+        description: 'Claude model to use for review'
+        required: false
+        type: string
+        default: 'claude-opus-4-5'
+      pr_number:
+        description: 'Pull request number for workflow_call triggers'
+        required: true
+        type: number
 
 concurrency:
-  group: claude-review-${{ github.event.pull_request.number }}
+  group: >-
+    claude-review-${{ github.event_name }}-${{
+      github.event.pull_request.number || inputs.pr_number || github.sha
+    }}
   cancel-in-progress: true
-
 jobs:
   claude-review:
-    # Skip if PR is authored by a bot
-    if: github.event.pull_request.user.type != 'Bot'
+    # Run on pull_request events (skip bot-authored PRs) or workflow_call events
+    # workflow_call requires pr_number input and assumes caller has validated bot status
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot') ||
+      (github.event_name == 'workflow_call' && inputs.pr_number != null)
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
-      actions: read
-      contents: read
-      issues: read
+      actions: read  # Required for Claude to read CI results on PRs
+      contents: write  # Required for Claude to push code changes
+      issues: write
       pull-requests: write
       id-token: write
     env:
       # Allowed tools for Claude (comma-separated list)
-      # Add new tools here as needed
+      # Based on tag mode requirements from anthropics/claude-code-action
+      # Core file operation tools
       ALLOWED_TOOLS: >-
+        Edit,
+        MultiEdit,
+        Glob,
+        Grep,
+        LS,
+        Read,
+        Write,
+        Bash(git add:*),
+        Bash(git commit:*),
+        Bash(git push:*),
+        Bash(git status:*),
+        Bash(git diff:*),
+        Bash(git log:*),
+        Bash(git rm:*),
         Bash(gh issue list:*),
         Bash(gh issue view:*),
         Bash(gh pr comment:*),
@@ -34,9 +69,13 @@ jobs:
         Bash(gh pr list:*),
         Bash(gh pr view:*),
         Bash(gh search:*),
-        Bash(git:*),
+        Bash(pre-commit run:*),
         Bash(jq:*),
         Bash(yq:*),
+        mcp__github_comment__update_claude_comment,
+        mcp__github_ci__get_ci_status,
+        mcp__github_ci__get_workflow_run_details,
+        mcp__github_ci__download_job_log,
         mcp__github_inline_comment__create_inline_comment
       # GitHub CLI token for gh commands
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,18 +84,33 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
+      - name: Cache Claude Code
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.claude
+            ~/.local/bin/claude
+          key: claude-code-${{ runner.os }}-v1
+          restore-keys: |
+            claude-code-${{ runner.os }}-
       - name: PR Review with Progress Tracking
         id: claude-review
         uses: anthropics/claude-code-action@v1
         with:
+          additional_permissions: |
+            actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           allowed_non_write_users: "Copilot"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
+          claude_args: |
+            --model ${{ inputs.model || 'claude-opus-4-5' }}
+            --allowedTools "${{ env.ALLOWED_TOOLS }}"
 
           prompt: |
             REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
+            PR NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
 
             Review this pull request. Focus mainly on:
             - Bugs, logic errors, or incorrect behavior
@@ -67,23 +121,14 @@ jobs:
             - Check the latest CI build of PR and identify the main cause of failure.
 
             Guidelines:
-            - Be concise. Only comment on actual problems, not style preferences.
+            - Be concise. Only comment on high-value issues, not style preferences.
             - Skip praise, summaries, and obvious observations.
             - If no significant issues exist, state that briefly.
             - Reference AGENTS.md if present for project conventions.
+            - Suggest committable suggestion for simple fixes.
+            ${{ inputs.additional_prompt && format('
+
+            Additional instructions:
+            {0}', inputs.additional_prompt) || '' }}
 
             Use mcp__github_comment__update_claude_comment or `gh pr comment` to post your review.
-
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
-          claude_args: |
-            --model claude-opus-4-5
-            --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config '{
-              "mcpServers": {
-                "github": {
-                  "type": "http",
-                  "url": "https://api.githubcopilot.com/mcp/"
-                }
-              }
-            }'

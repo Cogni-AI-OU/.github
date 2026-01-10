@@ -16,6 +16,9 @@ Claude can be triggered by mentioning `@claude` in:
 - **Inline review comments**: Add `@claude` to a review comment on specific code lines
 - **Issue comments**: Comment on an issue with `@claude` followed by instructions
 - **New issues**: Create an issue with `@claude` in the title or body
+- **Reply to Claude's comments**: Reply to Claude's comments (posted via
+  `github-actions[bot]` with claude-code-action markers) to continue the
+  conversation without needing to mention `@claude` again
 
 **Who can trigger Claude:**
 
@@ -26,6 +29,13 @@ Claude can be triggered by mentioning `@claude` in:
 **Security**: External contributors cannot trigger Claude on other people's PRs or
 issues. This prevents unauthorized API usage and ensures code changes are reviewed
 by trusted users.
+
+**Note**: Claude's comments appear under the `github-actions[bot]` user because
+they are posted through the GitHub Actions workflow. The workflow identifies
+Claude's comments specifically by looking for the `claude-code-action` marker
+to avoid confusion with other workflows that also post as `github-actions[bot]`.
+This is a limitation of the `anthropics/claude-code-action` and cannot be changed
+to display as `claude[bot]` at the workflow configuration level.
 
 ### Environment Variables
 
@@ -47,23 +57,33 @@ and environment.
 The allowed tools are defined in workflow files under the `ALLOWED_TOOLS`
 environment variable. Current categories include:
 
-- **Git operations**: `Bash(git:*)`
+- **Git operations**: `Bash(git:*)` - Full access for commits and pushes
 - **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
 - **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
 
 If you need a tool that isn't in the allowed tools list, suggest adding it to
 the relevant workflow file in `.github/workflows/`.
 
+**Note on git access**: You have broad git access to commit and push changes.
+The workflow has strict access controls ensuring only trusted users can trigger you.
+Repository administrators are responsible for configuring branch protection and
+monitoring commit activity.
+
 ### Model Context Protocol (MCP)
 
 MCP servers extend Claude's capabilities with additional tools and integrations.
-When MCP is enabled via `--mcp-config`, you gain access to:
 
-- GitHub API integrations (issues, PRs, repositories)
-- External service integrations
-- Custom tool implementations
+**Built-in MCP Servers:**
 
-MCP configuration is specified in workflow files using JSON format.
+The Claude Code Action automatically provides these MCP servers:
+
+- `github_comment`: Post and update PR/issue comments
+- `github_inline_comment`: Create inline code review comments
+
+**Custom MCP Configuration:**
+
+For information on configuring custom MCP servers, see the
+[Custom Agents documentation](.github/agents/README.md#mcp-server-setup).
 
 ## Prompting Best Practices
 
@@ -78,9 +98,11 @@ When working with Claude in this repository:
 
 ### Common Issues
 
-1. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
+1. **Workflow not triggering**: The workflow triggers for `@claude` mentions or replies
+   to comments from `github-actions[bot]`. Check workflow logs for permission issues.
+2. **Tool not allowed**: Check if the tool is in `ALLOWED_TOOLS`; request addition
    via PR if needed.
-2. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
+3. **Linting failures**: Run `pre-commit run -a` locally to identify issues before
    committing.
-3. **MCP connection errors**: Verify the MCP server URL and authentication in
+4. **MCP connection errors**: Verify the MCP server URL and authentication in
    workflow configuration.

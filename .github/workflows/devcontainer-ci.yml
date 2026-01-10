@@ -18,12 +18,12 @@ on:
   workflow_call:
     inputs:
       required_commands:
-        description: 'Space-separated list of required command-line tools'
+        description: Space-separated list of required command-line tools
         required: false
         type: string
         default: ''
       required_python_packages:
-        description: 'Space-separated list of required Python packages'
+        description: Space-separated list of required Python packages
         required: false
         type: string
         default: ''
