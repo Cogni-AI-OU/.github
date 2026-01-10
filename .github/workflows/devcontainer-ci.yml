@@ -27,18 +27,6 @@ on:
         required: false
         type: string
         default: ''
-  workflow_dispatch:
-    inputs:
-      required_commands:
-        description: 'Space-separated list of required command-line tools'
-        required: false
-        type: string
-        default: ''
-      required_python_packages:
-        description: 'Space-separated list of required Python packages'
-        required: false
-        type: string
-        default: ''
 env:
   # Keep the commands and packages in lexicographical order.
   REQUIRED_COMMANDS: >-
