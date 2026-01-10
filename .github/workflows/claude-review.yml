@@ -13,8 +13,9 @@ concurrency:
 
 jobs:
   claude-review:
-    # Skip if PR is authored by a bot
-    if: github.event_name != 'pull_request' || github.event.pull_request.user.type != 'Bot'
+    # Only run on pull requests, skip if authored by a bot
+    # Push events will validate workflow syntax without running the job
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot'
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
