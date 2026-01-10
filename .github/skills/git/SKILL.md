@@ -75,6 +75,67 @@ Strategy for focused PRs:
 - Document resolution approach for future reference
 - Keep PR changes minimal and reviewable
 
+## Working with Automation Tools (report_progress)
+
+When using automation tools like `report_progress` that handle git operations, be aware of potential issues:
+
+### Issue: Automatic Rebase on Diverged Branches
+
+**Problem**: When local and remote branches have diverged (different commit histories), `report_progress` automatically attempts to rebase the local branch against the remote. If the histories are incompatible (e.g., after a local reset/rebase to clean up history), this causes:
+
+```
+GitError: rebase git error: unknown git error: Command failed with exit code 1: 
+git rebase origin/<branch-name>
+CONFLICT (content): Merge conflict in <file>
+```
+
+This error **crashes the entire agent session**, losing all uncommitted work.
+
+**Root cause**: The tool tries to reconcile incompatible commit histories by rebasing, encounters conflicts it cannot auto-resolve, and fails fatally.
+
+### Prevention Strategies
+
+1. **Avoid divergence when using report_progress**:
+   - Don't use `git reset --hard` to rewrite history on a branch that's already pushed
+   - Don't cherry-pick commits onto a branch that already has a different version pushed
+
+2. **Use a new branch name** if you need to rewrite history:
+   ```bash
+   # Instead of rewriting existing branch:
+   git checkout -b <branch-name-v2>
+   # Make your clean commits
+   # Then use report_progress (no divergence, clean push)
+   ```
+
+3. **When instructed to integrate another branch** (e.g., "pull dev changes"):
+   - Create new branch from target: `git checkout -b <new-branch> <target-branch>`
+   - Cherry-pick your commits: `git cherry-pick <commit1> <commit2>`
+   - Use report_progress on the new clean branch
+   - **Do NOT** use report_progress after `git reset --hard` on existing pushed branch
+
+4. **Manual force-push required** when you must rewrite pushed history:
+   - Prepare clean commits locally
+   - Document the branch name and commit hashes in a comment
+   - Request manual force-push: `git push --force-with-lease origin <local-branch>:<remote-branch>`
+
+### Detection
+
+If you see "Your branch and 'origin/branch-name' have diverged" in `git status`, **do NOT** call `report_progress` or it will crash with rebase conflicts. Either:
+- Use a new branch name instead, OR
+- Request manual force-push from user
+
+### Example Error Pattern
+
+```
+Stderr:
+warning: skipped previously applied commit <sha>
+hint: use --reapply-cherry-picks to include skipped commits
+Rebasing (1/N)error: could not apply <sha>... <message>
+CONFLICT (content): Merge conflict in <file>
+```
+
+This pattern indicates incompatible histories. The session will crash. Solution: Start over with new branch name.
+
 ## What to Avoid
 
 - Interactive operations (`git rebase -i`, `git add -p` without scripting, editor prompts).
@@ -82,5 +143,6 @@ Strategy for focused PRs:
 - `git pull` in scripts—prefer explicit `fetch` + `rebase` or `merge --no-edit`.
 - `--force` pushes without `--force-with-lease`.
 - Unqualified `git reset --hard` (prefer `git reset --hard origin/main` with backup tag).
+- **Using report_progress after rewriting history on a pushed branch** (causes session crash).
 
 Always explain proposed git operations step-by-step, quote exact commands, and confirm irreversible actions with the user.

@@ -111,3 +111,24 @@ If Copilot or automated checks behave unexpectedly:
 
 - Prefix shell commands with `time` to measure execution duration for better visibility.
 - When command takes too long, use `timeout` or similar approach to limit execution time.
+
+### Git and report_progress issues
+
+**Critical**: The `report_progress` tool automatically rebases when branches have diverged, which can crash the session if conflicts occur.
+
+**Symptoms**:
+- Error: `GitError: rebase git error: unknown git error: Command failed with exit code 1`
+- `git status` shows "Your branch and 'origin/branch' have diverged"
+- Session crashes when calling report_progress
+
+**Prevention**:
+1. **Never call report_progress after `git reset --hard`** if the branch is already pushed
+2. Use a new branch name when rewriting history: `git checkout -b feature-v2`
+3. When integrating another branch, create new branch from target then cherry-pick
+4. If divergence detected, request manual force-push instead of using report_progress
+
+**Solution when stuck**:
+- Document your clean branch name and commit hashes in a comment
+- Request user to force-push: `git push --force-with-lease origin local-branch:remote-branch`
+
+See `.github/skills/git/SKILL.md` for detailed guidance on handling branch divergence.
