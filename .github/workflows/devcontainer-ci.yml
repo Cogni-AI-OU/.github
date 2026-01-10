@@ -15,6 +15,18 @@ on:
       - .github/workflows/devcontainer-ci.yml
   schedule:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
+  workflow_call:
+    inputs:
+      required_commands:
+        description: 'Space-separated list of required command-line tools'
+        required: false
+        type: string
+        default: ''
+      required_python_packages:
+        description: 'Space-separated list of required Python packages'
+        required: false
+        type: string
+        default: ''
   workflow_dispatch:
     inputs:
       required_commands:
