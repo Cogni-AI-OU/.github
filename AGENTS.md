@@ -74,153 +74,51 @@ When asked to "integrate changes from the target branch" (e.g., `dev` or `main`)
 **DO NOT** use `git merge`. Merging creates a merge commit that includes all commits from the target branch,
 making it impossible for reviewers to see only your changes.
 
-### Recommended Approach: Cherry-Pick Your Changes
+### Correct Approach
 
-The correct way to integrate target branch changes is to rebase your commits on top of the updated target branch:
+Use the **cherry-pick workflow** to rebase your commits on top of the updated target branch:
 
-1. **Identify your feature commits**:
+1. Identify your feature commits
+2. Fetch the latest target branch
+3. Reset your branch to target (with backup)
+4. Cherry-pick your feature commits
+5. Verify only your changes remain
 
-   ```bash
-   # List commits that are in your branch but not in target
-   git log --oneline <target-branch>..HEAD
-   
-   # Or compare with remote target
-   git log --oneline origin/dev..HEAD
-   ```
+**For detailed step-by-step instructions with commands**, see:
+[`.github/skills/git/SKILL.md` - "Integrating Changes from Target Branch"](.github/skills/git/SKILL.md#integrating-changes-from-target-branch-avoiding-merge-commits)
 
-2. **Fetch the latest target branch**:
+### Key Points
 
-   ```bash
-   git fetch origin <target-branch>
-   ```
+- ❌ **Never** use `git merge <target-branch>` for branch integration
+- ✅ **Always** create backup tags before destructive operations
+- ✅ **Always** verify with `git diff` that only your changes remain
+- ⚠️ **Use** `GIT_EDITOR=true` for non-interactive cherry-pick operations
 
-3. **Reset your branch to target** (creates clean starting point):
+### Critical: Using `report_progress` Tool
 
-   ```bash
-   # Create backup first (optional but recommended)
-   git tag backup/before-rebase-$(date +%s)
-   
-   # Reset to target branch
-   git reset --hard origin/<target-branch>
-   ```
+**⚠️ CRITICAL WARNING**: The `report_progress` tool automatically rebases your branch against the remote
+tracking branch. This **WILL CRASH** the session if your local history has diverged from remote.
 
-4. **Cherry-pick your feature commits**:
+**When Crash Occurs:**
 
-   ```bash
-   # Cherry-pick individual commits
-   git cherry-pick <commit-1> <commit-2> <commit-3>
-   
-   # Or use range syntax for many commits
-   git cherry-pick <first-commit>^..<last-commit>
-   ```
+After using `git reset --hard` to rewrite history, your local branch diverges from remote. When `report_progress`
+tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot resolve, crashing the session.
 
-5. **Verify only your changes appear**:
+**Prevention (Choose One):**
 
-   ```bash
-   git diff origin/<target-branch>..HEAD --stat
-   git diff origin/<target-branch>..HEAD --name-status
-   ```
+1. **Use new branch name** after rewriting history: `git checkout -b <feature>-v2` (safest)
+2. **Complete git operations manually**, then ask user for manual push (never call `report_progress` after `git reset --hard`)
 
-   The diff should show ONLY files you created or modified, not all files from the target branch.
+**If Already Crashed:**
 
-### Handling Conflicts During Cherry-Pick
+1. Run `git rebase --abort`
+2. Create new branch: `git checkout -b <feature>-v2`
+3. Push new branch: `git push origin <feature>-v2`
 
-If conflicts occur during cherry-picking:
+**Error Patterns:** `Rebasing (1/XXX)` with large numbers, `CONFLICT (content)`, session crash with `GitError`
 
-1. **Resolve conflicts** in the files (preserve target branch content and add your changes)
-2. **Stage resolved files**: `git add <resolved-files>`
-3. **Continue**: Use `GIT_EDITOR=true git cherry-pick --continue` to bypass editor prompts
-4. **Or skip**: Use `git cherry-pick --skip` to skip the problematic commit
-5. **Or abort**: Use `git cherry-pick --abort` to cancel and start over
-
-### Common Pitfalls to Avoid
-
-- **Using `git merge <target-branch>`**: This includes all target branch commits in your PR,
-  making review impossible. Use cherry-pick instead.
-- **Force pushing without verification**: Always verify your changes with `git diff` before force pushing.
-- **Forgetting to fetch**: Always `git fetch origin <target-branch>` to get the latest changes.
-- **Losing work**: Create a backup tag before resetting: `git tag backup/before-rebase-$(date +%s)`
-
-### When Using `report_progress` Tool
-
-**CRITICAL WARNING**: The `report_progress` tool automatically attempts to rebase your branch against the remote
-tracking branch. This **WILL CRASH** the session when:
-
-- **You've rewritten history** (e.g., using `git reset --hard` + `git cherry-pick`)
-- **Your branch has diverged** from the remote (e.g., after rebasing locally)
-- **The remote has many commits** that would trigger rebase conflicts
-
-**The crash occurs because:**
-
-1. `report_progress` switches to your branch
-2. It attempts `git rebase origin/<your-branch>` automatically
-3. If your local history diverged from remote (e.g., after `git reset --hard`), this creates conflicts
-4. The tool cannot resolve conflicts interactively, so it fails and crashes the session
-
-### Prevention Strategies
-
-**Option 1: Use a New Branch Name** (Recommended when history was rewritten)
-
-After using `git reset --hard` and cherry-picking, create a new branch instead of reusing the old one:
-
-```bash
-# After your reset + cherry-pick workflow
-git checkout -b <feature-name>-rebased
-
-# Now safe to call report_progress - no divergence, no auto-rebase needed
-```
-
-This avoids the force-push issue entirely and prevents `report_progress` from attempting to rebase.
-
-**Option 2: Complete Git Operations Before `report_progress`**
-
-If you must reuse the same branch name:
-
-1. Complete all git operations manually (fetch, reset, cherry-pick, verify)
-2. **DO NOT** call `report_progress` after `git reset --hard` on a pushed branch
-3. Instead, ask the user to manually force-push: `git push --force-with-lease origin <branch-name>`
-4. Document what you prepared so the user knows the branch is ready
-
-### If `report_progress` Fails with Rebase Errors
-
-If you already called it and it's failing:
-
-1. **Abort the rebase**: `git rebase --abort`
-2. **Verify your local branch is correct**: `git diff origin/<target-branch>..HEAD --stat`
-3. **Document what you prepared**: Explain the commits are ready, just need manual push
-4. **Ask the user** to push manually: `git push --force-with-lease origin <branch-name>`
-5. **Alternative**: Create new branch and push that instead: `git checkout -b <branch>-rebased && git push origin <branch>-rebased`
-
-### Error Pattern Recognition
-
-If you see these errors, you've hit the auto-rebase issue:
-
-- `error: could not apply <commit>...`
-- `CONFLICT (content): Merge conflict in <file>`
-- `Rebasing (1/XXX)` with many commits (e.g., 113 commits)
-- `hint: Resolve all conflicts manually...` followed by crash
-
-### Example: Integrating Dev Changes
-
-```bash
-# 1. See what commits you have
-git log --oneline origin/dev..HEAD
-
-# 2. Fetch latest dev
-git fetch origin dev
-
-# 3. Create backup and reset to dev
-git tag backup/before-dev-rebase-$(date +%s)
-git reset --hard origin/dev
-
-# 4. Cherry-pick your commits
-git cherry-pick abc123 def456 ghi789
-
-# 5. Verify only your changes
-git diff origin/dev..HEAD --stat
-
-# 6. Now call report_progress or ask user to push
-```
+**For complete details**, see:
+[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools)
 
 ## References
 
