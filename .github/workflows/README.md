@@ -30,7 +30,13 @@ vulnerabilities, performance issues, and missing error handling.
 **Reusable**: This workflow can be called from other repositories using:
 
 ```yaml
-uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
+# In another repository's workflow
+jobs:
+  claude-review:
+    uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+    secrets: inherit
 ```
 
 **Jobs**:
@@ -40,7 +46,8 @@ uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
 
 **Configuration**:
 
-- Only runs on pull requests (not on bot-authored PRs)
+- Runs on pull requests (not on bot-authored PRs) or via workflow_call
+- When using workflow_call, requires `pr_number` input
 - Uses Claude Opus 4.5 model
 - Limited to specific allowed tools for security
 
