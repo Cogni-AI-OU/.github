@@ -40,6 +40,12 @@ pre-commit run yamllint -a
 ansible-lint
 ```
 
+### Understanding the task
+
+- When task is not clear, check further relevant information for better clarity.
+- If triggered by a short comment, check if parent's comment exist and consist further information.
+- If none of above helps, and task is ambigious, comminicate to the user with potential options.
+
 ### Testing
 
 ```bash
