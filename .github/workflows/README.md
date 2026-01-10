@@ -9,6 +9,12 @@ This directory contains GitHub Actions workflows that automate various tasks for
 **Purpose**: Runs automated checks on all pushes, pull requests, and on a weekly schedule to ensure code quality
 and adherence to project standards.
 
+**Reusable**: This workflow can be called from other repositories using:
+
+```yaml
+uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
+```
+
 **Jobs**:
 
 - **actionlint**: Validates GitHub Actions workflow files for syntax errors and best practices
@@ -20,6 +26,12 @@ and adherence to project standards.
 
 **Purpose**: Provides automated code review for pull requests using Claude AI. Reviews focus on bugs, security
 vulnerabilities, performance issues, and missing error handling.
+
+**Reusable**: This workflow can be called from other repositories using:
+
+```yaml
+uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
+```
 
 **Jobs**:
 
@@ -38,6 +50,12 @@ vulnerabilities, performance issues, and missing error handling.
 
 **Purpose**: Enables interactive collaboration with Claude AI on issues and pull requests. Claude can be
 triggered by mentioning `@claude` in comments, reviews, or newly opened issues.
+
+**Reusable**: This workflow can be called from other repositories using:
+
+```yaml
+uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
+```
 
 **Jobs**:
 
