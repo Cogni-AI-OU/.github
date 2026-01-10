@@ -70,10 +70,8 @@ Notes:
 .
 ├── .github/
 │   ├── ISSUE_TEMPLATE/      # Issue templates (bug reports, feature requests)
-│   ├── agents/              # AI agent configurations
-│   ├── instructions/        # Language-specific coding standards
-│   ├── skills/              # Agent skills definitions
-│   ├── workflows/           # GitHub Actions workflows
+│   ├── instructions/         # Language-specific coding standards
+│   ├── workflows/            # GitHub Actions workflows
 │   ├── copilot-instructions.md
 │   └── pull_request_template.md
 ├── .tours/                   # VS Code guided tours

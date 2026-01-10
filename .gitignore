@@ -26,19 +26,10 @@ venv.bak/
 # Ignore .lock files
 .lock
 
-# Cursor
-#  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
-#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
-#  refer to https://docs.cursor.com/context/ignore-files
-#.cursorignore
-.cursorindexingignore
-
-
-# Temporary binary files
-actionlint
 
 # Temporary or backup files
 *.bak
 *.org
 *.orig
 *.swp
+actionlint

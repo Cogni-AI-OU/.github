@@ -5,5 +5,12 @@
 
 line_length = 110
 
+# Preserve block scalar format (|- and |)
+# This prevents conversion to quoted strings with escaped newlines
+preserve_block_scalars = true
+
+# Maintain original formatting
+preserve_formatting = true
+
 # Force sequences to use block style (multi-line lists)
 sequence_style = "block_style"

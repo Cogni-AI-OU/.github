@@ -16,9 +16,6 @@ Claude can be triggered by mentioning `@claude` in:
 - **Inline review comments**: Add `@claude` to a review comment on specific code lines
 - **Issue comments**: Comment on an issue with `@claude` followed by instructions
 - **New issues**: Create an issue with `@claude` in the title or body
-- **Reply to Claude's comments**: Reply to Claude's comments (posted via
-  `github-actions[bot]` with claude-code-action markers) to continue the
-  conversation without needing to mention `@claude` again
 
 **Who can trigger Claude:**
 
@@ -29,13 +26,6 @@ Claude can be triggered by mentioning `@claude` in:
 **Security**: External contributors cannot trigger Claude on other people's PRs or
 issues. This prevents unauthorized API usage and ensures code changes are reviewed
 by trusted users.
-
-**Note**: Claude's comments appear under the `github-actions[bot]` user because
-they are posted through the GitHub Actions workflow. The workflow identifies
-Claude's comments specifically by looking for the `claude-code-action` marker
-to avoid confusion with other workflows that also post as `github-actions[bot]`.
-This is a limitation of the `anthropics/claude-code-action` and cannot be changed
-to display as `claude[bot]` at the workflow configuration level.
 
 ### Environment Variables
 
@@ -57,17 +47,12 @@ and environment.
 The allowed tools are defined in workflow files under the `ALLOWED_TOOLS`
 environment variable. Current categories include:
 
-- **Git operations**: `Bash(git:*)` - Full access for commits and pushes
+- **Git operations**: `Bash(git:*)`
 - **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
 - **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
 
 If you need a tool that isn't in the allowed tools list, suggest adding it to
 the relevant workflow file in `.github/workflows/`.
-
-**Note on git access**: You have broad git access to commit and push changes.
-The workflow has strict access controls ensuring only trusted users can trigger you.
-Repository administrators are responsible for configuring branch protection and
-monitoring commit activity.
 
 ### Model Context Protocol (MCP)
 

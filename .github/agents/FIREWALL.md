@@ -5,7 +5,6 @@ If your agent runs behind a restrictive firewall, allow these hosts. Always chec
 ```plaintext
 api.github.com
 codeload.github.com
-galaxy.ansible.com
 ghcr.io
 github.com
 npm.pkg.github.com
