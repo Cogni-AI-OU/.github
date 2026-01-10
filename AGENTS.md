@@ -20,13 +20,13 @@ For detailed coding standards and formatting guidelines, refer to:
 
 ## Common Tasks
 
-### Before the changes
+### Before commit
 
-Before committing the new changes, install pre-commit via pip and its hooks by:
+Before each commit change:
 
-```bash
-pre-commit install
-```
+- Verify your expected changes by `git diff --no-color`.
+- Use linting and validation tools used by project to confirm your changes meet the coding standard.
+- If repo uses git hooks, run them to validate your changes.
 
 ### Linting and Validation
 
