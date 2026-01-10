@@ -36,8 +36,20 @@ jobs:
     uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
     with:
       pr_number: ${{ github.event.pull_request.number }}
+      # Optional: Customize the Claude model (default: claude-opus-4-5)
+      model: 'claude-opus-4-5'
+      # Optional: Add additional instructions to the review prompt
+      additional_prompt: |
+        - Check for accessibility issues
+        - Verify all functions have proper documentation
     secrets: inherit
 ```
+
+**Inputs**:
+
+- `pr_number` (required): Pull request number to review
+- `model` (optional): Claude model to use (default: `claude-opus-4-5`)
+- `additional_prompt` (optional): Additional instructions to append to the review prompt
 
 **Jobs**:
 
@@ -48,7 +60,7 @@ jobs:
 
 - Runs on pull requests (not on bot-authored PRs) or via workflow_call
 - When using workflow_call, requires `pr_number` input
-- Uses Claude Opus 4.5 model
+- Uses Claude Opus 4.5 model by default (configurable via `model` input)
 - Limited to specific allowed tools for security
 
 **Reference**: Uses [anthropics/claude-code-action][claude-action]
@@ -62,7 +74,15 @@ triggered by mentioning `@claude` in comments, reviews, or newly opened issues.
 
 ```yaml
 uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
+with:
+  # Optional: Customize the Claude model (default: claude-opus-4-5)
+  model: 'claude-opus-4-5'
+secrets: inherit
 ```
+
+**Inputs**:
+
+- `model` (optional): Claude model to use (default: `claude-opus-4-5`)
 
 **Jobs**:
 
@@ -76,7 +96,7 @@ uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
 
 **Configuration**:
 
-- Uses Claude Opus 4.5 model
+- Uses Claude Opus 4.5 model by default (configurable via `model` input)
 - Maximum 100 turns per conversation
 - Grants broad git access for autonomous commits (requires repository branch protection)
 
