@@ -105,7 +105,7 @@ these workflows:
 - Use CODEOWNERS for sensitive directories
 - Review Claude's commits before merging PRs
 
-For detailed security guidance, see [../.github/README.md](../.github/README.md) and [CLAUDE.md](../../CLAUDE.md).
+For detailed security guidance, see [../README.md](../README.md) and [CLAUDE.md](../../CLAUDE.md).
 
 ## Problem Matchers
 
