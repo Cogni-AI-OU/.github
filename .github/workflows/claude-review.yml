@@ -8,7 +8,7 @@ name: Claude Code Review
 on:
   pull_request:
     # Note: synchronize not included to avoid too frequent reviews on every push.
-    types: [edited, opened, ready_for_review, reopened, review_requested, synchronize]
+    types: [edited, opened, ready_for_review, reopened, review_requested]
   workflow_call:
     inputs:
       additional_prompt:
