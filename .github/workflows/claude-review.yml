@@ -7,7 +7,7 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [edited, opened, ready_for_review, reopened, review_requested]
+    types: [edited, opened, ready_for_review, reopened, review_requested, synchronize]
   workflow_call:
     inputs:
       additional_prompt:
