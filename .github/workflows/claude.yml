@@ -21,11 +21,24 @@ on:
       - submitted
   workflow_call:
     inputs:
+      issue_number:
+        description: 'Issue number to operate on (provide either issue_number or pr_number)'
+        required: false
+        type: number
       model:
         description: 'Claude model to use'
         required: false
         type: string
         default: 'claude-opus-4-5'
+      pr_number:
+        description: 'Pull request number to operate on (provide either issue_number or pr_number)'
+        required: false
+        type: number
+      prompt:
+        description: 'Prompt for Claude to execute'
+        required: false
+        type: string
+        default: ''
       system_prompt:
         description: 'System prompt to customize Claude behavior'
         required: false
@@ -46,6 +59,11 @@ on:
         description: 'Pull request number to operate on (provide either issue_number or pr_number)'
         required: false
         type: number
+      prompt:
+        description: 'Prompt for Claude to execute'
+        required: false
+        type: string
+        default: ''
       system_prompt:
         description: 'System prompt to customize Claude behavior'
         required: false
@@ -106,6 +124,10 @@ jobs:
     #    - Author has OWNER, MEMBER, or COLLABORATOR association (higher bar for auto-trigger)
     #    - Issue body or title contains '@claude' mention
     #
+    # E) workflow_call or workflow_dispatch events:
+    #    - Assumes caller has verified authorization
+    #    - Requires either issue_number or pr_number input to be provided
+    #
     # Note: Inline comments between conditions are not possible in YAML multiline strings,
     # so this documentation is placed before the conditional expression.
     if: |
@@ -143,6 +165,8 @@ jobs:
           )
           && (contains(github.event.issue.body, '@claude')
             || contains(github.event.issue.title, '@claude')))
+        || ((github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
+          && (inputs.issue_number != null || inputs.pr_number != null))
       )
     name: Claude Code
     runs-on: ubuntu-latest
@@ -294,6 +318,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
+          # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
+          prompt: ${{ inputs.prompt || '' }}
           claude_args: |
             --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
