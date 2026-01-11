@@ -33,11 +33,19 @@ on:
         default: ''
   workflow_dispatch:
     inputs:
+      issue_number:
+        description: 'Issue number to operate on (provide either issue_number or pr_number)'
+        required: false
+        type: number
       model:
         description: 'Claude model to use'
         required: false
         type: string
         default: 'claude-opus-4-5'
+      pr_number:
+        description: 'Pull request number to operate on (provide either issue_number or pr_number)'
+        required: false
+        type: number
       system_prompt:
         description: 'System prompt to customize Claude behavior'
         required: false
@@ -180,6 +188,8 @@ jobs:
         mcp__github_inline_comment__create_inline_comment
       # GitHub CLI token for gh commands
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # System prompt (optional, set via workflow inputs)
+      CLAUDE_SYSTEM_PROMPT: ${{ inputs.system_prompt }}
     steps:
       - name: Print workflow trigger
         env:
@@ -291,7 +301,7 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ inputs.system_prompt && format('--system-prompt "{0}"', inputs.system_prompt) || '' }}
+            ${{ inputs.system_prompt && '--system-prompt "$CLAUDE_SYSTEM_PROMPT"' || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
