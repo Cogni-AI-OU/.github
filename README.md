@@ -51,6 +51,52 @@ development tasks:
 
 For complete agent documentation, see [AGENTS.md](AGENTS.md).
 
+## Agentic Files and Configurations
+
+This repository contains multiple files and directories for configuring AI agents.
+Here's what each one does:
+
+### Root-Level Agent Files
+
+- **[AGENTS.md](AGENTS.md)**: Project-specific tips, best practices, and common
+  tasks for agents working in this repository. Read by all AI agents.
+- **[CLAUDE.md](CLAUDE.md)**: Claude-specific configuration including triggers,
+  tools, and workflow settings. Read by Claude agents.
+- **[README.md](README.md)**: High-level project overview, setup instructions,
+  and usage guide for all users (humans and agents).
+
+### .github/copilot-instructions.md
+
+General coding standards, project structure, and troubleshooting guidance. Read
+by GitHub Copilot (including VS Code extension and GitHub UI).
+
+### .github/ Subdirectories
+
+- **[agents/](.github/agents/)**: Specialized agent configurations for specific
+  tasks (e.g., code tours, DevOps, Terraform, research). Each `.agent.md` file
+  defines a custom agent with tailored prompts and capabilities.
+- **[skills/](.github/skills/)**: Reusable agent skills that provide specialized
+  capabilities like git operations, GitHub Actions debugging, and context-aware
+  resource management.
+- **[prompts/](.github/prompts/)**: Prompt templates for common automation tasks
+  (e.g., repository setup).
+- **[instructions/](.github/instructions/)**: Language-specific coding standards
+  and formatting rules (e.g., Python, Markdown, YAML, JSON, Ansible). Applied by
+  linters and followed by agents when writing code.
+
+### Quick Reference
+
+| File/Directory | Primary Audience | Purpose |
+| -------------- | ---------------- | ------- |
+| AGENTS.md | All AI agents | Repository-specific guidance and workflows |
+| CLAUDE.md | Claude agents | Claude-specific configuration |
+| README.md | Humans and agents | Project overview and setup |
+| .github/copilot-instructions.md | GitHub Copilot | Coding standards and project context |
+| .github/agents/ | Agent orchestrators | Specialized agent configurations |
+| .github/skills/ | All AI agents | Reusable capabilities and tools |
+| .github/prompts/ | Humans and agents | Automation prompt templates |
+| .github/instructions/ | Linters and agents | Language-specific code standards |
+
 ## Organization Profile
 
 For information about Cogni AI OÜ, our mission, and how to collaborate, see our
