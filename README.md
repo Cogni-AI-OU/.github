@@ -40,50 +40,21 @@ configuration, see [.github/README.template.md](.github/README.template.md).
 
 ## AI Agents
 
-This repository includes enhanced AI agent configurations and skills for automated
-development tasks:
+This repository provides AI agent configurations for automated development. Key
+resources include the [Copilot Plus Agent](.github/agents/copilot-plus.agent.md)
+and reusable [skills](.github/skills/) for git operations and GitHub Actions debugging.
 
-- **[Copilot Plus Agent](.github/agents/copilot-plus.agent.md)**: Enhanced agent
-  with critical thinking, robust problem-solving, and context-aware resource
-  management
-- **[Agent Skills](.github/skills/)**: Specialized skills for git operations,
-  GitHub Actions debugging, context-aware operations, and robust command execution
+### Agent Configuration Files
 
-### Agent Files
-
-- **[AGENTS.md](AGENTS.md)**: Project-specific tips, best practices, and common
-  tasks for agents working in this repository. Read by all AI agents.
-- **[CLAUDE.md](CLAUDE.md)**: Claude-specific configuration including triggers,
-  tools, and workflow settings. Read by Claude agents.
-- **[README.md](README.md)**: High-level project overview, setup instructions,
-  and usage guide for all users (humans and agents).
-- **.github/copilot-instructions.md**: General coding standards, project structure,
-  and troubleshooting guidance. Read by GitHub Copilot
-  (including VS Code extension and GitHub UI).
-- **[.github/agents/](.github/agents/)**: Specialized agent configurations for specific
-  tasks (e.g., code tours, DevOps, Terraform, research). Each `.agent.md` file
-  defines a custom agent with tailored prompts and capabilities.
-- **[.github/instructions/](.github/instructions/)**: Language-specific coding standards
-  and formatting rules (e.g., Python, Markdown, YAML, JSON). Applied by
-  linters and followed by agents when writing code.
-- **[.github/prompts/](.github/prompts/)**: Prompt templates for common automation tasks
-  (e.g., repository setup).
-- **[.github/skills/](.github/skills/)**: Reusable agent skills that provide specialized
-  capabilities like git operations, GitHub Actions debugging, and context-aware
-  resource management.
-
-### Quick Reference
-
-| File/Directory | Primary Audience | Purpose |
-| -------------- | ---------------- | ------- |
-| AGENTS.md | All AI agents | Repository-specific guidance and workflows |
-| CLAUDE.md | Claude agents | Claude-specific configuration |
-| README.md | Humans and agents | Project overview and setup |
-| .github/copilot-instructions.md | GitHub Copilot | Coding standards and project context |
-| .github/agents/ | Agent orchestrators | Specialized agent configurations |
-| .github/instructions/ | Linters and agents | Language-specific code standards |
-| .github/prompts/ | Humans and agents | Automation prompt templates |
-| .github/skills/ | All AI agents | Reusable capabilities and tools |
+| File/Directory | Audience | Purpose |
+| -------------- | -------- | ------- |
+| [AGENTS.md](AGENTS.md) | All agents | Repository-specific guidance and workflows |
+| [CLAUDE.md](CLAUDE.md) | Claude | Claude-specific configuration |
+| [.github/copilot-instructions.md](.github/copilot-instructions.md) | Copilot | Coding standards and project context |
+| [.github/agents/](.github/agents/) | Orchestrators | Specialized agent configs for specific tasks |
+| [.github/skills/](.github/skills/) | All agents | Reusable capabilities (git, GitHub Actions, etc.) |
+| [.github/prompts/](.github/prompts/) | All | Automation prompt templates |
+| [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
 
 ## Organization Profile
 
