@@ -34,8 +34,8 @@ on:
   workflow_dispatch:
     inputs:
       issue_number:
-        description: 'Issue number to operate on (required for workflow_dispatch)'
-        required: true
+        description: 'Issue number to operate on (provide either issue_number or pr_number)'
+        required: false
         type: number
       model:
         description: 'Claude model to use'
@@ -43,7 +43,7 @@ on:
         type: string
         default: 'claude-opus-4-5'
       pr_number:
-        description: 'Pull request number to operate on (alternative to issue_number)'
+        description: 'Pull request number to operate on (provide either issue_number or pr_number)'
         required: false
         type: number
       system_prompt:
@@ -301,7 +301,7 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ inputs.system_prompt && '--system-prompt "$CLAUDE_SYSTEM_PROMPT"' || '' }}
+            ${{ inputs.system_prompt != '' && '--system-prompt "$CLAUDE_SYSTEM_PROMPT"' || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
