@@ -21,6 +21,11 @@ on:
       - submitted
   workflow_call:
     inputs:
+      agent:
+        description: 'Agent configuration to use'
+        required: false
+        type: string
+        default: 'default'
       issue_number:
         description: 'Issue number to operate on (provide either issue_number or pr_number)'
         required: false
@@ -36,16 +41,20 @@ on:
         type: number
       prompt:
         description: 'Prompt for Claude to execute'
-        required: false
-        type: string
-        default: ''
-      system_prompt:
-        description: 'System prompt to customize Claude behavior'
         required: false
         type: string
         default: ''
   workflow_dispatch:
     inputs:
+      agent:
+        description: 'Agent configuration to use'
+        required: false
+        type: choice
+        options:
+          - default
+          - code-tour
+          - copilot-plus
+        default: 'default'
       issue_number:
         description: 'Issue number to operate on (provide either issue_number or pr_number)'
         required: false
@@ -61,11 +70,6 @@ on:
         type: number
       prompt:
         description: 'Prompt for Claude to execute'
-        required: false
-        type: string
-        default: ''
-      system_prompt:
-        description: 'System prompt to customize Claude behavior'
         required: false
         type: string
         default: ''
@@ -309,17 +313,29 @@ jobs:
           github.event_name != 'pull_request_review_comment' ||
           steps.check_trigger.outputs.should_trigger == 'true'
         id: prepare_args
-        env:
-          SYSTEM_PROMPT: ${{ inputs.system_prompt }}
         run: |
-          ARGS="--model ${{ inputs.model || 'claude-opus-4-5' }} --max-turns 100 --allowedTools \"${{ env.ALLOWED_TOOLS }}\" --mcp-config-file .github/mcp-config.json"
+          ARGS="--model ${{ inputs.model || 'claude-opus-4-5' }}"
+          ARGS="${ARGS} --max-turns 100"
+          ARGS="${ARGS} --allowedTools \"${{ env.ALLOWED_TOOLS }}\""
+          ARGS="${ARGS} --mcp-config-file .github/mcp-config.json"
 
-          if [ -n "$SYSTEM_PROMPT" ]; then
-            ESCAPED_PROMPT=$(printf '%q' "$SYSTEM_PROMPT")
-            ARGS="${ARGS} --system-prompt $ESCAPED_PROMPT"
+          # Load agent configuration if not default
+          AGENT="${{ inputs.agent || 'default' }}"
+          if [ "$AGENT" != "default" ]; then
+            AGENT_FILE=".github/agents/${AGENT}.agent.md"
+            if [ -f "$AGENT_FILE" ]; then
+              AGENT_CONTENT=$(cat "$AGENT_FILE")
+              # Use printf %q for proper shell escaping
+              ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
+              ARGS="${ARGS} --system-prompt ${ESCAPED_AGENT}"
+            fi
           fi
 
-          echo "claude_args=$ARGS" >> "$GITHUB_OUTPUT"
+          {
+            echo 'claude_args<<EOF'
+            echo "$ARGS"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
       - name: Run Claude Code
         if: |
           github.event_name != 'pull_request_review_comment' ||
