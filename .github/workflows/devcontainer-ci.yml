@@ -48,6 +48,8 @@ env:
     molecule
     pre-commit
     uv' }}
+permissions:
+  contents: read
 jobs:
   devcontainer-build:
     name: Build & Test

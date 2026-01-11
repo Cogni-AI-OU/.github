@@ -28,6 +28,8 @@ concurrency:
       github.event.pull_request.number || inputs.pr_number || github.sha
     }}
   cancel-in-progress: true
+permissions:
+  contents: read
 jobs:
   claude-review:
     # Run on pull_request events (skip bot-authored PRs) or workflow_call events
