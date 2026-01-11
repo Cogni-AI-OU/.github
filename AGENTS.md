@@ -18,9 +18,16 @@ For detailed coding standards and formatting guidelines, refer to:
 - [Markdown](.github/instructions/markdown.instructions.md) - Markdown standards
 - [YAML](.github/instructions/yaml.instructions.md) - YAML formatting standards
 
+### Specialized Agents
+
+For specific tasks, use the following specialized agent instructions:
+
+- [Code Tour Agent](.github/agents/code-tour.agent.md) - For creating/updating `.tours/` files
+- [Copilot Plus Agent](.github/agents/copilot-plus.agent.md) - Enhanced Copilot capabilities
+
 ## Common Tasks
 
-### Before commit
+### Before the changes
 
 Before each commit change:
 
@@ -37,7 +44,6 @@ pre-commit run -a
 # Run specific checks
 pre-commit run markdownlint -a
 pre-commit run yamllint -a
-ansible-lint
 ```
 
 ### Understanding the task
