@@ -359,7 +359,7 @@ jobs:
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
             ${{ steps.load_agent.outputs.system_prompt &&
-              format('--system-prompt {0}', steps.load_agent.outputs.system_prompt) || '' }}
+              format('--system-prompt "{0}"', steps.load_agent.outputs.system_prompt) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
