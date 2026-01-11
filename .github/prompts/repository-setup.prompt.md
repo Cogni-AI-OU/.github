@@ -120,13 +120,26 @@ exist. Do not skip items just because a file already exists.
         types: [opened]
       pull_request_review:
         types: [submitted]
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
     jobs:
       claude:
         uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
+        permissions:
+          actions: read
+          contents: write
+          id-token: write
+          issues: write
+          pull-requests: write
         secrets: inherit
     ```
 
   - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
+  - Note: Workflow-level permissions are required when calling reusable workflows with job-level permissions
 
 - [ ] **`.github/workflows/claude-review.yml`**
   - Check if file exists
@@ -141,13 +154,27 @@ exist. Do not skip items just because a file already exists.
     on:
       pull_request:
         types: [edited, opened, ready_for_review, reopened, review_requested]
+      workflow_call:
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
     jobs:
       claude-review:
         uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
+        permissions:
+          actions: read
+          contents: write
+          id-token: write
+          issues: write
+          pull-requests: write
         secrets: inherit
     ```
 
   - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
+  - Note: Workflow-level permissions are required when calling reusable workflows with job-level permissions
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)

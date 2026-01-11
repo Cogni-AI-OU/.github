@@ -1,6 +1,6 @@
 # GitHub Actions Workflows
 
-This directory contains GitHub Actions workflows that automate various tasks for this organization's repositories.
+This directory contains GitHub Actions workflows that automate various tasks.
 
 ## Workflows
 
