@@ -304,6 +304,33 @@ jobs:
           key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
+      - name: Prepare Claude arguments
+        if: |
+          github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true'
+        id: prepare_args
+        env:
+          SYSTEM_PROMPT: ${{ inputs.system_prompt }}
+          MODEL: ${{ inputs.model || 'claude-opus-4-5' }}
+        run: |
+          # Build base arguments
+          ARGS="--model ${MODEL} --max-turns 100"
+          ARGS="${ARGS} --allowedTools \"${{ env.ALLOWED_TOOLS }}\""
+          ARGS="${ARGS} --mcp-config-file .github/mcp-config.json"
+
+          # Add system prompt if provided, using proper shell escaping
+          if [ -n "$SYSTEM_PROMPT" ]; then
+            # Use printf %q to properly escape the system prompt for shell
+            ESCAPED_PROMPT=$(printf '%q' "$SYSTEM_PROMPT")
+            ARGS="${ARGS} --system-prompt ${ESCAPED_PROMPT}"
+          fi
+
+          # Output the arguments (use heredoc to handle multiline safely)
+          {
+            echo 'claude_args<<EOF'
+            echo "$ARGS"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
       - name: Run Claude Code
         if: |
           github.event_name != 'pull_request_review_comment' ||
@@ -320,12 +347,7 @@ jobs:
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
           prompt: ${{ inputs.prompt || '' }}
-          claude_args: |
-            --model ${{ inputs.model || 'claude-opus-4-5' }}
-            --max-turns 100
-            --allowedTools "${{ env.ALLOWED_TOOLS }}"
-            --mcp-config-file .github/mcp-config.json
-            ${{ inputs.system_prompt && format('--system-prompt ''{0}''', inputs.system_prompt) || '' }}
+          claude_args: ${{ steps.prepare_args.outputs.claude_args }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
