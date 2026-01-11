@@ -317,17 +317,22 @@ jobs:
         env:
           AGENT_INPUT: ${{ inputs.agent }}
         run: |
+          set -euo pipefail
           # Sanitize agent name to allow only lowercase letters and hyphens
           AGENT_CLEAN="${AGENT_INPUT//[^a-z-]/}"
+          if [ -z "$AGENT_CLEAN" ]; then
+            echo "Invalid agent input after sanitization: '$AGENT_INPUT'" >&2
+            exit 1
+          fi
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
             AGENT_CONTENT=$(cat "$AGENT_FILE")
             # Use printf %q for proper shell escaping
             ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
-            echo "system_prompt=${ESCAPED_AGENT}" >> "$GITHUB_OUTPUT"
+            printf 'system_prompt=%s\n' "$ESCAPED_AGENT" >> "$GITHUB_OUTPUT"
           else
-            echo "system_prompt=" >> "$GITHUB_OUTPUT"
+            printf 'system_prompt=\n' >> "$GITHUB_OUTPUT"
           fi
       - name: Run Claude Code
         if: |
