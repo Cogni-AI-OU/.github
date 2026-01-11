@@ -33,10 +33,31 @@ etc.) to any repository in the organization that doesn't have its own versions.
    repository
 3. Changes here automatically apply organization-wide
 
-## GitHub Actions
+## Development
 
-For documentation on GitHub Actions workflows, problem matchers, and CI/CD
-configuration, see [.github/README.template.md](.github/README.template.md).
+### Setup
+
+```bash
+# Install pre-commit hooks
+pip install pre-commit
+pre-commit install
+
+# Install Python dependencies (for devcontainer)
+pip install -r .devcontainer/requirements.txt
+```
+
+### Testing and Validation
+
+```bash
+# Run all pre-commit checks
+pre-commit run -a
+
+# Run specific checks
+pre-commit run markdownlint -a
+pre-commit run yamllint -a
+pre-commit run black -a
+pre-commit run flake8 -a
+```
 
 ## AI Agents
 
@@ -53,6 +74,11 @@ This repository provides AI agent configurations for automated development.
 | [.github/skills/](.github/skills/) | All agents | Reusable capabilities (git, GitHub Actions, etc.) |
 | [.github/prompts/](.github/prompts/) | All | Automation prompt templates |
 | [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
+
+## GitHub Actions
+
+For documentation on GitHub Actions workflows, problem matchers, and CI/CD
+configuration, see [.github/README.template.md](.github/README.template.md).
 
 ## Organization Profile
 

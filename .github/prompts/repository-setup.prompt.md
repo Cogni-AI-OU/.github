@@ -192,7 +192,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/README.template.md`
   - Purpose: Documentation for GitHub workflows, agents, and problem matchers
-  - Action: Copy from reference (README.template.md) as `.github/README.md` if missing; customize for repository-specific workflows
+  - Action: Copy from reference (README.template.md) as `.github/README.md` if missing;
+    customize for repository-specific workflows
   - Content: Workflow templates overview, agent prompts usage, problem matchers configuration, security notes
   - Customize: Update workflow references and add repository-specific workflow documentation
 
