@@ -312,7 +312,7 @@ jobs:
             claude-code-${{ runner.os }}-
       - name: Load agent configuration
         if: |
-          inputs.agent != 'default' &&
+    inputs.agent && inputs.agent != 'default' &&
           (github.event_name != 'pull_request_review_comment' ||
           steps.check_trigger.outputs.should_trigger == 'true')
         id: load_agent
