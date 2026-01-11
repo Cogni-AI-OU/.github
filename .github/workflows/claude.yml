@@ -308,34 +308,27 @@ jobs:
           key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
-      - name: Prepare Claude arguments
+      - name: Load agent configuration
         if: |
-          github.event_name != 'pull_request_review_comment' ||
-          steps.check_trigger.outputs.should_trigger == 'true'
-        id: prepare_args
+          inputs.agent != 'default' &&
+          (github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true')
+        id: load_agent
+        env:
+          AGENT_INPUT: ${{ inputs.agent }}
         run: |
-          ARGS="--model ${{ inputs.model || 'claude-opus-4-5' }}"
-          ARGS="${ARGS} --max-turns 100"
-          ARGS="${ARGS} --allowedTools \"${{ env.ALLOWED_TOOLS }}\""
-          ARGS="${ARGS} --mcp-config-file .github/mcp-config.json"
+          # Sanitize agent name to allow only lowercase letters and hyphens
+          AGENT_CLEAN="${AGENT_INPUT//[^a-z-]/}"
+          AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
-          # Load agent configuration if not default
-          AGENT="${{ inputs.agent || 'default' }}"
-          if [ "$AGENT" != "default" ]; then
-            AGENT_FILE=".github/agents/${AGENT}.agent.md"
-            if [ -f "$AGENT_FILE" ]; then
-              AGENT_CONTENT=$(cat "$AGENT_FILE")
-              # Use printf %q for proper shell escaping
-              ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
-              ARGS="${ARGS} --system-prompt ${ESCAPED_AGENT}"
-            fi
+          if [ -f "$AGENT_FILE" ]; then
+            AGENT_CONTENT=$(cat "$AGENT_FILE")
+            # Use printf %q for proper shell escaping
+            ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
+            echo "system_prompt=${ESCAPED_AGENT}" >> "$GITHUB_OUTPUT"
+          else
+            echo "system_prompt=" >> "$GITHUB_OUTPUT"
           fi
-
-          {
-            echo 'claude_args<<EOF'
-            echo "$ARGS"
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
       - name: Run Claude Code
         if: |
           github.event_name != 'pull_request_review_comment' ||
@@ -347,12 +340,18 @@ jobs:
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           allowed_non_write_users: "Copilot"
-          claude_args: ${{ steps.prepare_args.outputs.claude_args }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
           prompt: ${{ inputs.prompt || '' }}
+          claude_args: |
+            --model ${{ inputs.model || 'claude-opus-4-5' }}
+            --max-turns 100
+            --allowedTools "${{ env.ALLOWED_TOOLS }}"
+            --mcp-config-file .github/mcp-config.json
+            ${{ steps.load_agent.outputs.system_prompt &&
+              format('--system-prompt {0}', steps.load_agent.outputs.system_prompt) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
