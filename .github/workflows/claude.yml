@@ -320,8 +320,9 @@ jobs:
           AGENT_INPUT: ${{ inputs.agent }}
         run: |
           set -euo pipefail
-          # Sanitize agent name to allow only lowercase letters and hyphens
-          AGENT_CLEAN="${AGENT_INPUT//[^a-z-]/}"
+          # Lowercase first, then sanitize to allow only lowercase letters and hyphens
+          AGENT_LOWER="${AGENT_INPUT,,}"
+          AGENT_CLEAN="${AGENT_LOWER//[^a-z-]/}"
           if [ -z "$AGENT_CLEAN" ]; then
             echo "Invalid agent input after sanitization: '$AGENT_INPUT'" >&2
             exit 1
@@ -329,10 +330,12 @@ jobs:
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
+            # Use randomized delimiter to prevent output injection
+            DELIMITER="EOF_$(uuidgen | tr -d '-')"
             {
-              echo 'system_prompt<<EOF_SYSTEM_PROMPT'
+              echo "system_prompt<<${DELIMITER}"
               cat "$AGENT_FILE"
-              echo 'EOF_SYSTEM_PROMPT'
+              echo "${DELIMITER}"
             } >> "$GITHUB_OUTPUT"
           else
             echo 'system_prompt=' >> "$GITHUB_OUTPUT"
