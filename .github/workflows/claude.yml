@@ -304,15 +304,6 @@ jobs:
           key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
-      - name: Save system prompt to file
-        if: |
-          inputs.system_prompt != '' &&
-          (github.event_name != 'pull_request_review_comment' ||
-          steps.check_trigger.outputs.should_trigger == 'true')
-        env:
-          SYSTEM_PROMPT: ${{ inputs.system_prompt }}
-        run: |
-          echo "$SYSTEM_PROMPT" > /tmp/system_prompt.txt
       - name: Prepare Claude arguments
         if: |
           github.event_name != 'pull_request_review_comment' ||
