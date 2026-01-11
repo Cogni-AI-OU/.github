@@ -26,6 +26,13 @@ on:
         required: false
         type: string
         default: 'claude-opus-4-5'
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Claude model to use'
+        required: false
+        type: string
+        default: 'claude-opus-4-5'
 concurrency:
   # Include comment/review ID to prevent different comments from cancelling each other
   # while still cancelling duplicate runs of the same comment (e.g., from rapid edits).

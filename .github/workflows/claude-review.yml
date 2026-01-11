@@ -24,6 +24,22 @@ on:
         description: 'Pull request number for workflow_call triggers'
         required: true
         type: number
+  workflow_dispatch:
+    inputs:
+      additional_prompt:
+        description: 'Additional instructions to append to the review prompt'
+        required: false
+        type: string
+        default: ''
+      model:
+        description: 'Claude model to use for review'
+        required: false
+        type: string
+        default: 'claude-opus-4-5'
+      pr_number:
+        description: 'Pull request number for workflow_call triggers'
+        required: true
+        type: number
 
 concurrency:
   group: >-
