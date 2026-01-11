@@ -7,7 +7,7 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [edited, opened, ready_for_review, reopened, review_requested]
+    types: [edited, opened, ready_for_review, reopened, review_requested, synchronize]
   workflow_call:
     inputs:
       additional_prompt:
@@ -51,11 +51,11 @@ permissions:
   contents: read
 jobs:
   claude-review:
-    # Run on pull_request events (skip bot-authored PRs) or workflow_call events
-    # workflow_call requires pr_number input and assumes caller has validated bot status
+    # Run on pull_request events (skip bot-authored PRs), workflow_call events, or workflow_dispatch events
+    # workflow_call and workflow_dispatch require pr_number input and assume caller has validated bot status
     if: |
       (github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot') ||
-      (github.event_name == 'workflow_call' && inputs.pr_number != null)
+      ((github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') && inputs.pr_number != null)
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:
