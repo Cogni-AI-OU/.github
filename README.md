@@ -36,7 +36,7 @@ etc.) to any repository in the organization that doesn't have its own versions.
 ## GitHub Actions
 
 For documentation on GitHub Actions workflows, problem matchers, and CI/CD
-configuration, see [.github/README.md](.github/README.md).
+configuration, see [.github/README.template.md](.github/README.template.md).
 
 ## AI Agents and Skills
 
