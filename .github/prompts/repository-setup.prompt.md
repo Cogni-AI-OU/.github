@@ -17,6 +17,10 @@ Follow the checklist below in order to review the current repository structure a
 files. For each item, check if the file exists, compare it with the template from `.github` repository, and
 create or update it as needed with repository-specific customizations.
 
+**IMPORTANT**: Many checklist items require updating existing files, not just creating missing ones. Pay close
+attention to items marked "**REQUIRED**" or "Action: review and update" - these must be updated even if they
+exist. Do not skip items just because a file already exists.
+
 ## Checklist
 
 ### Phase 1: Essential Configuration Files
@@ -184,24 +188,39 @@ create or update it as needed with repository-specific customizations.
   - Purpose: GitHub Actions problem matcher for pre-commit output
   - Action: Copy from reference if missing
 
+- [ ] **`.github/README.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/README.md`
+  - Purpose: Documentation for GitHub workflows, agents, and problem matchers
+  - Action: Copy from reference if missing; customize for repository-specific workflows
+  - Content: Workflow templates overview, agent prompts usage, problem matchers configuration, security notes
+  - Customize: Update workflow references and add repository-specific workflow documentation
+
+- [ ] **`.github/workflows/README.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/README.md`
+  - Purpose: Documentation for GitHub Actions workflows in the repository
+  - Action: Copy from reference if missing; customize for repository-specific workflows
+  - Content: Workflow descriptions, usage examples, inputs/outputs, security considerations
+  - Customize: Add documentation for any custom workflows specific to the repository
+
 ### Phase 4: Development Container Configuration
 
 - [ ] **`.devcontainer/devcontainer.json`**
   - Check if `.devcontainer/` directory and file exist
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.devcontainer/devcontainer.json`
   - Purpose: Defines containerized development environment
-  - Action: Create if missing; review and update if exists
+  - Action: If file exists, review and update to match organization standards; create if missing
   - Key features: Python, Docker-in-Docker, actionlint, node, make, ripgrep
-  - Customize: Add language-specific features and VS Code extensions
-  - Important: Update `postCreateCommand` and `onCreateCommand` to use repository-specific requirements
+  - Customize: Add language-specific features and VS Code extensions as needed
 
 - [ ] **`.devcontainer/requirements.txt`**
   - Check if file exists (if `.devcontainer/` exists)
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.devcontainer/requirements.txt`
   - Purpose: Python dependencies for devcontainer
-  - Action: Create with base requirements; merge if exists
+  - Action: If file exists, verify it contains base packages; create with base requirements if missing
   - Base packages: ansible, ansible-lint, docker, pre-commit, uv
-  - Customize: Add project-specific Python packages
+  - Customize: Add project-specific Python packages (keep existing project packages)
 
 - [ ] **`.devcontainer/apt-packages.txt`**
   - Check if file exists (if `.devcontainer/` exists)
@@ -209,9 +228,18 @@ create or update it as needed with repository-specific customizations.
   - Purpose: System packages to install in devcontainer
   - Action: Create with base packages; merge if exists
   - Base packages: coreutils, gh, git, mawk, sed, time, vim
+  - This file must be created because devcontainer.json references it in `onCreateCommand`
   - Customize: Add project-specific system dependencies
 
 ### Phase 5: Code Tours and Documentation
+
+- [ ] **`.tours/README.md`**
+  - Check if `.tours/` directory and file exist
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.tours/README.md`
+  - Purpose: Documentation for VS Code code tours
+  - Action: Create if missing; customize for repository-specific tours
+  - Content: What are code tours, how to use them, available tours list
+  - Customize: Update the "Available Tours" section with repository-specific tour descriptions
 
 - [ ] **`.tours/getting-started.tour`**
   - Check if `.tours/` directory and file exist
@@ -221,6 +249,9 @@ create or update it as needed with repository-specific customizations.
   - Content: Overview of repository structure, key files, development workflows
   - Format: JSON file following CodeTour schema
   - Note: Use the code-tour agent to create repository-specific tours
+  - Agent instructions: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/agents/code-tour.agent.md`
+  - The agent should be copied to `.github/agents/code-tour.agent.md` in the repository
+  - Reference the agent when creating tours: "Use the Code Tour Expert agent to create a getting-started tour"
 
 - [ ] **Create or update repository README.md**
   - Check if `README.md` exists
@@ -309,6 +340,35 @@ create or update it as needed with repository-specific customizations.
     - `yaml.instructions.md` - YAML formatting
   - Customize: Only include files relevant to languages/formats used in repository
 
+- [ ] **`.github/agents/` directory**
+  - Check if directory exists with custom agent files
+  - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/agents`
+  - Purpose: Custom agent definitions for specialized tasks
+  - Action: Copy relevant agent files based on repository needs
+  - Required agents:
+    - `code-tour.agent.md` - For creating/updating `.tours/` files (always include)
+    - `README.md` - Documentation of available agents
+  - Optional agents:
+    - `copilot-plus.agent.md` - Enhanced Copilot with critical thinking
+  - Customize: Add repository-specific agents as needed
+
+- [ ] **`.github/skills/` directory**
+  - Check if directory exists with skill files
+  - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/skills`
+  - Purpose: Agent Skills for GitHub Copilot coding agent
+  - Action: Create directory with README.md; optionally copy skill subdirectories
+  - Required files:
+    - `README.md` - Overview of agent skills and how to use them
+    - `context-aware-ops/` - Intelligent resource management
+    - `git/` - Guide for safe git operations
+    - `github-actions/` - Debugging failing workflows
+    - `pre-commit/` - Using pre-commit hooks effectively
+    - `robust-commands/` - Resilient command execution
+    - `skill-writer/` - Generate/update SKILL.md files
+  - Optional skills (copy as needed):
+    - Check remote
+  - Customize: Add repository-specific skills as needed
+
 ### Phase 8: Additional Organization Files
 
 - [ ] **`CODE_OF_CONDUCT.md`**
@@ -329,7 +389,8 @@ create or update it as needed with repository-specific customizations.
 
 - [ ] **Validate all created/updated files**
   - Run pre-commit checks: `pre-commit run -a`
-  - Fix any linting errors found
+    In case of errors, compare `.pre-commit-config.yaml` with upstream if anything else is missing.
+    Otherwise fix any reported linting errors found
   - Ensure all YAML files are valid: `yamllint .`
   - Ensure all Markdown files are valid: `markdownlint **/*.md`
   - Ensure GitHub Actions workflows are valid: `actionlint .github/workflows/*.yml`
@@ -452,14 +513,14 @@ Follow the phases in order:
 
 A successful repository setup includes:
 
-- ✅ All essential configuration files present and valid
-- ✅ Pre-commit hooks configured and working
-- ✅ GitHub Actions workflows configured (using remote references where possible)
-- ✅ Devcontainer configured (if using containerized development)
-- ✅ Documentation updated (README, AGENTS.md, etc.)
-- ✅ All linters passing
-- ✅ Repository follows organization standards
-- ✅ Repository-specific needs addressed
+- [x] All essential configuration files present and valid
+- [x] Pre-commit hooks configured and working
+- [x] GitHub Actions workflows configured (using remote references where possible)
+- [x] Devcontainer configured (if using containerized development)
+- [x] Documentation updated (README, AGENTS.md, etc.)
+- [x] All linters passing
+- [x] Repository follows organization standards
+- [x] Repository-specific needs addressed
 
 ## Final Deliverables
 
