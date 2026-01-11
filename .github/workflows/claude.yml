@@ -21,6 +21,11 @@ on:
       - submitted
   workflow_call:
     inputs:
+      agent:
+        description: 'Agent configuration to use'
+        required: false
+        type: string
+        default: 'default'
       issue_number:
         description: 'Issue number to operate on (provide either issue_number or pr_number)'
         required: false
@@ -36,16 +41,20 @@ on:
         type: number
       prompt:
         description: 'Prompt for Claude to execute'
-        required: false
-        type: string
-        default: ''
-      system_prompt:
-        description: 'System prompt to customize Claude behavior'
         required: false
         type: string
         default: ''
   workflow_dispatch:
     inputs:
+      agent:
+        description: 'Agent configuration to use'
+        required: false
+        type: choice
+        options:
+          - default
+          - code-tour
+          - copilot-plus
+        default: 'default'
       issue_number:
         description: 'Issue number to operate on (provide either issue_number or pr_number)'
         required: false
@@ -61,11 +70,6 @@ on:
         type: number
       prompt:
         description: 'Prompt for Claude to execute'
-        required: false
-        type: string
-        default: ''
-      system_prompt:
-        description: 'System prompt to customize Claude behavior'
         required: false
         type: string
         default: ''
@@ -304,6 +308,27 @@ jobs:
           key: claude-code-${{ runner.os }}-v1
           restore-keys: |
             claude-code-${{ runner.os }}-
+      - name: Load agent configuration
+        if: |
+          inputs.agent != 'default' &&
+          (github.event_name != 'pull_request_review_comment' ||
+          steps.check_trigger.outputs.should_trigger == 'true')
+        id: load_agent
+        env:
+          AGENT_INPUT: ${{ inputs.agent }}
+        run: |
+          # Sanitize agent name to allow only lowercase letters and hyphens
+          AGENT_CLEAN="${AGENT_INPUT//[^a-z-]/}"
+          AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
+
+          if [ -f "$AGENT_FILE" ]; then
+            AGENT_CONTENT=$(cat "$AGENT_FILE")
+            # Use printf %q for proper shell escaping
+            ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
+            echo "system_prompt=${ESCAPED_AGENT}" >> "$GITHUB_OUTPUT"
+          else
+            echo "system_prompt=" >> "$GITHUB_OUTPUT"
+          fi
       - name: Run Claude Code
         if: |
           github.event_name != 'pull_request_review_comment' ||
@@ -325,7 +350,8 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ inputs.system_prompt && format('--system-prompt ''{0}''', inputs.system_prompt) || '' }}
+            ${{ steps.load_agent.outputs.system_prompt &&
+              format('--system-prompt {0}', steps.load_agent.outputs.system_prompt) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
