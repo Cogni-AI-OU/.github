@@ -26,6 +26,11 @@ on:
         required: false
         type: string
         default: 'claude-opus-4-5'
+      system_prompt:
+        description: 'System prompt to customize Claude behavior'
+        required: false
+        type: string
+        default: ''
   workflow_dispatch:
     inputs:
       model:
@@ -33,6 +38,11 @@ on:
         required: false
         type: string
         default: 'claude-opus-4-5'
+      system_prompt:
+        description: 'System prompt to customize Claude behavior'
+        required: false
+        type: string
+        default: ''
 concurrency:
   # Include comment/review ID to prevent different comments from cancelling each other
   # while still cancelling duplicate runs of the same comment (e.g., from rapid edits).
@@ -281,6 +291,7 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
+            ${{ inputs.system_prompt && format('--system-prompt "{0}"', inputs.system_prompt) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
