@@ -40,9 +40,7 @@ configuration, see [.github/README.template.md](.github/README.template.md).
 
 ## AI Agents
 
-This repository provides AI agent configurations for automated development. Key
-resources include the [Copilot Plus Agent](.github/agents/copilot-plus.agent.md)
-and reusable [skills](.github/skills/) for git operations and GitHub Actions debugging.
+This repository provides AI agent configurations for automated development.
 
 ### Agent Configuration Files
 
