@@ -327,12 +327,13 @@ jobs:
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
-            AGENT_CONTENT=$(cat "$AGENT_FILE")
-            # Use printf %q for proper shell escaping
-            ESCAPED_AGENT=$(printf '%q' "$AGENT_CONTENT")
-            printf 'system_prompt=%s\n' "$ESCAPED_AGENT" >> "$GITHUB_OUTPUT"
+            {
+              echo 'system_prompt<<EOF_SYSTEM_PROMPT'
+              cat "$AGENT_FILE"
+              echo 'EOF_SYSTEM_PROMPT'
+            } >> "$GITHUB_OUTPUT"
           else
-            printf 'system_prompt=\n' >> "$GITHUB_OUTPUT"
+            echo 'system_prompt=' >> "$GITHUB_OUTPUT"
           fi
       - name: Run Claude Code
         if: |
