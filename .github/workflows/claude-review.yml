@@ -52,10 +52,10 @@ permissions:
 jobs:
   claude-review:
     # Run on pull_request events (skip bot-authored PRs), workflow_call events, or workflow_dispatch events
-    # workflow_call and workflow_dispatch require pr_number input and assume caller has validated bot status
+    # workflow_call and workflow_dispatch require pr_number input (marked as required)
     if: |
       (github.event_name == 'pull_request' && github.event.pull_request.user.type != 'Bot') ||
-      ((github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') && inputs.pr_number != null)
+      (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
     name: Claude Review
     runs-on: ubuntu-latest
     permissions:

@@ -301,7 +301,7 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ inputs.system_prompt != '' && '--system-prompt "$CLAUDE_SYSTEM_PROMPT"' || '' }}
+            ${{ inputs.system_prompt && '--system-prompt "$CLAUDE_SYSTEM_PROMPT"' || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
