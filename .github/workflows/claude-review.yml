@@ -55,7 +55,9 @@ jobs:
     # Run on pull_request events (skip bot-authored PRs except for ready_for_review),
     # workflow_call events, or workflow_dispatch events.
     # ready_for_review is allowed for bot PRs since it's explicitly triggered by a human user.
-    # workflow_call and workflow_dispatch require pr_number input (marked as required)
+    # workflow_call and workflow_dispatch require pr_number input (marked as required).
+    # Note: GitHub enforces the required: true constraint, so pr_number will always be
+    # provided for workflow_dispatch; no additional null check is needed in this condition.
     if: |
       (github.event_name == 'pull_request' && (
         github.event.pull_request.user.type != 'Bot' ||
