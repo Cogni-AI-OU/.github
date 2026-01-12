@@ -90,4 +90,5 @@ repos:
     rev: v3.14.2
     hooks:
       - id: markdown-link-check
-        args: [--quiet]
+        args:
+          - --quiet
