@@ -3,9 +3,8 @@
 This file provides Claude Code-specific guidance for AI agents. For general agent
 instructions, see [AGENTS.md](AGENTS.md).
 
-**Note**: This file is intended for AI agents (like Claude) working in the
-repository, similar to AGENTS.md. For human-readable documentation about Claude
-workflows, see [.github/workflows/README.md](.github/workflows/README.md).
+This file is intended for AI agents (like Claude) working in the repository,
+similar to AGENTS.md. For human-readable documentation, follow [README.md](README.md).
 
 ## Claude Code Configuration
 
