@@ -17,9 +17,9 @@ Markdown prompts (`.prompt.md`) are human-readable prompt templates designed for
 
 Markdown prompts are ideal for detailed, structured instructions with checklists and examples.
 
-### YAML Format (`.yml` / `.yaml`)
+### YAML Format (`.yml` or `.yaml`)
 
-YAML prompts (`.prompt.yml`) follow the [GitHub Models prompt format](https://docs.github.com/en/github-models/use-github-models/storing-prompts-in-github-repositories)
+YAML prompts (`.prompt.yml` or `.prompt.yaml`) follow the [GitHub Models prompt format](https://docs.github.com/en/github-models/use-github-models/storing-prompts-in-github-repositories)
 and are designed for:
 
 - **GitHub Models**: Direct integration with GitHub's AI model playground
@@ -71,7 +71,7 @@ through a detailed checklist to:
 
 2. **In Pull Request**: Create a PR and ask Copilot to review using the prompt guidelines.
 
-### YAML Prompts (`.prompt.yml`)
+### YAML Prompts (`.prompt.yml` or `.prompt.yaml`)
 
 #### With GitHub Models
 
@@ -94,7 +94,7 @@ Feel free to create your own prompt files for common tasks:
 
 1. Choose the appropriate format:
    - Use `.prompt.md` for human-readable templates and VS Code integration
-   - Use `.prompt.yml` for GitHub Models and programmatic use
+   - Use `.prompt.yml` (or `.prompt.yaml`) for GitHub Models and programmatic use
 2. Structure it with clear sections and checklists (for Markdown) or proper message roles (for YAML)
 3. Include references to relevant documentation and templates
 4. Test it with an AI agent
@@ -114,7 +114,7 @@ When creating prompt files:
 - **Add customization notes**: Guide agents on when/how to adapt
 - **Include validation steps**: Ensure work can be verified
 
-### For YAML Prompts (`.prompt.yml`)
+### For YAML Prompts (`.prompt.yml` or `.prompt.yaml`)
 
 - **Follow GitHub Models format**: Use `messages` array with role-based structure
 - **Define model settings**: Specify `model` and `responseFormat`
