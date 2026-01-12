@@ -362,6 +362,7 @@ jobs:
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
           prompt: ${{ inputs.prompt || '' }}
+          # @fixme: <anthropics/claude-code-action/issues/811>
           claude_args: |
             --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
