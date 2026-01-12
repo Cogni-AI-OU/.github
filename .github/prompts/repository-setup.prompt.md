@@ -202,12 +202,28 @@ exist. Do not skip items just because a file already exists.
           - main
         paths:
           - .devcontainer/**
+      workflow_call:
+        inputs:
+          required_commands:
+            description: Space-separated list of required command-line tools
+            required: false
+            type: string
+            default: ''
+          required_python_packages:
+            description: Space-separated list of required Python packages
+            required: false
+            type: string
+            default: ''
     jobs:
       devcontainer-build:
         uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
         permissions:
           contents: read
           packages: write  # Required for pushing to GitHub Container Registry
+        with:
+          required_commands: ${{ inputs.required_commands }}
+          required_python_packages: ${{ inputs.required_python_packages }}
+        secrets: inherit
     ```
 
   - Note: The `packages: write` permission is **required** for the workflow to push container images to GHCR
@@ -223,6 +239,7 @@ exist. Do not skip items just because a file already exists.
         with:
           required_commands: 'docker npm python3'
           required_python_packages: 'ansible pre-commit'
+        secrets: inherit
     ```
 
 - [ ] **`.github/actionlint-matcher.json`**
