@@ -86,14 +86,8 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-  - repo: local
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.13.6
     hooks:
-      - id: linkcheckmd
-        name: Check Markdown links
-        entry: python -m linkcheckmd
-        language: python
-        types: [markdown]
-        args: [-local, -r, .]
-        pass_filenames: false
-        additional_dependencies:
-          - linkcheckmd
+      - id: markdown-link-check
+        args: [--quiet]
