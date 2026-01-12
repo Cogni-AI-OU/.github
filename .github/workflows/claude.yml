@@ -360,13 +360,14 @@ jobs:
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
           prompt: ${{ inputs.prompt || '' }}
+          # Use settings input for system prompt to properly handle multi-line content
+          settings: ${{ steps.load_agent.outputs.system_prompt &&
+            format('{{"systemPrompt":{0}}}', toJSON(steps.load_agent.outputs.system_prompt)) || '' }}
           claude_args: |
             --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ steps.load_agent.outputs.system_prompt &&
-              format('--system-prompt "{0}"', steps.load_agent.outputs.system_prompt) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
