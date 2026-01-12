@@ -330,15 +330,9 @@ jobs:
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
-            # Use randomized delimiter to prevent output injection
-            DELIMITER="EOF_$(uuidgen | tr -d '-')"
-            {
-              echo "system_prompt<<${DELIMITER}"
-              cat "$AGENT_FILE"
-              echo "${DELIMITER}"
-            } >> "$GITHUB_OUTPUT"
+            echo "agent_file=${AGENT_FILE}" >> "$GITHUB_OUTPUT"
           else
-            echo 'system_prompt=' >> "$GITHUB_OUTPUT"
+            echo 'agent_file=' >> "$GITHUB_OUTPUT"
           fi
       - name: Run Claude Code
         if: |
@@ -361,8 +355,8 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ steps.load_agent.outputs.system_prompt &&
-              format('--system-prompt "{0}"', steps.load_agent.outputs.system_prompt) || '' }}
+            ${{ steps.load_agent.outputs.agent_file &&
+              format('--system-prompt-file {0}', steps.load_agent.outputs.agent_file) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
