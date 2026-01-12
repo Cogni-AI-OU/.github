@@ -125,6 +125,15 @@ To contribute new prompts or improve existing ones:
 - **Reference standards**: Link to style guides and templates
 - **Allow flexibility**: Balance standardization with customization
 
+## Prompt structure
+
+Prompts have two key parts:
+
+- Runtime information (required)
+- Development information (optional)
+
+See: [Storing prompts in GitHub repositories](https://docs.github.com/en/github-models/use-github-models/storing-prompts-in-github-repositories)
+
 ## Additional Resources
 
 - [AGENTS.md](../../AGENTS.md) - General agent guidance
