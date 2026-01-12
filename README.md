@@ -72,10 +72,13 @@ This repository provides AI agent configurations for automated development.
 | [.github/copilot-instructions.md](.github/copilot-instructions.md) | Copilot | Coding standards and project context |
 | [.github/agents/](.github/agents/) | Orchestrators | Specialized agent configs for specific tasks |
 | [.github/skills/](.github/skills/) | All agents | Reusable capabilities (git, GitHub Actions, etc.) |
-| [.github/prompts/](.github/prompts/) | All | Automation prompt templates |
+| [.github/prompts/](.github/prompts/) | All | Prompt templates (`.md` for VSCode, `.yaml` for GitHub Models) |
 | [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
 
-See also: [Best practices for using GitHub Copilot](https://gh.io/copilot-coding-agent-tips).
+See also:
+
+- [`AGENTS.md` file format specification](https://agents.md/)
+- [Best practices for using GitHub Copilot](https://gh.io/copilot-coding-agent-tips).
 
 ## GitHub Actions
 

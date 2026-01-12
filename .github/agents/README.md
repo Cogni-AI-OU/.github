@@ -160,8 +160,6 @@ Repository administrators must configure:
 - Monitor workflow logs for unexpected behavior
 - Rotate `ANTHROPIC_API_KEY` periodically
 
-See [.github/README.md](../README.md#security) for detailed security configuration.
-
 ## Troubleshooting
 
 ### Claude Not Responding to Comments
@@ -178,5 +176,5 @@ If Claude isn't responding to your comments, verify:
    - You're replying to a comment that contains `@claude`
 
 The workflow uses a two-stage filter to prevent abuse while allowing natural
-conversation flow. Check the [Actions tab](../../actions) for workflow run details
+conversation flow. Check the Actions tab in your repository for workflow run details
 if Claude doesn't respond as expected.
