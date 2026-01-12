@@ -1,6 +1,6 @@
 # AGENTS.md
 
-[Guidance for coding agents][agents-md] working in this repository.
+Guidance for coding agents working in this repository.
 
 ## Quick Start
 
@@ -123,6 +123,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 
 - Claude-specific guidance: [CLAUDE.md](CLAUDE.md)
 - Main documentation: [README.md](README.md)
+- AGENTS.md file format specification: [agents.md][agents-md]
 
 ## Troubleshooting
 
