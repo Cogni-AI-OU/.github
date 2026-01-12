@@ -144,7 +144,8 @@ jobs:
   - `default` - Basic AI assistant behavior
   - `code-tour` - VSCode CodeTour expert agent
   - `copilot-plus` - Enhanced coding agent with critical thinking
-- `enable-github-mcp` (optional): Enable GitHub MCP (Model Context Protocol) integration (default: `false`)
+- `enable-github-mcp` (optional): Enable GitHub MCP (Model Context Protocol) integration
+  (default: `false`)
 
 **Jobs**:
 

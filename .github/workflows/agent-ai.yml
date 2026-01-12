@@ -91,8 +91,6 @@ jobs:
       actions: read
       contents: read
       id-token: write
-      issues: write
-      pull-requests: write
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -117,9 +115,11 @@ jobs:
           if [ -f "$PROMPT_FILE_PATH" ]; then
             # Use randomized delimiter to prevent output injection
             DELIMITER="EOF_$(uuidgen | tr -d '-')"
+            # Extract system_prompt field from YAML, fallback to entire content if not found
+            SYSTEM_PROMPT=$(yq eval '.system_prompt // ""' "$PROMPT_FILE_PATH" 2>/dev/null || cat "$PROMPT_FILE_PATH")
             {
               echo "prompt_content<<${DELIMITER}"
-              cat "$PROMPT_FILE_PATH"
+              echo "$SYSTEM_PROMPT"
               echo "${DELIMITER}"
             } >> "$GITHUB_OUTPUT"
             echo "Loaded prompt file: $PROMPT_FILE_PATH"
