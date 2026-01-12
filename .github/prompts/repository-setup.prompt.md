@@ -73,6 +73,17 @@ exist. Do not skip items just because a file already exists.
   - Standard patterns: localhost, 127.0.0.1, example.com URLs, placeholder GitHub URLs
   - Customize: Add URLs that require authentication or block automated requests
   - Note: Supports regular expressions (one expression per line)
+  - Note: Don't add there blocked URLs by firewall as for workaround to pass linters
+
+- [ ] **`.markdown-link-check.json`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.markdown-link-check.json`
+  - Purpose: Configuration for markdown-link-check to customize link validation behavior
+  - Action: Create if missing with standard configuration
+  - Standard settings: timeout, ignorePatterns for localhost/example.com, retryOn429, aliveStatusCodes
+  - Customize: Add repository-specific ignore patterns, timeout values, or HTTP headers
+  - Note: Supports JSON configuration with regex patterns, replacement patterns, and status code handling
+  - Note: Don't add there blocked URLs by firewall as for workaround to pass linters
 
 - [ ] **`.yamllint`**
   - Check if file exists in repository root
