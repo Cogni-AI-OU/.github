@@ -33,23 +33,54 @@ etc.) to any repository in the organization that doesn't have its own versions.
    repository
 3. Changes here automatically apply organization-wide
 
+## Development
+
+### Setup
+
+```bash
+# Install pre-commit hooks
+pip install pre-commit
+pre-commit install
+
+# Install Python dependencies (for devcontainer)
+pip install -r .devcontainer/requirements.txt
+```
+
+### Testing and Validation
+
+```bash
+# Run all pre-commit checks
+pre-commit run -a
+
+# Run specific checks
+pre-commit run markdownlint -a
+pre-commit run yamllint -a
+pre-commit run black -a
+pre-commit run flake8 -a
+```
+
+## AI Agents
+
+This repository provides AI agent configurations for automated development.
+
+### Agent Configuration Files
+
+| File/Directory | Audience | Purpose |
+| -------------- | -------- | ------- |
+| [AGENTS.md](AGENTS.md) | All agents | Repository-specific guidance and workflows |
+| [CLAUDE.md](CLAUDE.md) | Claude | Claude-specific configuration |
+| [.github/copilot-instructions.md](.github/copilot-instructions.md) | Copilot | Coding standards and project context |
+| [.github/agents/](.github/agents/) | Orchestrators | Specialized agent configs for specific tasks |
+| [.github/skills/](.github/skills/) | All agents | Reusable capabilities (git, GitHub Actions, etc.) |
+| [.github/prompts/](.github/prompts/) | All | Automation prompt templates |
+| [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
+
+See also: [Best practices for using GitHub Copilot](https://gh.io/copilot-coding-agent-tips).
+
 ## GitHub Actions
 
 For documentation on GitHub Actions workflows, problem matchers, and CI/CD
-configuration, see [.github/README.md](.github/README.md).
-
-## AI Agents and Skills
-
-This repository includes enhanced AI agent configurations and skills for automated
-development tasks:
-
-- **[Copilot Plus Agent](.github/agents/copilot-plus.agent.md)**: Enhanced agent
-  with critical thinking, robust problem-solving, and context-aware resource
-  management
-- **[Agent Skills](.github/skills/)**: Specialized skills for git operations,
-  GitHub Actions debugging, context-aware operations, and robust command execution
-
-For complete agent documentation, see [AGENTS.md](AGENTS.md).
+configuration, see [.github/README.template.md](.github/README.template.md).
 
 ## Organization Profile
 

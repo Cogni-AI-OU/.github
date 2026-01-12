@@ -1,6 +1,6 @@
 # GitHub Actions Workflows
 
-This directory contains GitHub Actions workflows that automate various tasks for this organization's repositories.
+This directory contains GitHub Actions workflows that automate various tasks.
 
 ## Workflows
 
@@ -107,6 +107,30 @@ secrets: inherit
 **Purpose**: Builds and tests the development container configuration to ensure all required tools and
 dependencies are properly installed.
 
+**Reusable**: This workflow can be called from other repositories using:
+
+```yaml
+# In another repository's workflow
+jobs:
+  devcontainer:
+    uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
+    permissions:
+      contents: read
+      packages: write  # Required for pushing to GitHub Container Registry
+    with:
+      # Optional: Customize required commands (space-separated)
+      required_commands: 'docker npm python3'
+      # Optional: Customize required Python packages (space-separated)
+      required_python_packages: 'ansible pre-commit'
+```
+
+**Inputs**:
+
+- `required_commands` (optional): Space-separated list of required command-line tools. Defaults to a
+  comprehensive set including actionlint, ansible, docker, gh, make, node, npm, pip, pre-commit, python3, and rg.
+- `required_python_packages` (optional): Space-separated list of required Python packages. Defaults to ansible,
+  ansible-lint, docker, molecule, pre-commit, and uv.
+
 **Jobs**:
 
 - **devcontainer-build**: Builds the dev container, verifies required commands and Python packages are
@@ -117,7 +141,11 @@ dependencies are properly installed.
 - Pull requests affecting `.devcontainer/` or this workflow
 - Pushes to main branch affecting `.devcontainer/` or this workflow
 - Weekly schedule (Mondays at 00:00 UTC)
-- Manual dispatch
+- Reusable workflow call
+
+**Permissions**: When calling this workflow from another repository, you **must** grant `packages: write`
+permission to allow pushing container images to GitHub Container Registry. The workflow will fail with a
+permission error if this is not set in the calling workflow.
 
 **Reference**: Uses [devcontainers/ci][devcontainer-ci-action]
 

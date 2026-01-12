@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for automation agents working in this repository.
+[Guidance for coding agents](https://agents.md/) working in this repository.
 
 ## Quick Start
 
@@ -18,15 +18,20 @@ For detailed coding standards and formatting guidelines, refer to:
 - [Markdown](.github/instructions/markdown.instructions.md) - Markdown standards
 - [YAML](.github/instructions/yaml.instructions.md) - YAML formatting standards
 
+### Specialized Agents
+
+For specific tasks, use the following specialized agent instructions:
+
+- [Code Tour Agent](.github/agents/code-tour.agent.md) - For creating/updating `.tours/` files
+- [Copilot Plus Agent](.github/agents/copilot-plus.agent.md) - Enhanced Copilot capabilities
+
 ## Common Tasks
 
-### Before commit
+### Before each commit
 
-Before each commit change:
-
-- Verify your expected changes by `git diff --no-color`.
-- Use linting and validation tools used by project to confirm your changes meet the coding standard.
-- If repo uses git hooks, run them to validate your changes.
+- Verify your expected changes with `git diff --no-color`.
+- Use the project linting/validation tools to confirm your changes meet the coding standard.
+- If the repo uses git hooks, run them to validate your changes.
 
 ### Linting and Validation
 
@@ -37,14 +42,13 @@ pre-commit run -a
 # Run specific checks
 pre-commit run markdownlint -a
 pre-commit run yamllint -a
-ansible-lint
 ```
 
-### Understanding the task
+### Understanding the Task
 
-- When task is not clear, check further relevant information for better clarity.
-- If triggered by a short comment, check if parent's comment exist and consist further information.
-- If none of above helps, and task is ambiguous, comminicate to the user with potential options.
+- When the task is not clear, look for additional context.
+- If triggered by a brief comment, check whether the parent comment exists and includes more detail.
+- If it's still ambiguous, communicate with the user and propose options.
 
 ### Testing
 
@@ -55,12 +59,6 @@ molecule test
 # Syntax check
 molecule syntax
 ```
-
-### Updating Organization Defaults
-
-- Edit files in `.github/ISSUE_TEMPLATE/` to modify issue templates
-- Edit `.github/pull_request_template.md` for PR template changes
-- Update `profile/README.md` to change the organization's public profile
 
 ### Adding or Modifying Workflows
 
@@ -97,7 +95,7 @@ on top of the updated target branch:
 
 ### Critical: Using `report_progress` Tool
 
-**CRITICAL WARNING**: The `report_progress` tool automatically rebases your branch against the remote
+**WARNING**: The `report_progress` tool automatically rebases your branch against the remote
 tracking branch. This **WILL CRASH** the session if your local history has diverged from remote.
 
 **When Crash Occurs:**
@@ -123,9 +121,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 
 ## References
 
-- Org profile and collaboration info: [profile/README.md](profile/README.md)
 - Claude-specific guidance: [CLAUDE.md](CLAUDE.md)
-- Community standards: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - Main documentation: [README.md](README.md)
 
 ## Troubleshooting
@@ -152,8 +148,3 @@ If Copilot or automated checks behave unexpectedly:
 - Re-run `pre-commit run -a` locally to surface formatting or linting issues.
 - Verify `.markdownlint.yaml` and `.yamllint` have not been modified incorrectly.
 - If problems persist, open an issue with details of the command run and any error output.
-
-### Shell commands issues
-
-- Prefix shell commands with `time` to measure execution duration for better visibility.
-- When command takes too long, use `timeout` or similar approach to limit execution time.
