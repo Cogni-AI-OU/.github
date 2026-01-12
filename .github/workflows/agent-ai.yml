@@ -107,7 +107,8 @@ jobs:
         run: |
           set -euo pipefail
           # Sanitize prompt file input
-          PROMPT_FILE_CLEAN="${PROMPT_FILE_INPUT//[^a-z0-9-]/}"
+          PROMPT_FILE_LOWER="${PROMPT_FILE_INPUT,,}"
+          PROMPT_FILE_CLEAN="${PROMPT_FILE_LOWER//[^a-z0-9-]/}"
           if [ -z "$PROMPT_FILE_CLEAN" ]; then
             echo "Invalid prompt file input after sanitization: '$PROMPT_FILE_INPUT'" >&2
             exit 1
