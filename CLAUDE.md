@@ -44,8 +44,15 @@ to display as `claude[bot]` at the workflow configuration level.
 
 ### Model Selection
 
-By default, workflows use `claude-opus-4-5`. To change the model, update the
-`--model` argument in the workflow's `claude_args`.
+By default, workflows use `claude-opus-4-5`. Available models include:
+
+- `claude-haiku-4-5` - Fastest model, best for quick tasks
+- `claude-opus-4-5` - Default model, best balance of speed and capability
+- `claude-sonnet-4-5` - Most capable model, best for complex tasks
+
+To change the model when using workflow_dispatch (manual trigger), select from
+the dropdown menu in the GitHub Actions UI. For workflow_call triggers, pass
+the model name as an input parameter.
 
 ## Tools
 
