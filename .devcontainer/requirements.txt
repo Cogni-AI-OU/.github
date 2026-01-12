@@ -6,6 +6,7 @@ ansible-lint
 argcomplete>=1.9.4
 docker>=7.1
 jinja2-cli
+lychee
 molecule
 molecule-docker
 pipenv

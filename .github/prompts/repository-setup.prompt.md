@@ -65,6 +65,15 @@ exist. Do not skip items just because a file already exists.
   - Action: Create if missing (can be empty initially)
   - Customize: Add paths to exclude (e.g., `node_modules/`, `vendor/`, generated docs)
 
+- [ ] **`.lycheeignore`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.lycheeignore`
+  - Purpose: URL patterns to exclude from link checking with lychee
+  - Action: Create if missing with standard ignore patterns
+  - Standard patterns: localhost, 127.0.0.1, example.com URLs, placeholder GitHub URLs
+  - Customize: Add URLs that require authentication or block automated requests
+  - Note: Supports regular expressions (one expression per line)
+
 - [ ] **`.yamllint`**
   - Check if file exists in repository root
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.yamllint`

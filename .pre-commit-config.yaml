@@ -72,6 +72,12 @@ repos:
     rev: v1.7.8
     hooks:
       - id: actionlint
+  - repo: https://github.com/lycheeverse/lychee.git
+    rev: v0.15.1
+    hooks:
+      - id: lychee
+        # Optionally include additional CLI arguments
+        args: ["--no-progress", "--exclude", "file://"]
   - repo: https://github.com/lyz-code/yamlfix
     rev: 1.19.1
     hooks:
@@ -86,8 +92,3 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-  - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.13.6
-    hooks:
-      - id: markdown-link-check
-        args: [--quiet]
