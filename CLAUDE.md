@@ -1,7 +1,10 @@
 # CLAUDE.md
 
-This file provides Claude Code-specific guidance. For general agent instructions,
-see [AGENTS.md](AGENTS.md).
+This file provides Claude Code-specific guidance for AI agents. For general agent
+instructions, see [AGENTS.md](AGENTS.md).
+
+This file is intended for AI agents (like Claude) working in the repository,
+similar to AGENTS.md. For human-readable documentation, follow [README.md](README.md).
 
 ## Claude Code Configuration
 
@@ -41,11 +44,6 @@ to display as `claude[bot]` at the workflow configuration level.
 
 - `ANTHROPIC_API_KEY`: API key for Claude (stored as repository secret)
 - `ALLOWED_TOOLS`: Comma-separated list of tools Claude can use
-
-### Model Selection
-
-By default, workflows use `claude-opus-4-5`. To change the model, update the
-`--model` argument in the workflow's `claude_args`.
 
 ## Tools
 

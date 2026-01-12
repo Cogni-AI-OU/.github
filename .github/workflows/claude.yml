@@ -62,7 +62,11 @@ on:
       model:
         description: 'Claude model to use'
         required: false
-        type: string
+        type: choice
+        options:
+          - claude-haiku-4-5
+          - claude-opus-4-5
+          - claude-sonnet-4-5
         default: 'claude-opus-4-5'
       pr_number:
         description: 'Pull request number to operate on (provide either issue_number or pr_number)'
