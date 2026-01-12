@@ -77,7 +77,10 @@ repos:
     hooks:
       - id: lychee
         # Optionally include additional CLI arguments
-        args: ["--no-progress", "--exclude", "file://"]
+        args:
+          - --no-progress
+          - --exclude
+          - file://
   - repo: https://github.com/lyz-code/yamlfix
     rev: 1.19.1
     hooks:
