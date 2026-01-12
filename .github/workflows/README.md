@@ -149,6 +149,37 @@ permission error if this is not set in the calling workflow.
 
 **Reference**: Uses [devcontainers/ci][devcontainer-ci-action]
 
+## Model Selection
+
+When using Claude workflows (`claude.yml` and `claude-review.yml`), you can select
+from the following models:
+
+- **`claude-haiku-4-5`** - Fastest model, best for quick tasks and simple changes
+- **`claude-opus-4-5`** (default) - Best balance of speed and capability for most use cases
+- **`claude-sonnet-4-5`** - Most capable model, best for complex tasks requiring deep reasoning
+
+### How to Select a Model
+
+**For manual workflow execution (workflow_dispatch)**:
+
+When manually triggering a Claude workflow from the GitHub Actions UI, you can select
+the model from a dropdown menu.
+
+**For workflow_call triggers**:
+
+When calling a Claude workflow from another workflow, pass the model name as an input:
+
+```yaml
+uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
+with:
+  model: 'claude-sonnet-4-5'  # or 'claude-haiku-4-5', 'claude-opus-4-5'
+secrets: inherit
+```
+
+**Default behavior**:
+
+If no model is specified, workflows default to `claude-opus-4-5`.
+
 ## Security Considerations
 
 The Claude workflows grant intentionally broad git access to enable autonomous code changes. To safely use
