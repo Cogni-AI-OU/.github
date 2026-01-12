@@ -361,6 +361,15 @@ exist. Do not skip items just because a file already exists.
   - Content: Triggering info, allowed tools, model selection, MCP config
   - Customize: Adjust allowed tools and MCP servers for repository needs
 
+- [ ] **`.gemini/settings.json`**
+  - Check if `.gemini/` directory and file exist
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.gemini/settings.json`
+  - Purpose: Google Gemini AI configuration
+  - Action: Create if missing
+  - Content: Configuration that points Gemini to use `AGENTS.md` as the context file
+  - Format: JSON file with `contextFileName` property
+  - Example: `{ "contextFileName": "AGENTS.md" }`
+
 - [ ] **`.github/copilot-instructions.md`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/copilot-instructions.md`
