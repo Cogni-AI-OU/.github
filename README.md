@@ -75,7 +75,10 @@ This repository provides AI agent configurations for automated development.
 | [.github/prompts/](.github/prompts/) | All | Automation prompt templates |
 | [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
 
-See also: [Best practices for using GitHub Copilot](https://gh.io/copilot-coding-agent-tips).
+See also:
+
+- [`AGENTS.md` file format specification](https://agents.md/)
+- [Best practices for using GitHub Copilot](https://gh.io/copilot-coding-agent-tips).
 
 ## GitHub Actions
 
