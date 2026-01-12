@@ -1,6 +1,6 @@
 # GitHub Workflows and Actions
 
-This directory contains GitHub Actions workflows and related configuration.
+This directory contains GitHub Actions workflows, agent prompts, and related configuration.
 
 ## Workflows
 
@@ -45,6 +45,27 @@ The `workflow-templates/` directory contains reference workflows that are not
 actively executed but are preserved for future use or copying to other
 repositories. These templates can be customized and moved to the `workflows/`
 directory when needed.
+
+## Agent Prompts
+
+The `prompts/` directory contains ready-to-use prompts for AI agents to perform
+common repository management tasks.
+
+### Available Prompts
+
+- **repository-setup.prompt.md**: Comprehensive checklist for standardizing
+  repository structure, configuration files, and workflows
+
+### Usage
+
+Prompts can be referenced directly in agent conversations:
+
+```text
+@claude Please follow .github/prompts/repository-setup.prompt.md to
+standardize this repository.
+```
+
+For detailed usage instructions, see [prompts/README.md](prompts/README.md).
 
 ## Problem Matchers
 

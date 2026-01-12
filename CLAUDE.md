@@ -60,6 +60,7 @@ environment variable. Current categories include:
 - **Git operations**: `Bash(git:*)` - Full access for commits and pushes
 - **GitHub CLI**: `Bash(gh issue:*)`, `Bash(gh pr:*)`, `Bash(gh search:*)`
 - **Data processing**: `Bash(jq:*)`, `Bash(yq:*)`
+- **Pre-commit**: `Bash(pre-commit run:*)` - Run code quality checks
 
 If you need a tool that isn't in the allowed tools list, suggest adding it to
 the relevant workflow file in `.github/workflows/`.
@@ -72,19 +73,26 @@ monitoring commit activity.
 ### Model Context Protocol (MCP)
 
 MCP servers extend Claude's capabilities with additional tools and integrations.
-When MCP is enabled via `--mcp-config`, you gain access to:
+When MCP is enabled via `--mcp-config-file`, you gain access to:
 
 - GitHub API integrations (issues, PRs, repositories)
 - External service integrations
 - Custom tool implementations
 
-MCP configuration is specified in workflow files using JSON format.
+**Custom MCP Configuration:**
+
+MCP configuration is maintained in a separate config file (`.github/mcp-config.json`)
+and referenced in workflow files using the `--mcp-config-file` flag.
+
+For information on configuring custom MCP servers, see the
+[Custom Agents documentation](.github/agents/README.md).
 
 ## Prompting Best Practices
 
 When working with Claude in this repository:
 
-- Reference `AGENTS.md` for coding standards and formatting rules
+- Reference `AGENTS.md` for coding standards and common tasks
+- Reference `.github/copilot-instructions.md` for detailed project context
 - Run `pre-commit run -a` before finalizing changes
 - Keep responses concise; avoid restating obvious context
 - Focus on actionable issues rather than stylistic preferences

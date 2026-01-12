@@ -15,10 +15,56 @@ on:
       - .github/workflows/devcontainer-ci.yml
   schedule:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
-  workflow_dispatch:
+  workflow_call:
+    # IMPORTANT: When calling this reusable workflow from another repository,
+    # you MUST grant 'packages: write' permission in the calling workflow.
+    # Example:
+    #   jobs:
+    #     devcontainer:
+    #       uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
+    #       permissions:
+    #         contents: read
+    #         packages: write  # Required for pushing to GitHub Container Registry
+    inputs:
+      required_commands:
+        description: Space-separated list of required command-line tools
+        required: false
+        type: string
+        default: ''
+      required_python_packages:
+        description: Space-separated list of required Python packages
+        required: false
+        type: string
+        default: ''
+env:
+  # Keep the commands and packages in lexicographical order.
+  REQUIRED_COMMANDS: >-
+    ${{ inputs.required_commands != '' && inputs.required_commands || 'actionlint
+    ansible
+    docker
+    gh
+    make
+    node
+    npm
+    pip
+    pre-commit
+    python3
+    rg' }}
+  REQUIRED_PYTHON_PACKAGES: >-
+    ${{ inputs.required_python_packages != '' && inputs.required_python_packages || 'ansible
+    ansible-lint
+    docker
+    molecule
+    pre-commit
+    uv' }}
+permissions:
+  contents: read
 jobs:
   devcontainer-build:
     name: Build & Test
+    permissions:
+      contents: read
+      packages: write  # Enables push to GHCR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -42,29 +88,22 @@ jobs:
           # Remove /. pattern to handle repos like "org/.github" -> "org/github"
           SAFE_REPO_NAME="${REPO_LOWER//\/\./\/}"
           echo "name=ghcr.io/${SAFE_REPO_NAME}/devcontainer" >> "$GITHUB_OUTPUT"
+      - name: Check cache image existence
+        id: cache_check
+        continue-on-error: true
+        run: |
+          IMAGE_NAME="${{ steps.image.outputs.name }}"
+          echo "Checking if cache image exists: ${IMAGE_NAME}:latest"
+          if docker pull "${IMAGE_NAME}:latest" 2>/dev/null; then
+            echo "✓ Cache image found: ${IMAGE_NAME}:latest"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "⚠ Cache image not found: ${IMAGE_NAME}:latest"
+            echo "⚠ Build will proceed without cache (first build or image expired)"
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Build and test dev container
         uses: devcontainers/ci@v0.3
-        env:
-          # Keep the commands and packages in lexicographical order.
-          REQUIRED_COMMANDS: >-
-            actionlint
-            ansible
-            docker
-            gh
-            make
-            node
-            npm
-            pip
-            pre-commit
-            python3
-            rg
-          REQUIRED_PACKAGES: >-
-            ansible
-            ansible-lint
-            docker
-            molecule
-            pre-commit
-            uv
         with:
           imageName: ${{ steps.image.outputs.name }}
           cacheFrom: ${{ steps.image.outputs.name }}
@@ -85,7 +124,7 @@ jobs:
 
             # Check all required Python packages are installed
             echo "Checking required Python packages..."
-            for pkg in $REQUIRED_PACKAGES; do
+            for pkg in $REQUIRED_PYTHON_PACKAGES; do
               if ! python3 -m pip show "$pkg" &> /dev/null; then
                 echo "✗ Required Python package '$pkg' is missing"
                 exit 1
