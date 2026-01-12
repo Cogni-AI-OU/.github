@@ -140,20 +140,27 @@ jobs:
     # so this documentation is placed before the conditional expression.
     if: |
       (
-        github.event.comment.author_association == 'OWNER' ||
-        github.event.comment.author_association == 'MEMBER' ||
-        github.event.comment.author_association == 'COLLABORATOR' ||
-        github.event.comment.author_association == 'CONTRIBUTOR' ||
-        github.event.review.author_association == 'OWNER' ||
-        github.event.review.author_association == 'MEMBER' ||
-        github.event.review.author_association == 'COLLABORATOR' ||
-        github.event.review.author_association == 'CONTRIBUTOR' ||
-        (github.event.issue.pull_request && github.event.issue.user.login == github.actor) ||
-        (github.event.pull_request && github.event.pull_request.user.login == github.event.review.user.login) ||
-        (github.event.pull_request && github.event.pull_request.user.login == github.event.comment.user.login) ||
-        (github.event.issue && github.event.issue.user.login == github.actor) ||
         github.event_name == 'workflow_call' ||
-        github.event_name == 'workflow_dispatch'
+        github.event_name == 'workflow_dispatch' ||
+        (github.event.comment && (
+          github.event.comment.author_association == 'OWNER' ||
+          github.event.comment.author_association == 'MEMBER' ||
+          github.event.comment.author_association == 'COLLABORATOR' ||
+          github.event.comment.author_association == 'CONTRIBUTOR'
+        )) ||
+        (github.event.review && (
+          github.event.review.author_association == 'OWNER' ||
+          github.event.review.author_association == 'MEMBER' ||
+          github.event.review.author_association == 'COLLABORATOR' ||
+          github.event.review.author_association == 'CONTRIBUTOR'
+        )) ||
+        (github.event.issue && github.event.issue.pull_request &&
+          github.event.issue.user.login == github.actor) ||
+        (github.event.pull_request && github.event.review &&
+          github.event.pull_request.user.login == github.event.review.user.login) ||
+        (github.event.pull_request && github.event.comment &&
+          github.event.pull_request.user.login == github.event.comment.user.login) ||
+        (github.event.issue && github.event.issue.user.login == github.actor)
       ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude'))
         || (github.event_name == 'pull_request_review_comment'
@@ -334,15 +341,10 @@ jobs:
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
-            # Use randomized delimiter to prevent output injection
-            DELIMITER="EOF_$(uuidgen | tr -d '-')"
-            {
-              echo "system_prompt<<${DELIMITER}"
-              cat "$AGENT_FILE"
-              echo "${DELIMITER}"
-            } >> "$GITHUB_OUTPUT"
+            # Expose the sanitized file path instead of embedding file contents in outputs
+            echo "system_prompt_file=$AGENT_FILE" >> "$GITHUB_OUTPUT"
           else
-            echo 'system_prompt=' >> "$GITHUB_OUTPUT"
+            echo 'system_prompt_file=' >> "$GITHUB_OUTPUT"
           fi
       - name: Run Claude Code
         if: |
@@ -360,13 +362,14 @@ jobs:
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           # Optional: Provide a prompt for workflow_dispatch/workflow_call triggers
           prompt: ${{ inputs.prompt || '' }}
+          # @fixme: <anthropics/claude-code-action/issues/811>
           claude_args: |
             --model ${{ inputs.model || 'claude-opus-4-5' }}
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ steps.load_agent.outputs.system_prompt &&
-              format('--system-prompt "{0}"', steps.load_agent.outputs.system_prompt) || '' }}
+            ${{ steps.load_agent.outputs.system_prompt_file &&
+              format('--system-prompt-file {0}', steps.load_agent.outputs.system_prompt_file) || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
