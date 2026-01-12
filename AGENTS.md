@@ -1,6 +1,6 @@
 # AGENTS.md
 
-[Guidance for coding agents](https://agents.md/) working in this repository.
+Guidance for coding agents working in this repository.
 
 ## Quick Start
 
@@ -123,6 +123,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 
 - Claude-specific guidance: [CLAUDE.md](CLAUDE.md)
 - Main documentation: [README.md](README.md)
+- AGENTS.md file format specification: [agents.md][agents-md]
 
 ## Troubleshooting
 
@@ -148,3 +149,7 @@ If Copilot or automated checks behave unexpectedly:
 - Re-run `pre-commit run -a` locally to surface formatting or linting issues.
 - Verify `.markdownlint.yaml` and `.yamllint` have not been modified incorrectly.
 - If problems persist, open an issue with details of the command run and any error output.
+
+<!-- Named links -->
+
+[agents-md]: https://agents.md/
