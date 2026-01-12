@@ -1,0 +1,220 @@
+---
+# Agent-AI Workflow using GitHub Actions AI Inference
+# See: https://github.com/actions/ai-inference
+# Note: Keep keys and envs in alphabetical order.
+name: Agent AI
+on:
+  workflow_call:
+    inputs:
+      enable-github-mcp:
+        description: Enable GitHub MCP (Model Context Protocol) integration
+        required: false
+        type: boolean
+        default: false
+      model:
+        description: AI model to use for inference
+        required: false
+        type: string
+        default: openai/gpt-4o
+      prompt:
+        description: Prompt string to send to the AI agent
+        required: false
+        type: string
+        default: ''
+      prompt-file:
+        description: Prompt file to use (from .github/prompts/)
+        required: false
+        type: string
+        default: default
+      system-prompt-file:
+        description: System prompt / agent configuration file to use
+        required: false
+        type: string
+        default: default
+  workflow_dispatch:
+    inputs:
+      enable-github-mcp:
+        description: Enable GitHub MCP (Model Context Protocol) integration
+        required: false
+        type: boolean
+        default: false
+      model:
+        description: AI model to use for inference
+        required: false
+        type: choice
+        options:
+          - DeepSeek-R1
+          - DeepSeek-R1-0528
+          - DeepSeek-V3-0324
+          - Ministral-3B
+          - gpt-4.1
+          - gpt-4o-mini
+          - gpt-5
+          - gpt-5-nano
+          - grok-3
+          - grok-3-mini
+          - mistral-medium-2505
+          - mistral-small-2503
+          - openai/gpt-4o
+        default: openai/gpt-4o
+      prompt:
+        description: Prompt string to send to the AI agent
+        required: false
+        type: string
+        default: ''
+      prompt-file:
+        description: Prompt file to use (from .github/prompts/)
+        required: false
+        type: choice
+        options:
+          - default
+        default: default
+      system-prompt-file:
+        description: System prompt / agent configuration file to use
+        required: false
+        type: choice
+        options:
+          - code-tour
+          - copilot-plus
+          - default
+        default: default
+concurrency:
+  group: agent-ai-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref || github.sha }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  agent-ai:
+    name: Agent AI
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Load prompt file
+        id: load_prompt
+        env:
+          PROMPT_FILE_INPUT: ${{ inputs.prompt-file }}
+        run: |
+          set -euo pipefail
+          # Sanitize prompt file input
+          PROMPT_FILE_LOWER="${PROMPT_FILE_INPUT,,}"
+          PROMPT_FILE_CLEAN="${PROMPT_FILE_LOWER//[^a-z0-9-]/}"
+          if [ -z "$PROMPT_FILE_CLEAN" ]; then
+            echo "Invalid prompt file input after sanitization: '$PROMPT_FILE_INPUT'" >&2
+            exit 1
+          fi
+          PROMPT_FILE_PATH=".github/prompts/${PROMPT_FILE_CLEAN}.prompt.yml"
+          if [ -f "$PROMPT_FILE_PATH" ]; then
+            # Use randomized delimiter to prevent output injection
+            DELIMITER="EOF_$(uuidgen | tr -d '-')"
+            # Extract system_prompt field from YAML, fallback to entire content if not found
+            SYSTEM_PROMPT=$(yq eval '.system_prompt // ""' "$PROMPT_FILE_PATH" 2>/dev/null || cat "$PROMPT_FILE_PATH")
+            {
+              echo "prompt_content<<${DELIMITER}"
+              echo "$SYSTEM_PROMPT"
+              echo "${DELIMITER}"
+            } >> "$GITHUB_OUTPUT"
+            echo "Loaded prompt file: $PROMPT_FILE_PATH"
+          else
+            echo "Prompt file not found: $PROMPT_FILE_PATH"
+            echo 'prompt_content=' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Load system prompt file
+        id: load_system_prompt
+        env:
+          SYSTEM_PROMPT_FILE_INPUT: ${{ inputs.system-prompt-file }}
+        run: |
+          set -euo pipefail
+          # Sanitize system prompt file input
+          SYSTEM_PROMPT_LOWER="${SYSTEM_PROMPT_FILE_INPUT,,}"
+          SYSTEM_PROMPT_CLEAN="${SYSTEM_PROMPT_LOWER//[^a-z-]/}"
+          if [ -z "$SYSTEM_PROMPT_CLEAN" ]; then
+            echo "Invalid system prompt file input after sanitization: '$SYSTEM_PROMPT_FILE_INPUT'" >&2
+            exit 1
+          fi
+
+          # Check if it's 'default' or an agent file
+          if [ "$SYSTEM_PROMPT_CLEAN" = "default" ]; then
+            echo "Using default system prompt"
+            echo 'system_prompt=' >> "$GITHUB_OUTPUT"
+          else
+            AGENT_FILE=".github/agents/${SYSTEM_PROMPT_CLEAN}.agent.md"
+            if [ -f "$AGENT_FILE" ]; then
+              # Use randomized delimiter to prevent output injection
+              DELIMITER="EOF_$(uuidgen | tr -d '-')"
+              {
+                echo "system_prompt<<${DELIMITER}"
+                cat "$AGENT_FILE"
+                echo "${DELIMITER}"
+              } >> "$GITHUB_OUTPUT"
+              echo "Loaded system prompt file: $AGENT_FILE"
+            else
+              echo "System prompt file not found: $AGENT_FILE"
+              echo 'system_prompt=' >> "$GITHUB_OUTPUT"
+            fi
+          fi
+      - name: Prepare AI inference configuration
+        id: prepare_config
+        env:
+          ENABLE_MCP: ${{ inputs.enable-github-mcp }}
+          MODEL: ${{ inputs.model || 'openai/gpt-4o' }}
+          PROMPT_INPUT: ${{ inputs.prompt }}
+          PROMPT_FILE_CONTENT: ${{ steps.load_prompt.outputs.prompt_content }}
+          SYSTEM_PROMPT_CONTENT: ${{ steps.load_system_prompt.outputs.system_prompt }}
+        run: |
+          set -euo pipefail
+          echo "Model: $MODEL"
+          echo "Enable MCP: $ENABLE_MCP"
+          echo "Prompt input length: ${#PROMPT_INPUT} characters"
+          echo "Prompt file content length: ${#PROMPT_FILE_CONTENT} characters"
+          echo "System prompt content length: ${#SYSTEM_PROMPT_CONTENT} characters"
+
+          # Combine prompt sources
+          COMBINED_PROMPT=""
+          if [ -n "$SYSTEM_PROMPT_CONTENT" ]; then
+            COMBINED_PROMPT="$SYSTEM_PROMPT_CONTENT"
+          fi
+          if [ -n "$PROMPT_FILE_CONTENT" ]; then
+            if [ -n "$COMBINED_PROMPT" ]; then
+              COMBINED_PROMPT="${COMBINED_PROMPT}\n\n"
+            fi
+            COMBINED_PROMPT="${COMBINED_PROMPT}${PROMPT_FILE_CONTENT}"
+          fi
+          if [ -n "$PROMPT_INPUT" ]; then
+            if [ -n "$COMBINED_PROMPT" ]; then
+              COMBINED_PROMPT="${COMBINED_PROMPT}\n\n"
+            fi
+            COMBINED_PROMPT="${COMBINED_PROMPT}${PROMPT_INPUT}"
+          fi
+
+          # Use randomized delimiter to prevent output injection
+          DELIMITER="EOF_$(uuidgen | tr -d '-')"
+          {
+            echo "combined_prompt<<${DELIMITER}"
+            echo -e "$COMBINED_PROMPT"
+            echo "${DELIMITER}"
+          } >> "$GITHUB_OUTPUT"
+      - name: Run AI Inference
+        id: ai_inference
+        uses: actions/ai-inference@v1
+        with:
+          enable-github-mcp: ${{ inputs.enable-github-mcp }}
+          github-mcp-token: ${{ secrets.GITHUB_TOKEN }}
+          model: ${{ inputs.model || 'openai/gpt-4o' }}
+          prompt: ${{ steps.prepare_config.outputs.combined_prompt }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Display AI Response
+        env:
+          AI_RESPONSE: ${{ steps.ai_inference.outputs.response }}
+        run: |-
+          echo "AI Inference Response:"
+          echo "====================="
+          echo "$AI_RESPONSE"

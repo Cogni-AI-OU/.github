@@ -102,6 +102,65 @@ secrets: inherit
 
 **Reference**: Uses [anthropics/claude-code-action][claude-action]
 
+### agent-ai.yml
+
+**Purpose**: Provides a flexible AI inference workflow using GitHub's AI Inference action. This workflow
+supports multiple AI models and can be customized with different prompts and agent configurations.
+
+**Reusable**: This workflow can be called from other repositories using:
+
+```yaml
+# In another repository's workflow
+jobs:
+  ai-task:
+    uses: Cogni-AI-OU/.github/.github/workflows/agent-ai.yml@main
+    with:
+      model: 'openai/gpt-4o'
+      prompt: 'Review this code and suggest improvements'
+      system-prompt-file: 'copilot-plus'
+      enable-github-mcp: true
+    secrets: inherit
+```
+
+**Inputs**:
+
+- `model` (optional): AI model to use (default: `openai/gpt-4o`). Available models:
+  - `openai/gpt-4o` (default) - OpenAI GPT-4 optimized model
+  - `gpt-4.1` - GPT-4.1 model
+  - `gpt-4o-mini` - Smaller, faster GPT-4 variant
+  - `gpt-5` - GPT-5 model
+  - `gpt-5-nano` - Compact GPT-5 model
+  - `grok-3` - xAI's Grok-3 model
+  - `grok-3-mini` - Smaller Grok-3 variant
+  - `mistral-small-2503` - Mistral small model
+  - `mistral-medium-2505` - Mistral medium model
+  - `Ministral-3B` - Compact Ministral model
+  - `DeepSeek-R1` - DeepSeek R1 reasoning model
+  - `DeepSeek-R1-0528` - DeepSeek R1 version 0528
+  - `DeepSeek-V3-0324` - DeepSeek V3 version 0324
+- `prompt` (optional): Direct prompt string to send to the AI agent
+- `prompt-file` (optional): Prompt file to use from `.github/prompts/` (default: `default`)
+- `system-prompt-file` (optional): System prompt or agent configuration to use. Options:
+  - `default` - Basic AI assistant behavior
+  - `code-tour` - VSCode CodeTour expert agent
+  - `copilot-plus` - Enhanced coding agent with critical thinking
+- `enable-github-mcp` (optional): Enable GitHub MCP (Model Context Protocol) integration
+  (default: `false`)
+
+**Jobs**:
+
+- **agent-ai**: Runs AI inference with the specified model and prompts, combining prompt file, system
+  prompt, and direct prompt inputs
+
+**Configuration**:
+
+- Prompts are combined in order: system prompt → prompt file → direct prompt
+- System prompts are loaded from `.github/agents/*.agent.md` files
+- Prompt files are loaded from `.github/prompts/*.prompt.yml` files
+- GitHub MCP integration provides additional context about repositories and workflows
+
+**Reference**: Uses [actions/ai-inference][ai-inference-action]
+
 ### devcontainer-ci.yml
 
 **Purpose**: Builds and tests the development container configuration to ensure all required tools and
@@ -205,6 +264,7 @@ These are registered in the workflows before running the corresponding tools.
 <!-- Named links -->
 
 [actionlint-action]: https://github.com/reviewdog/action-actionlint
+[ai-inference-action]: https://github.com/actions/ai-inference
 [pre-commit-action]: https://github.com/pre-commit/action
 [claude-action]: https://github.com/anthropics/claude-code-action
 [devcontainer-ci-action]: https://github.com/devcontainers/ci
