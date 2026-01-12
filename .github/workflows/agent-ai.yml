@@ -79,7 +79,7 @@ on:
           - default
         default: default
 concurrency:
-  group: agent-ai-${{ github.run_id }}
+  group: agent-ai-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref || github.sha }}
   cancel-in-progress: true
 permissions:
   contents: read
