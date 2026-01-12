@@ -160,7 +160,7 @@ Repository administrators must configure:
 - Monitor workflow logs for unexpected behavior
 - Rotate `ANTHROPIC_API_KEY` periodically
 
-See [.github/README.md](../README.md#security) for detailed security configuration.
+See [.github/README.template.md](../README.template.md#security) for detailed security configuration.
 
 ## Troubleshooting
 
