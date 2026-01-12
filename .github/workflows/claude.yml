@@ -334,15 +334,16 @@ jobs:
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
 
           if [ -f "$AGENT_FILE" ]; then
-            # Use randomized delimiter to prevent output injection
-            DELIMITER="EOF_$(uuidgen | tr -d '-')"
-            {
-              echo "system_prompt<<${DELIMITER}"
-              cat "$AGENT_FILE"
-              echo "${DELIMITER}"
-            } >> "$GITHUB_OUTPUT"
+            # Create a settings file with the system prompt from the agent file
+            # Use jq to properly escape the content and create valid JSON
+            # Use RUNNER_TEMP for secure temporary storage (auto-cleaned by GitHub Actions)
+            SETTINGS_FILE="${RUNNER_TEMP}/claude-settings-$(uuidgen).json"
+            jq -Rs '{systemPrompt: .}' "$AGENT_FILE" > "$SETTINGS_FILE"
+            echo "settings_file=${SETTINGS_FILE}" >> "$GITHUB_OUTPUT"
+            echo "has_agent=true" >> "$GITHUB_OUTPUT"
           else
-            echo 'system_prompt=' >> "$GITHUB_OUTPUT"
+            echo 'settings_file=' >> "$GITHUB_OUTPUT"
+            echo "has_agent=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Run Claude Code
         if: |
@@ -365,8 +366,7 @@ jobs:
             --max-turns 100
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
             --mcp-config-file .github/mcp-config.json
-            ${{ steps.load_agent.outputs.system_prompt &&
-              format('--system-prompt "{0}"', steps.load_agent.outputs.system_prompt) || '' }}
+          settings: ${{ steps.load_agent.outputs.has_agent == 'true' && steps.load_agent.outputs.settings_file || '' }}
 
           # Models: <https://platform.claude.com/docs/en/about-claude/models/overview>
 
