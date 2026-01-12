@@ -332,7 +332,8 @@ jobs:
           if [ -f "$AGENT_FILE" ]; then
             # Create a settings file with the system prompt from the agent file
             # Use jq to properly escape the content and create valid JSON
-            SETTINGS_FILE="/tmp/claude-settings-$(uuidgen).json"
+            # Use RUNNER_TEMP for secure temporary storage (auto-cleaned by GitHub Actions)
+            SETTINGS_FILE="${RUNNER_TEMP}/claude-settings-$(uuidgen).json"
             jq -Rs '{systemPrompt: .}' "$AGENT_FILE" > "$SETTINGS_FILE"
             echo "settings_file=${SETTINGS_FILE}" >> "$GITHUB_OUTPUT"
             echo "has_agent=true" >> "$GITHUB_OUTPUT"
