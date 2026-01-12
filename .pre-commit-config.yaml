@@ -93,6 +93,6 @@ repos:
         entry: python -m linkcheckmd
         language: python
         types: [markdown]
-        args: [--method, head, --local]
+        args: [-local]
         additional_dependencies:
           - linkcheckmd
