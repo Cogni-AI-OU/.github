@@ -3,6 +3,8 @@
 This directory contains prompt files that can be used with AI agents (Claude Code, GitHub Copilot, etc.)
 to perform standardized tasks across repositories.
 
+- For the agent-facing prompt catalog, see [AGENTS.md](AGENTS.md).
+
 ## Prompt File Formats
 
 This directory supports two types of prompt formats:
@@ -28,21 +30,6 @@ and are designed for:
 
 YAML prompts define structured message exchanges with specific roles (system, user, assistant) and
 model configuration.
-
-## Available Prompts
-
-### Repository Setup (`repository-setup.prompt.md`)
-
-Comprehensive prompt for reviewing and standardizing repository structure. This prompt guides an agent
-through a detailed checklist to:
-
-- Create or update essential configuration files (`.editorconfig`, `.gitignore`, `.pre-commit-config.yaml`)
-- Set up linting configurations (`.markdownlint.yaml`, `.yamllint`, `.yamlfix.toml`)
-- Configure GitHub Actions workflows (using remote workflow references)
-- Set up development containers (`.devcontainer/`)
-- Create code tours and documentation
-- Configure GitHub files (issue templates, PR templates, CODEOWNERS)
-- Set up agent configuration files (`AGENTS.md`, `CLAUDE.md`, copilot instructions)
 
 ## How to Use
 
