@@ -73,6 +73,17 @@ exist. Do not skip items just because a file already exists.
   - Standard patterns: localhost, 127.0.0.1, example.com URLs, placeholder GitHub URLs
   - Customize: Add URLs that require authentication or block automated requests
   - Note: Supports regular expressions (one expression per line)
+  - Note: Don't add blocked URLs there as a workaround to pass linters
+
+- [ ] **`.markdown-link-check.json`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.markdown-link-check.json`
+  - Purpose: Configuration for markdown-link-check to customize link validation behavior
+  - Action: Create if missing with standard configuration
+  - Standard settings: timeout, ignorePatterns for localhost/example.com, retryOn429, aliveStatusCodes
+  - Customize: Add repository-specific ignore patterns, timeout values, or HTTP headers
+  - Note: Supports JSON configuration with regex patterns, replacement patterns, and status code handling
+  - Note: Don't add blocked URLs there as a workaround to pass linters
 
 - [ ] **`.yamllint`**
   - Check if file exists in repository root
@@ -129,12 +140,6 @@ exist. Do not skip items just because a file already exists.
         types: [opened]
       pull_request_review:
         types: [submitted]
-    permissions:
-      actions: read
-      contents: write
-      id-token: write
-      issues: write
-      pull-requests: write
     jobs:
       claude:
         uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
@@ -163,12 +168,6 @@ exist. Do not skip items just because a file already exists.
       pull_request:
         types: [edited, opened, ready_for_review, reopened, review_requested]
       workflow_call:
-    permissions:
-      actions: read
-      contents: write
-      id-token: write
-      issues: write
-      pull-requests: write
     jobs:
       claude-review:
         uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
@@ -182,7 +181,6 @@ exist. Do not skip items just because a file already exists.
     ```
 
   - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
-  - Note: Workflow-level permissions are required when calling reusable workflows with job-level permissions
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)
@@ -255,6 +253,29 @@ exist. Do not skip items just because a file already exists.
   - Action: Copy from reference if missing; customize for repository-specific workflows
   - Content: Workflow descriptions, usage examples, inputs/outputs, security considerations
   - Customize: Add documentation for any custom workflows specific to the repository
+
+- [ ] **`.github/workflows/AGENTS.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/AGENTS.md`
+  - Purpose: Agent catalog describing workflows, triggers, and inputs
+  - Action: Create if missing; update when workflows are added, removed, or renamed
+
+- [ ] **`.github/prompts/` directory**
+  - Check if directory exists with prompt files
+  - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/prompts`
+  - Purpose: Prompt templates for GitHub Models, Claude, and Copilot
+  - Action: Include relevant prompt files; keep formats (Markdown/YAML) as upstream
+  - Available prompts:
+    - `default.prompt.yml` - Default prompt for agent-ai workflow
+    - `repository-setup.prompt.md` - This setup prompt
+    - `test.prompt.yml` - Example prompt
+  - Customize: Add prompts for repository-specific tasks as needed
+
+- [ ] **`.github/prompts/AGENTS.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/prompts/AGENTS.md`
+  - Purpose: Catalog of prompts with format and intended use for agents
+  - Action: Create if missing; update when prompts change
 
 ### Phase 4: Development Container Configuration
 
@@ -401,6 +422,12 @@ exist. Do not skip items just because a file already exists.
     - `yaml.instructions.md` - YAML formatting
   - Customize: Only include files relevant to languages/formats used in repository
 
+- [ ] **`.github/instructions/AGENTS.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/instructions/AGENTS.md`
+  - Purpose: Catalog of instruction files with scopes for agents
+  - Action: Create if missing and keep in sync when instruction files change
+
 - [ ] **`.github/agents/` directory**
   - Check if directory exists with custom agent files
   - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/agents`
@@ -408,6 +435,7 @@ exist. Do not skip items just because a file already exists.
   - Action: Copy relevant agent files based on repository needs
   - Required agents:
     - `code-tour.agent.md` - For creating/updating `.tours/` files (always include)
+    - `FIREWALL.md` - Firewall allowlist for Copilot agents (always include)
     - `README.md` - Documentation of available agents
   - Optional agents:
     - `copilot-plus.agent.md` - Enhanced Copilot with critical thinking
@@ -450,7 +478,9 @@ exist. Do not skip items just because a file already exists.
 
 - [ ] **Validate all created/updated files**
   - Run pre-commit checks: `pre-commit run -a`
-    In case of errors, compare `.pre-commit-config.yaml` with upstream if anything else is missing.
+    - If errors occur, compare `.pre-commit-config.yaml` with upstream to ensure all required hooks are present
+    - Then fix any remaining linting errors reported by the hooks
+    - Note: In case of firewall issues, don't add blocked URLs to ignore list to pass the linters
     Otherwise fix any reported linting errors found
   - Ensure all YAML files are valid: `yamllint .`
   - Ensure all Markdown files are valid: `markdownlint **/*.md`
@@ -476,6 +506,14 @@ exist. Do not skip items just because a file already exists.
   - Note any manual steps required (e.g., setting secrets)
 
 ## Important Notes
+
+### File References and Organization Repository
+
+When working with this prompt, you may encounter references to files that don't exist in the target
+repository. Before creating new files, always check if they already exist in the organization's `.github`
+repository at `https://github.com/Cogni-AI-OU/.github`. Many files are meant to be copied or referenced
+from the organization repository rather than created from scratch. This ensures consistency across all
+repositories and reduces maintenance overhead.
 
 ### Remote Workflow References
 

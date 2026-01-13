@@ -49,23 +49,9 @@ directory when needed.
 ## Agent Prompts
 
 The `prompts/` directory contains ready-to-use prompts for AI agents to perform
-common repository management tasks.
-
-### Available Prompts
-
-- **repository-setup.prompt.md**: Comprehensive checklist for standardizing
-  repository structure, configuration files, and workflows
-
-### Usage
-
-Prompts can be referenced directly in agent conversations:
-
-```text
-@claude Please follow .github/prompts/repository-setup.prompt.md to
-standardize this repository.
-```
-
-For detailed usage instructions, see [prompts/README.md](prompts/README.md).
+common repository management tasks. For agent-loading guidance and catalog, see
+[prompts/AGENTS.md](prompts/AGENTS.md). For human-oriented details, see
+[prompts/README.md](prompts/README.md).
 
 ## Problem Matchers
 

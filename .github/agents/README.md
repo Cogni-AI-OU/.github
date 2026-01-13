@@ -3,10 +3,11 @@
 This folder contains custom agents designed to enhance your development workflow.
 These agents are tailored to specific tasks and integrate seamlessly with GitHub Copilot and MCP servers.
 
-## Featured Agent
+## Available Agents
 
-**[Copilot Plus](copilot-plus.agent.md)** - Enhanced agent with critical thinking, robust problem-solving,
-and context-aware resource management. Features:
+### [Copilot Plus](copilot-plus.agent.md)
+
+Enhanced agent with critical thinking, robust problem-solving, and context-aware resource management. Features:
 
 - Automatic file size checking before viewing
 - Smart filtering for long outputs
@@ -14,30 +15,37 @@ and context-aware resource management. Features:
 - Self-improvement capabilities
 - Never-give-up problem-solving approach
 
+### [Code Tour Expert](code-tour.agent.md)
+
+Expert agent for creating and maintaining VSCode CodeTour files. Features:
+
+- Creating `.tours/` files with proper CodeTour schema
+- Designing step-by-step walkthroughs for complex codebases
+- Implementing interactive tours with command links and code snippets
+- Setting up primary tours and tour linking sequences
+
+**When to use**: Anytime you need to create or update `.tour` files for repository onboarding.
+
 ## How to Use Custom Agents
 
 ### Installation
 
 - Download the desired agent configuration file (`*.agent.md`) and add it to your repository.
 - Use the Copilot CLI for local testing: [Copilot CLI](https://gh.io/customagents/cli).
+- Merge the agent configuration file into the default branch of your repository.
+- Access installed agents through the VS Code Chat interface, Copilot CLI,
+  or assign them in Copilot Coding Agent (CCA).
 
-## Reference for configuring custom agents
+For more details, see:
 
-For more details, see the [About](https://gh.io/customagents) and
-[Custom Agents Documentation](https://gh.io/customagents/config).
-
-Additional documentation:
-
-- [About custom agents](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents)
+- [About custom agents](https://gh.io/customagents)
+- [Custom Agents Documentation](https://gh.io/customagents/config).
 - [Create custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+- [Copilot CLI](https://gh.io/customagents/cli)
+- [GitHub Awesome Copilot repository](https://github.com/github/awesome-copilot)
+- [Supported Models](https://docs.github.com/en/copilot/reference/ai-models/supported-models)
 
-For a collection of awesome custom agents, visit the
-[GitHub Awesome Copilot repository](https://github.com/github/awesome-copilot).
-
-For information on supported AI models, see
-[Supported Models](https://docs.github.com/en/copilot/reference/ai-models/supported-models).
-
-## Customizing the development environment
+## Customizing development environment
 
 See: [Customizing the development environment for GitHub Copilot coding agent][customize-env].
 
@@ -62,54 +70,7 @@ built-in MCP servers for GitHub operations (`github_comment` and
 
 #### Custom MCP Servers
 
-You can add custom MCP servers for additional integrations. There are two ways
-to configure MCP servers:
-
-##### Method 1: Inline configuration (recommended for simple setups)
-
-Pass MCP config directly in the workflow file using `--mcp-config`:
-
-```yaml
-claude_args: |
-  --model claude-opus-4-5
-  --mcp-config '{
-    "mcpServers": {
-      "server_name": {
-        "command": "node",
-        "args": ["path/to/server.js"],
-        "env": {
-          "API_KEY": "${{ secrets.API_KEY }}"
-        }
-      }
-    }
-  }'
-```
-
-##### Method 2: File-based configuration
-
-Create `.github/mcp-config.json` and reference it in your workflow:
-
-```json
-{
-  "mcpServers": {
-    "server_name": {
-      "command": "node",
-      "args": ["path/to/server.js"],
-      "env": {
-        "API_KEY": "..."
-      }
-    }
-  }
-}
-```
-
-Then reference it in `claude_args`:
-
-```yaml
-claude_args: |
-  --model claude-opus-4-5
-  --mcp-config-file .github/mcp-config.json
-```
+You can add custom MCP servers for additional integrations.
 
 **Important notes:**
 
@@ -124,11 +85,6 @@ claude_args: |
   MCP servers if needed.
 
 Follow the instructions in the agent's documentation to configure the necessary MCP servers.
-
-### Activation
-
-- Merge the agent configuration file into the default branch of your repository.
-- Access installed agents through the VS Code Chat interface, Copilot CLI, or assign them in CCA.
 
 ## Security Considerations
 
