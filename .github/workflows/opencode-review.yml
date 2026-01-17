@@ -65,3 +65,7 @@ jobs:
             - If no significant issues exist, state that briefly.
             - Reference AGENTS.md if present for project conventions.
             - Suggest committable improvements for simple fixes.
+      - name: Show OpenCode log on failure
+        if: failure()
+        run: |-
+          tail -n 100 ~/.local/share/opencode/log/*.log 2>/dev/null
