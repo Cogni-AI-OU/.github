@@ -25,6 +25,10 @@ on:
         description: Claude model to use for review
         required: false
         type: string
+      pr_number:
+        description: Pull request number for workflow_call triggers
+        required: true
+        type: number
   workflow_dispatch:
     inputs:
       additional_prompt:
@@ -41,6 +45,10 @@ on:
           - anthropic/claude-sonnet-4-5
         required: false
         type: choice
+      pr_number:
+        description: Pull request number for manual workflow execution
+        required: true
+        type: number
 jobs:
   review:
     # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
@@ -61,7 +69,10 @@ jobs:
       - name: Get PR number
         id: pr-number
         run: |
-          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+          if [ "${{ github.event_name }}" = "workflow_call" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ];
+          then
+            echo "number=${{ inputs.pr_number }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "pull_request_target" ]; then
             echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
           else
             echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
