@@ -42,8 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
-      issues: write
       pull-requests: write
     steps:
       - name: Get PR number
@@ -54,9 +52,6 @@ jobs:
           else
             echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
           fi
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
       - name: Get PR details
         id: pr-details
         run: |
@@ -65,6 +60,10 @@ jobs:
           echo "sha=$(jq -r .head.sha pr_data.json)" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          persist-credentials: false
       - uses: anomalyco/opencode/github@latest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
