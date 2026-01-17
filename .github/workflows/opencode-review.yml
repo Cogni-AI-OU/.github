@@ -18,6 +18,9 @@ on:
       - ready_for_review
       - reopened
       - review_requested
+    issue_comment:
+      types:
+        - created
   workflow_call:
     inputs:
       model:
@@ -44,12 +47,19 @@ jobs:
     # workflow_call and workflow_dispatch require pr_number input (marked as required).
     # Note: GitHub enforces the required: true constraint, so pr_number will always be
     # provided for workflow_dispatch; no additional null check is needed in this condition.
-    if: |
-      (github.event_name == 'pull_request' && (
-        github.event.pull_request.user.type != 'Bot' ||
-        github.event.action == 'ready_for_review'
-      )) ||
-      (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
+      if: |
+        github.event_name == 'pull_request_target' || (
+          github.event_name == 'issue_comment' &&
+          github.event.issue.pull_request &&
+          startsWith(github.event.comment.body, '/review') &&
+          contains(fromJson('["OWNER","MEMBER"]'), github.event.comment.author_association)
+        ) || (
+          github.event_name == 'pull_request' && (
+            github.event.pull_request.user.type != 'Bot' ||
+            github.event.action == 'ready_for_review'
+          )
+        ) ||
+        (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
     name: OpenCode Review
     runs-on: ubuntu-latest
     permissions:
