@@ -1,8 +1,11 @@
+---
+# See: <https://opencode.ai/docs/github/>
+# Note: Keep keys and envs in alphabetical order.
 name: opencode-review
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, ready_for_review, reopened, review_requested]
 
 jobs:
   review:
