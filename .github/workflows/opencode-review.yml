@@ -2,11 +2,32 @@
 # See: <https://opencode.ai/docs/github/>
 # Note: Keep keys and envs in alphabetical order.
 name: opencode-review
-
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review, reopened, review_requested]
-
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+      - reopened
+      - review_requested
+  workflow_call:
+    inputs:
+      model:
+        default: anthropic/claude-opus-4-5
+        description: Claude model to use for review
+        required: false
+        type: string
+  workflow_dispatch:
+    inputs:
+      model:
+        default: anthropic/claude-opus-4-5
+        description: Claude model to use for review
+        options:
+          - anthropic/claude-haiku-4-5
+          - anthropic/claude-opus-4-5
+          - anthropic/claude-sonnet-4-5
+        required: false
+        type: choice
 jobs:
   review:
     runs-on: ubuntu-latest
@@ -24,11 +45,12 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
           # See: <https://opencode.ai/docs/models/>
-          model: anthropic/claude-sonnet-4-20250514
-          prompt: |
+          model: |
+            ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
+            && inputs.model || 'anthropic/claude-opus-4-5' }}
+          prompt: |-
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
-
             Review this pull request:
             - Check for code quality issues
             - In case the latest CI build fails, identify the main cause of failure.
@@ -36,7 +58,6 @@ jobs:
             - Missing error handling
             - Performance issues with measurable impact
             - Security vulnerabilities
-
             Guidelines:
             - Be concise. Only comment on high-value issues, not style preferences.
             - Skip praise, summaries, and obvious observations.
