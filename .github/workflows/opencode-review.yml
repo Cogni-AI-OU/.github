@@ -30,12 +30,13 @@ on:
         type: choice
 jobs:
   review:
+    name: OpenCode Review
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
-      pull-requests: read
-      issues: read
+      id-token: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v6
         with:
