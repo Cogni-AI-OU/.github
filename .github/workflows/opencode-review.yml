@@ -21,7 +21,7 @@ on:
         required: false
         type: string
       model:
-        default: anthropic/claude-opus-4-5
+        default: opencode/claude-opus-4-5
         description: Claude model to use for review
         required: false
         type: string
@@ -37,12 +37,12 @@ on:
         required: false
         type: string
       model:
-        default: anthropic/claude-opus-4-5
+        default: opencode/claude-opus-4-5
         description: Claude model to use for review
         options:
-          - anthropic/claude-haiku-4-5
-          - anthropic/claude-opus-4-5
-          - anthropic/claude-sonnet-4-5
+          - opencode/claude-haiku-4-5
+          - opencode/claude-opus-4-5
+          - opencode/claude-sonnet-4-5
         required: false
         type: choice
       pr_number:
@@ -99,7 +99,7 @@ jobs:
           # See: <https://opencode.ai/docs/models/>
           model: |
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
-            && inputs.model || 'anthropic/claude-opus-4-5' }}
+            && inputs.model || 'opencode/claude-opus-4-5' }}
           prompt: |-
             Pull request needs to be reviewed in the context of the following repository:
             <repo>
