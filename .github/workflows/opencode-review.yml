@@ -52,16 +52,16 @@ jobs:
         id: pr-number
         run: |
           if [ "${{ github.event_name }}" = "pull_request_target" ]; then
-            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+            echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
           else
-            echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+            echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
           fi
       - name: Get PR details
         id: pr-details
         run: |
-          gh api /repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }} > pr_data.json
-          echo "title=$(jq -r .title pr_data.json)" >> $GITHUB_OUTPUT
-          echo "sha=$(jq -r .head.sha pr_data.json)" >> $GITHUB_OUTPUT
+          gh api "/repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }}" > pr_data.json
+          echo "title=$(jq -r .title pr_data.json)" >> "$GITHUB_OUTPUT"
+          echo "sha=$(jq -r .head.sha pr_data.json)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v6
