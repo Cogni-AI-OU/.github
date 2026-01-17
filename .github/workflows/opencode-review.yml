@@ -1,16 +1,11 @@
 ---
 # See: <https://opencode.ai/docs/github/>
 # Note: Keep keys and envs in alphabetical order.
-name: OpenCode Review
+name: opencode-review
 on:
   issue_comment:
     types:
       - created
-      - edited
-  pull_request_review_comment:
-    types:
-      - created
-      - edited
   pull_request_target:
     types:
       - opened
@@ -18,9 +13,6 @@ on:
       - ready_for_review
       - reopened
       - review_requested
-    issue_comment:
-      types:
-        - created
   workflow_call:
     inputs:
       model:
@@ -41,25 +33,15 @@ on:
         type: choice
 jobs:
   review:
-    # Run on pull_request events (skip bot-authored PRs except for ready_for_review),
-    # workflow_call events, or workflow_dispatch events.
-    # ready_for_review is allowed for bot PRs since it's explicitly triggered by a human user.
-    # workflow_call and workflow_dispatch require pr_number input (marked as required).
-    # Note: GitHub enforces the required: true constraint, so pr_number will always be
-    # provided for workflow_dispatch; no additional null check is needed in this condition.
-      if: |
-        github.event_name == 'pull_request_target' || (
-          github.event_name == 'issue_comment' &&
-          github.event.issue.pull_request &&
-          startsWith(github.event.comment.body, '/review') &&
-          contains(fromJson('["OWNER","MEMBER"]'), github.event.comment.author_association)
-        ) || (
-          github.event_name == 'pull_request' && (
-            github.event.pull_request.user.type != 'Bot' ||
-            github.event.action == 'ready_for_review'
-          )
-        ) ||
-        (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
+    # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
+    if: |
+      github.event_name == 'pull_request_target' || (
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        startsWith(github.event.comment.body, '/review') &&
+        contains(fromJson('["OWNER","MEMBER"]'), github.event.comment.author_association)
+      ) ||
+      (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
     name: OpenCode Review
     runs-on: ubuntu-latest
     permissions:
