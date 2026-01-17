@@ -28,7 +28,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-bun
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
         env:
