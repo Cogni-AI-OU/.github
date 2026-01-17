@@ -38,6 +38,18 @@ on:
         type: choice
 jobs:
   review:
+    # Run on pull_request events (skip bot-authored PRs except for ready_for_review),
+    # workflow_call events, or workflow_dispatch events.
+    # ready_for_review is allowed for bot PRs since it's explicitly triggered by a human user.
+    # workflow_call and workflow_dispatch require pr_number input (marked as required).
+    # Note: GitHub enforces the required: true constraint, so pr_number will always be
+    # provided for workflow_dispatch; no additional null check is needed in this condition.
+    if: |
+      (github.event_name == 'pull_request' && (
+        github.event.pull_request.user.type != 'Bot' ||
+        github.event.action == 'ready_for_review'
+      )) ||
+      (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
     name: OpenCode Review
     runs-on: ubuntu-latest
     permissions:
@@ -76,13 +88,16 @@ jobs:
             && inputs.model || 'anthropic/claude-opus-4-5' }}
           use_github_token: true
           prompt: |-
-            REPO: ${{ github.repository }}
+            Pull request needs to be reviewed in the context of the following repository:
+            <repo>
+            ${{ github.repository }}
+            </repo>
             <pr-number>
             ${{ steps.pr-number.outputs.number }}
             </pr-number>
-            <pr-description>
+            <pr-title>
             ${{ steps.pr-details.outputs.title }}
-            </pr-description>
+            </pr-title>
             Review this pull request:
             - Check for code quality issues
             - In case the latest CI build fails, identify the main cause of failure.
@@ -96,6 +111,21 @@ jobs:
             - If no significant issues exist, state that briefly.
             - Reference AGENTS.md if present for project conventions.
             - Suggest committable improvements for simple fixes.
+            - Use the gh cli to create comments on the files for the violations.
+            - Generally, write a comment instead of writing suggested change if you can help it.
+            Command MUST be like this.
+            ```
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }}/comments \
+              -f 'body=[summary of issue]' \
+              -f 'commit_id=${{ steps.pr-details.outputs.sha }}' \
+              -f 'path=[path-to-file]' \
+              -f 'side=RIGHT' \
+              -F "line=[line]"
+            ```
       - name: Show OpenCode log on failure
         if: failure()
         run: |-
