@@ -51,6 +51,7 @@ jobs:
           model: |
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
             && inputs.model || 'anthropic/claude-opus-4-5' }}
+          use_github_token: true
           prompt: |-
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
