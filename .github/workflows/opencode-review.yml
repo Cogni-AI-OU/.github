@@ -15,6 +15,11 @@ on:
       - review_requested
   workflow_call:
     inputs:
+      additional_prompt:
+        default: ''
+        description: Additional instructions for the review prompt
+        required: false
+        type: string
       model:
         default: anthropic/claude-opus-4-5
         description: Claude model to use for review
@@ -22,6 +27,11 @@ on:
         type: string
   workflow_dispatch:
     inputs:
+      additional_prompt:
+        default: ''
+        description: Additional instructions for the review prompt
+        required: false
+        type: string
       model:
         default: anthropic/claude-opus-4-5
         description: Claude model to use for review
@@ -118,6 +128,7 @@ jobs:
               -f 'side=RIGHT' \
               -F "line=[line]"
             ```
+            ${{ inputs.additional_prompt && format('\nAdditional instructions:\n{0}', inputs.additional_prompt) || '' }}
       - name: Show OpenCode log on failure
         if: failure()
         run: |-
