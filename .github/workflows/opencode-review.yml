@@ -23,9 +23,23 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
+          # See: <https://opencode.ai/docs/models/>
           model: anthropic/claude-sonnet-4-20250514
           prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
             Review this pull request:
             - Check for code quality issues
-            - Look for potential bugs
-            - Suggest improvements
+            - In case the latest CI build fails, identify the main cause of failure.
+            - Look for potential bugs, logic errors, or incorrect behavior
+            - Missing error handling
+            - Performance issues with measurable impact
+            - Security vulnerabilities
+
+            Guidelines:
+            - Be concise. Only comment on high-value issues, not style preferences.
+            - Skip praise, summaries, and obvious observations.
+            - If no significant issues exist, state that briefly.
+            - Reference AGENTS.md if present for project conventions.
+            - Suggest committable improvements for simple fixes.
