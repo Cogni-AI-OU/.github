@@ -170,7 +170,7 @@ jobs:
           PROMPT_INPUT: ${{ inputs.prompt }}
         run: |
           set -euo pipefail
-          [[ "$prompt_name" =~ ^[a-zA-Z0-9_-]+$ ]] || { echo "Invalid prompt: $prompt_name"; exit 1; }
+          prompt_name="${PROMPT_INPUT:-pr-review}"
           [[ "$prompt_name" =~ ^[a-z0-9-]+$ ]] || { echo "Invalid prompt: $prompt_name"; exit 1; }
           prompt_file=".github/prompts/$prompt_name.prompt.md"
           [ -f "$prompt_file" ] || { echo "Missing prompt: $prompt_file"; exit 1; }
