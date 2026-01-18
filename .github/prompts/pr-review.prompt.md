@@ -15,7 +15,8 @@ Guidelines:
 - Skip praise, summaries, and obvious observations.
 - If no significant issues exist, state that briefly.
 - Reference AGENTS.md if present for project conventions.
-- Suggest committable improvements for simple fixes.
+- For simple fixes, provide committable suggestions using a fenced code block
+  with the language identifier `suggestion`.
 - Use the gh cli to create comments on the files for the violations.
 - Generally, write a comment instead of writing suggested change if you can help it.
 - For inline comments, start with summarizing the issue in one line, then provide details.
