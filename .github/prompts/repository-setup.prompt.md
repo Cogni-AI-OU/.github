@@ -382,14 +382,6 @@ exist. Do not skip items just because a file already exists.
   - Content: Quick start, links to instructions, common tasks (linting, building, testing)
   - Customize: Include repository-specific commands, test runners, build processes
 
-- [ ] **`CLAUDE.md`**
-  - Check if file exists
-  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/CLAUDE.md`
-  - Purpose: Claude Code-specific guidance and configuration
-  - Action: Create if missing
-  - Content: Triggering info, allowed tools, model selection, MCP config
-  - Customize: Adjust allowed tools and MCP servers for repository needs
-
 - [ ] **`.gemini/settings.json`**
   - Check if `.gemini/` directory and file exist
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.gemini/settings.json`
