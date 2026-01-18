@@ -54,7 +54,7 @@ on:
         type: choice
       model:
         default: opencode/claude-opus-4-5
-        description: Claude model to use for review
+        description: Model to use for OpenCode
         options:
           - anthropic/claude-haiku-4-5
           - anthropic/claude-opus-4-5
@@ -131,7 +131,7 @@ on:
         required: true
         type: number
 jobs:
-  review:
+  opencode-review:
     # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
     if: |
       (
@@ -148,7 +148,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      id-token: write  # Needed so opencode can request an OIDC token for GitHub API calls
+      issues: read
+      pull-requests: read
     steps:
       - name: Get PR number
         id: pr-number
