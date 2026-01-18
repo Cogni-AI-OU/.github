@@ -11,7 +11,7 @@ Key contents:
 - **Community health files**: CODE_OF_CONDUCT.md, issue templates, PR templates
 - **Reusable workflows**: CI/CD, linting, automated reviews
 - **Organization profile**: Public-facing info in `profile/README.md`
-- **Agent configurations**: `AGENTS.md`, `CLAUDE.md` for AI coding assistants
+- **Agent configurations**: `AGENTS.md` for AI coding assistants
 
 ### Getting started
 
@@ -80,7 +80,6 @@ Notes:
 ├── profile/
 │   └── README.md             # Organization profile (shown on GitHub org page)
 ├── AGENTS.md                 # AI agent guidance
-├── CLAUDE.md                 # Claude-specific configuration
 ├── CODE_OF_CONDUCT.md        # Community standards
 └── README.md                 # Repository documentation
 ```
