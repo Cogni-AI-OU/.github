@@ -107,7 +107,7 @@ jobs:
       contents: read
       id-token: write  # Needed so opencode can request an OIDC token for GitHub API calls
       issues: read
-      pull-requests: read
+      pull-requests: write
     steps:
       - name: Get PR number
         id: pr-number
