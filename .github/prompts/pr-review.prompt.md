@@ -18,6 +18,7 @@ Guidelines:
 - Suggest committable improvements for simple fixes.
 - Use the gh cli to create comments on the files for the violations.
 - Generally, write a comment instead of writing suggested change if you can help it.
+- For inline comments, start with summarizing the issue in one line, then provide details.
 
 Command MUST be like this and use values from `<repo>`, `<pr-number>`, and `<pr-sha>`:
 
