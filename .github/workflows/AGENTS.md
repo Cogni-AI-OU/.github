@@ -63,7 +63,7 @@ For a human-readable overview, see [README.md](README.md).
 - Purpose: OpenCode-driven PR review.
 - Inputs: agent (build), model (opencode/claude-opus-4-5), additional_prompt, pr_number (req for call/dispatch).
 - Triggers: pull_request_target (trusted authors), /review comment (OWNER/MEMBER), workflow_call, workflow_dispatch.
-- Permissions: `contents: read`, `pull-requests: write`, `id-token: write`.
+- Permissions: `contents: read`, `id-token: write`, `issues: read`, `pull-requests: write`.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main`.
 
 ### devcontainer-ci.yml
