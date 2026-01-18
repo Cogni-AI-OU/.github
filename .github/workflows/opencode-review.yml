@@ -191,7 +191,7 @@ jobs:
         with:
           agent: ${{ inputs.agent }}
           # See: <https://opencode.ai/docs/models/>
-          model: |
+          model: >-
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
             && inputs.model || 'opencode/claude-opus-4-5' }}
           prompt: |-
