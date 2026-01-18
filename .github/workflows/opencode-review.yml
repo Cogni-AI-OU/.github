@@ -1,7 +1,7 @@
 ---
 # See: <https://opencode.ai/docs/github/>
 # Note: Keep keys and envs in alphabetical order.
-name: opencode-review
+name: OpenCode Review
 on:
   issue_comment:
     types:
