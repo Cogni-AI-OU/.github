@@ -167,6 +167,8 @@ jobs:
         id: pr-details
         run: |
           gh api "/repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }}" > pr_data.json
+          gh pr view "${{ steps.pr-number.outputs.number }}" --repo "${{ github.repository }}" \
+            --json files > pr_files.json
           sanitized_title=$(jq -r '.title
             | gsub("[\u0000-\u0008\u000B-\u001F\u007F]";"")
             | gsub("\r\n|\r|\n";" ")
@@ -175,6 +177,8 @@ jobs:
             | gsub(">";"&gt;")' pr_data.json)
           echo "title=${sanitized_title}" >> "$GITHUB_OUTPUT"
           echo "sha=$(jq -r .head.sha pr_data.json)" >> "$GITHUB_OUTPUT"
+          files_json=$(jq -c '.files | map(.path)' pr_files.json)
+          echo "files=${files_json}" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v6
@@ -202,6 +206,9 @@ jobs:
             <pr-number>
             ${{ steps.pr-number.outputs.number }}
             </pr-number>
+            <pr-files-json>
+            ${{ steps.pr-details.outputs.files }}
+            </pr-files-json>
             <pr-title>
             ${{ steps.pr-details.outputs.title }}
             </pr-title>
