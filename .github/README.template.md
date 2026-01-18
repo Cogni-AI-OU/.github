@@ -82,23 +82,23 @@ before running the corresponding tools.
 
 ## Security
 
-### Claude Workflow Git Access
+### OpenCode Workflow Git Access
 
-The Claude Code workflow (`claude.yml`) grants intentionally broad git access
+The OpenCode workflow (`opencode.yml`) grants intentionally broad git access
 via `Bash(git:*)` to enable autonomous code changes. This permission is necessary
-for Claude to commit and push changes, but requires proper safeguards.
+for OpenCode to commit and push changes, but requires proper safeguards.
 
 #### Security Controls
 
 **Access Control:**
 
-- Only trusted users can trigger Claude (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR)
+- Only trusted users can trigger OpenCode (OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR)
 - PR/issue authors can only trigger on their own content
 - External contributors (FIRST_TIME_CONTRIBUTOR, NONE) are explicitly blocked
 
 **Required Repository Protections:**
 
-To safely use Claude with git access, repository administrators must configure:
+To safely use OpenCode with git access, repository administrators must configure:
 
 1. **Branch Protection Rules** on main/protected branches:
    - Require pull request reviews before merging
@@ -108,7 +108,7 @@ To safely use Claude with git access, repository administrators must configure:
 
 2. **GitHub Audit Logs** (organization-level):
    - Enable and regularly review audit logs
-   - Monitor commits made by `github-actions[bot]` (Claude's identity)
+   - Monitor commits made by `github-actions[bot]` (OpenCode's identity)
    - Set up alerts for suspicious patterns (rapid commits, deleted branches, etc.)
 
 3. **Protected Branch Policies**:
@@ -118,10 +118,8 @@ To safely use Claude with git access, repository administrators must configure:
 
 #### Best Practices
 
-- Review Claude's commits before merging PRs
-- Use draft PRs for Claude's work to require explicit promotion
-- Regularly audit Claude's tool usage and permissions
-- Rotate `ANTHROPIC_API_KEY` periodically
+- Review OpenCode's commits before merging PRs
+- Use draft PRs for OpenCode's work to require explicit promotion
+- Regularly audit OpenCode's tool usage and permissions
+- Rotate `OPENCODE_API_KEY` periodically
 - Monitor workflow run logs for unexpected behavior
-
-For more details, see [CLAUDE.md](../CLAUDE.md).
