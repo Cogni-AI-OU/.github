@@ -10,9 +10,6 @@ For a human-readable overview, see [README.md](README.md).
 | Workflow | Purpose | Key triggers / notes |
 | -------- | ------- | -------------------- |
 | [check.yml](check.yml) | Linting and quality gates via actionlint and pre-commit | push, pull_request, schedule; reusable via `workflow_call` |
-| [claude-review.yml](claude-review.yml) | Automated PR review with Claude | pull_request (non-bot), `workflow_call` with `pr_number` |
-| [claude.yml](claude.yml) | Interactive Claude mentions on issues/PRs | issue_comment, pull_request_review_comment, workflow_dispatch, `workflow_call` |
-| [agent-ai.yml](agent-ai.yml) | Generic AI inference workflow with prompt composition | workflow_dispatch, `workflow_call` |
 | [opencode.yml](opencode.yml) | OpenCode agent invocation via comments or manual triggers | issue_comment keywords `/oc` or `/opencode`, workflow_dispatch, `workflow_call` |
 | [opencode-review.yml](opencode-review.yml) | OpenCode PR review | pull_request_target (trusted authors), `/review` comment by OWNER/MEMBER, workflow_dispatch, `workflow_call` |
 | [devcontainer-ci.yml](devcontainer-ci.yml) | Build/test devcontainer and required tools/packages | push/pull_request touching .devcontainer or workflow; schedule; `workflow_call` |
@@ -24,31 +21,6 @@ For a human-readable overview, see [README.md](README.md).
 - Purpose: run actionlint and pre-commit to enforce workflow and repo standards.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main`.
 - Jobs: `actionlint`, `pre-commit`.
-
-### claude-review.yml
-
-- Purpose: AI code review that comments on PRs.
-- Inputs: `pr_number` (required for `workflow_call`), `model` (default `claude-opus-4-5`),
-  `additional_prompt` (optional extra review instructions).
-- Trigger: pull_request (skips bot authors) and `workflow_call`.
-- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main`.
-
-### claude.yml
-
-- Purpose: respond to `@claude` mentions for interactive assistance.
-- Input: `model` (default `claude-opus-4-5`).
-- Triggers: issue_comment, pull_request_review_comment, workflow_dispatch, `workflow_call`.
-- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main`.
-- Access: restricted to OWNER, MEMBER, COLLABORATOR, CONTRIBUTOR associations.
-
-### agent-ai.yml
-
-- Purpose: flexible AI inference using actions/ai-inference.
-- Inputs: `model` (default `openai/gpt-4o`, see model list below), `prompt`, `prompt-file`
-  (default `default`), `system-prompt-file` (`default`, `code-tour`, `copilot-plus`),
-  `enable-github-mcp` (default `false`).
-- Prompts compose in order: system prompt → prompt file → direct prompt.
-- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/agent-ai.yml@main`.
 
 ### opencode.yml
 

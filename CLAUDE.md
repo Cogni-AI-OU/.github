@@ -6,45 +6,6 @@ instructions, see [AGENTS.md](AGENTS.md).
 This file is intended for AI agents (like Claude) working in the repository,
 similar to AGENTS.md. For human-readable documentation, follow [README.md](README.md).
 
-## Claude Code Configuration
-
-Claude Code is configured via GitHub Actions workflows in this repository.
-The primary workflow is [.github/workflows/claude.yml](.github/workflows/claude.yml).
-
-### Triggering Claude
-
-Claude can be triggered by mentioning `@claude` in:
-
-- **PR comments**: Comment on a pull request with `@claude` followed by instructions
-- **Inline review comments**: Add `@claude` to a review comment on specific code lines
-- **Issue comments**: Comment on an issue with `@claude` followed by instructions
-- **New issues**: Create an issue with `@claude` in the title or body
-- **Reply to Claude's comments**: Reply to Claude's comments (posted via
-  `github-actions[bot]` with claude-code-action markers) to continue the
-  conversation without needing to mention `@claude` again
-
-**Who can trigger Claude:**
-
-- Organization owners, members, and collaborators (on any PR/issue)
-- PR authors (on their own PRs only)
-- Issue authors (on their own issues only)
-
-**Security**: External contributors cannot trigger Claude on other people's PRs or
-issues. This prevents unauthorized API usage and ensures code changes are reviewed
-by trusted users.
-
-**Note**: Claude's comments appear under the `github-actions[bot]` user because
-they are posted through the GitHub Actions workflow. The workflow identifies
-Claude's comments specifically by looking for the `claude-code-action` marker
-to avoid confusion with other workflows that also post as `github-actions[bot]`.
-This is a limitation of the `anthropics/claude-code-action` and cannot be changed
-to display as `claude[bot]` at the workflow configuration level.
-
-### Environment Variables
-
-- `ANTHROPIC_API_KEY`: API key for Claude (stored as repository secret)
-- `ALLOWED_TOOLS`: Comma-separated list of tools Claude can use
-
 ## Tools
 
 Claude Code provides access to various tools for interacting with the repository
