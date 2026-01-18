@@ -23,6 +23,11 @@ on:
         description: Model to use for OpenCode
         required: false
         type: string
+      prompt:
+        default: ''
+        description: Custom prompt to override the default prompt
+        required: false
+        type: string
   workflow_dispatch:
     inputs:
       agent:
@@ -110,6 +115,10 @@ on:
           - openrouter/z-ai/glm-4.7
         required: false
         type: choice
+      prompt:
+        description: Custom prompt to override the default prompt
+        required: false
+        default: false
 jobs:
   opencode:
     if: |
@@ -140,3 +149,4 @@ jobs:
           model: >-
             ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
             && inputs.model || 'opencode/claude-opus-4-5' }}
+          prompt: ${{ inputs.prompt || '' }}

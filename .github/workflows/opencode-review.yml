@@ -27,7 +27,7 @@ on:
         type: string
       model:
         default: opencode/claude-opus-4-5
-        description: Claude model to use for review
+        description: Model to use for OpenCode
         required: false
         type: string
       pr_number:
