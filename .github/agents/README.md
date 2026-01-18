@@ -114,7 +114,7 @@ Repository administrators must configure:
 - Review Claude's commits before merging PRs
 - Use draft PRs for Claude's work requiring explicit promotion
 - Monitor workflow logs for unexpected behavior
-- Rotate `ANTHROPIC_API_KEY` periodically
+- Rotate API keys periodically
 
 ## Troubleshooting
 

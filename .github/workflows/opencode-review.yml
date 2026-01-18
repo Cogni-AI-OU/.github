@@ -12,7 +12,6 @@ on:
   pull_request_target:
     types:
       - opened
-      - synchronize
       - ready_for_review
       - reopened
       - review_requested
@@ -177,7 +176,6 @@ jobs:
           { echo 'prompt<<EOF'; cat "$prompt_file"; echo 'EOF'; } >> "$GITHUB_OUTPUT"
       - uses: anomalyco/opencode/github@latest
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           OPENCODE_PERMISSION: |-

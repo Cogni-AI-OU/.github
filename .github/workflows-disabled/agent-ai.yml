@@ -3,6 +3,7 @@
 # See: https://github.com/actions/ai-inference
 # Note: Keep keys and envs in alphabetical order.
 name: Agent AI
+# yamllint disable-line rule:truthy
 on:
   workflow_call:
     inputs:

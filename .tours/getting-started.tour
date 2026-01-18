@@ -83,15 +83,9 @@
     },
     {
       "file": "AGENTS.md",
-      "description": "## Agent Guidance\n\nQuick reference guide for Claude and other AI automation agents.\n\n**Contents:**\n- Quick start instructions\n- Links to detailed coding standards\n- Common tasks (linting, validation, testing)\n- References to other important files\n\n**Key commands:**\n- `pre-commit run -a`: Run all checks\n- `molecule test`: Run Molecule tests\n- `ansible-lint`: Validate Ansible playbooks\n\nThis provides a quick entry point for AI agents working in this repository.",
+      "description": "## Agent Guidance\n\nQuick reference guide for AI automation agents.\n\n**Contents:**\n- Quick start instructions\n- Links to detailed coding standards\n- Common tasks (linting, validation, testing)\n- References to other important files\n\n**Key commands:**\n- `pre-commit run -a`: Run all checks\n- `molecule test`: Run Molecule tests\n- `ansible-lint`: Validate Ansible playbooks\n\nThis provides a quick entry point for AI agents working in this repository.",
       "line": 1,
       "title": "AI Agent Guidance"
-    },
-    {
-      "file": "CLAUDE.md",
-      "description": "## Claude-Specific Configuration\n\nGuidance specific to Claude Code automation.\n\n**Covers:**\n- Claude Code workflow configuration\n- Environment variables and secrets\n- Model selection (default: claude-opus-4-5)\n- Allowed tools and MCP (Model Context Protocol)\n- Prompting best practices\n- Troubleshooting common issues\n\nThis file helps configure and optimize Claude Code for working with this repository.",
-      "line": 1,
-      "title": "Claude Configuration"
     },
     {
       "file": ".github/agents/code-tour.agent.md",
