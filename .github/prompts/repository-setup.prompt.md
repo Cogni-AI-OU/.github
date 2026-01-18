@@ -121,16 +121,16 @@ exist. Do not skip items just because a file already exists.
 
   - Customize: Add additional jobs if needed for project-specific checks
 
-- [ ] **`.github/workflows/claude.yml`**
+- [ ] **`.github/workflows/opencode.yml`**
   - Check if file exists
-  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/claude.yml`
-  - Purpose: Claude Code automation for AI-assisted development
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/opencode.yml`
+  - Purpose: OpenCode automation for AI-assisted development
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
 
     ```yaml
     ---
-    name: Claude Code
+    name: OpenCode
     on:
       issue_comment:
         types: [created, edited]
@@ -141,8 +141,8 @@ exist. Do not skip items just because a file already exists.
       pull_request_review:
         types: [submitted]
     jobs:
-      claude:
-        uses: Cogni-AI-OU/.github/.github/workflows/claude.yml@main
+      opencode:
+        uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
         permissions:
           actions: read
           contents: write
@@ -152,25 +152,25 @@ exist. Do not skip items just because a file already exists.
         secrets: inherit
     ```
 
-  - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings
 
-- [ ] **`.github/workflows/claude-review.yml`**
+- [ ] **`.github/workflows/opencode-review.yml`**
   - Check if file exists
-  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/claude-review.yml`
-  - Purpose: Automated PR review using Claude
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/opencode-review.yml`
+  - Purpose: Automated PR review using OpenCode
   - Action: Create using `workflow_call` to reference the remote workflow
   - Implementation:
 
     ```yaml
     ---
-    name: Claude Code Review
+    name: OpenCode Review
     on:
       pull_request:
         types: [edited, opened, ready_for_review, reopened, review_requested]
       workflow_call:
     jobs:
-      claude-review:
-        uses: Cogni-AI-OU/.github/.github/workflows/claude-review.yml@main
+      opencode-review:
+        uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main
         permissions:
           actions: read
           contents: write
@@ -180,7 +180,7 @@ exist. Do not skip items just because a file already exists.
         secrets: inherit
     ```
 
-  - Note: Requires `ANTHROPIC_API_KEY` secret to be set in repository settings
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)
@@ -263,7 +263,7 @@ exist. Do not skip items just because a file already exists.
 - [ ] **`.github/prompts/` directory**
   - Check if directory exists with prompt files
   - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/prompts`
-  - Purpose: Prompt templates for GitHub Models, Claude, and Copilot
+  - Purpose: Prompt templates for GitHub Models, OpenCode, and Copilot
   - Action: Include relevant prompt files; keep formats (Markdown/YAML) as upstream
   - Available prompts:
     - `default.prompt.yml` - Default prompt for agent-ai workflow
@@ -495,7 +495,7 @@ exist. Do not skip items just because a file already exists.
 - [ ] **Update or create repository documentation**
   - Ensure README.md documents new configuration files
   - Add section about pre-commit hooks and how to use them
-  - Document any required secrets (e.g., `ANTHROPIC_API_KEY`)
+  - Document any required secrets (e.g., `OPENCODE_API_KEY`)
   - Add badge to README for build status
 
 - [ ] **Create summary report**
@@ -553,7 +553,7 @@ When customizing:
 
 Some workflows require secrets to be configured in repository settings:
 
-- `ANTHROPIC_API_KEY` - Required for Claude Code workflows
+- `OPENCODE_API_KEY` - Required for OpenCode workflows
 - Add others as needed for specific integrations
 
 Document required secrets in README.md or a SECRETS.md file.
