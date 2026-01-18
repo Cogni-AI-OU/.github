@@ -92,7 +92,7 @@ jobs:
     name: OpenCode
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write  # Needed so opencode can request an OIDC token for GitHub API calls
       issues: write
       pull-requests: write
