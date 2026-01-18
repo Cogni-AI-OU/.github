@@ -136,7 +136,8 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_call" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ];
           then
             echo "number=${{ inputs.pr_number }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" = "pull_request_target" ]; then
+          elif [ "${{ github.event_name }}" = "pull_request_target" ] || \
+               [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
             echo "number=${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
           else
             echo "number=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
@@ -182,7 +183,7 @@ jobs:
           OPENCODE_PERMISSION: |-
             { "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny" } }
         with:
-          agent: ${{ inputs.agent }}
+          agent: ${{ inputs.agent || 'build' }}
           # See: <https://opencode.ai/docs/models/>
           model: >-
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
