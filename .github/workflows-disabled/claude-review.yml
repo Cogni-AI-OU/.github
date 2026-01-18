@@ -4,48 +4,51 @@
 # Examples: <https://github.com/anthropics/claude-code-action/tree/main/examples>
 # Note: Keep keys and envs in alphabetical order.
 name: Claude Code Review
-
 on:
   pull_request:
     # Note: synchronize not included to avoid too frequent reviews on every push.
-    types: [edited, opened, ready_for_review, reopened, review_requested]
+    types:
+      - edited
+      - opened
+      - ready_for_review
+      - reopened
+      - review_requested
   workflow_call:
     inputs:
       additional_prompt:
-        description: 'Additional instructions to append to the review prompt'
+        description: Additional instructions to append to the review prompt
         required: false
         type: string
         default: ''
       model:
-        description: 'Claude model to use for review'
+        description: Claude model to use for review
         required: false
         type: string
-        default: 'claude-opus-4-5'
+        default: claude-opus-4-5
       pr_number:
-        description: 'Pull request number for workflow_call triggers'
+        description: Pull request number for workflow_call triggers
         required: true
         type: number
   workflow_dispatch:
     inputs:
       additional_prompt:
-        description: 'Additional instructions to append to the review prompt'
+        description: Additional instructions to append to the review prompt
         required: false
         type: string
         default: ''
       model:
-        description: 'Claude model to use for review'
+        description: Claude model to use for review
         required: false
         type: choice
         options:
           - claude-haiku-4-5
           - claude-opus-4-5
           - claude-sonnet-4-5
-        default: 'claude-opus-4-5'
+        default: claude-opus-4-5
       pr_number:
-        description: 'Pull request number for manual workflow execution'
+        description: Pull request number for manual workflow execution
         required: true
         type: number
-
 concurrency:
   group: >-
     claude-review-${{ github.event_name }}-${{
@@ -133,18 +136,16 @@ jobs:
           additional_permissions: |
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          allowed_non_write_users: "Copilot"
+          allowed_non_write_users: Copilot
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
           claude_args: |
             --model ${{ inputs.model || 'claude-opus-4-5' }}
             --allowedTools "${{ env.ALLOWED_TOOLS }}"
-
-          prompt: |
+          prompt: |-
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
-
             Review this pull request. Focus mainly on:
             - Bugs, logic errors, or incorrect behavior
             - Security vulnerabilities
@@ -152,7 +153,6 @@ jobs:
             - Missing error handling
             - When identified issues could be fixed, include an inline link to fix it.
             - Check the latest CI build of PR and identify the main cause of failure.
-
             Guidelines:
             - Be concise. Only comment on high-value issues, not style preferences.
             - Skip praise, summaries, and obvious observations.
@@ -160,8 +160,6 @@ jobs:
             - Reference AGENTS.md if present for project conventions.
             - Suggest committable suggestion for simple fixes.
             ${{ inputs.additional_prompt && format('
-
             Additional instructions:
             {0}', inputs.additional_prompt) || '' }}
-
             Use mcp__github_comment__update_claude_comment or `gh pr comment` to post your review.

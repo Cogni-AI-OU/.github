@@ -22,58 +22,58 @@ on:
   workflow_call:
     inputs:
       agent:
-        description: 'Agent configuration to use'
+        description: Agent configuration to use
         required: false
         type: string
-        default: 'default'
+        default: default
       issue_number:
-        description: 'Issue number to operate on (provide either issue_number or pr_number)'
+        description: Issue number to operate on (provide either issue_number or pr_number)
         required: false
         type: number
       model:
-        description: 'Claude model to use'
+        description: Claude model to use
         required: false
         type: string
-        default: 'claude-opus-4-5'
+        default: claude-opus-4-5
       pr_number:
-        description: 'Pull request number to operate on (provide either issue_number or pr_number)'
+        description: Pull request number to operate on (provide either issue_number or pr_number)
         required: false
         type: number
       prompt:
-        description: 'Prompt for Claude to execute'
+        description: Prompt for Claude to execute
         required: false
         type: string
         default: ''
   workflow_dispatch:
     inputs:
       agent:
-        description: 'Agent configuration to use'
+        description: Agent configuration to use
         required: false
         type: choice
         options:
           - default
           - code-tour
           - copilot-plus
-        default: 'default'
+        default: default
       issue_number:
-        description: 'Issue number to operate on (provide either issue_number or pr_number)'
+        description: Issue number to operate on (provide either issue_number or pr_number)
         required: false
         type: number
       model:
-        description: 'Claude model to use'
+        description: Claude model to use
         required: false
         type: choice
         options:
           - claude-haiku-4-5
           - claude-opus-4-5
           - claude-sonnet-4-5
-        default: 'claude-opus-4-5'
+        default: claude-opus-4-5
       pr_number:
-        description: 'Pull request number to operate on (provide either issue_number or pr_number)'
+        description: Pull request number to operate on (provide either issue_number or pr_number)
         required: false
         type: number
       prompt:
-        description: 'Prompt for Claude to execute'
+        description: Prompt for Claude to execute
         required: false
         type: string
         default: ''
@@ -251,7 +251,6 @@ jobs:
           echo "Review body length: ${#REVIEW_BODY} characters (redacted for security)"
           echo "Review author: $REVIEW_AUTHOR"
           echo "Review author_association: $REVIEW_AUTHOR_ASSOC"
-
       - name: Check if comment should trigger Claude
         id: check_trigger
         if: github.event_name == 'pull_request_review_comment'
@@ -298,10 +297,8 @@ jobs:
               fi
             fi
           fi
-
           echo "should_trigger=$SHOULD_TRIGGER" >> "$GITHUB_OUTPUT"
           echo "Should trigger Claude: $SHOULD_TRIGGER"
-
       - name: Checkout repository
         if: |
           github.event_name != 'pull_request_review_comment' ||
@@ -339,7 +336,6 @@ jobs:
             exit 1
           fi
           AGENT_FILE=".github/agents/${AGENT_CLEAN}.agent.md"
-
           if [ -f "$AGENT_FILE" ]; then
             # Expose the sanitized file path instead of embedding file contents in outputs
             echo "system_prompt_file=$AGENT_FILE" >> "$GITHUB_OUTPUT"
@@ -356,7 +352,7 @@ jobs:
           additional_permissions: |
             actions: read
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          allowed_non_write_users: "Copilot"
+          allowed_non_write_users: Copilot
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options
