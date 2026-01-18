@@ -13,6 +13,8 @@ For a human-readable overview, see [README.md](README.md).
 | [claude-review.yml](claude-review.yml) | Automated PR review with Claude | pull_request (non-bot), `workflow_call` with `pr_number` |
 | [claude.yml](claude.yml) | Interactive Claude mentions on issues/PRs | issue_comment, pull_request_review_comment, workflow_dispatch, `workflow_call` |
 | [agent-ai.yml](agent-ai.yml) | Generic AI inference workflow with prompt composition | workflow_dispatch, `workflow_call` |
+| [opencode.yml](opencode.yml) | OpenCode agent invocation via comments or manual triggers | issue_comment keywords `/oc` or `/opencode`, workflow_dispatch, `workflow_call` |
+| [opencode-review.yml](opencode-review.yml) | OpenCode PR review | pull_request_target (trusted authors), `/review` comment by OWNER/MEMBER, workflow_dispatch, `workflow_call` |
 | [devcontainer-ci.yml](devcontainer-ci.yml) | Build/test devcontainer and required tools/packages | push/pull_request touching .devcontainer or workflow; schedule; `workflow_call` |
 
 ## Details
@@ -47,6 +49,24 @@ For a human-readable overview, see [README.md](README.md).
   `enable-github-mcp` (default `false`).
 - Prompts compose in order: system prompt → prompt file → direct prompt.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/agent-ai.yml@main`.
+
+### opencode.yml
+
+- Purpose: invoke OpenCode agents via slash commands or manual triggers.
+- Inputs: `agent` (default `build`), `model` (default `opencode/claude-opus-4-5`), `prompt` (optional override).
+- Triggers: `workflow_dispatch`, `workflow_call`, or issue comments with `/oc` or `/opencode` from trusted (non-bot) collaborators/members/owners.
+- Permissions: `contents: read`, `id-token: write`, `issues: write`, `pull-requests: write`.
+- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main`.
+
+### opencode-review.yml
+
+- Purpose: OpenCode-driven PR review.
+- Inputs: agent (build), model (opencode/claude-opus-4-5), additional_prompt, pr_number (req for call/dispatch),
+  prompt (default pr-review).
+- Triggers: pull_request_target (trusted authors), /review comment (COLLABORATOR/OWNER/MEMBER), workflow_call,
+  workflow_dispatch.
+- Permissions: `contents: read`, `id-token: write`, `issues: read`, `pull-requests: write`.
+- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main`.
 
 ### devcontainer-ci.yml
 
