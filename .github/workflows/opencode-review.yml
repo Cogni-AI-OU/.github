@@ -37,6 +37,11 @@ on:
         description: Pull request number for workflow_call triggers
         required: true
         type: number
+      prompt:
+        default: pr-review
+        description: Prompt template name from .github/prompts (without extension)
+        required: false
+        type: string
   workflow_dispatch:
     inputs:
       additional_prompt:
@@ -90,6 +95,13 @@ on:
         description: Pull request number for manual workflow execution
         required: true
         type: number
+      prompt:
+        default: pr-review
+        description: Prompt template name from .github/prompts (without extension)
+        options:
+          - pr-review
+        required: false
+        type: choice
 jobs:
   opencode-review:
     # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
@@ -149,6 +161,17 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
+      - name: Load review prompt
+        id: load-prompt
+        env:
+          PROMPT_INPUT: ${{ inputs.prompt }}
+        run: |
+          set -euo pipefail
+          prompt_name="${PROMPT_INPUT:-pr-review}"
+          [[ "$prompt_name" =~ ^[a-z0-9-]+$ ]] || { echo "Invalid prompt: $prompt_name"; exit 1; }
+          prompt_file=".github/prompts/$prompt_name.prompt.md"
+          [ -f "$prompt_file" ] || { echo "Missing prompt: $prompt_file"; exit 1; }
+          { echo 'prompt<<EOF'; cat "$prompt_file"; echo 'EOF'; } >> "$GITHUB_OUTPUT"
       - uses: anomalyco/opencode/github@latest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -176,34 +199,10 @@ jobs:
             <pr-title>
             ${{ steps.pr-details.outputs.title }}
             </pr-title>
-            Review this pull request:
-            - Check for code quality issues
-            - In case the latest CI build fails, identify the main cause of failure.
-            - Look for potential bugs, logic errors, or incorrect behavior
-            - Missing error handling
-            - Performance issues with measurable impact
-            - Security vulnerabilities
-            Guidelines:
-            - Be concise. Only comment on high-value issues, not style preferences.
-            - Skip praise, summaries, and obvious observations.
-            - If no significant issues exist, state that briefly.
-            - Reference AGENTS.md if present for project conventions.
-            - Suggest committable improvements for simple fixes.
-            - Use the gh cli to create comments on the files for the violations.
-            - Generally, write a comment instead of writing suggested change if you can help it.
-            Command MUST be like this.
-            ```
-            gh api \
-              --method POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              /repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }}/comments \
-              -f 'body=[summary of issue]' \
-              -f 'commit_id=${{ steps.pr-details.outputs.sha }}' \
-              -f 'path=[path-to-file]' \
-              -f 'side=RIGHT' \
-              -F "line=[line]"
-            ```
+            <pr-sha>
+            ${{ steps.pr-details.outputs.sha }}
+            </pr-sha>
+            ${{ steps.load-prompt.outputs.prompt }}
             ${{ inputs.additional_prompt && format('\nAdditional instructions:\n{0}', inputs.additional_prompt) || '' }}
       - name: Show OpenCode log on failure
         if: failure()
