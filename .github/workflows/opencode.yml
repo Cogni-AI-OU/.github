@@ -75,7 +75,7 @@ on:
       prompt:
         description: Custom prompt to override the default prompt
         required: false
-        default: false
+        default: ''
 jobs:
   opencode:
     if: |
