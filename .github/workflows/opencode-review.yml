@@ -134,7 +134,10 @@ jobs:
   review:
     # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
     if: |
-      github.event_name == 'pull_request_target' || (
+      (
+        github.event_name == 'pull_request_target' &&
+        contains(fromJson('["COLLABORATOR","MEMBER","OWNER"]'), github.event.pull_request.author_association)
+      ) || (
         github.event_name == 'issue_comment' &&
         github.event.issue.pull_request &&
         startsWith(github.event.comment.body, '/review') &&
@@ -162,7 +165,13 @@ jobs:
         id: pr-details
         run: |
           gh api "/repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }}" > pr_data.json
-          echo "title=$(jq -r .title pr_data.json)" >> "$GITHUB_OUTPUT"
+          sanitized_title=$(jq -r '.title
+            | gsub("[\u0000-\u0008\u000B-\u001F\u007F]";"")
+            | gsub("\r\n|\r|\n";" ")
+            | gsub("&";"&amp;")
+            | gsub("<";"&lt;")
+            | gsub(">";"&gt;")' pr_data.json)
+          echo "title=${sanitized_title}" >> "$GITHUB_OUTPUT"
           echo "sha=$(jq -r .head.sha pr_data.json)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
