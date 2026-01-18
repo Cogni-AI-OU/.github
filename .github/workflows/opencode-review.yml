@@ -20,6 +20,11 @@ on:
         description: Additional instructions for the review prompt
         required: false
         type: string
+      agent:
+        default: build
+        description: Agent to use.
+        required: false
+        type: string
       model:
         default: opencode/claude-opus-4-5
         description: Claude model to use for review
@@ -36,6 +41,17 @@ on:
         description: Additional instructions for the review prompt
         required: false
         type: string
+      agent:
+        default: summary
+        description: Agent to use.
+        options:
+          - build
+          - compaction
+          - plan
+          - summary
+          - title
+        required: false
+        type: choice
       model:
         default: opencode/claude-opus-4-5
         description: Claude model to use for review
@@ -159,8 +175,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
-          OPENCODE_PERMISSION: '{ "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny" } }'
+          OPENCODE_PERMISSION: |-
+            { "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny" } }
         with:
+          agent: ${{ inputs.agent }}
           # See: <https://opencode.ai/docs/models/>
           model: |
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')

@@ -11,8 +11,31 @@ on:
     types:
       - created
       - edited
+  workflow_call:
+    inputs:
+      agent:
+        default: build
+        description: Agent to use.
+        required: false
+        type: string
+      model:
+        default: opencode/claude-opus-4-5
+        description: Model to use for OpenCode
+        required: false
+        type: string
   workflow_dispatch:
     inputs:
+      agent:
+        default: build
+        description: Agent to use.
+        options:
+          - build
+          - compaction
+          - plan
+          - summary
+          - title
+        required: false
+        type: choice
       model:
         default: opencode/claude-opus-4-5
         description: Model to use for OpenCode
@@ -90,7 +113,7 @@ on:
 jobs:
   opencode:
     if: |
-      github.event_name == 'workflow_dispatch' || (
+      github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || (
         contains(github.event.comment.body, ' /oc') ||
         startsWith(github.event.comment.body, '/oc') ||
         contains(github.event.comment.body, ' /opencode') ||
@@ -113,4 +136,7 @@ jobs:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           OPENCODE_PERMISSION: '{"bash": "deny"}'
         with:
-          model: ${{ github.event_name == 'workflow_dispatch' && inputs.model || 'opencode/claude-opus-4-5' }}
+          agent: ${{ inputs.agent }}
+          model: >-
+            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
+            && inputs.model || 'opencode/claude-opus-4-5' }}
