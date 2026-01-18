@@ -4,6 +4,7 @@
 # Examples: <https://github.com/anthropics/claude-code-action/tree/main/examples>
 # Note: Keep keys and envs in alphabetical order.
 name: Claude Code
+# yamllint disable-line rule:truthy
 on:
   issue_comment:
     types:
