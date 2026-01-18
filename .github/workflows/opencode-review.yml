@@ -98,8 +98,10 @@ on:
       prompt:
         default: pr-review
         description: Prompt template name from .github/prompts (without extension)
+        options:
+          - pr-review
         required: false
-        type: string
+        type: choice
 jobs:
   opencode-review:
     # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
