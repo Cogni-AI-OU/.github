@@ -176,7 +176,6 @@ jobs:
           { echo 'prompt<<EOF'; cat "$prompt_file"; echo 'EOF'; } >> "$GITHUB_OUTPUT"
       - uses: anomalyco/opencode/github@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           OPENCODE_PERMISSION: |-
             { "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny", "pre-commit*": "allow" } }
