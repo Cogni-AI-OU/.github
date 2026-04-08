@@ -4,22 +4,21 @@ Guidance for coding agents working in this repository.
 
 For general project guidance, see [README.md](README.md).
 
+## Directory-Specific Agent files
+
+Read these Agent files when working in corresponding dirs:
+
+- [`.github/instructions/AGENTS.md`](.github/instructions/AGENTS.md)
+- [`.github/prompts/AGENTS.md`](.github/prompts/AGENTS.md)
+- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md)
+- [`.github/workflows/AGENTS.md`](.github/workflows/AGENTS.md)
+
 ## Required References
 
 - Project overview and install steps: [README.md](README.md)
 - Agent configuration and conventions: [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- Language and format rules: see [.github/instructions/AGENTS.md](.github/instructions/AGENTS.md)
 - Workflow and navigation help: [.tours/getting-started.tour](.tours/getting-started.tour)
 - For enhanced agent capabilities, see [Copilot Plus](.github/agents/copilot-plus.agent.md)
-
-## Agent Catalogs
-
-Use these catalogs for authoritative, machine-readable lists of resources:
-
-- Skills: [.github/skills/AGENTS.md](.github/skills/AGENTS.md) - loadable skills and their SKILL.md entries
-- Instructions: [.github/instructions/AGENTS.md](.github/instructions/AGENTS.md) - formatting and language rules
-- Workflows: [.github/workflows/AGENTS.md](.github/workflows/AGENTS.md) - reusable GitHub Actions with inputs/triggers
-- Prompts: [.github/prompts/AGENTS.md](.github/prompts/AGENTS.md) - available prompt files
 
 ### Specialized Agents
 
