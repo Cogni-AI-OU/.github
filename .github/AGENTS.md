@@ -17,4 +17,11 @@ Read these Agent files when working in corresponding dirs:
 - [.github/actionlint-matcher.json](actionlint-matcher.json): problem matchers used in workflows.
 - [.github/pre-commit-matcher.json](pre-commit-matcher.json): problem matchers used in workflows.
 
-Keep this catalog updated when adding, removing, or renaming folders or agent catalogs.
+## Troubleshooting
+
+TBA
+
+## Additional notes
+
+- Keep this Agent file up-to-date.
+
