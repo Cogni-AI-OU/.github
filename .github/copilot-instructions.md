@@ -64,6 +64,35 @@ Notes:
 - GitHub Actions run pre-commit checks (`.pre-commit-config.yaml`).
 - To verify locally, run `pre-commit run yamllint -a` from the repo root.
 
+### Devcontainer Guidance
+
+Project utilizes Codespaces with config at `.devcontainer/devcontainer.json`
+and requirements at `.devcontainer/requirements.txt`.
+These rules apply only when the agent is running inside GitHub Codespaces
+or the repository's VS Code devcontainer.
+In that environment, the container should be treated as the controller
+runtime and as the source of required controller-side dependencies.
+
+- Treat the repository devcontainer as the default controller environment
+  for local development and testing.
+- Keep controller dependency installation in the devcontainer
+  configuration so Molecule scenarios can assume those tools are already
+  available.
+- Do not install controller-side Python dependencies during Molecule runs
+  when the agent is already operating inside Codespaces or the repo
+  devcontainer.
+- Do not create additional Python virtual environments such as `.venv`
+  or `venv`; use the existing container Python environment, which should
+  already provide the required dependencies.
+- If dependencies are missing in a Codespace or devcontainer, update
+  `.devcontainer/requirements.txt` or `.devcontainer/devcontainer.json`
+  instead of introducing a per-run Molecule install step or a separate
+  virtual environment.
+- Use `CODESPACES=true` as the primary quick check for GitHub Codespaces.
+- Outside Codespaces, use the presence of `/.dockerenv` together with
+  the repository `.devcontainer/devcontainer.json` as a practical check
+  for the containerized dev environment.
+
 ## Project Structure
 
 ```text
@@ -103,6 +132,12 @@ To identify and diagnose the latest build errors:
    - For actionlint errors: Install actionlint and run it on workflow files
 
 2. **Common error patterns:**
+   - **Ansible missing Python modules:** If a module such as `requests` or
+     `docker` is installed for the main container Python but Ansible still
+     cannot import it, check `ansible --version` to identify the interpreter in
+     use. In Codespaces/devcontainers, Ansible may run from a pipx-managed
+     environment, so install controller-side libraries there as well, for
+     example with `pipx inject ansible -r .devcontainer/requirements-ansible.txt`.
    - **Markdown linting errors:** Check `.markdownlint.yaml` for rules; errors show line numbers
    - **YAML linting errors:** Check `.yamllint` for rules; verify indentation and structure
    - **JSON formatting errors:** Use `jq . <file>` to validate JSON syntax
