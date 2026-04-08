@@ -8,10 +8,7 @@ For general project guidance, see [README.md](README.md).
 
 Read these Agent files when working in corresponding dirs:
 
-- [`.github/instructions/AGENTS.md`](.github/instructions/AGENTS.md)
-- [`.github/prompts/AGENTS.md`](.github/prompts/AGENTS.md)
-- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md)
-- [`.github/workflows/AGENTS.md`](.github/workflows/AGENTS.md)
+- [`.github/AGENTS.md`](.github/AGENTS.md)
 
 ## Required References
 
