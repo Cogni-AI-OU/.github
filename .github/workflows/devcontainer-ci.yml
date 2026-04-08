@@ -9,6 +9,7 @@ on:
       - .github/workflows/devcontainer-ci.yml
   push:
     branches:
+      - dev
       - main
     paths:
       - .devcontainer/**
