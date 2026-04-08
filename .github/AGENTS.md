@@ -1,7 +1,6 @@
-# .github Directory Catalog (Agent View)
+# .github Directory
 
-Catalog of folders within the `.github` directory of this repository.
-Use this as the entry point for agent work, and follow linked catalogs where present.
+Use this as the entry point for agent work, and follow linked catalogs when relevant.
 
 ## Directory-Specific Agent files
 
