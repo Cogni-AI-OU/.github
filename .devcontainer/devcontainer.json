@@ -16,7 +16,7 @@
         "DavidAnson.vscode-markdownlint",
         "GitHub.copilot-chat",
         "GitHub.copilot",
-        "github.vscode-github-actions",
+        "GitHub.vscode-github-actions",
         "vscodevim.vim",
         "vsls-contrib.codetour",
         "xaver.clang-format"
