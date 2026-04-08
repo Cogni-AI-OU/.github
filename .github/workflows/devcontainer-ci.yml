@@ -59,6 +59,7 @@ env:
     uv' }}
 permissions:
   contents: read
+  packages: write
 jobs:
   devcontainer-build:
     name: Build & Test
