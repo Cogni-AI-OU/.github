@@ -132,10 +132,12 @@ To identify and diagnose the latest build errors:
    - For actionlint errors: Install actionlint and run it on workflow files
 
 2. **Common error patterns:**
-   - **Ansible missing Python modules:** If a module such as `requests` or `docker` is installed for the
-     main container Python but Ansible still cannot import it, check `ansible --version` to identify the
-     interpreter in use. In Codespaces/devcontainers, Ansible may run from a pipx-managed environment, so
-     install controller-side libraries there as well, for example with `pipx inject ansible -r .devcontainer/requirements-ansible.txt`.
+   - **Ansible missing Python modules:** If a module such as `requests` or
+     `docker` is installed for the main container Python but Ansible still
+     cannot import it, check `ansible --version` to identify the interpreter in
+     use. In Codespaces/devcontainers, Ansible may run from a pipx-managed
+     environment, so install controller-side libraries there as well, for
+     example with `pipx inject ansible -r .devcontainer/requirements-ansible.txt`.
    - **Markdown linting errors:** Check `.markdownlint.yaml` for rules; errors show line numbers
    - **YAML linting errors:** Check `.yamllint` for rules; verify indentation and structure
    - **JSON formatting errors:** Use `jq . <file>` to validate JSON syntax
