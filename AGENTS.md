@@ -8,10 +8,80 @@ For general project guidance, see [README.md](README.md).
 
 Read these Agent files when working in corresponding dirs:
 
-- [`.github/instructions/AGENTS.md`](.github/instructions/AGENTS.md)
-- [`.github/prompts/AGENTS.md`](.github/prompts/AGENTS.md)
-- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md)
-- [`.github/workflows/AGENTS.md`](.github/workflows/AGENTS.md)
+- [`.github/AGENTS.md`](.github/AGENTS.md)
+
+Note: Keep this list up-to-date.
+
+### Creating new Agents file
+
+Examples when you should create or update Agents files:
+
+- Agent-focused guidance that complements existing README and docs.
+- On completion of complex tasks which are essential to be included for simplified agentic flow.
+- Provides more efficient steps which were discovered during development session,
+- Resolution has been found during troubleshooting session.
+- User provides new rules, examples, or feedback intended to guide agent.
+- User requests to update, improve, or refactor existing processes.
+- When existing documentation is too long and complex, and we only need to extract the key information.
+- When the agent struggles with a recurring task, encounters repeated failures, follows ambiguous steps
+  or discovers an effective new solution/workaround not already documented.
+- When working on functionality which requires special knowledge to be shared.
+
+What to avoid
+
+- Don't include one-time discoveries which won't be needed in the future.
+- Don't include steps which could be a comment in the code instead.
+
+Additional tips:
+
+- Do not hardcode values, keep it generic with relevant placeholders.
+- Do not state obvious, keep it on expert-level.
+- Files should be created in relevant sub-directories.
+- Information should be focused for fully autonomous agent execution.
+- Keep files concise, focused and organized.
+- When information is more discipline related, consider creating or updating relevant `SKILL.md` instead.
+- Write dense, imperative, expert-level instructions assuming ninja proficiency;
+  skip basics, favor one-liners, pack maximum depth.
+
+Docs: <https://agents.md/>
+
+Example structure for Agents files:
+
+```markdown
+# AGENTS.md
+
+## Setup
+
+- TBA
+
+## Additional key files
+
+- TBA
+
+## Debug tips
+
+- TBA
+
+## Directory-Specific Agent files
+
+Read these Agent files when working in corresponding dirs:
+
+- TBA
+
+## Testing instructions
+
+- TBA
+
+## Troubleshooting
+
+> error ...
+
+- TBA
+
+## Final notes
+
+- Keep this Agent file up-to-date.
+```
 
 ## Required References
 
