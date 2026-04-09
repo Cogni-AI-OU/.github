@@ -21,6 +21,12 @@
     },
     {
       "pattern": "^https://github.com/org/repo"
+    },
+    {
+      "pattern": "^https://aka\\.ms/codetour-schema$"
+    },
+    {
+      "pattern": "^https://img\\.shields\\.io/"
     }
   ],
   "retryCount": 3,
