@@ -23,7 +23,7 @@ Examples when you should create or update Agents files:
 - User provides new rules, examples, or feedback intended to guide agent.
 - User requests to update, improve, or refactor existing processes.
 - When existing documentation is too long and complex, and we only need to extract the key information.
-- When the agent struggles with a recurring task, encounters repeated failures, follows ambigious steps
+- When the agent struggles with a recurring task, encounters repeated failures, follows ambiguous steps
   or discovers an effective new solution/workaround not already documented.
 - When working on functionality which requires special knowledge to be shared.
 
@@ -38,7 +38,7 @@ Additional tips:
 - Do not state obvious, keep it on expert-level.
 - Files should be created in relevant sub-directories.
 - Information should be focused for fully autonomous agent execution.
-- Keep files concise, focused and organized. 
+- Keep files concise, focused and organized.
 - When information is more discipline related, consider creating or updating relevant `SKILL.md` instead.
 - Write dense, imperative, expert-level instructions assuming ninja proficiency;
   skip basics, favor one-liners, pack maximum depth.
