@@ -209,8 +209,10 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 If you encounter firewall issues when using the GitHub Copilot Agent:
 
 - Refer to <https://gh.io/copilot/firewall-config> for configuration details.
+- Do not workaround blocked URLs by adding markdown-link-check ignore/whitelist patterns for real links.
+- Keep markdown-link-check validating real links, and request firewall allowlisting instead.
 - If you need to allowlist additional hosts, update your firewall configuration accordingly
-  and keep the list of allowed hosts in `.github/agents/FIREWALL.md` up to date.
+  by following `.github/agents/FIREWALL.md` and keep that file up to date.
 
 ### Linting issues
 

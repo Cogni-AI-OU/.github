@@ -15,6 +15,7 @@ gh.io
 ghcr.io
 github.com
 guides.github.com
+img.shields.io
 hashicorp.com
 marketplace.visualstudio.com
 npm.pkg.github.com
