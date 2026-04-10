@@ -154,6 +154,12 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
 
+### File operations
+
+- **Renaming/removing files**:
+  Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
+  when working with files under source control.
+
 ### Linting and Validation
 
 ```bash
