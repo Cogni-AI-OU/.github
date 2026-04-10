@@ -5,7 +5,7 @@
   "steps": [
     {
       "file": "README.md",
-      "description": "## Welcome to Cogni AI OÜ's .github Repository\n\nThis is a special organization-wide repository that provides default community health files and configurations for all repositories in the Cogni AI OÜ organization.\n\n**Key Features:**\n- Default issue templates and PR templates\n- Organization-wide Code of Conduct\n- Reusable GitHub Actions workflows\n- Coding standards and formatting guidelines\n- Organization profile displayed on GitHub\n\n**How it works:** Files here automatically apply to all repositories that don't have their own versions. Changes here affect the entire organization.",
+      "description": "## Welcome to Cogni AI OÜ's .github Repository\n\nThis is a special organization-wide repository that provides default community health files and configurations for all repositories in the Cogni AI OÜ organization.\n\n**Start here:**\n- Review the README's Getting Started section for the local validation flow\n- Use the Project Layout section to find the key directories quickly\n- Follow the Contributing section pointer for organization-wide contribution guidance\n\n**Key Features:**\n- Default issue templates and PR templates\n- Organization-wide Code of Conduct\n- Reusable GitHub Actions workflows\n- Coding standards and formatting guidelines\n- Organization profile displayed on GitHub\n\n**How it works:** Files here automatically apply to all repositories that don't have their own versions. Changes here affect the entire organization.",
       "line": 1,
       "title": "Repository Overview"
     },
