@@ -81,8 +81,8 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || (
         !endsWith(github.actor, '[bot]') &&
-        contains(fromJson('["COLLABORATOR","MEMBER","OWNER"]'), github.event.comment.author_association) &&
-        (
+        contains(fromJson('["COLLABORATOR","CONTRIBUTOR","MEMBER","OWNER"]'), github.event.comment.author_association)
+        && (
           contains(github.event.comment.body, ' /oc') ||
           startsWith(github.event.comment.body, '/oc') ||
           contains(github.event.comment.body, ' /opencode') ||

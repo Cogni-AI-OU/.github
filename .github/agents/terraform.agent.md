@@ -5,7 +5,7 @@ description: >
   registry integration, workspace management, and run orchestration. Generates compliant code using latest
   provider/module versions, manages private registries, automates variable sets, and orchestrates infrastructure
   deployments with proper validation and security practices.
-tools: ['read', 'edit', 'search', 'shell', 'terraform/*']
+tools: ['read', 'edit', 'search', 'execute', 'terraform/*']
 mcp-servers:
   terraform:
     type: 'local'

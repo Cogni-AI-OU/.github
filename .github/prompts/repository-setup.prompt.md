@@ -257,7 +257,7 @@ exist. Do not skip items just because a file already exists.
 - [ ] **`.github/workflows/AGENTS.md`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/AGENTS.md`
-  - Purpose: Agent catalog describing workflows, triggers, and inputs
+  - Purpose: Agent instruction file describing workflows, triggers, and inputs
   - Action: Create if missing; update when workflows are added, removed, or renamed
 
 - [ ] **`.github/prompts/` directory**
@@ -274,7 +274,7 @@ exist. Do not skip items just because a file already exists.
 - [ ] **`.github/prompts/AGENTS.md`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/prompts/AGENTS.md`
-  - Purpose: Catalog of prompts with format and intended use for agents
+  - Purpose: Agent instruction file describing workflows, triggers, and inputs
   - Action: Create if missing; update when prompts change
 
 ### Phase 4: Development Container Configuration
@@ -427,10 +427,11 @@ exist. Do not skip items just because a file already exists.
   - Action: Copy relevant agent files based on repository needs
   - Required agents:
     - `code-tour.agent.md` - For creating/updating `.tours/` files (always include)
+    - `cogni-ai.agent.md` - Enhanced Agent with critical thinking
+  - Other files:
+    - `AGENTS.md` - Instruction file with scopes for agents (always include)
     - `FIREWALL.md` - Firewall allowlist for Copilot agents (always include)
     - `README.md` - Documentation of available agents
-  - Optional agents:
-    - `copilot-plus.agent.md` - Enhanced Copilot with critical thinking
   - Customize: Add repository-specific agents as needed
 
 - [ ] **`.github/skills/` directory**

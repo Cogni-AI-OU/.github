@@ -154,16 +154,17 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
 
-### Linting and Validation
+### File operations
 
-```bash
-# Run all pre-commit checks
-pre-commit run -a
+- **Renaming/removing files**:
+  Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
+  when working with files under source control.
 
-# Run specific checks
-pre-commit run markdownlint -a
-pre-commit run yamllint -a
-```
+## Tooling
+
+- Use MCP when possible.
+- Use `pre-commit` for linting and validation if installed.
+- For dumping links use `links -dump` if installed.
 
 ### Understanding the Task
 

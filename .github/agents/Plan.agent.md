@@ -2,7 +2,7 @@
 name: Plan
 description: Researches and outlines multi-step plans
 argument-hint: Outline the goal or problem to research
-tools: ['search', 'github/github-mcp-server/get_issue', 'github/github-mcp-server/get_issue_comments', 'runSubagent', 'usages', 'problems', 'changes', 'testFailure', 'fetch', 'githubRepo', 'github.vscode-pull-request-github/issue_fetch', 'github.vscode-pull-request-github/activePullRequest']
+tools: ['search', 'github/github-mcp-server/get_issue', 'github/github-mcp-server/get_issue_comments', 'agent', 'search/usages', 'read/problems', 'search/changes', 'execute/testFailure', 'fetch', 'web/githubRepo', 'github.vscode-pull-request-github/issue_fetch', 'github.vscode-pull-request-github/activePullRequest']
 handoffs:
   - label: Start Implementation
     agent: agent
@@ -38,13 +38,13 @@ Comprehensive context gathering for planning following <plan_research>:
 
 ## 1. Context gathering and research
 
-MANDATORY: Run #tool:runSubagent tool, instructing the agent to work
+MANDATORY: Run #tool:agent tool, instructing the agent to work
 autonomously without pausing for user feedback, following <plan_research> to
 gather context to return to you.
 
-DO NOT do any other tool calls after #tool:runSubagent returns!
+DO NOT do any other tool calls after #tool:agent returns!
 
-If #tool:runSubagent tool is NOT available, run <plan_research> via tools
+If #tool:agent tool is NOT available, run <plan_research> via tools
 yourself.
 
 ## 2. Present a concise plan to the user for iteration
