@@ -111,8 +111,8 @@ jobs:
         (
           contains(fromJson('["COLLABORATOR","MEMBER","OWNER"]'), github.event.pull_request.author_association) ||
           (
-            contains(fromJson('["Copilot","copilot[bot]","copilot-swe-agent"]'), github.event.pull_request.user.login) &&
-            github.event.pull_request.author_association == 'CONTRIBUTOR'
+            contains(fromJson('["Copilot","copilot[bot]","copilot-swe-agent"]'), github.event.pull_request.user.login)
+            && github.event.pull_request.author_association == 'CONTRIBUTOR'
           )
         )
       ) || (

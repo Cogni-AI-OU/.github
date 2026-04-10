@@ -5,7 +5,7 @@ These agents are tailored to specific tasks and integrate seamlessly with GitHub
 
 ## Available Agents
 
-### [Copilot Plus](copilot-plus.agent.md)
+### [Cogni AI agent](cogni-ai.agent.md)
 
 Enhanced agent with critical thinking, robust problem-solving, and context-aware resource management. Features:
 
