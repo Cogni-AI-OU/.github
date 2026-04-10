@@ -5,5 +5,18 @@
     "pre-commit": true
   },
   "code-runner.fileDirectoryAsCwd": true,
-  "code-runner.saveFileBeforeRun": true
+  "code-runner.saveFileBeforeRun": true,
+  "chat.tools.terminal.autoApprove": {
+      "ansible": true,
+      "ansible-galaxy": true,
+      "ansible-playbook": true,
+      "curl": true,
+      "gh": true,
+      "pre-commit": true,
+      "pulumi": true,
+      "set": true,
+      "time": true,
+      "true": true,
+      "wget": true
+  }
 }

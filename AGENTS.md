@@ -160,16 +160,11 @@ Read and merge these when operating inside corresponding sub-directories (order 
   Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
   when working with files under source control.
 
-### Linting and Validation
+## Tooling
 
-```bash
-# Run all pre-commit checks
-pre-commit run -a
-
-# Run specific checks
-pre-commit run markdownlint -a
-pre-commit run yamllint -a
-```
+- Use MCP when possible.
+- Use `pre-commit` for linting and validation if installed.
+- For dumping links use `links -dump` if installed.
 
 ### Understanding the Task
 

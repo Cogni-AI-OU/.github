@@ -103,11 +103,18 @@ on:
         type: choice
 jobs:
   opencode-review:
-    # Run automatically for PRs, or when an OWNER/MEMBER adds a `/review` comment on a PR.
+    # Run automatically for trusted PRs, including Copilot-authored PRs,
+    # or when an OWNER/MEMBER adds a `/review` comment on a PR.
     if: |
       (
         github.event_name == 'pull_request_target' &&
-        contains(fromJson('["COLLABORATOR","MEMBER","OWNER"]'), github.event.pull_request.author_association)
+        (
+          contains(fromJson('["COLLABORATOR","MEMBER","OWNER"]'), github.event.pull_request.author_association) ||
+          (
+            contains(fromJson('["Copilot","copilot[bot]"]'), github.event.pull_request.user.login) &&
+            github.event.pull_request.author_association == 'CONTRIBUTOR'
+          )
+        )
       ) || (
         github.event_name == 'issue_comment' &&
         github.event.issue.pull_request &&
