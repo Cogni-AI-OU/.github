@@ -1,106 +1,145 @@
 # AGENTS.md
 
-Guidance for coding agents working in this repository.
+Persistent single-source truth for autonomous agent behavior.
 
-For general project guidance, see [README.md](README.md).
+For general project invariants see [README.md](README.md).
 
 ## Directory-Specific Agent files
 
-Read these Agent files when working in corresponding dirs:
+Read and merge these when operating inside corresponding sub-directories (order = precedence):
 
 - [`.github/AGENTS.md`](.github/AGENTS.md)
+- Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
 
-Note: Keep this list up-to-date.
+**Maintenance invariant**:
 
-### Creating new Agents file
+After every complex task completion, troubleshooting victory, or user-provided rule/feedback,
+immediately evaluate and update the nearest relevant AGENTS.md/SKILL.md.
+Trigger: recurring failure, ambiguous steps, discovered superior workaround, new efficiency primitive, or explicit user directive.
 
-Examples when you should create or update Agents files:
+**Creation / Update Triggers (Hard Gate)**:
 
-- Agent-focused guidance that complements existing README and docs.
-- On completion of complex tasks which are essential to be included for simplified agentic flow.
-- Provides more efficient steps which were discovered during development session,
-- Resolution has been found during troubleshooting session.
-- User provides new rules, examples, or feedback intended to guide agent.
-- User requests to update, improve, or refactor existing processes.
-- When existing documentation is too long and complex, and we only need to extract the key information.
-- When the agent struggles with a recurring task, encounters repeated failures, follows ambiguous steps
-  or discovers an effective new solution/workaround not already documented.
-- When working on functionality which requires special knowledge to be shared.
+- Agent-focused guidance that materially compresses cognitive load or failure surface.
+- Resolution of recurring task failures or repeated edge-case collapses.
+- Discovery of dense, reusable execution primitives during development or debugging.
+- User injects new rules, exemplars, or feedback intended for persistent agent memory.
+- Existing documentation entropy exceeds threshold, then extract & prune to peak-density form.
+- Functionality requires domain-specific knowledge that must survive context windows.
 
-What to avoid
+**Hardened NEVER List**:
 
-- Don't include one-time discoveries which won't be needed in the future.
-- Don't include steps which could be a comment in the code instead.
+- NEVER embed one-time discoveries or transient hacks.
+- NEVER duplicate code-level comments or obvious steps.
+- NEVER hardcode environment-specific values; use generic placeholders with explicit semantics.
+- NEVER include beginner exposition or obvious statements.
+- NEVER bloat with prose; enforce one-liner density + imperative syntax only.
+- If guidance is purely disciplinary, route to dedicated `SKILL.md` instead.
 
-Additional tips:
+**Writing invariants (Prodigy-Level)**:
 
-- Do not hardcode values, keep it generic with relevant placeholders.
-- Do not state obvious, keep it on expert-level.
-- Files should be created in relevant sub-directories.
-- Information should be focused for fully autonomous agent execution.
-- Keep files concise, focused and organized.
-- When information is more discipline related, consider creating or updating relevant `SKILL.md` instead.
-- Write dense, imperative, expert-level instructions assuming ninja proficiency;
-  skip basics, favor one-liners, pack maximum depth.
+- Assume ninja-level proficiency across project spectrum.
+- Embed quantitative gates (+20% fidelity delta, <1h MTTR analog, zero ambiguity).
+- Every bullet carries measurable payload: role, then invariants, then context, then exemplars, then schema, then NEVER/MUST-NOT,
+  then verification loops.
+- Favor tables, checklists, and contract-style boundaries over linear text.
+- Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
 
-Docs: <https://agents.md/>
+## Core Agent Execution Protocol (Mandatory for All Forks)
 
-Example structure for Agents files:
+**Pre-execution reverse-prompting activation**:
 
-```markdown
-# AGENTS.md
+- Declare required inputs, missing context, edge cases, and optimal strategy before any tool invocation or code delta.
+- Snapshot current problem state in one entropy-minimized sentence.
+- Enumerate risks against classic-mistakes matrix and Top-10 Risks List.
+- Apply noise-pruning filter + single-variable delta rule for all experiments.
 
-## Setup
+**Strategic vs tactical default**:
 
-- TBA
+- Always default to strategic programming (Ousterhout).
+- Invest 10-20% per cycle in design/refactoring for long-term velocity.
+- Tactical tornadoes trigger immediate rollback + root-cause ablation.
 
-## Additional key files
+**Complexity annihilation primitives** (apply at every layer):
 
-- TBA
+- Design-it-twice mandate on non-trivial decisions.
+- Divide-and-conquer + controlled simplification.
+- DRY + Boy Scout Rule + Rule-of-Three on every duplication smell.
+- Information hiding / deep modules over shallow pass-throughs.
+- Pull complexity downwards; define errors out of existence where possible.
+- Refactor mercilessly via Fowler catalog before feature addition.
 
-## Agents Instructions
+**Verification scaffold (Neurosymbolic)**:
 
-- TBA
+- Chain-of-Verification (CoV) + self-consistency majority vote on every output.
+- Unit, then integration, then system regression sequence before any merge.
+- Minimal reproducible example builder for every failure isolation.
+- Trust-but-verify: replace every assumption with logs/assertions/runtime inspection.
+- Post-action: blameless root-cause ablation + lesson injection into persistent memory.
 
-## Debug tips
+**Debug & Troubleshooting Engine**:
 
-- TBA
+- Stabilize, then reproduce, then isolate via divide-and-conquer + single-variable delta.
+- Never patch symptoms; fix root via 5-Whys until systemic.
+- Instrument targeted breakpoints; prune non-contributory variables first.
+- Maintain runbooks for recurring failure signatures.
 
-## Directory-Specific Agent files
+**Orchestration Models** (select via task cardinality):
 
-Read these Agent files when working in corresponding dirs:
+- **Fork**: byte-identical context clone for bounded subtasks.
+- **Teammate**: persistent peer with isolated tools/memory.
+- **Worktree**: fully parallel independent streams with fork-join synchronization.
 
-- TBA
+**Termination invariants**:
 
-## Testing Instructions
-
-- TBA
-
-## Troubleshooting
-
-> example error ...
-
-- TBA
-
-## Final notes
-
-- Keep this Agent file up-to-date and relevant with the right context.
-- For the latest standard, see: <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>.
-```
+- All TODOs empirically verified.
+- Quality, security, performance gates satisfied.
+- User objective resolved at target fidelity (+20% over prior baseline).
+- AGENTS.md/SKILL.md updated if new reusable primitive discovered.
 
 ## Required References
 
-- Project overview and install steps: [README.md](README.md)
-- Agent configuration and conventions: [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- Workflow and navigation help: [.tours/getting-started.tour](.tours/getting-started.tour)
-- For enhanced agent capabilities, see [Copilot Plus](.github/agents/copilot-plus.agent.md)
+- Project overview & install: [README.md](README.md)
+- Agent configuration & conventions: [.github/copilot-instructions.md](.github/copilot-instructions.md)
+- Workflow navigation: [.tours/getting-started.tour](.tours/getting-started.tour)
+- Latest org baseline: <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>
 
-### Specialized Agents
+## Example Structure for New/Updated AGENTS.md Files
 
-For specific tasks, use the following specialized agent instructions:
+```markdown
+# AGENTS.md  (subdir-specific)
 
-- [Code Tour Agent](.github/agents/code-tour.agent.md) - For creating/updating `.tours/` files
-- [Copilot Plus Agent](.github/agents/copilot-plus.agent.md) - Enhanced Copilot capabilities
+## Setup & Environment Invariants
+
+- ...
+
+## Key Files & Context Injection
+
+- ...
+
+## Agent Directives (Contract Style)
+
+- Role, then invariants, then ...
+- NEVER ...
+- MUST ...
+
+## Testing & Verification Gates
+
+- ...
+
+## Troubleshooting Matrix
+
+> signature error / smell
+- root-cause vector
+- isolation steps
+- verified fix + prevention
+
+## Final Assurance Gates
+
+- Keep this file entropy-pruned and up-to-date.
+- Inject full content into every sub-agent context.
+- For latest version see:
+  <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>
+- For latest standard see: <https://agents.md/>
 
 ## Common Tasks
 
