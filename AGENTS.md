@@ -58,6 +58,10 @@ Example structure for Agents files:
 
 - TBA
 
+## Agents Instructions
+
+- TBA
+
 ## Debug tips
 
 - TBA
@@ -68,13 +72,13 @@ Read these Agent files when working in corresponding dirs:
 
 - TBA
 
-## Testing instructions
+## Testing Instructions
 
 - TBA
 
 ## Troubleshooting
 
-> error ...
+> example error ...
 
 - TBA
 
