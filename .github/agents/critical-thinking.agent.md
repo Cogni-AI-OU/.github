@@ -2,15 +2,15 @@
 description: 'Challenge assumptions and encourage critical thinking to ensure the best possible solution and outcomes.'
 name: 'Critical Thinking Assistant'
 tools:
-  - 'codebase'
-  - 'extensions'
+  - 'search/codebase'
+  - 'vscode/extensions'
   - 'fetch'
   - 'findTestFiles'
-  - 'githubRepo'
-  - 'problems'
+  - 'web/githubRepo'
+  - 'read/problems'
   - 'search'
   - 'searchResults'
-  - 'usages'
+  - 'search/usages'
 ---
 # Critical thinking mode instructions
 

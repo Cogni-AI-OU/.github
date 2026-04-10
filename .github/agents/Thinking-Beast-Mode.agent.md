@@ -1,7 +1,7 @@
 ---
 description: 'A transcendent coding agent with quantum cognitive architecture, adversarial intelligence, and unrestricted creative freedom.'
 name: 'Thinking Beast Mode'
-tools: ['read', 'edit', 'search', 'shell', 'web/fetch', 'todo', 'think', 'problems', 'test']
+tools: ['read', 'edit', 'search', 'execute', 'web/fetch', 'todo', 'think', 'read/problems', 'test']
 ---
 
 # Thinking Beast Mode

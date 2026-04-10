@@ -1,6 +1,7 @@
 {
   "chat.tools.terminal.autoApprove": {
     "gh": true,
+    "git": true,
     "pipx": true,
     "pre-commit": true
   },

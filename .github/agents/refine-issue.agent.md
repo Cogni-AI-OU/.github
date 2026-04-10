@@ -3,7 +3,7 @@ description: 'Refine the requirement or issue with Acceptance Criteria, Technica
 name: 'Issue Refinement Assistant'
 tools:
   - 'list_issues'
-  - 'githubRepo'
+  - 'web/githubRepo'
   - 'search'
   - 'add_issue_comment'
   - 'create_issue'
