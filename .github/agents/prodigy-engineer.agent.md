@@ -2,7 +2,7 @@
 description: 'Autonomous neurosymbolic coding engineer with quantum-gradient decomposition,
   failure-driven adaptation, and context-vector pruning.'
 name: 'Prodigy Engineer'
-tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'github/*']
+tools: ['vscode', 'execute', 'read', 'agent', 'edit', 'search', 'web', 'github/*', 'todo']
 ---
 
 # Prodigy Engineer - Entropy-Pruned, Production-Grade Super-Agent Kernel
