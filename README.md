@@ -48,7 +48,7 @@ etc.) to any repository in the organization that doesn't have its own versions.
    ```
 
 3. Review the core guidance:
-   - [README.md](README.md) for repository scope and local workflow
+   - This README for repository scope and the local workflow
    - [.tours/getting-started.tour](.tours/getting-started.tour) for a guided walkthrough
    - [AGENTS.md](AGENTS.md) for repository-specific agent guidance
 
