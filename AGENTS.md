@@ -13,9 +13,14 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 **Maintenance invariant**:
 
-After every complex task completion, troubleshooting victory, or user-provided rule/feedback,
-immediately evaluate and update the nearest relevant AGENTS.md/SKILL.md.
-Trigger: recurring failure, ambiguous steps, discovered superior workaround, new efficiency primitive, or explicit user directive.
+- After every complex task completion or troubleshooting victory,
+  immediately update the nearest relevant AGENTS.md or SKILL.md.
+- On recurring failure, immediately re-evaluate
+  and update the nearest relevant AGENTS.md or SKILL.md.
+- On discovery of superior workaround, new efficiency primitive, or explicit user directive,
+  immediately update the nearest relevant AGENTS.md or SKILL.md.
+- On detection of ambiguous steps or unclear instructions,
+  immediately update the nearest relevant AGENTS.md or SKILL.md.
 
 **Creation / Update Triggers (Hard Gate)**:
 
