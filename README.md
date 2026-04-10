@@ -19,7 +19,6 @@ etc.) to any repository in the organization that doesn't have its own versions.
   other issue types
 - **Code of Conduct**: Organization-wide behavioral standards
 - **Contributing Guidelines**: How to contribute to projects
-- **Security Policies**: Instructions for reporting vulnerabilities
 - **Pull Request Templates**: Standardized PR descriptions
 - **GitHub Actions Workflows**: Reusable CI/CD and automation workflows
 - **Organization Profile**: Public-facing information via `profile/README.md`
@@ -32,6 +31,26 @@ etc.) to any repository in the organization that doesn't have its own versions.
 2. If a repository doesn't have a specific file, GitHub falls back to this
    repository
 3. Changes here automatically apply organization-wide
+
+## Getting Started
+
+1. Install the local validation tooling:
+
+   ```bash
+   pip install pre-commit
+   pip install -r .devcontainer/requirements.txt
+   ```
+
+2. Run the repository checks:
+
+   ```bash
+   pre-commit run -a
+   ```
+
+3. Review the core guidance:
+   - This README for repository scope and the local workflow
+   - [.tours/getting-started.tour](.tours/getting-started.tour) for a guided walkthrough
+   - [AGENTS.md](AGENTS.md) for repository-specific agent guidance
 
 ## Development
 
@@ -58,6 +77,15 @@ pre-commit run yamllint -a
 pre-commit run black -a
 pre-commit run flake8 -a
 ```
+
+## Project Layout
+
+- `.github/`: default templates, workflows, instructions, prompts, skills, and agent configuration
+- `.tours/`: guided walkthroughs for repository onboarding
+- `profile/`: the public organization profile shown on GitHub
+- `AGENTS.md`: repository-specific guidance for automation agents
+- `CODE_OF_CONDUCT.md`: organization-wide community standards
+- `README.md`: repository overview and local development workflow
 
 ## AI Agents
 
@@ -88,6 +116,11 @@ configuration, see [.github/GITHUB-WORKFLOWS.md](.github/GITHUB-WORKFLOWS.md).
 
 For information about Cogni AI OÜ, our mission, and how to collaborate, see our
 [organization profile](profile/README.md).
+
+## Contributing
+
+See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for organization-wide
+contribution guidelines and expectations for issues, pull requests, and CI.
 
 ## References
 
