@@ -81,6 +81,7 @@ Read these Agent files when working in corresponding dirs:
 ## Final notes
 
 - Keep this Agent file up-to-date.
+- For the latest standard, see: <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>.
 ```
 
 ## Required References
