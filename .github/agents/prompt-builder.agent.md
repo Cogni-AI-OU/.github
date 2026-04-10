@@ -7,11 +7,12 @@ tools:
   - 'fetch'
   - 'web/githubRepo'
   - 'read/problems'
-  - 'execute/getTerminalOutput','execute/runInTerminal','read/terminalLastCommand','read/terminalSelection'
-  - 'search'
-  - 'searchResults'
+  - 'execute/getTerminalOutput'
+  - 'execute/runInTerminal'
   - 'read/terminalLastCommand'
   - 'read/terminalSelection'
+  - 'search'
+  - 'searchResults'
   - 'search/usages'
 ---
 

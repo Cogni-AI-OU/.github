@@ -29,8 +29,6 @@ tools:
   - 'execute/runTests'
   - 'search'
   - 'searchResults'
-  - 'read/terminalLastCommand'
-  - 'read/terminalSelection'
   - 'execute/testFailure'
   - 'updateUserPreferences'
   - 'search/usages'
