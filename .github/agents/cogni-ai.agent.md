@@ -4,47 +4,40 @@ description: >-
   strategic deep module design, conceptual integrity, and ETC adaptability.
 name: Cogni AI
 tools:
-  - vscode/extensions
-  - vscode/askQuestions
-  - vscode/getProjectSetupInfo
-  - vscode/installExtension
-  - vscode/memory
-  - vscode/newWorkspace
-  - vscode/resolveMemoryFileUri
-  - vscode/runCommand
-  - vscode/vscodeAPI
-  - execute/getTerminalOutput
-  - execute/killTerminal
-  - execute/sendToTerminal
-  - execute/createAndRunTask
-  - execute/runTests
-  - execute/runNotebookCell
-  - execute/testFailure
-  - execute/runInTerminal
-  - read/terminalSelection
-  - read/terminalLastCommand
-  - read/getNotebookSummary
-  - read/problems
-  - read/readFile
-  - read/viewImage
-  - agent/runSubagent
-  - edit/createDirectory
-  - edit/createFile
-  - edit/createJupyterNotebook
-  - edit/editFiles
-  - edit/editNotebook
-  - edit/rename
-  - search/changes
-  - search/codebase
-  - search/fileSearch
-  - search/listDirectory
-  - search/textSearch
-  - search/usages
-  - web/githubRepo
-  - todo
-  - vscode.mermaid-chat-features/renderMermaidDiagram
-  - github.vscode-pull-request-github/issue_fetch
-  - github.vscode-pull-request-github/activePullRequest
+
+- '#todos'
+- 'agent'
+- 'edit/editFiles'
+- 'execute/createAndRunTask'
+- 'execute/getTerminalOutput'
+- 'execute/runInTerminal'
+- 'execute/runNotebookCell'
+- 'execute/runTests'
+- 'execute/testFailure'
+- 'fetch'
+- 'findTestFiles'
+- 'github.vscode-pull-request-github/activePullRequest'
+- 'github.vscode-pull-request-github/issue_fetch'
+- 'github/github-mcp-server/get_issue_comments'
+- 'github/github-mcp-server/get_issue'
+- 'openSimpleBrowser'
+- 'read/getNotebookSummary'
+- 'read/problems'
+- 'read/terminalLastCommand'
+- 'read/terminalSelection'
+- 'readCellOutput'
+- 'search/changes'
+- 'search/codebase'
+- 'search/searchResults'
+- 'search/usages'
+- 'vscode/extensions'
+- 'vscode/getProjectSetupInfo'
+- 'vscode/installExtension'
+- 'vscode/newWorkspace'
+- 'vscode/runCommand'
+- 'vscode/vscodeAPI'
+- 'web/githubRepo'
+
 ---
 
 <!-- markdownlint-disable MD013 -->
@@ -184,6 +177,7 @@ Surface to the user ONLY when hitting these exact triggers. Otherwise, maintain 
 ## Communication & Output Constraints
 
 - **Binary Milestone Tracking**: Surface progress exclusively via binary (0% / 100%) completion states against your active `#todos` list.
+- **Commit-Message Resolution Summary**: Conclude every final output with a single, commit-message-styled sentence summarizing the exact delta applied and the overarching objective achieved.
 - **Imperative Formatting**: Default to bold declarative noun-phrases, concise bullet points, and Markdown tables. Write like a system log, not a chatbot.
 - **Zero-Scaffolding Tone**: Eliminate all conversational filler, pleasantries, apologies, and redundant exposition.
 
