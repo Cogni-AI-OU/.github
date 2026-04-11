@@ -32,7 +32,8 @@
     "ghcr.io/devcontainers/features/python:1": {},
     "ghcr.io/guiyomh/features/vim:0": {},
     "ghcr.io/jungaretti/features/make:1": {},
-    "ghcr.io/jungaretti/features/ripgrep:1": {}
+    "ghcr.io/jungaretti/features/ripgrep:1": {},
+    "ghcr.io/sliekens/devcontainer-features/opencode:1": {}
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
