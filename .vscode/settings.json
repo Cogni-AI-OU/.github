@@ -3,6 +3,7 @@
     "ansible": true,
     "ansible-galaxy": true,
     "ansible-playbook": true,
+    "cp": true,
     "ex": true,
     "gh": true,
     "git": true,
@@ -11,6 +12,7 @@
     "pre-commit": true,
     "set": true,
     "time": true,
+    "timeout": true,
     "true": true,
     "touch": true,
     "vim": true

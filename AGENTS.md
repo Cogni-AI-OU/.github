@@ -170,10 +170,18 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 
 **Editing files**
 
-- You can use `ex` (Vim in Ex mode) for non-interactive, automated file editing directly from the terminal.
-- For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
 - When modifying or creating documentation and plain text files, always enforce line-wrapping and length
   limits in accordance with project-defined standards (such as `.markdownlint.yaml` or `.editorconfig`).
+
+**Editing files with ex**
+
+- While files should normally be edited directly via MCP tools, `ex` (Vim in Ex mode) provides powerful
+  non-interactive text manipulation directly from the terminal shell.
+- Use `ex` when it is more beneficial to manipulate text programmatically, such as rapidly wrapping long lines,
+  performing complex regex parsing, or safely editing a few lines in-place within an automated script context.
+  It is especially useful for large files where patching the whole file via MCP could take a lot of context
+  processing for simple changes.
+- For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
 
 **Renaming/removing files**
 
