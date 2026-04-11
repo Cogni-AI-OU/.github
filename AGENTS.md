@@ -53,6 +53,9 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 **Pre-execution reverse-prompting activation**:
 
+- Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
+  along with any directory-specific `AGENTS.md` and related files, `.github/copilot-instructions.md`,
+  and autonomously load any relevant `.instructions.md` rules or `SKILL.md` workflows before formulating a strategy.
 - Declare required inputs, missing context, edge cases, and optimal strategy before any tool invocation or code delta.
 - Snapshot current problem state in one entropy-minimized sentence.
 - Enumerate risks against classic-mistakes matrix and Top-10 Risks List.

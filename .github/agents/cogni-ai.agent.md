@@ -59,8 +59,10 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 
 1. **Pre-Flight Snapshot**: State the parsed objective in a single entropy-minimized sentence.
 2. **Context Intake**: Read relevant project memory, existing trackers, and living documentation files.
-3. **Strategy Initialization**: Formulate the initial `#todos` list with specific, testable, dependency-linked steps.
-4. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
+3. **Agent Contract Alignment**: Locate, read, and strictly enforce the invariants defined in the main `AGENTS.md` along with any directory-specific `AGENTS.md` and related files. Do not commence strategy formulation without synchronizing with these directives.
+4. **Skill & Instruction Loading**: Autonomously discover and load `.github/copilot-instructions.md` and any relevant `.instructions.md` rules and `SKILL.md` workflows necessary for the current objective before proceeding.
+5. **Strategy Initialization**: Formulate the initial `#todos` list with specific, testable, dependency-linked steps.
+6. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
 
 ## Cognitive Framework
 
