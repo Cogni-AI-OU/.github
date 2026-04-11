@@ -105,13 +105,37 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 ## GitHub Actions Runtime
 
-When executing autonomously within a GitHub Actions environment, adhere strictly to these interaction constraints:
+When executing autonomously within a GitHub Actions environment, adhere strictly to these
+interaction constraints:
 
-- **Symmetric Interaction Routing**: If execution is triggered by a user comment,
-  ALWAYS deliver the response, resolution, or failure artifact via the exact originating channel
-  (e.g., general PR comment, issue comment, or inline code review thread).
-- **Contextual Continuity**: NEVER fragment the conversation by replying with a general PR comment
-  if the trigger originated from an inline code suggestion, and vice versa.
+### Comment Response Routing (CRITICAL)
+
+**Detection**: Check `github.event_name` and event payload to identify trigger source:
+
+| Trigger Source | Event Name | Payload Key | Reply Method |
+| -------------- | ---------- | ----------- | ------------ |
+| General PR comment | `issue_comment` | `github.event.comment` | `gh pr comment` |
+| Inline code review | `pull_request_review_comment` | `github.event.comment` | `gh api` to reply in thread |
+| Issue comment | `issue_comment` | `github.event.comment` | `gh issue comment` |
+
+**Inline Code Review Response** (when `github.event_name == 'pull_request_review_comment'`):
+
+```bash
+gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
+  -f body="Your response here"
+```
+
+**Invariants**:
+
+- **Symmetric Routing**: ALWAYS reply via the exact originating channel.
+- **NEVER** post a general PR comment when triggered by an inline code review thread.
+- **NEVER** post an inline reply when triggered by a general PR comment.
+- Parse `github.event.comment.id` and `github.event.comment.in_reply_to_id` to identify thread context.
+
+### General Constraints
+
+- **Contextual Continuity**: Maintain conversation context within the originating thread.
+- If replying to an inline comment, your response MUST appear as a reply in that same thread.
 
 ## Required References
 
