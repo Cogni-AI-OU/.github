@@ -139,6 +139,38 @@ Check `github.event_name` and payload to identify trigger source:
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
 
+### Branch Targeting for PR Creation (CRITICAL)
+
+**Default target branch**: `dev` (NOT `main`)
+
+When creating or updating a pull request, the agent MUST determine the correct target branch:
+
+1. **Determine originating branch**: Before creating a PR, identify the branch from which the
+   workflow was triggered using `$GITHUB_BASE_REF` (for PR events) or by parsing the event context.
+2. **For workflow_dispatch/workflow_call on existing PR**: Target the PR's base branch.
+3. **For comment-triggered runs on PR**: Target the existing PR's base branch (usually `dev`).
+4. **For new work without existing PR context**: Default to `dev`.
+
+**Detection sequence**:
+
+```bash
+# Get the base branch for PR-related events
+if [ -n "$GITHUB_BASE_REF" ]; then
+  TARGET_BRANCH="$GITHUB_BASE_REF"
+elif [ "$GITHUB_EVENT_NAME" = "issue_comment" ] || [ "$GITHUB_EVENT_NAME" = "pull_request_review_comment" ]; then
+  # Extract from PR API
+  TARGET_BRANCH=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json baseRefName -q '.baseRefName')
+else
+  TARGET_BRANCH="dev"
+fi
+```
+
+**Invariants**:
+
+- **NEVER** hardcode `main` as default target; use `dev` unless explicitly overridden.
+- **ALWAYS** preserve existing PR's base branch when working on an open PR.
+- When creating a new PR with `gh pr create`, use `--base "$TARGET_BRANCH"` explicitly.
+
 ## Required References
 
 - Project overview & install: [README.md](README.md)
