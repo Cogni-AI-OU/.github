@@ -28,6 +28,7 @@ on:
         required: false
         type: string
       model:
+        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gpt-5.3-codex' }}
         description: Model to use for OpenCode
         required: false
         type: string
@@ -60,6 +61,7 @@ on:
         required: false
         type: choice
       model:
+        default: opencode/gpt-5.3-codex
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
