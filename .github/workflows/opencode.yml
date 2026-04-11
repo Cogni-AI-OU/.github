@@ -136,6 +136,31 @@ jobs:
           python-version: '3.12'
       - name: Install pre-commit
         run: pip install pre-commit
+      - name: Resolve OpenCode prompt
+        id: prompt
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body || '' }}
+          PROMPT_INPUT: ${{ inputs.prompt }}
+        run: |
+          set -euo pipefail
+          prompt="${PROMPT_INPUT:-}"
+          if [ -z "$prompt" ]; then
+            prompt="${COMMENT_BODY:-}"
+          fi
+          {
+            echo 'prompt<<EOF'
+            printf '%s\n' "$prompt"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+      - name: Annotate OpenCode prompt
+        env:
+          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+        run: |
+          set -euo pipefail
+          message=${OPENCODE_PROMPT//'%'/'%25'}
+          message=${message//$'\r'/'%0D'}
+          message=${message//$'\n'/'%0A'}
+          echo "::notice title=OpenCode prompt::${message}"
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
         env:
@@ -149,4 +174,4 @@ jobs:
           model: >-
             ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
             && inputs.model || 'opencode/claude-opus-4-5' }}
-          prompt: ${{ inputs.prompt || '' }}
+          prompt: ${{ steps.prompt.outputs.prompt }}

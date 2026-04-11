@@ -10,6 +10,7 @@
     "links": true,
     "pipx": true,
     "pre-commit": true,
+    "printf": true,
     "set": true,
     "time": true,
     "timeout": true,

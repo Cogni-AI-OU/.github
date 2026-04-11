@@ -195,17 +195,56 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
-      - name: Load review prompt
-        id: load-prompt
+      - name: Resolve OpenCode prompt
+        id: prompt
         env:
+          ADDITIONAL_PROMPT_INPUT: ${{ inputs.additional_prompt }}
+          PR_FILES_JSON: ${{ steps.pr-details.outputs.files }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.number }}
+          PR_SHA: ${{ steps.pr-details.outputs.sha }}
+          PR_TITLE: ${{ steps.pr-details.outputs.title }}
           PROMPT_INPUT: ${{ inputs.prompt }}
+          REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
           prompt_name="${PROMPT_INPUT:-pr-review}"
           [[ "$prompt_name" =~ ^[a-z0-9-]+$ ]] || { echo "Invalid prompt: $prompt_name"; exit 1; }
           prompt_file=".github/prompts/$prompt_name.prompt.md"
           [ -f "$prompt_file" ] || { echo "Missing prompt: $prompt_file"; exit 1; }
-          { echo 'prompt<<EOF'; cat "$prompt_file"; echo 'EOF'; } >> "$GITHUB_OUTPUT"
+          {
+            echo 'prompt<<EOF'
+            printf '%s\n' \
+              'Pull request needs to be reviewed in the context of the following repository:' \
+              '<repo>' \
+              "$REPOSITORY" \
+              '</repo>' \
+              '<pr-number>' \
+              "$PR_NUMBER" \
+              '</pr-number>' \
+              '<pr-files-json>' \
+              "$PR_FILES_JSON" \
+              '</pr-files-json>' \
+              '<pr-title>' \
+              "$PR_TITLE" \
+              '</pr-title>' \
+              '<pr-sha>' \
+              "$PR_SHA" \
+              '</pr-sha>'
+            cat "$prompt_file"
+            if [ -n "${ADDITIONAL_PROMPT_INPUT:-}" ]; then
+              printf '\nAdditional instructions:\n%s\n' "$ADDITIONAL_PROMPT_INPUT"
+            fi
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+      - name: Annotate OpenCode prompt
+        env:
+          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+        run: |
+          set -euo pipefail
+          message=${OPENCODE_PROMPT//'%'/'%25'}
+          message=${message//$'\r'/'%0D'}
+          message=${message//$'\n'/'%0A'}
+          echo "::notice title=OpenCode prompt::${message}"
       - uses: anomalyco/opencode/github@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -218,25 +257,7 @@ jobs:
           model: >-
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
             && inputs.model || 'opencode/claude-opus-4-5' }}
-          prompt: |-
-            Pull request needs to be reviewed in the context of the following repository:
-            <repo>
-            ${{ github.repository }}
-            </repo>
-            <pr-number>
-            ${{ steps.pr-number.outputs.number }}
-            </pr-number>
-            <pr-files-json>
-            ${{ steps.pr-details.outputs.files }}
-            </pr-files-json>
-            <pr-title>
-            ${{ steps.pr-details.outputs.title }}
-            </pr-title>
-            <pr-sha>
-            ${{ steps.pr-details.outputs.sha }}
-            </pr-sha>
-            ${{ steps.load-prompt.outputs.prompt }}
-            ${{ inputs.additional_prompt && format('\nAdditional instructions:\n{0}', inputs.additional_prompt) || '' }}
+          prompt: ${{ steps.prompt.outputs.prompt }}
       - name: Show OpenCode log on failure
         if: failure()
         run: |-
