@@ -155,16 +155,8 @@ jobs:
             printf '%s\n' "$prompt"
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
-      - name: Annotate OpenCode prompt
-        env:
-          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
-        run: |
-          set -euo pipefail
-          message=${OPENCODE_PROMPT//'%'/'%25'}
-          message=${message//$'\r'/'%0D'}
-          message=${message//$'\n'/'%0A'}
-          echo "::notice title=OpenCode prompt::${message}"
       - name: Run opencode
+        id: opencode
         uses: anomalyco/opencode/github@latest
         timeout-minutes: 60
         env:
@@ -177,6 +169,21 @@ jobs:
             ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
           prompt: ${{ steps.prompt.outputs.prompt }}
+      - name: Annotate OpenCode prompt and output
+        env:
+          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+          OPENCODE_OUTPUT: ${{ steps.opencode.outputs.response }}
+        run: |
+          set -euo pipefail
+          escape() {
+            local value="$1"
+            value=${value//'%'/'%25'}
+            value=${value//$'\r'/'%0D'}
+            value=${value//$'\n'/'%0A'}
+            printf '%s' "$value"
+          }
+          echo "::notice title=OpenCode prompt::$(escape "$OPENCODE_PROMPT")"
+          echo "::notice title=OpenCode output::$(escape "${OPENCODE_OUTPUT:-}")"
       - name: Print logs
         if: failure()
         run: grep -v INFO ~/.local/share/opencode/log/* || true

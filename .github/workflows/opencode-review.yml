@@ -256,16 +256,9 @@ jobs:
             fi
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
-      - name: Annotate OpenCode prompt
-        env:
-          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
-        run: |
-          set -euo pipefail
-          message=${OPENCODE_PROMPT//'%'/'%25'}
-          message=${message//$'\r'/'%0D'}
-          message=${message//$'\n'/'%0A'}
-          echo "::notice title=OpenCode prompt::${message}"
-      - uses: anomalyco/opencode/github@latest
+      - name: Run opencode
+        id: opencode
+        uses: anomalyco/opencode/github@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
@@ -276,6 +269,21 @@ jobs:
           # See: <https://opencode.ai/docs/models/>
           model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
           prompt: ${{ steps.prompt.outputs.prompt }}
+      - name: Annotate OpenCode prompt and output
+        env:
+          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+          OPENCODE_OUTPUT: ${{ steps.opencode.outputs.response }}
+        run: |
+          set -euo pipefail
+          escape() {
+            local value="$1"
+            value=${value//'%'/'%25'}
+            value=${value//$'\r'/'%0D'}
+            value=${value//$'\n'/'%0A'}
+            printf '%s' "$value"
+          }
+          echo "::notice title=OpenCode prompt::$(escape "$OPENCODE_PROMPT")"
+          echo "::notice title=OpenCode output::$(escape "${OPENCODE_OUTPUT:-}")"
       - name: Show OpenCode log on failure
         if: failure()
         run: |-
