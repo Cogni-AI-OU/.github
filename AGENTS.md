@@ -185,7 +185,7 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 
 **Renaming/removing files**
 
-- Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
+- Use `git mv`, `git rm`, or equivalent Git-aware tooling (instead of `mv` or `rm`) to preserve history
   when working with files under source control.
 
 ## Tooling
