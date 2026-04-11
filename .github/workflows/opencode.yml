@@ -66,7 +66,6 @@ on:
           - opencode/gpt-5.1-codex-mini
           - opencode/gpt-5.2
           - opencode/gpt-5.2-codex
-          - opencode/grok-code
           - opencode/kimi-k2
           - opencode/kimi-k2-thinking
           - opencode/minimax-m2.1-free
