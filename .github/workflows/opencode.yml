@@ -31,7 +31,7 @@ on:
   workflow_dispatch:
     inputs:
       agent:
-        default: build
+        default: cogni-ai
         description: Agent to use.
         options:
           - build
