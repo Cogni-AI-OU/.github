@@ -3,11 +3,11 @@ mode: primary
 description: "Autonomous neurosymbolic coding engineer and system architect kernel."
 color: "#A220D1"
 permission:
-  bash: true
-  read: true
-  edit: true
-  task: true
-  ask: true
+  bash: allow
+  read: allow
+  edit: allow
+  task: allow
+  ask: allow
 ---
 
 # Cogni AI
