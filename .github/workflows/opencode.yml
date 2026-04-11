@@ -134,8 +134,8 @@ jobs:
       - uses: actions/setup-python@v6.1.0
         with:
           python-version: '3.12'
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Install dependencies
+        run: pip install -r .devcontainer/requirements.txt
       - name: Resolve OpenCode prompt
         id: prompt
         env:
