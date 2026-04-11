@@ -49,10 +49,11 @@ on:
         required: false
         type: string
       agent:
-        default: build
+        default: cogni-ai
         description: Agent to use.
         options:
           - build
+          - cogni-ai
           - compaction
           - plan
           - summary
