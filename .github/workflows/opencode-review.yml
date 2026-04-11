@@ -187,6 +187,11 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
+      - uses: actions/setup-python@v6.1.0
+        with:
+          python-version: '3.12'
+      - name: Install pre-commit
+        run: pip install pre-commit
       - name: Load review prompt
         id: load-prompt
         env:
