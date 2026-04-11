@@ -23,7 +23,7 @@ on:
         required: false
         type: string
       agent:
-        default: build
+        default: cogni-ai
         description: Agent to use.
         required: false
         type: string
@@ -102,6 +102,8 @@ on:
           - pr-review
         required: false
         type: choice
+env:
+  OPENCODE_AGENT_DEFAULT: cogni-ai
 jobs:
   opencode-review:
     # Run automatically for trusted PRs, including Copilot-authored PRs,
@@ -189,7 +191,7 @@ jobs:
           OPENCODE_PERMISSION: |-
             { "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny", "pre-commit*": "allow" } }
         with:
-          agent: ${{ inputs.agent || 'build' }}
+          agent: ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           # See: <https://opencode.ai/docs/models/>
           model: >-
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')

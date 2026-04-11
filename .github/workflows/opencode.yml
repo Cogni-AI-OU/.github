@@ -14,7 +14,7 @@ on:
   workflow_call:
     inputs:
       agent:
-        default: build
+        default: cogni-ai
         description: Agent to use.
         required: false
         type: string
@@ -77,6 +77,8 @@ on:
         description: Custom prompt to override the default prompt
         required: false
         default: ''
+env:
+  OPENCODE_AGENT_DEFAULT: cogni-ai
 jobs:
   opencode:
     if: |
@@ -109,7 +111,8 @@ jobs:
           OPENCODE_PERMISSION: |-
             { "bash": {  "*": "deny", "gh*": "allow", "gh pr review*": "deny", "pre-commit*": "allow" } }
         with:
-          agent: ${{ inputs.agent }}
+          agent: >-
+            ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           model: >-
             ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
             && inputs.model || 'opencode/claude-opus-4-5' }}
