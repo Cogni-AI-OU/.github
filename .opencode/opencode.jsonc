@@ -14,6 +14,28 @@
         "write": true,
         "edit": true,
         "bash": true
+      },
+      // Keep shell permissions aligned with .vscode/settings.json allowlist.
+      "permission": {
+        "bash": {
+          "ansible": "allow",
+          "ansible-galaxy": "allow",
+          "ansible-playbook": "allow",
+          "cp": "allow",
+          "ex": "allow",
+          "gh": "allow",
+          "git": "allow",
+          "links": "allow",
+          "pipx": "allow",
+          "pre-commit": "allow",
+          "printf": "allow",
+          "set": "allow",
+          "time": "allow",
+          "timeout": "allow",
+          "true": "allow",
+          "touch": "allow",
+          "vim": "allow"
+        }
       }
     }
   },
