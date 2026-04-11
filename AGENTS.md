@@ -104,6 +104,16 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - User objective resolved at target fidelity (+20% over prior baseline).
 - AGENTS.md/SKILL.md updated if new reusable primitive discovered.
 
+## GitHub Actions Runtime
+
+When executing autonomously within a GitHub Actions environment, adhere strictly to these interaction constraints:
+
+- **Symmetric Interaction Routing**: If execution is triggered by a user comment,
+  ALWAYS deliver the response, resolution, or failure artifact via the exact originating channel
+  (e.g., general PR comment, issue comment, or inline code review thread).
+- **Contextual Continuity**: NEVER fragment the conversation by replying with a general PR comment
+  if the trigger originated from an inline code suggestion, and vice versa.
+
 ## Required References
 
 - Project overview & install: [README.md](README.md)
