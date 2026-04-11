@@ -28,7 +28,7 @@ on:
         required: false
         type: string
       model:
-        default: opencode/claude-opus-4-5
+        default: opencode/gpt-5.3-codex
         description: Model to use for OpenCode
         required: false
         type: string
@@ -61,7 +61,7 @@ on:
         required: false
         type: choice
       model:
-        default: opencode/claude-opus-4-5
+        default: opencode/gpt-5.3-codex
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
@@ -273,7 +273,7 @@ jobs:
           # See: <https://opencode.ai/docs/models/>
           model: >-
             ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
-            && inputs.model || 'opencode/claude-opus-4-5' }}
+            && inputs.model || 'opencode/gpt-5.3-codex' }}
           prompt: ${{ steps.prompt.outputs.prompt }}
       - name: Show OpenCode log on failure
         if: failure()

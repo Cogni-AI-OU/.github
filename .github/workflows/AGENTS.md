@@ -25,7 +25,7 @@ For a human-readable overview, see [README.md](README.md).
 ### opencode.yml
 
 - Purpose: invoke OpenCode agents via slash commands or manual triggers.
-- Inputs: `agent` (default `cogni-ai`), `model` (default `opencode/claude-opus-4-5`), `prompt` (optional override).
+- Inputs: `agent` (default `cogni-ai`), `model` (default `opencode/gpt-5.3-codex`), `prompt` (optional override).
 - Triggers: `workflow_dispatch`, `workflow_call`, or issue comments with `/oc` or `/opencode` from trusted (non-bot) collaborators/members/owners.
 - Guardrail: comment-triggered runs do not populate `inputs.*`; back shared OpenCode defaults
   with a single workflow-level `env` value instead of hardcoding agent literals in steps.
@@ -35,7 +35,7 @@ For a human-readable overview, see [README.md](README.md).
 ### opencode-review.yml
 
 - Purpose: OpenCode-driven PR review.
-- Inputs: agent (cogni-ai), model (opencode/claude-opus-4-5), additional_prompt, pr_number (req for call/dispatch),
+- Inputs: agent (cogni-ai), model (opencode/gpt-5.3-codex), additional_prompt, pr_number (req for call/dispatch),
   prompt (default pr-review).
 - Triggers: pull_request_target (trusted authors), /review comment (COLLABORATOR/OWNER/MEMBER), workflow_call,
   workflow_dispatch.
