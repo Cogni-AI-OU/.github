@@ -178,4 +178,4 @@ jobs:
           prompt: ${{ steps.prompt.outputs.prompt }}
       - name: Print logs
         if: failure()
-        run: cat ~/.local/share/opencode/log/* || true
+        run: grep -v INFO ~/.local/share/opencode/log/* || true
