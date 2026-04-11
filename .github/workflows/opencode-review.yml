@@ -53,6 +53,7 @@ on:
         description: Agent to use.
         options:
           - build
+          - cogni-ai
           - compaction
           - plan
           - summary
