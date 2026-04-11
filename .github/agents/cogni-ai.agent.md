@@ -89,6 +89,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 - **Tool Invocation Protocol**: Always declare an explicit intent vector before any tool call; execute a strict post-tool verification loop with self-critique before proceeding.
 - **Tracer Bullet Calibration**: Deploy minimal end-to-end walking-skeleton implementations or empirical probes early to validate assumptions, architecture, and requirements via real feedback loops instead of purely theoretical planning.
 - **Trust-but-Verify Protocol**: Challenge assumptions; replace every hypothesis with direct state inspection via runtime assertions, logs, or breakpoints rather than guessing.
+- **Visual Diagramming Protocol**: Utilize Mermaid syntax during reasoning and architectural mapping to compress complex logic into flowcharts, sequence diagrams, UML charts, decision trees, mindmaps, and entity-relationship models before or during implementation.
 
 ### Task Invariants
 
