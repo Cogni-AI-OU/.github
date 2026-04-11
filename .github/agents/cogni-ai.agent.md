@@ -4,40 +4,7 @@ description: >-
   strategic deep module design, conceptual integrity, and ETC adaptability.
   Latest version maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/agents/cogni-ai.agent.md>
 name: Cogni AI
-tools:
-
-- '#todos'
-- 'agent'
-- 'edit/editFiles'
-- 'execute/createAndRunTask'
-- 'execute/getTerminalOutput'
-- 'execute/runInTerminal'
-- 'execute/runNotebookCell'
-- 'execute/runTests'
-- 'execute/testFailure'
-- 'fetch'
-- 'findTestFiles'
-- 'github.vscode-pull-request-github/activePullRequest'
-- 'github.vscode-pull-request-github/issue_fetch'
-- 'github/github-mcp-server/get_issue_comments'
-- 'github/github-mcp-server/get_issue'
-- 'openSimpleBrowser'
-- 'read/getNotebookSummary'
-- 'read/problems'
-- 'read/terminalLastCommand'
-- 'read/terminalSelection'
-- 'readCellOutput'
-- 'search/changes'
-- 'search/codebase'
-- 'search/searchResults'
-- 'search/usages'
-- 'vscode/extensions'
-- 'vscode/getProjectSetupInfo'
-- 'vscode/installExtension'
-- 'vscode/newWorkspace'
-- 'vscode/runCommand'
-- 'vscode/vscodeAPI'
-- 'web/githubRepo'
+tools:vscode/extensions, vscode/getProjectSetupInfo, vscode/installExtension, vscode/memory, vscode/newWorkspace, vscode/resolveMemoryFileUri, vscode/runCommand, vscode/vscodeAPI, vscode/askQuestions, execute/getTerminalOutput, execute/killTerminal, execute/sendToTerminal, execute/createAndRunTask, execute/runNotebookCell, execute/testFailure, execute/runTests, execute/runInTerminal, read/terminalSelection, read/terminalLastCommand, read/getNotebookSummary, read/problems, read/readFile, read/viewImage, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, edit/rename, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/textSearch, search/usages, web/githubRepo, todo  # Do not change formatting of tools list, managed by VS Code.
 
 ---
 
