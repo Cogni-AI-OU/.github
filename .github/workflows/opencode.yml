@@ -163,6 +163,7 @@ jobs:
           echo "::notice title=OpenCode prompt::${message}"
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
+        timeout-minutes: 2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
@@ -175,3 +176,6 @@ jobs:
             ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
             && inputs.model || 'opencode/claude-opus-4-5' }}
           prompt: ${{ steps.prompt.outputs.prompt }}
+      - name: Print logs
+        if: failure()
+        run: cat ~/.local/share/opencode/log/* || true
