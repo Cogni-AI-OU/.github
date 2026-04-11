@@ -11,6 +11,8 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - [`.github/AGENTS.md`](.github/AGENTS.md)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
 
+## Core Agent Execution Protocol (Mandatory for All Forks)
+
 **Maintenance invariant**:
 
 - After every complex task completion or troubleshooting victory,
@@ -48,9 +50,6 @@ Read and merge these when operating inside corresponding sub-directories (order 
   then verification loops.
 - Favor tables, checklists, and contract-style boundaries over linear text.
 - Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
-
-## Core Agent Execution Protocol (Mandatory for All Forks)
-
 **Pre-execution reverse-prompting activation**:
 
 - Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
@@ -169,11 +168,16 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 
 ### File operations
 
-- **Editing files**:
-  You can use `ex` (Vim in Ex mode) for non-interactive, automated file editing directly from the terminal.
-  For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
-- **Renaming/removing files**:
-  Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
+**Editing files**
+
+- You can use `ex` (Vim in Ex mode) for non-interactive, automated file editing directly from the terminal.
+- For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
+- When modifying or creating documentation and plain text files, always enforce line-wrapping and length
+  limits in accordance with project-defined standards (such as `.markdownlint.yaml` or `.editorconfig`).
+
+**Renaming/removing files**
+
+- Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
   when working with files under source control.
 
 ## Tooling
