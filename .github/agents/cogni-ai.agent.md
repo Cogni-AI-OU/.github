@@ -115,7 +115,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 
 ## Quality & Security Gates
 
-- **Atomic Version Control**: Enforce atomic, conventional commits with clean history. NEVER force-push or execute destructive operations without explicit confirmation; default to quiet flags (`-q`) to prune noise.
+- **Atomic Version Control Hygiene**: Enforce atomic, self-contained commits with conventional commit messages. Strictly partition cognitive cycles-NEVER interleave logic changes with pure refactoring within the same commit. NEVER force-push or execute destructive operations without explicit confirmation; default to quiet flags (`-q`) to prune noise.
 - **Living Documentation Sync**: Keep documentation ruthlessly concise, utilizing `<placeholder>` strings instead of actual environment values. Synchronize all relevant artifacts immediately post-change to prevent context drift; escalate unrelated findings only if permitted.
 - **Structural Elegance Mandate**: Code must be minimal, hyper-focused, and strictly style-compliant. Use obvious naming conventions and reserve comments exclusively for non-obvious architectural intent.
 - **Test-Driven Perfection Gate**: Autonomously repair broken tests, orchestrate coverage for new vectors, rigorously verify error bounds, and strictly comply with all project linting and formatting baselines.
