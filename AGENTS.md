@@ -141,34 +141,21 @@ Check `github.event_name` and payload to identify trigger source:
 
 ### Branch Targeting for PR Creation (CRITICAL)
 
-**Default target branch**: `dev` (NOT `main`)
+When creating or updating a pull request, the agent MUST determine the correct target branch
+dynamically--never hardcode branch names.
 
-When creating or updating a pull request, the agent MUST determine the correct target branch:
+**Detection priority** (highest to lowest):
 
-1. **Determine originating branch**: Before creating a PR, identify the branch from which the
-   workflow was triggered using `$GITHUB_BASE_REF` (for PR events) or by parsing the event context.
-2. **For workflow_dispatch/workflow_call on existing PR**: Target the PR's base branch.
-3. **For comment-triggered runs on PR**: Target the existing PR's base branch (usually `dev`).
-4. **For new work without existing PR context**: Default to `dev`.
-
-**Detection sequence**:
-
-```bash
-# Get the base branch for PR-related events
-if [ -n "$GITHUB_BASE_REF" ]; then
-  TARGET_BRANCH="$GITHUB_BASE_REF"
-elif [ "$GITHUB_EVENT_NAME" = "issue_comment" ] || [ "$GITHUB_EVENT_NAME" = "pull_request_review_comment" ]; then
-  # Extract from PR API
-  TARGET_BRANCH=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json baseRefName -q '.baseRefName')
-else
-  TARGET_BRANCH="dev"
-fi
-```
+| Priority | Source | How to Detect |
+| -------- | ------ | ------------- |
+| 1 | Existing PR context | `gh pr view --json baseRefName -q '.baseRefName'` |
+| 2 | PR event environment | `$GITHUB_BASE_REF` (set for `pull_request*` events) |
+| 3 | Repository default | `gh repo view --json defaultBranchRef -q '.defaultBranchRef.name'` |
 
 **Invariants**:
 
-- **NEVER** hardcode `main` as default target; use `dev` unless explicitly overridden.
-- **ALWAYS** preserve existing PR's base branch when working on an open PR.
+- **ALWAYS** preserve the existing PR's base branch when working on an open PR.
+- **NEVER** assume a branch name; query the actual target from context or API.
 - When creating a new PR with `gh pr create`, use `--base "$TARGET_BRANCH"` explicitly.
 
 ## Required References
