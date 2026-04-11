@@ -19,7 +19,6 @@ on:
         required: false
         type: string
       model:
-        default: &opencode_model_default opencode/gpt-5.3-codex
         description: Model to use for OpenCode
         required: false
         type: string
@@ -43,7 +42,6 @@ on:
         required: false
         type: choice
       model:
-        default: *opencode_model_default
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
@@ -101,7 +99,7 @@ on:
         default: ''
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai
-  OPENCODE_MODEL_DEFAULT: *opencode_model_default
+  OPENCODE_MODEL_DEFAULT: opencode/gpt-5.3-codex
 jobs:
   opencode:
     if: |
