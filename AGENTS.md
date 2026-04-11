@@ -169,6 +169,9 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 
 ### File operations
 
+- **Editing files**:
+  You can use `ex` (Vim in Ex mode) for non-interactive, automated file editing directly from the terminal.
+  For detailed commands and examples, see [`.github/skills/ex/SKILL.md`](.github/skills/ex/SKILL.md).
 - **Renaming/removing files**:
   Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
   when working with files under source control.
@@ -184,16 +187,6 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 - When the task is not clear, look for additional context.
 - If triggered by a brief comment, check whether the parent comment exists and includes more detail.
 - If it's still ambiguous, communicate with the user and propose options.
-
-### Testing
-
-```bash
-# Run Molecule tests
-molecule test
-
-# Syntax check
-molecule syntax
-```
 
 ### Adding or Modifying Workflows
 

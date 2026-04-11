@@ -3,13 +3,17 @@
     "ansible": true,
     "ansible-galaxy": true,
     "ansible-playbook": true,
+    "ex": true,
     "gh": true,
     "git": true,
+    "links": true,
     "pipx": true,
     "pre-commit": true,
     "set": true,
     "time": true,
-    "true": true
+    "true": true,
+    "touch": true,
+    "vim": true
   },
   "code-runner.fileDirectoryAsCwd": true,
   "code-runner.saveFileBeforeRun": true
