@@ -48,6 +48,12 @@ on:
         options:
           - opencode/big-pickle
           - opencode/claude-3-5-haiku
+          # Grok models (xAI)
+          - xai/grok-4-1-fast-non-reasoning  # Fast responses, 2M context
+          - xai/grok-4-1-fast-reasoning  # Tool-calling + reasoning, 2M context
+          - xai/grok-4.20-0309-non-reasoning  # Flagship, 2M context
+          - xai/grok-4.20-0309-reasoning  # Flagship + reasoning, 2M context
+          - xai/grok-code-fast-1  # Agentic coding + reasoning, 256K context
           - opencode/claude-haiku-4-5
           - opencode/claude-opus-4-1
           - opencode/claude-opus-4-5
@@ -66,7 +72,6 @@ on:
           - opencode/gpt-5.1-codex-mini
           - opencode/gpt-5.2
           - opencode/gpt-5.2-codex
-          - opencode/grok-code
           - opencode/kimi-k2
           - opencode/kimi-k2-thinking
           - opencode/minimax-m2.1-free
