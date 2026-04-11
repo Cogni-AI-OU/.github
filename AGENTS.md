@@ -171,7 +171,7 @@ When executing autonomously within a GitHub Actions environment, adhere strictly
 
 - **Editing files**:
   You can use `ex` (Vim in Ex mode) for non-interactive, automated file editing directly from the terminal.
-  For detailed commands and examples, see [`.github/skills/ex/SKILL.md`](.github/skills/ex/SKILL.md).
+  For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
 - **Renaming/removing files**:
   Use `git mv`, `git rm` or relevant (instead of `mv` or `rm`) to preserve history,
   when working with files under source control.

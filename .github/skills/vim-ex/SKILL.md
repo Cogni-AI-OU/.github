@@ -1,5 +1,5 @@
 ---
-name: ex
+name: vim-ex
 description: 'How to use Ex mode in Vim for non-interactive file editing'
 ---
 
