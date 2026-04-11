@@ -15,20 +15,26 @@
         "edit": true,
         "bash": true
       },
-      // Keep shell permissions aligned with .devcontainer/devcontainer.json bootstrap commands.
+      // Keep shell permissions aligned with .vscode/settings.json allowlist.
       "permission": {
         "bash": {
-          "mkdir -p \"$HOME/.local/share/opencode\" \"$HOME/.config/opencode\"": "allow",
-          "sudo apt update": "allow",
-          "xargs -a .devcontainer/apt-packages.txt sudo apt-get install -y": "allow",
-          "pip install -r .devcontainer/requirements.txt": "allow",
-          "time pip install -r .devcontainer/requirements.txt": "allow",
-          "pipx install --include-deps --force ansible": "allow",
-          "time pipx install --include-deps --force ansible": "allow",
-          "pipx inject ansible -r .devcontainer/requirements-ansible.txt": "allow",
-          "time pipx inject ansible -r .devcontainer/requirements-ansible.txt": "allow",
-          "pre-commit install": "allow",
-          "time pre-commit install": "allow"
+          "ansible": "allow",
+          "ansible-galaxy": "allow",
+          "ansible-playbook": "allow",
+          "cp": "allow",
+          "ex": "allow",
+          "gh": "allow",
+          "git": "allow",
+          "links": "allow",
+          "pipx": "allow",
+          "pre-commit": "allow",
+          "printf": "allow",
+          "set": "allow",
+          "time": "allow",
+          "timeout": "allow",
+          "true": "allow",
+          "touch": "allow",
+          "vim": "allow"
         }
       }
     }
