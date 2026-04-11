@@ -5,7 +5,8 @@ description: 'How to use Ex mode in Vim for non-interactive file editing'
 
 # File Editing with Ex Mode
 
-`ex` is the line-editor mode of Vim, which is useful for non-interactive file editing in shell scripts or agent executed terminal commands.
+`ex` is the line-editor mode of Vim, which is useful for non-interactive file editing in shell scripts
+or agent executed terminal commands.
 
 ## Basic Usage
 
@@ -42,7 +43,8 @@ VIMEOF
 
 ## Using a Script File
 
-When you have a complex or reusable set of commands, you can store them in a script file and apply them to your target file using standard input redirection or the `source` command:
+When you have a complex or reusable set of commands, you can store them in a script file
+and apply them to your target file using standard input redirection or the `source` command:
 
 ```bash
 # Using standard input redirection
@@ -58,29 +60,29 @@ You can also use Ex mode for more advanced manipulation like piping streams or e
 
 ```bash
 # Print file contents to stdout after making a substitution
-ex -sc '%s/127/128/ge' -c '%p|q!' /etc/hosts
+ex -s -c '%s/127/128/ge' -c '%p' -c 'q!' /etc/hosts
 
 # Edit data piped via standard input
-echo Example | ex -sc '%p|q!' /dev/stdin
+echo Example | ex -s -c '%p' -c 'q!' /dev/stdin
 
 # Edit multiple files using find
-find . -name "*.txt" -type f -exec ex -sc '%s/old/new/g|x' {} \;
+find . -name "*.txt" -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
 
 # Use normal mode commands (e.g. to extract or delete complex HTML tags or XML node)
-ex -s -c '/<div.*id="the_div_id"/norm nvatd' -c '%p' -c 'qa!' index.html
+ex -s -c '/<div.*id="the_div_id"/norm nvatd' -c '%p' -c 'q!' index.html
 
 # String parsing examples
-echo "This is example." | vim -es '+s/example/test/g' '+%print' '+:q!' /dev/stdin
-echo "This is example." | vim - -es '+s/example/test/g' '+%print' '+:q!'
+echo "This is example." | vim -es '+s/example/test/g' '+%print' '+q!' /dev/stdin
+echo "This is example." | ex -s -c '%s/example/test/g' -c '%p' -c 'q!' /dev/stdin
 
-# More examples for editing files in-place
-ex +'%s/127/128/g' -cswq file
-ex -sc '%s/olddomain\.com/newdomain.com/g|x' file
-printf '%s\n' 'g/olddomain\.com/s//newdomain.com/g' w q | ex -s file
-ex -s "$file" <<< $'g/old/s//new/g\nw\nq'
-ex -sc 'argdo %s/old/new/ge|x' ./**
-find . -type f -exec ex -sc '%s/old/new/g|x' {} \;
-ex -s +%p -cq /etc/hosts
+# More examples for editing files in-place (non-interactive)
+ex -s -c '%s/127/128/g' -c 'wq' file
+ex -s -c '%s/olddomain\.com/newdomain.com/g' -c 'wq' file
+printf '%s\n' '%s/olddomain\.com/newdomain.com/ge' w q | ex -s file
+ex -s file <<< $'%s/old/new/ge\nw\nq'
+ex -s -c 'argdo %s/old/new/ge|update' -c 'q' ./**
+find . -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
+ex -s -c '%p' -c 'q!' /etc/hosts
 ```
 
 Running vim/ex commands from a file:
@@ -92,12 +94,49 @@ echo :%quit! >> cmds.vim
 ex -s /etc/hosts < cmds.vim # The same as: vim -s cmds.vim /etc/hosts
 ```
 
+### Parse HTML/XML with Ex Mode
+
+Examples:
+
+```bash
+# Extracting html tags
+ex -s -c 'bufdo! /<div.*id=.the_div_id/norm nvatdggdG"2p' -c 'bufdo! %p' -c 'qa!' *.html
+
+# Removing XML tags
+ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' -c 'q!' file.txt
+
+# Removing style tag from the header and print the parsed output
+curl -s http://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
+
+# Parse html with multiple complex rules
+ex -s index.html << 'EOF'
+  %s,'//,'http://,ge
+  %s,"//,"http://,ge
+  %s,[^,]\zs'/\ze[^>],'http://www.example.com/,ge
+  %s,[^,]\zs"/\ze[^>],"http://www.example.com/,ge
+  " Remove the margin on the left of the main block. "
+  %s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/ge
+  %s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/ge
+  " Remove useless html elements. "
+  /<div.*id="global_header"/norm nvatd
+  wq " Update changes and quit.
+EOF
+
+# Real live example from the RPM specification
+ex -s Makefile << 'EOF'
+   %s/CFLAGS = -g$/CFLAGS =-fPIC -DPIC -g/ge
+   %s/CFLAGS =$/CFLAGS =-fPIC -DPIC/ge
+   %s/ADAFLAGS =$/ADAFLAGS =-fPIC -DPIC/ge
+   wq
+EOF
+```
+
 Create a new HTML file by downloading html of Example site
 and replacing its body by auto-generated 20x20 table with random numbers in it:
 
 ```bash
 ex -s table.html << 'VIMEOF'
-%!curl -s example.com 
+%!curl -s example.com
 let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'
 /<body
 norm! vitd"tP
@@ -106,57 +145,22 @@ wq
 VIMEOF
 ```
 
-### Parse HTML/XML with Ex Mode
-
-Examples:
-
-```bash
-# Extracting html tags
-ex -s +'bufdo!/<div.*id=.the_div_id/norm nvatdggdG"2p' +'bufdo!%p' -cqa! *.html
-
-# Removing XML tags
-ex -s +'%s/<[^>].\{-}>//ge' +%p +q! file.txt
-
-# Removing style tag from the header and print the parsed output
-curl -s http://example.com/ | ex -s +'/<style.*/norm nvatd' +%p -cq! /dev/stdin
-
-# Parse html with multiple complex rules
-ex -V1 $PAGE <<-EOF
-  %s,'//,'http://,ge
-  %s,"//,"http://,ge
-  %s,[^,]\zs'/\ze[^>],'http://www.example.com/,ge
-  %s,[^,]\zs"/\ze[^>],"http://www.example.com/,ge
-  " Remove the margin on the left of the main block. "
-  %s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/g
-  %s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/g
-  " Remove useless html elements. "
-  /<div.*id="global_header"/norm nvatd
-  wq " Update changes and quit.
-EOF
-
-# Real live example from the RPM specification
-vim -E -s Makefile <<-EOF
-   :%substitute/CFLAGS = -g$/CFLAGS =-fPIC -DPIC -g/
-   :%substitute/CFLAGS =$/CFLAGS =-fPIC -DPIC/
-   :%substitute/ADAFLAGS =$/ADAFLAGS =-fPIC -DPIC/
-   :update
-   :quit
-EOF
-```
-
 ### Plugins
 
-One-liner to convert source code file into HTML using one of the standard plugins:
+One-liner to convert source code file into HTML using one of the standard plugins
+(redirecting standard output to `/dev/null` avoids unnecessary logging):
 
 ```bash
-ex -s '+let g:html_no_progress=1' '+syntax on' '+set ft=c' '+runtime syntax/2html.vim' -cwqa my_code.c
+ex -s -c 'let g:html_no_progress=1' -c 'syntax on' -c 'set ft=c' -c 'runtime syntax/2html.vim' -c 'wqa' my_code.c > /dev/null
 ```
 
 ## Tips
 
 - Always include `wq` at the end to write changes and quit.
 - The `-s` flag suppresses prompts and feedback, making it ideal for automated file edits.
-- Use `ex` when complex string replacements or regular expression-based modifications are required directly from the terminal without breaking the automated flow.
+- Use `ex` when complex string replacements or regular expression-based modifications are required directly
+  from the terminal without breaking the automated flow.
+- When adding or updating examples in this file, ensure they work non-interactively and do not require user input.
 
 ## References
 
