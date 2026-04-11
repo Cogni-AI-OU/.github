@@ -8,6 +8,12 @@ description: 'How to use Ex mode in Vim for non-interactive file editing'
 `ex` is the line-editor mode of Vim, which is useful for non-interactive file editing in shell scripts
 or agent executed terminal commands.
 
+Unlike tools such as `sed` or `awk` which are *stream editors* designed to process data sequentially line-by-line—`ex`
+is a true *file editor*. It loads the entire file into a buffer, allowing you to freely navigate forwards and backwards,
+execute complex multi-line modifications, and utilize powerful normal-mode commands. Furthermore, while `sed -i` merely
+mimics in-place editing by secretly using temporary files (which leads to notoriously frustrating syntax
+incompatibilities between GNU/Linux and macOS), `ex` safely and natively edits the file directly in-place.
+
 ## Basic Usage
 
 You can run `ex` using the `-c` flag for commands and `-s` for silent (batch) mode:
