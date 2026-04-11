@@ -163,7 +163,7 @@ jobs:
           echo "::notice title=OpenCode prompt::${message}"
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
-        timeout-minutes: 2
+        timeout-minutes: 60
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
