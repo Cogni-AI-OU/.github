@@ -117,17 +117,14 @@ echo "<root> <item>data</item> </root>" | ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' 
 curl -s https://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
 
 # Parse html with multiple complex rules by passing HTML dynamically
-curl -s https://example.com -o /tmp/example.html && ex -s /tmp/example.html << 'EOF'
-  %s,'//,'http://,ge
-  %s,"//,"http://,ge
-  " Remove the margin on the left of the main block. "
-  %s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/ge
-  %s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/ge
-  " Remove useless html elements. "
-  /<div.*id="global_header"/norm nvatd
-  %p " Print changes
-  q! " Quit without saving
-EOF
+curl -s https://example.com | ex -s \
+  -c "%s,'//,'http://,ge" \
+  -c '%s,"//,"http://,ge' \
+  -c '%s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/ge' \
+  -c '%s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/ge' \
+  -c '/<div.*id="global_header"/norm nvatd' \
+  -c '%p' \
+  -c 'q!' /dev/stdin
 
 # Real live example from an RPM specification dynamically compiled via stdin
 ex -s main.spec << 'EOF'
@@ -143,14 +140,13 @@ Create a new HTML structure by downloading HTML of Example site
 and replacing its body by an auto-generated 20x20 table with random numbers in it (streamed to standard out):
 
 ```bash
-curl -s https://example.com -o /tmp/example.html && ex -s /tmp/example.html << 'VIMEOF' > generated_table.html
-let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'
-/<body
-norm! vitd"tP
-%s/_/\=trim(system('echo $RANDOM'))/g
-%p
-q!
-VIMEOF
+curl -s https://example.com | ex -s \
+  -c "let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'" \
+  -c '/<body' \
+  -c 'norm! vitd"tP' \
+  -c '%s/_/\=trim(system("echo $RANDOM"))/g' \
+  -c '%p' \
+  -c 'q!' /dev/stdin > generated_table.html
 ```
 
 ### Plugins
