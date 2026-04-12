@@ -139,25 +139,6 @@ Check `github.event_name` and payload to identify trigger source:
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
 
-### Branch Targeting for PR Creation (CRITICAL)
-
-When creating or updating a pull request, the agent MUST determine the correct target branch
-dynamically--never hardcode branch names.
-
-**Detection priority** (highest to lowest):
-
-| Priority | Source | How to Detect |
-| -------- | ------ | ------------- |
-| 1 | Existing PR context | `gh pr view --json baseRefName -q '.baseRefName'` |
-| 2 | PR event environment | `$GITHUB_BASE_REF` (set for `pull_request*` events) |
-| 3 | Repository default | `gh repo view --json defaultBranchRef -q '.defaultBranchRef.name'` |
-
-**Invariants**:
-
-- **ALWAYS** preserve the existing PR's base branch when working on an open PR.
-- **NEVER** assume a branch name; query the actual target from context or API.
-- When creating a new PR with `gh pr create`, use `--base "$TARGET_BRANCH"` explicitly.
-
 ## Required References
 
 - Project overview & install: [README.md](README.md)
