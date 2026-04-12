@@ -15,13 +15,14 @@
         "edit": true,
         "bash": true
       },
-      // Keep shell permissions aligned with .vscode/settings.json allowlist.
+      // Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
       "permission": {
         "bash": {
           "ansible": "allow",
           "ansible-galaxy": "allow",
           "ansible-playbook": "allow",
           "awk": "allow",
+          "continue": "allow",
           "cp": "allow",
           "ex": "allow",
           "gh": "allow",
@@ -34,8 +35,8 @@
           "set": "allow",
           "time": "allow",
           "timeout": "allow",
-          "true": "allow",
           "touch": "allow",
+          "true": "allow",
           "vim": "allow"
         }
       }

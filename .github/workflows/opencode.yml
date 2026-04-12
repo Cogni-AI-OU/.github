@@ -175,6 +175,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          # Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
           OPENCODE_PERMISSION: |-
             {
               "bash": {
@@ -183,6 +184,7 @@ jobs:
                 "ansible-galaxy*": "allow",
                 "ansible-playbook*": "allow",
                 "awk*": "allow",
+                "continue*": "allow",
                 "cp*": "allow",
                 "ex*": "allow",
                 "gh*": "allow",

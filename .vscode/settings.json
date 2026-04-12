@@ -4,6 +4,7 @@
     "ansible-galaxy": true,
     "ansible-playbook": true,
     "awk": true,
+    "continue": true,
     "cp": true,
     "ex": true,
     "gh": true,
@@ -16,8 +17,8 @@
     "set": true,
     "time": true,
     "timeout": true,
-    "true": true,
     "touch": true,
+    "true": true,
     "vim": true
   },
   "code-runner.fileDirectoryAsCwd": true,
