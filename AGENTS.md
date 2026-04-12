@@ -134,6 +134,34 @@ Check `github.event_name` and payload to identify trigger source:
 - **Symmetric Routing**: ALWAYS reply via the exact originating channel. NEVER cross threads.
 - Parse `github.event.comment.id` and `in_reply_to_id` to maintain thread continuity.
 
+### Branch Sync Policy (No Rebase During Runtime)
+
+When the prompt asks to "pull" or "sync with base" in GitHub Actions runtime,
+the agent MUST integrate remote changes with a merge commit workflow.
+
+- **MUST NOT** run any rebase-based update command during runtime.
+- **FORBIDDEN**: `gh pr update-branch --rebase`, `git pull --rebase`,
+  `git rebase`, or any history rewrite that changes commit SHAs.
+- **MUST** use pull-with-merge semantics: `git pull --no-rebase`.
+- **MUST** preserve remote branch compatibility for post-run auto PR/push logic.
+
+**Execution Steps (strict order)**:
+
+1. Determine PR base/head from context (`## Pull Request Context`, `gh pr view`).
+2. Ensure work is on the PR head branch (not detached HEAD).
+3. Sync head branch from remote with merge semantics:
+   `git pull --no-rebase origin <head-branch>`.
+4. If base changes must be integrated into head, merge base explicitly:
+   `git fetch origin <base-branch> && git merge --no-ff origin/<base-branch>`.
+5. Resolve conflicts, commit merge if required, then push normally (no force).
+
+**Verification Gate (required before push)**:
+
+- Confirm no rebase command was executed in this run.
+- Confirm `git log --oneline --graph -n 10` shows merge topology
+  (no rewritten linearized history from rebase).
+- Proceed with normal `git push` only after these checks pass.
+
 ### General Constraints
 
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
