@@ -129,9 +129,7 @@ contribution guidelines and expectations for issues, pull requests, and CI.
 
 ## License
 
-MIT
-
-See: [LICENSE](./LICENSE)
+This repository is licensed under MIT. See [LICENSE](LICENSE) for the full text.
 
 <!-- Named links -->
 

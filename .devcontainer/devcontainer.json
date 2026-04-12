@@ -14,8 +14,8 @@
     "vscode": {
       "extensions": [
         "DavidAnson.vscode-markdownlint",
-        "GitHub.copilot-chat",
         "GitHub.copilot",
+        "GitHub.copilot-chat",
         "GitHub.vscode-github-actions",
         "vscodevim.vim",
         "vsls-contrib.codetour",
