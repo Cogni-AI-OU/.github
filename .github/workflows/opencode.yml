@@ -102,7 +102,14 @@ on:
 concurrency:
   cancel-in-progress: false
   group: >-
-    ${{ github.workflow }}-${{ github.event.pull_request.number || github.event.issue.number || github.head_ref || github.ref_name }}
+    ${{
+      github.workflow
+    }}-${{
+      github.event.pull_request.number ||
+      github.event.issue.number ||
+      github.head_ref ||
+      github.ref_name
+    }}
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai
   OPENCODE_MODEL_DEFAULT: opencode/gemini-3.1-pro
