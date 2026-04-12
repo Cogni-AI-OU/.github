@@ -69,7 +69,7 @@ You can also use Ex mode for more advanced manipulation like piping streams or e
 ex -s -c '%s/127/128/ge' -c '%p' -c 'q!' /etc/hosts
 
 # Edit data piped via standard input
-sh -c 'echo Example | ex -s -c "%p" -c "q!" /dev/stdin'
+echo Example | ex -s -c '%p' -c 'q!' /dev/stdin
 
 # Edit multiple files using find
 find . -name "*.txt" -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
@@ -78,13 +78,13 @@ find . -name "*.txt" -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
 ex -s -c '/<div.*id="the_div_id"/norm nvatd' -c '%p' -c 'q!' index.html
 
 # String parsing examples
-sh -c 'echo "This is example." | vim -es "+s/example/test/g" "+%print" "+q!" /dev/stdin'
-sh -c 'echo "This is example." | ex -s -c "%s/example/test/g" -c "%p" -c "q!" /dev/stdin'
+echo "This is example." | vim -es '+s/example/test/g' '+%print' '+q!' /dev/stdin
+echo "This is example." | ex -s -c '%s/example/test/g' -c '%p' -c 'q!' /dev/stdin
 
 # More examples for editing files in-place or via streams (non-interactive)
 ex -s -c '%s/127/128/g' -c 'wq' /etc/hosts
 ex -s -c '%s/olddomain\.com/newdomain.com/g' -c 'wq' /etc/nginx/nginx.conf
-sh -c 'printf "%s\n" "%s/olddomain\\.com/newdomain.com/ge" w q | ex -s /etc/nginx/nginx.conf'
+printf "%s\n" "%s/olddomain\\.com/newdomain.com/ge" w q | ex -s /etc/nginx/nginx.conf
 ex -s /etc/hosts <<< $'%s/localhost/localhost.localdomain/ge\nw\nq'
 ex -s -c 'argdo %s/old/new/ge|update' -c 'q' ./**/*.txt
 find . -type f -name '*.txt' -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
@@ -111,10 +111,10 @@ Examples:
 ex -s -c 'bufdo! /<div.*id=.the_div_id/norm nvatdggdG"2p' -c 'bufdo! %p' -c 'qa!' *.html
 
 # Removing XML tags by piping stream data directly to standard input
-sh -c 'echo "<root> <item>data</item> </root>" | ex -s -c "%s/<[^>].\\{-}>//ge" -c "%p" -c "q!" /dev/stdin'
+echo "<root> <item>data</item> </root>" | ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' -c 'q!' /dev/stdin
 
 # Removing style tag from the header and print the parsed output
-sh -c 'curl -s https://example.com/ | ex -s -c "/<style.*/norm nvatd" -c "%p" -c "q!" /dev/stdin'
+curl -s https://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
 
 # Parse html with multiple complex rules by passing HTML dynamically
 curl -s https://example.com -o /tmp/example.html && ex -s /tmp/example.html << 'EOF'
