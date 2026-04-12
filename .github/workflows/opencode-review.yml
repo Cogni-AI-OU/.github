@@ -28,7 +28,7 @@ on:
         required: false
         type: string
       model:
-        default: opencode/claude-opus-4-5
+        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gpt-5.3-codex' }}
         description: Model to use for OpenCode
         required: false
         type: string
@@ -61,7 +61,7 @@ on:
         required: false
         type: choice
       model:
-        default: opencode/claude-opus-4-5
+        default: opencode/gpt-5.3-codex
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
@@ -126,6 +126,7 @@ on:
         type: choice
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai
+  OPENCODE_MODEL_DEFAULT: opencode/gpt-5.3-codex
 jobs:
   opencode-review:
     # Run automatically for trusted PRs, including Copilot-authored PRs,
@@ -209,6 +210,8 @@ jobs:
             pre-commit|
       - uses: actions/setup-python@v6.1.0
         with:
+          cache: pip
+          cache-dependency-path: .devcontainer/requirements.txt
           python-version: '3.12'
       - name: Install dependencies
         run: pip install -r .devcontainer/requirements.txt
@@ -271,9 +274,7 @@ jobs:
         with:
           agent: ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           # See: <https://opencode.ai/docs/models/>
-          model: >-
-            ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch')
-            && inputs.model || 'opencode/claude-opus-4-5' }}
+          model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
           prompt: ${{ steps.prompt.outputs.prompt }}
       - name: Show OpenCode log on failure
         if: failure()
