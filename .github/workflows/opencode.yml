@@ -123,9 +123,28 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+      - name: Get PR base branch (for existing PRs)
+        id: pr-base
+        if: |
+          github.event_name == 'issue_comment' && github.event.issue.pull_request ||
+          github.event_name == 'pull_request_review_comment'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
+            pr_number="${{ github.event.pull_request.number }}"
+          else
+            pr_number="${{ github.event.issue.number }}"
+          fi
+          base_branch=$(gh api "/repos/${{ github.repository }}/pulls/${pr_number}" --jq '.base.ref')
+          echo "base_branch=${base_branch}" >> "$GITHUB_OUTPUT"
+          echo "::notice title=PR Base Branch::${base_branch}"
       - uses: actions/checkout@v6
         with:
           persist-credentials: false  # Prevents duplicate Authorization header
+          # For existing PRs, checkout the PR's base branch
+          ref: ${{ steps.pr-base.outputs.base_branch || github.ref }}
       - uses: actions/cache@v5.0.1
         with:
           path: ~/.cache/pre-commit
