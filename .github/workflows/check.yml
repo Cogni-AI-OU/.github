@@ -9,16 +9,27 @@ on:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
   workflow_call:
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - OpenCode
+      - OpenCode Review
+    types:
+      - completed
 permissions:
   contents: read
 jobs:
   actionlint:
     name: actionlint
+    # Skip if triggered by workflow_run and the triggering workflow failed
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          # For workflow_run, checkout the head branch from the triggering workflow
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
       - name: Add Problem Matcher for actionlint
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
@@ -26,11 +37,14 @@ jobs:
       - uses: reviewdog/action-actionlint@v1
   link-checker:
     name: Link Checker
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
       - name: Restore lychee cache
         uses: actions/cache@v5.0.1
         with:
@@ -45,11 +59,14 @@ jobs:
           fail: true
   pre-commit:
     name: Pre-commit
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
       - uses: actions/cache@v5.0.1
         with:
           path: ~/.cache/pre-commit

@@ -9,7 +9,7 @@ For a human-readable overview, see [README.md](README.md).
 
 | Workflow | Purpose | Key triggers / notes |
 | -------- | ------- | -------------------- |
-| [check.yml](check.yml) | Linting and quality gates via actionlint and pre-commit | push, pull_request, schedule; reusable via `workflow_call` |
+| [check.yml](check.yml) | Linting and quality gates via actionlint and pre-commit | push, pull_request, schedule, workflow_run (after OpenCode); reusable via `workflow_call` |
 | [opencode.yml](opencode.yml) | OpenCode agent invocation via comments or manual triggers | issue_comment keywords `/oc` or `/opencode`, workflow_dispatch, `workflow_call` |
 | [opencode-review.yml](opencode-review.yml) | OpenCode PR review | pull_request_target (trusted authors), `/review` comment by OWNER/MEMBER, workflow_dispatch, `workflow_call` |
 | [devcontainer-ci.yml](devcontainer-ci.yml) | Build/test devcontainer and required tools/packages | push/pull_request touching .devcontainer or workflow; schedule; `workflow_call` |
@@ -19,8 +19,12 @@ For a human-readable overview, see [README.md](README.md).
 ### check.yml
 
 - Purpose: run actionlint and pre-commit to enforce workflow and repo standards.
+- Triggers: `push`, `pull_request`, `schedule`, `workflow_call`, `workflow_dispatch`,
+  `workflow_run` (after OpenCode/OpenCode Review workflows complete successfully).
+- Bot-PR support: `workflow_run` trigger enables checks on PRs created by bots
+  (e.g., `opencode-agent`), since normal `pull_request` events don't trigger for bot actors.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main`.
-- Jobs: `actionlint`, `pre-commit`.
+- Jobs: `actionlint`, `link-checker`, `pre-commit`.
 
 ### opencode.yml
 
