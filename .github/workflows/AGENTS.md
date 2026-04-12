@@ -83,14 +83,6 @@ It must be identical in both workflow files:
 | [opencode.yml](opencode.yml) | Line ~130 (env section) |
 | [opencode-review.yml](opencode-review.yml) | Line ~210 (env section) |
 
-Current policy:
-
-```json
-{ "bash": { "*": "deny", "gh*": "allow", "gh pr review*": "deny", "pre-commit*": "allow" } }
-```
-
-When adding new allowed commands (e.g., `"ex*": "allow"`), update **both** files.
-
 ### Model options list
 
 The `model` input options for `workflow_dispatch` must be identical in both workflow files:
