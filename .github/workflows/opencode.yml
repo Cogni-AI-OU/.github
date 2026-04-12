@@ -177,6 +177,7 @@ jobs:
         uses: anomalyco/opencode/github@latest
         timeout-minutes: 60
         env:
+          GITHUB_EVENT_NAME: ${{ github.event_name == 'pull_request_target' && 'pull_request' || github.event_name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
           # Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
