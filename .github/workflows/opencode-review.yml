@@ -213,7 +213,14 @@ jobs:
           cache: pip
           cache-dependency-path: .devcontainer/requirements.txt
           python-version: '3.12'
+      - name: Cache installed dependencies
+        id: cache-dependencies
+        uses: actions/cache@v5.0.1
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-pip-${{ env.pythonLocation }}-${{ hashFiles('.devcontainer/requirements.txt') }}
       - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: pip install -r .devcontainer/requirements.txt
       - name: Load review prompt
         id: load-prompt
