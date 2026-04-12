@@ -147,6 +147,7 @@ jobs:
         (
           contains(github.event.comment.body, ' /review ') ||
           startsWith(github.event.comment.body, '/review ') ||
+          endsWith(github.event.comment.body, ' /review') ||
           github.event.comment.body == '/review'
         ) &&
         !endsWith(github.actor, '[bot]') &&
@@ -156,6 +157,7 @@ jobs:
         (
           contains(github.event.comment.body, ' /review ') ||
           startsWith(github.event.comment.body, '/review ') ||
+          endsWith(github.event.comment.body, ' /review') ||
           github.event.comment.body == '/review'
         ) &&
         !endsWith(github.actor, '[bot]') &&
