@@ -117,7 +117,7 @@ echo "<root> <item>data</item> </root>" | ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' 
 curl -s https://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
 
 # Parse html with multiple complex rules by passing HTML dynamically
-curl -s https://example.com -o /tmp/example.html && ex -s /tmp/example.html << 'EOF'
+curl -s https://example.com | ex -s /dev/stdin << 'EOF'
   %s,'//,'http://,ge
   %s,"//,"http://,ge
   " Remove the margin on the left of the main block. "
