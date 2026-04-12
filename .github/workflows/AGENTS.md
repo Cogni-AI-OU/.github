@@ -35,6 +35,7 @@ For a human-readable overview, see [README.md](README.md).
 - Triggers: `workflow_dispatch`, `workflow_call`, or issue comments with `/oc` or `/opencode` from trusted (non-bot) collaborators/members/owners.
 - Guardrail: comment-triggered runs do not populate `inputs.*`; back shared OpenCode defaults
   with workflow-level `env` values instead of hardcoding agent/model literals in steps.
+- Concurrency: one run per branch/PR context via workflow-level `concurrency` group to avoid competing pushes.
 - Permissions: `contents: read`, `id-token: write`, `issues: write`, `pull-requests: write`.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main`.
 
