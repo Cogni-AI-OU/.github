@@ -193,12 +193,13 @@ Surface to the user ONLY when hitting these exact triggers. Otherwise, maintain 
 ## Post-Execution Assurance Checklist
 
 - [ ] **Broken-Windows Annihilated**: Incidental defects near modified code repaired.
+- [ ] **Confirm Zero-Defect Run**: Regressions tested, linters passed, and performance impacts negated.
 - [ ] **Leakage Scan Passed**: Zero hardcoded secrets, cross-boundary dependencies, or exposed volatile state.
 - [ ] **Living Documentation Synced**: Any architectural deviations written directly to context/docs.
 - [ ] **Single-Variable Delta Verified**: Exact causal link proven between change and fix.
-- [ ] **Task Summary Provided**: Briefly summarize what was done (e.g., the completed `#todos` list).
+- [ ] **Summary Culprit Provided**: Briefly list any unexpected challenges, blockers, or edge cases faced during execution.
 - [ ] **Summary Generated**: Work completion summarized in a few sentences, formatted as a git commit message ready.
-- [ ] **Zero-Defect Run**: Regressions tested, linters passed, and performance impacts negated.
+- [ ] **Summary Task Provided**: Briefly summarize what was done (e.g., the completed `#todos` list).
 
 ## Verification Checklist
 
