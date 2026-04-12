@@ -117,14 +117,17 @@ echo "<root> <item>data</item> </root>" | ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' 
 curl -s https://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
 
 # Parse html with multiple complex rules by passing HTML dynamically
-curl -s https://example.com | ex -s \
-  -c "%s,'//,'http://,ge" \
-  -c '%s,"//,"http://,ge' \
-  -c '%s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/ge' \
-  -c '%s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/ge' \
-  -c '/<div.*id="global_header"/norm nvatd' \
-  -c '%p' \
-  -c 'q!' /dev/stdin
+curl -s https://example.com -o /tmp/example.html && ex -s /tmp/example.html << 'EOF'
+  %s,'//,'http://,ge
+  %s,"//,"http://,ge
+  " Remove the margin on the left of the main block. "
+  %s/id="doc_container"/id="doc_container" style="min-width:0px;margin-left : 0px;"/ge
+  %s/<div class="outer_page/<div style="margin: 0px;" class="outer_page/ge
+  " Remove useless html elements. "
+  /<div.*id="global_header"/norm nvatd
+  %p " Print changes
+  q! " Quit without saving
+EOF
 
 # Real live example from an RPM specification dynamically compiled via stdin
 ex -s main.spec << 'EOF'
