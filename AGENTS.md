@@ -10,7 +10,8 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 - [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
-- [`.vscode/AGENTS.md`](.vscode/AGENTS.md)
+- [`.github/skills/AGENTS.md`](.skills/AGENTS.md) (list of available skills)
+- [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
 
 ## Core Agent Execution Protocol (Mandatory for All Forks)
