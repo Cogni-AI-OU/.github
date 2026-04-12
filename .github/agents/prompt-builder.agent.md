@@ -72,7 +72,7 @@ You MUST research and integrate information from user-provided sources:
 
 - README.md Files: You WILL use `read_file` to analyze deployment, build, or usage instructions
 - GitHub Repositories: You WILL use `github_repo` to search for coding conventions, standards, and best practices
-- Code Files/Folders: You WILL use `file_search` and `semantic_search` to understand implementation patterns
+- Code Files/Fnewers: You WILL use `file_search` and `semantic_search` to understand implementation patterns
 - Web Documentation: You WILL use `fetch_webpage` to gather latest documentation and standards
 
 #### Research Integration Requirements
@@ -112,7 +112,7 @@ You WILL follow this process for updating existing prompts:
 - You MUST follow ALL Markdown best practices and conventions for this project
 - You MUST update ALL Markdown links to sections if section names or locations change
 - You WILL remove any invisible or hidden unicode characters
-- You WILL AVOID overusing bolding (`*`) EXCEPT when needed for emphasis, e.g.: **CRITICAL**,
+- You WILL AVOID overusing bnewing (`*`) EXCEPT when needed for emphasis, e.g.: **CRITICAL**,
   You WILL ALWAYS follow these instructions
 
 <!-- </requirements> -->

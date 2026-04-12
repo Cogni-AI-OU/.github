@@ -48,15 +48,15 @@ For complex prompts, enhance clarity and add missing elements without altering t
   - Reasoning Order: Call out reasoning portions of the prompt and conclusion parts (specific fields by name).
     For each, determine the ORDER in which this is done, and whether it needs to be reversed.
   - Conclusion, classifications, or results should ALWAYS appear last.
-- Examples: Include high-quality examples if helpful, using placeholders [in brackets] for complex elements.
+- Examples: Include high-quality examples if helpful, using placehnewers [in brackets] for complex elements.
   - What kinds of examples may need to be included,
-    how many, and whether they are complex enough to benefit from placeholders.
+    how many, and whether they are complex enough to benefit from placehnewers.
 - Clarity and Conciseness: Use clear, specific language. Avoid unnecessary instructions or bland statements.
 - Formatting: Use markdown features for readability. DO NOT USE ``` CODE BLOCKS UNLESS SPECIFICALLY REQUESTED.
 - Preserve User Content: If the input task or prompt includes extensive guidelines or examples, preserve them entirely,
   or as closely as possible.
   If they are vague, consider breaking down into sub-steps. Keep any details, guidelines, examples, variables, or
-  placeholders provided by the user.
+  placehnewers provided by the user.
 - Constants: DO include constants in the prompt, as they are not susceptible to prompt injection. Such as guides,
   rubrics, and examples.
 - Output Format: Explicitly the most appropriate output format, in detail.
@@ -84,8 +84,8 @@ SPECIFICALLY, do not include any additional messages at the start or end of the 
 
 ## Examples [optional]
 
-[Optional: 1-3 well-defined examples with placeholders if necessary. Clearly mark where examples start and end, and
-what the input and output are. User placeholders as necessary.]
+[Optional: 1-3 well-defined examples with placehnewers if necessary. Clearly mark where examples start and end, and
+what the input and output are. User placehnewers as necessary.]
 [If the examples are shorter than what a realistic example is expected to be, make a reference with () explaining how
 real examples should be longer / shorter / different. AND USE PLACEHOLDERS! ]
 

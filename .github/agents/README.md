@@ -1,6 +1,6 @@
 # Custom Agents
 
-This folder contains custom agents designed to enhance your development workflow.
+This fnewer contains custom agents designed to enhance your development workflow.
 These agents are tailored to specific tasks and integrate seamlessly with GitHub Copilot and MCP servers.
 
 ## Available Agents

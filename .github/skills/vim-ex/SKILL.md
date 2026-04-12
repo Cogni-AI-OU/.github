@@ -20,19 +20,19 @@ You can run `ex` using the `-c` flag for commands and `-s` for silent (batch) mo
 
 ```bash
 # Search and replace all occurrences in a user-owned configuration file
-ex -s -c '%s/alias/alias_new/g' -c 'wq' ~/.bashrc
+timeout 5s ex -s -c '%s/alias/alias_new/g' -c 'wq' ~/.bashrc
 
 # Append text (e.g., a new export path) to the end of your bash profile
-ex -s -c '$put =\"export PATH=$PATH:~/bin\"' -c 'wq' ~/.bash_profile
+timeout 5s ex -s -c '$put =\"export PATH=$PATH:~/bin\"' -c 'wq' ~/.bash_profile
 
 # Delete a specific line (e.g., line 5) from an SSH configuration
-ex -s -c '5d' -c 'wq' ~/.ssh/config
+timeout 5s ex -s -c '5d' -c 'wq' ~/.ssh/config
 
 # Wrap all lines in a markdown document to 120 characters
-ex -s -c 'set tw=120' -c '%normal gqq' -c 'wq' README.md
+timeout 5s ex -s -c 'set tw=120' -c '%normal gqq' -c 'wq' README.md
 
 # Wrap specific lines (e.g., lines 19 to 23) to 120 characters
-ex -s -c 'set tw=120' -c '19,23normal gqq' -c 'wq' README.md
+timeout 5s ex -s -c 'set tw=120' -c '19,23normal gqq' -c 'wq' README.md
 ```
 
 ## Using Heredocs
@@ -40,7 +40,7 @@ ex -s -c 'set tw=120' -c '19,23normal gqq' -c 'wq' README.md
 For multiple commands, a heredoc is often cleaner (e.g., removing debugging logs from a python code file):
 
 ```bash
-ex -s main.py << 'VIMEOF'
+timeout 5s ex -s main.py << 'VIMEOF'
 %s/print("debug: .*/pass/g
 3,5d
 wq
@@ -54,10 +54,10 @@ and apply them to your target using standard input redirection or the `source` c
 
 ```bash
 # Using standard input redirection
-ex -s ~/.bashrc < ~/.vim/custom_bash_rules.vim
+timeout 5s ex -s ~/.bashrc < ~/.vim/custom_bash_rules.vim
 
 # Alternatively, using the source command
-ex -s -c "source ~/.vim/custom_bash_rules.vim" ~/.bashrc
+timeout 5s ex -s -c "source ~/.vim/custom_bash_rules.vim" ~/.bashrc
 ```
 
 ## Advanced Examples
@@ -66,36 +66,36 @@ You can also use Ex mode for more advanced manipulation like piping streams or e
 
 ```bash
 # Print file contents to stdout after making a substitution
-ex -s -c '%s/127/128/ge' -c '%p' -c 'q!' /etc/hosts
+timeout 5s ex -s -c '%s/127/128/ge' -c '%p' -c 'q!' /etc/hosts
 
 # Edit data piped via standard input
-echo Example | ex -s -c '%p' -c 'q!' /dev/stdin
+timeout 5s sh -c 'echo Example | ex -s -c "%p" -c "q!" /dev/stdin'
 
 # Edit multiple files using find
-find . -name "*.txt" -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
+timeout 10s find . -name "*.txt" -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
 
 # Use normal mode commands (e.g. to extract or delete complex HTML tags or XML node)
-ex -s -c '/<div.*id="the_div_id"/norm nvatd' -c '%p' -c 'q!' index.html
+timeout 5s ex -s -c '/<div.*id="the_div_id"/norm nvatd' -c '%p' -c 'q!' index.html
 
 # String parsing examples
-echo "This is example." | vim -es '+s/example/test/g' '+%print' '+q!' /dev/stdin
-echo "This is example." | ex -s -c '%s/example/test/g' -c '%p' -c 'q!' /dev/stdin
+timeout 5s sh -c 'echo "This is example." | vim -es "+s/example/test/g" "+%print" "+q!" /dev/stdin'
+timeout 5s sh -c 'echo "This is example." | ex -s -c "%s/example/test/g" -c "%p" -c "q!" /dev/stdin'
 
 # More examples for editing files in-place or via streams (non-interactive)
-ex -s -c '%s/127/128/g' -c 'wq' /etc/hosts
-ex -s -c '%s/olddomain\.com/newdomain.com/g' -c 'wq' /etc/nginx/nginx.conf
-printf '%s\n' '%s/olddomain\.com/newdomain.com/ge' w q | ex -s /etc/nginx/nginx.conf
-ex -s /etc/hosts <<< $'%s/localhost/localhost.localdomain/ge\nw\nq'
-ex -s -c 'argdo %s/old/new/ge|update' -c 'q' ./**
-find . -type f -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
-ex -s -c '%p' -c 'q!' /etc/hosts
+timeout 5s ex -s -c '%s/127/128/g' -c 'wq' /etc/hosts
+timeout 5s ex -s -c '%s/olddomain\.com/newdomain.com/g' -c 'wq' /etc/nginx/nginx.conf
+timeout 5s sh -c 'printf "%s\n" "%s/olddomain\\.com/newdomain.com/ge" w q | ex -s /etc/nginx/nginx.conf'
+timeout 5s ex -s /etc/hosts <<< $'%s/localhost/localhost.localdomain/ge\nw\nq'
+timeout 10s ex -s -c 'argdo %s/old/new/ge|update' -c 'q' ./**/*.txt
+timeout 10s find . -type f -name '*.txt' -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
+timeout 5s ex -s -c '%p' -c 'q!' /etc/hosts
 ```
 
 Instead of maintaining an external `.vim` script file (which adds clutter),
 you can stream multiple `ex` commands directly using a here-document:
 
 ```bash
-ex -s /etc/hosts << 'EOF'
+timeout 5s ex -s /etc/hosts << 'EOF'
 %s/127/128/g
 %print
 q!
@@ -108,16 +108,16 @@ Examples:
 
 ```bash
 # Extracting html tags
-ex -s -c 'bufdo! /<div.*id=.the_div_id/norm nvatdggdG"2p' -c 'bufdo! %p' -c 'qa!' *.html
+timeout 10s ex -s -c 'bufdo! /<div.*id=.the_div_id/norm nvatdggdG"2p' -c 'bufdo! %p' -c 'qa!' *.html
 
 # Removing XML tags by piping stream data directly to standard input
-echo "<root> <item>data</item> </root>" | ex -s -c '%s/<[^>].\{-}>//ge' -c '%p' -c 'q!' /dev/stdin
+timeout 5s sh -c 'echo "<root> <item>data</item> </root>" | ex -s -c "%s/<[^>].\\{-}>//ge" -c "%p" -c "q!" /dev/stdin'
 
 # Removing style tag from the header and print the parsed output
-curl -s http://example.com/ | ex -s -c '/<style.*/norm nvatd' -c '%p' -c 'q!' /dev/stdin
+timeout 10s sh -c 'curl -s https://example.com/ | ex -s -c "/<style.*/norm nvatd" -c "%p" -c "q!" /dev/stdin'
 
 # Parse html with multiple complex rules by passing HTML dynamically
-curl -s http://example.com | ex -s /dev/stdin << 'EOF'
+timeout 10s curl -s https://example.com -o /tmp/example.html && timeout 10s ex -s /tmp/example.html << 'EOF'
   %s,'//,'http://,ge
   %s,"//,"http://,ge
   " Remove the margin on the left of the main block. "
@@ -130,7 +130,7 @@ curl -s http://example.com | ex -s /dev/stdin << 'EOF'
 EOF
 
 # Real live example from an RPM specification dynamically compiled via stdin
-ex -s main.spec << 'EOF'
+timeout 5s ex -s main.spec << 'EOF'
    %s/CFLAGS = -g$/CFLAGS =-fPIC -DPIC -g/ge
    %s/CFLAGS =$/CFLAGS =-fPIC -DPIC/ge
    %s/ADAFLAGS =$/ADAFLAGS =-fPIC -DPIC/ge
@@ -143,7 +143,7 @@ Create a new HTML structure by downloading HTML of Example site
 and replacing its body by an auto-generated 20x20 table with random numbers in it (streamed to standard out):
 
 ```bash
-curl -s example.com | ex -s /dev/stdin << 'VIMEOF' > generated_table.html
+timeout 10s curl -s https://example.com -o /tmp/example.html && timeout 10s ex -s /tmp/example.html << 'VIMEOF' > generated_table.html
 let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'
 /<body
 norm! vitd"tP
@@ -159,13 +159,15 @@ One-liner to convert source code file into HTML using one of the standard plugin
 (redirecting standard output to `/dev/null` avoids unnecessary logging):
 
 ```bash
-ex -s -c 'let g:html_no_progress=1' -c 'syntax on' -c 'set ft=c' -c 'runtime syntax/2html.vim' -c 'wqa' main.c > /dev/null
+timeout 10s ex -s -c 'let g:html_no_progress=1' -c 'syntax on' -c 'set ft=c' \
+  -c 'runtime syntax/2html.vim' -c 'wqa' main.c > /dev/null
 ```
 
 ## Tips
 
-- Always include `wq` at the end to write changes and quit.
+- Always include `wq` at the end to write changes and quit when you intend in-place edits.
 - The `-s` flag suppresses prompts and feedback, making it ideal for automated file edits.
+- Prefix commands with short `timeout` values (for example, `timeout 5s` or `timeout 10s`) during testing.
 - Use `ex` when complex string replacements or regular expression-based modifications are required directly
   from the terminal without breaking the automated flow.
 - When adding or updating examples in this file, ensure they work non-interactively and do not require user input.
@@ -179,10 +181,10 @@ ex -s -c 'let g:html_no_progress=1' -c 'syntax on' -c 'set ft=c' -c 'runtime syn
 
   ```bash
   # Fails (evaluates +3 relative to line 1)
-  ex -s -c '/MyPattern/+1,+3d' -c 'wq' file.txt
+  timeout 5s ex -s -c '/MyPattern/+1,+3d' -c 'wq' file.txt
 
   # Succeeds (moves cursor to MyPattern, then deletes the next 3 lines)
-  ex -s -c '/MyPattern/' -c '+1,+3d' -c 'wq' file.txt
+  timeout 5s ex -s -c '/MyPattern/' -c '+1,+3d' -c 'wq' file.txt
   ```
 
 ## References

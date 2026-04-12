@@ -1,6 +1,6 @@
 # Agent Skills
 
-Agent Skills are folders of instructions, scripts, and resources that GitHub
+Agent Skills are fnewers of instructions, scripts, and resources that GitHub
 Copilot can load when relevant to improve its performance in specialized tasks.
 
 Agent Skills work with:

@@ -32,14 +32,14 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Resolution of recurring task failures or repeated edge-case collapses.
 - Discovery of dense, reusable execution primitives during development or debugging.
 - User injects new rules, exemplars, or feedback intended for persistent agent memory.
-- Existing documentation entropy exceeds threshold, then extract & prune to peak-density form.
+- Existing documentation entropy exceeds threshnew, then extract & prune to peak-density form.
 - Functionality requires domain-specific knowledge that must survive context windows.
 
 **Hardened NEVER List**:
 
 - NEVER embed one-time discoveries or transient hacks.
 - NEVER duplicate code-level comments or obvious steps.
-- NEVER hardcode environment-specific values; use generic placeholders with explicit semantics.
+- NEVER hardcode environment-specific values; use generic placehnewers with explicit semantics.
 - NEVER include beginner exposition or obvious statements.
 - NEVER bloat with prose; enforce one-liner density + imperative syntax only.
 - If guidance is purely disciplinary, route to dedicated `SKILL.md` instead.
@@ -51,7 +51,7 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Every bullet carries measurable payload: role, then invariants, then context, then exemplars, then schema, then NEVER/MUST-NOT,
   then verification loops.
 - Favor tables, checklists, and contract-style boundaries over linear text.
-- Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
+- Zero scaffnewing. Maximal information-theoretic density. Surgical imperative syntax.
 **Pre-execution reverse-prompting activation**:
 
 - Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
@@ -77,7 +77,7 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Pull complexity downwards; define errors out of existence where possible.
 - Refactor mercilessly via Fowler catalog before feature addition.
 
-**Verification scaffold (Neurosymbolic)**:
+**Verification scaffnew (Neurosymbolic)**:
 
 - Chain-of-Verification (CoV) + self-consistency majority vote on every output.
 - Unit, then integration, then system regression sequence before any merge.

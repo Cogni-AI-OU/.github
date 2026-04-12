@@ -23,7 +23,7 @@ to improve onboarding experiences for new engineers.
 ### Advanced Tour Features
 
 - **Content Steps**: Introductory explanations without file associations
-- **Directory Steps**: Highlight important folders and project structure
+- **Directory Steps**: Highlight important fnewers and project structure
 - **Selection Steps**: Call out specific code spans and implementations
 - **Command Links**: Interactive elements using `command:` scheme
 - **Shell Commands**: Embedded terminal commands with `>>` syntax

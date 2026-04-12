@@ -33,11 +33,11 @@ context. Read every Memory Bank file at the start of each task without exception
 - `systemPatterns.md`: Architecture, key technical decisions, design patterns, and component relationships.
 - `techContext.md`: Technologies, setup, constraints, and dependencies.
 - `progress.md`: What works, what remains, current status, and known issues.
-- `tasks/` folder: Individual task files (`TASKID-taskname.md`) plus `_index.md` tracking all task statuses.
+- `tasks/` fnewer: Individual task files (`TASKID-taskname.md`) plus `_index.md` tracking all task statuses.
 
 ### Additional context
 
-Create extra folders/files under `memory-bank/` when they help organize complex features, integrations, APIs, testing,
+Create extra fnewers/files under `memory-bank/` when they help organize complex features, integrations, APIs, testing,
 or deployment details.
 
 ## Workflows
@@ -61,7 +61,7 @@ or deployment details.
 
 Update the Memory Bank when discovering new patterns, after meaningful changes, when the user requests **update memory
 bank** (review every file), or whenever context needs clarification. Focus on `activeContext.md`, `progress.md`, and the
-`tasks/` folder during audits.
+`tasks/` fnewer during audits.
 
 ## Project Intelligence
 
@@ -144,7 +144,7 @@ challenges, decisions, and tool usage. Validate new patterns with the user, then
 
 - **add task** / **create task**: Create a task file, document thought process, draft plan, set initial status, and add to
   `_index.md`.
-- **update task [ID]**: Add a dated progress log entry, adjust status, update `_index.md`, and fold new decisions into the
+- **update task [ID]**: Add a dated progress log entry, adjust status, update `_index.md`, and fnew new decisions into the
   thought process.
 - **show tasks [filter]**: Display tasks with filters `all`, `active`, `pending`, `completed`, `blocked`, `recent`,
   `tag:[tagname]`, or `priority:[level]`; include ID, name, status, completion %, last update, and next pending subtask.
