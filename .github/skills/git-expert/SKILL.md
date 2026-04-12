@@ -15,17 +15,19 @@ Expert-level guidance for executing complex Git operations safely and effectivel
 
 - User has lost commits or needs to recover state using `git reflog`.
 - User needs to find a regression using `git bisect`.
-- User needs to manage Git submodules or advanced worktrees.
-- User needs to recover a corrupted local repository (e.g., empty objects, bad object refs, `git fsck` failures).
-- User needs to rewrite commit history (e.g., squashing, reordering, editing).
+- User is managing Git submodules or advanced worktrees.
+- Local repository corruption requires recovery (e.g., empty objects, bad object refs, `git fsck` failures).
+- Commit history rewriting is required (e.g., squashing, reordering, editing).
 - User requires assistance with complex merge conflicts or tree manipulations.
 
 ## Interactive Rebasing (`git rebase -i`)
 
 - **Objective**: Clean up local commit history before pushing.
 - **Process**:
-  - Start rebase: `git rebase -i <base-commit-or-branch>`
-  - Set `GIT_SEQUENCE_EDITOR=true` for non-interactive automated rewrites if scripted.
+  - **WARNING**: Interactive modes (`-i`) are FORBIDDEN in runtime automation. Ensure `-i` is strictly scoped to
+    local manual-only usage or fixing in the non-github runtime (like in local agent or devcontainer runtime).
+  - Start manual rebase: `git rebase -i <base-commit-or-branch>`
+  - Automated rewrites: Set `GIT_SEQUENCE_EDITOR=true` for non-interactive execution if scripted.
   - Actions: `pick`, `reword`, `edit`, `squash` (or `s`), `fixup` (or `f`), `drop`.
 - **Safety**: NEVER rebase commits that have already been pushed to a shared public
   branch unless explicitly coordinating a force-push.
@@ -61,7 +63,8 @@ Expert-level guidance for executing complex Git operations safely and effectivel
 - **Corrupted Repository Recovery**: For errors like `fatal: bad object refs/heads/...`,
   `object file is empty`, or `git did not send all necessary objects`.
   - **Diagnose**: Run `git fsck --full` to identify missing/corrupted objects or refs.
-  - **Backup first**: `cp -a repo repo.bak` before destructive commands.
+  - **Backup first**: From the parent directory, back up the entire repository:
+    `cp -a <repo-name> <repo-name>.bak` before destructive commands.
   - **Empty Objects**: Delete zero-byte objects blocking pulls with
     `find .git/objects/ -type f -empty -delete`.
   - **Bad Refs/Heads**: Check for corrupted or duplicate branch refs (e.g., from cloud-sync
