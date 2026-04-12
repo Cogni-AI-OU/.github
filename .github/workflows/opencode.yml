@@ -142,13 +142,20 @@ jobs:
       - name: Resolve OpenCode prompt
         id: prompt
         env:
+          BASE_BRANCH: dev
           COMMENT_BODY: ${{ github.event.comment.body || '' }}
           PROMPT_INPUT: ${{ inputs.prompt }}
         run: |
           set -euo pipefail
           prompt="${PROMPT_INPUT:-}"
+          context=$(printf '## Pull Request Context\n**Base Branch:** %s' "${BASE_BRANCH}")
           if [ -z "$prompt" ]; then
             prompt="${COMMENT_BODY:-}"
+          fi
+          if [ -n "$prompt" ]; then
+            prompt=$(printf '%s\n\n%s\n' "$context" "$prompt")
+          else
+            prompt=$(printf '%s\n' "$context")
           fi
           {
             echo 'prompt<<EOF'
