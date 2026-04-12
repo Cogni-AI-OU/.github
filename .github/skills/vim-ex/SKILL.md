@@ -171,6 +171,7 @@ ex -s -c 'let g:html_no_progress=1' -c 'syntax on' -c 'set ft=c' \
 - Use `ex` when complex string replacements or regular expression-based modifications are required directly
   from the terminal without breaking the automated flow.
 - When adding or updating examples in this file, ensure they work non-interactively and do not require user input.
+- Do not change existing examples unless they are not working; keep proven examples unchanged.
 
 ## Troubleshooting
 
