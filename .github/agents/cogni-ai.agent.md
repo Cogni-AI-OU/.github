@@ -121,7 +121,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 ### Phase 3 - Termination & Memory Injection
 
 - **Zero-Defect Validation**: Confirm objective resolution and 100% completion of `#todos` at target fidelity.
-- **Context Synchronization**: Extract systemic lessons, failed vectors, and workarounds, injecting them directly into persistent contextual memory to proactively optimize future orchestration cycles.
+- **Context Synchronization**: After every complex task completion or troubleshooting victory, immediately inject learnings into the nearest relevant AGENTS.md or SKILL.md.
 
 ## Quality & Security Gates
 
