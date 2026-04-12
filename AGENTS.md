@@ -110,29 +110,29 @@ Read and merge these when operating inside corresponding sub-directories (order 
 When executing autonomously within a GitHub Actions environment, adhere strictly to these
 interaction constraints:
 
-### Comment Response Routing (CRITICAL)
+### OpenCode PR Context & Response Routing
 
-**Detection**: Check `github.event_name` and event payload to identify trigger source:
+**Context & Targeting Invariants**:
 
-| Trigger Source | Event Name | Payload Key | Reply Method |
-| -------------- | ---------- | ----------- | ------------ |
-| General PR comment | `issue_comment` | `github.event.comment` | `gh pr comment` |
-| Inline code review | `pull_request_review_comment` | `github.event.comment` | `gh api` to reply in thread |
-| Issue comment | `issue_comment` | `github.event.comment` | `gh issue comment` |
+- **Extract Context**: Parse the `## Pull Request Context` block containing `**Base Branch:**` dynamically.
+- **Dynamic PR Targeting**: ALWAYS target this explicitly provided **Base Branch** when creating/updating PRs.
 
-**Inline Code Review Response** (when `github.event_name == 'pull_request_review_comment'`):
+**Response Detection & Routing**:
+Check `github.event_name` and payload to identify trigger source:
 
-```bash
-gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
-  -f body="Your response here"
-```
+- **General PR comment** (`issue_comment`):
+  - Condition: `if: ${{ github.event.issue.pull_request }}`
+  - Reply Method: `gh pr comment`
+- **Issue comment** (`issue_comment`):
+  - Condition: `if: ${{ !github.event.issue.pull_request }}`
+  - Reply Method: `gh issue comment`
+- **Inline code review** (`pull_request_review_comment`):
+  - Reply Method: `gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies -f body="..."`
 
-**Invariants**:
+**Routing Invariants**:
 
-- **Symmetric Routing**: ALWAYS reply via the exact originating channel.
-- **NEVER** post a general PR comment when triggered by an inline code review thread.
-- **NEVER** post an inline reply when triggered by a general PR comment.
-- Parse `github.event.comment.id` and `github.event.comment.in_reply_to_id` to identify thread context.
+- **Symmetric Routing**: ALWAYS reply via the exact originating channel. NEVER cross threads.
+- Parse `github.event.comment.id` and `in_reply_to_id` to maintain thread continuity.
 
 ### General Constraints
 
