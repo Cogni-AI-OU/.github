@@ -57,6 +57,37 @@ For a human-readable overview, see [README.md](README.md).
 - `claude-sonnet-4-5`: most capable.
 - Provide `model` input when calling `claude.yml` or `claude-review.yml`; defaults to `claude-opus-4-5`.
 
+## Synchronized Configuration
+
+The following configuration values **MUST** be kept in sync across multiple files:
+
+### OPENCODE_PERMISSION
+
+The `OPENCODE_PERMISSION` environment variable defines the bash command allowlist for OpenCode agents.
+It must be identical in both workflow files:
+
+| File | Location |
+| ---- | -------- |
+| [opencode.yml](opencode.yml) | Line ~130 (env section) |
+| [opencode-review.yml](opencode-review.yml) | Line ~210 (env section) |
+
+Current policy:
+
+```json
+{ "bash": { "*": "deny", "gh*": "allow", "gh pr review*": "deny", "pre-commit*": "allow" } }
+```
+
+When adding new allowed commands (e.g., `"ex*": "allow"`), update **both** files.
+
+### Model options list
+
+The `model` input options for `workflow_dispatch` must be identical in both workflow files:
+
+| File | Location |
+| ---- | -------- |
+| [opencode.yml](opencode.yml) | Lines ~48-90 (workflow_dispatch inputs) |
+| [opencode-review.yml](opencode-review.yml) | Lines ~67-107 (workflow_dispatch inputs) |
+
 ## Notes
 
 - Follow [.github/instructions/github-workflows.instruction.md](../instructions/github-workflows.instruction.md)
