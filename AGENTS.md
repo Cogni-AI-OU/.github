@@ -218,6 +218,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 ### Before each commit
 
 - Verify your expected changes with `git diff --no-color`.
+- Ensure no temporary, dummy, or unrelated test files are included in the commit.
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
 
