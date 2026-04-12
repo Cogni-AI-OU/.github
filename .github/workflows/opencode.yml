@@ -99,17 +99,11 @@ on:
         description: Custom prompt to override the default prompt
         required: false
         default: ''
+# Prevent concurrent runs on the same branch to avoid push conflicts.
+# When a new run is triggered, the previous pending run is cancelled.
 concurrency:
-  cancel-in-progress: false
-  group: >-
-    ${{
-      github.workflow
-    }}-${{
-      github.event.pull_request.number ||
-      github.event.issue.number ||
-      github.head_ref ||
-      github.ref_name
-    }}
+  cancel-in-progress: true
+  group: opencode-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai
   OPENCODE_MODEL_DEFAULT: opencode/gemini-3.1-pro
