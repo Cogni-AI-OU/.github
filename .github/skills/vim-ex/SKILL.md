@@ -143,13 +143,14 @@ Create a new HTML structure by downloading HTML of Example site
 and replacing its body by an auto-generated 20x20 table with random numbers in it (streamed to standard out):
 
 ```bash
-curl -s https://example.com | ex -s \
-  -c "let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'" \
-  -c '/<body' \
-  -c 'norm! vitd"tP' \
-  -c '%s/_/\=trim(system("echo $RANDOM"))/g' \
-  -c '%p' \
-  -c 'q!' /dev/stdin > generated_table.html
+curl -s https://example.com | ex -s /dev/stdin << 'VIMEOF' > generated_table.html
+let @t='<table>'.repeat('<tr>'.repeat('<td>_</td>',20).'</tr>',20).'</table>'
+/<body
+norm! vitd"tP
+%s/_/\=trim(system('echo $RANDOM'))/g
+%p
+q!
+VIMEOF
 ```
 
 ### Plugins
