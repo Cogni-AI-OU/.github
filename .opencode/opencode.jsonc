@@ -27,6 +27,7 @@
           "ex": "allow",
           "gh": "allow",
           "git": "allow",
+          "hexdump": "allow",
           "links": "allow",
           "mawk": "allow",
           "pipx": "allow",

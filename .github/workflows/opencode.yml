@@ -190,6 +190,7 @@ jobs:
                 "gh*": "allow",
                 "gh pr review*": "deny",
                 "git*": "allow",
+                "hexdump*": "allow",
                 "links*": "allow",
                 "mawk*": "allow",
                 "pipx*": "allow",

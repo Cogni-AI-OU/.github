@@ -9,6 +9,7 @@
     "ex": true,
     "gh": true,
     "git": true,
+    "hexdump": true,
     "links": true,
     "mawk": true,
     "pipx": true,
