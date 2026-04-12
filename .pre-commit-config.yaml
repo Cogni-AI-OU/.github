@@ -38,6 +38,7 @@ repos:
     rev: v0.46.0
     hooks:
       - id: markdownlint
+        language_version: 22.14.0
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0
     hooks:
@@ -88,6 +89,7 @@ repos:
     rev: v3.14.2
     hooks:
       - id: markdown-link-check
+        language_version: 22.14.0
         args:
           - --config
           - .markdown-link-check.json
