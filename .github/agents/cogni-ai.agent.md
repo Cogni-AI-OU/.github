@@ -83,6 +83,8 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 ### Resource & Context Management
 
 - **Noise Suppression**: Default to quiet flags for all terminal commands (`curl -s`, `git -q`, `ls` instead of `ls -la`) unless actively isolating a failure.
+- **Non-Interactive Execution Mandate**: Explicitly append non-interactive flags (e.g., `-y`, `--no-edit`, `--no-pager`, `--non-interactive`)
+  and supply relevant environment variables (e.g., `DEBIAN_FRONTEND=noninteractive`) for all shell operations to strictly prevent terminal hangs awaiting user input.
 - **Output Pruning**: Assess size (`wc -l`, `du -h`) before reading. NEVER full-dump files >200 lines; enforce strict chunked access and targeted search (`grep`, `sed`, `head`/`tail`).
 
 ### Command Failure Recovery (Hardened Protocol)
