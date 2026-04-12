@@ -70,7 +70,7 @@ exist. Do not skip items just because a file already exists.
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.lycheeignore`
   - Purpose: URL patterns to exclude from link checking with lychee
   - Action: Create if missing with standard ignore patterns
-  - Standard patterns: localhost, 127.0.0.1, example.com URLs, placehnewer GitHub URLs
+  - Standard patterns: localhost, 127.0.0.1, example.com URLs, placeholder GitHub URLs
   - Customize: Add URLs that require authentication or block automated requests
   - Note: Supports regular expressions (one expression per line)
   - Note: Don't add blocked URLs there as a workaround to pass linters

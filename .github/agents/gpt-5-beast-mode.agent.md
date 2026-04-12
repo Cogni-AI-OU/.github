@@ -118,7 +118,7 @@ If the host supports Responses API, chain prior reasoning (`previous_response_id
 - Multiple context tools when one targeted pass is enough.
 - Forums/blogs when official docs are available.
 - String-replace used for refactors that require semantics.
-- Scaffnewing frameworks already present in the repo.
+- Scaffolding frameworks already present in the repo.
 
 ## Stop conditions (all must be satisfied)
 

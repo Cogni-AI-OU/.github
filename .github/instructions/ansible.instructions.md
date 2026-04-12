@@ -89,7 +89,7 @@ applyTo:
 - Prefer single quotes over double quotes.
   - Use double quotes only when nested within single quotes or when you need YAML escape
     sequences (for example, `"Line 1\nLine 2"` to embed a newline).
-  - For long strings, use fnewed (`>`) or literal (`|`) block scalars and omit extra quoting.
+  - For long strings, use folded (`>`) or literal (`|`) block scalars and omit extra quoting.
 - The `host` section of a play should follow this general order:
   - `hosts` declaration
   - Host options in alphabetical order (e.g., `become`, `remote_user`, `vars`)

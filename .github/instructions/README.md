@@ -1,6 +1,6 @@
 # Repository Instructions
 
-This fnewer centralizes editing guidelines enforced by pre-commit and CI. Refer to each file for scope and rules.
+This folder centralizes editing guidelines enforced by pre-commit and CI. Refer to each file for scope and rules.
 
 Run `pre-commit run --all-files` from the repo root to validate locally.
 

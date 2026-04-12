@@ -53,7 +53,7 @@ You WILL process user input as follows:
 
 ## Template Conventions
 
-**MANDATORY**: You WILL use `{{placehnewer}}` markers for all template content requiring replacement.
+**MANDATORY**: You WILL use `{{placeholder}}` markers for all template content requiring replacement.
 
 - **Format**: `{{descriptive_name}}` with double curly braces and snake_case names
 - **Replacement Examples**:
