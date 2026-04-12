@@ -215,8 +215,8 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install -r .devcontainer/requirements.txt
-      - name: Resolve OpenCode prompt
-        id: prompt
+      - name: Load review prompt
+        id: load-prompt
         env:
           ADDITIONAL_PROMPT_INPUT: ${{ inputs.additional_prompt }}
           PR_FILES_JSON: ${{ steps.pr-details.outputs.files }}
@@ -268,10 +268,10 @@ jobs:
           agent: ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           # See: <https://opencode.ai/docs/models/>
           model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
-          prompt: ${{ steps.prompt.outputs.prompt }}
+          prompt: ${{ steps.load-prompt.outputs.prompt }}
       - name: Annotate OpenCode prompt and output
         env:
-          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+          OPENCODE_PROMPT: ${{ steps.load-prompt.outputs.prompt }}
           OPENCODE_OUTPUT: ${{ steps.opencode.outputs.response }}
         run: |
           set -euo pipefail
