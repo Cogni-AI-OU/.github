@@ -30,7 +30,7 @@ repository standards.
 ## Core Process
 
 1. Infer a unique, descriptive `name` in lowercase-hyphenated format that will
-   exactly match the intended fnewer name.
+   exactly match the intended folder name.
 
 2. Write a single, highly precise `description` sentence that captures exact
    activation triggers without overlap.
@@ -65,7 +65,7 @@ repository standards.
 When creating or updating a skill file, ensure the following format:
 
 - **YAML Frontmatter is Mandatory**: Begin every SKILL.md with required fields
-  `name` (lowercase-hyphenated, exactly matching fnewer name) and `description`
+  `name` (lowercase-hyphenated, exactly matching folder name) and `description`
   (one precise, activation-triggering sentence explaining exactly what the skill
   does and when Copilot should load it). Include `license` only if needed. YAML
   must pass all repository validation and linting rules.
@@ -102,7 +102,7 @@ When creating or updating a skill file, ensure the following format:
   Quality over quantity: each example must add distinct value.
 
 - **Avoid Hardcoding**: Never embed specific values, file paths, repository
-  names, user details, or tool versions; instead, use clear placehnewers (e.g.,
+  names, user details, or tool versions; instead, use clear placeholders (e.g.,
   `<repository-name>`, `<file-path>`, `<version>`).
 
 - **Command-Line Tool Examples**: When the skill involves command-line tools,

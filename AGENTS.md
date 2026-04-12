@@ -216,14 +216,9 @@ the agent MUST integrate remote changes with a merge commit workflow.
 
 ### Before each commit
 
-- **Review all changes**: Before committing, carefully review all modified files to ensure changes are
-  intentional and correct. Use `git diff --no-color` to inspect the exact changes.
-- **Verify no unintended modifications**: Check that no accidental typos, corrupted text, or unrelated
-  changes were introduced during editing.
+- Verify your expected changes with `git diff --no-color`.
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
-- **Final verification gate**: Only proceed with commit after confirming all changes are deliberate and
-  aligned with the task requirements.
 
 ### File operations
 
