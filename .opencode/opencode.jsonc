@@ -8,7 +8,7 @@
   "agent": {
     "cogni-ai": {
       "mode": "primary",
-      "model": "opencode/gpt-5.3-codex",
+      "model": "opencode/gemini-3.1-pro",
       "prompt": "{file:../.github/agents/cogni-ai.agent.md}",
       "tools": {
         "write": true,
