@@ -83,9 +83,21 @@
     },
     {
       "file": "AGENTS.md",
-      "description": "## Agent Guidance\n\nQuick reference guide for AI automation agents.\n\n**Contents:**\n- Quick start instructions\n- Links to detailed coding standards\n- Common tasks (linting, validation, testing)\n- References to other important files\n\n**Key commands:**\n- `pre-commit run -a`: Run all checks\n- `molecule test`: Run Molecule tests\n- `ansible-lint`: Validate Ansible playbooks\n\nThis provides a quick entry point for AI agents working in this repository.",
+      "description": "## Agent Guidance\n\nPersistent single-source truth for autonomous agent behavior.\n\n**Contents:**\n- Directory-Specific Agent files (`.opencode/AGENTS.md`, `.vscode/AGENTS.md`, etc.)\n- Core Agent Execution Protocols\n- GitHub Actions Runtime and OpenCode PR Context routing\n- Troubleshooting Matrix and Common Tasks\n\n**Maintenance invariant:**\n- Agents must read, assimilate, and enforce invariants defined here and in directory-specific `AGENTS.md` files.\n- After complex tasks or troubleshooting victories, agents update the nearest relevant AGENTS.md or SKILL.md.\n\nThis is the root agent configuration that ensures AI code assistants consistently apply project conventions and maintain context.",
       "line": 1,
-      "title": "AI Agent Guidance"
+      "title": "Root AI Agent Guidance"
+    },
+    {
+      "file": ".opencode/AGENTS.md",
+      "description": "## OpenCode Agents\n\nDirectory-specific agent guidance for the `.opencode` directory.\n\n**Behavior:**\n- Read and merged by agents when operating inside `.opencode/`.\n- Overrides or supplements the root `AGENTS.md` rules with context-specific directives.\n\nFollowing the 'Persistent single-source truth' model, this ensures agents have precisely the right context when working on OpenCode-specific tasks.",
+      "line": 1,
+      "title": "OpenCode Specific Agents"
+    },
+    {
+      "file": ".vscode/AGENTS.md",
+      "description": "## VS Code Agents\n\nDirectory-specific agent guidance for the `.vscode` directory.\n\n**Behavior:**\n- Read and merged by agents when operating inside `.vscode/`.\n- Provides specific invariants and rules for handling VS Code settings, extensions, and task configurations.\n\nThis prevents agents from making incorrect assumptions about VS Code internals by providing localized, high-priority instructions.",
+      "line": 1,
+      "title": "VS Code Specific Agents"
     },
     {
       "file": ".github/agents/code-tour.agent.md",
