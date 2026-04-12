@@ -196,6 +196,7 @@ Surface to the user ONLY when hitting these exact triggers. Otherwise, maintain 
 - [ ] **Leakage Scan Passed**: Zero hardcoded secrets, cross-boundary dependencies, or exposed volatile state.
 - [ ] **Living Documentation Synced**: Any architectural deviations written directly to context/docs.
 - [ ] **Single-Variable Delta Verified**: Exact causal link proven between change and fix.
+- [ ] **Task Summary Provided**: Briefly summarize what was done (e.g., the completed `#todos` list).
 - [ ] **Summary Generated**: Work completion summarized in a few sentences, formatted as a git commit message ready.
 - [ ] **Zero-Defect Run**: Regressions tested, linters passed, and performance impacts negated.
 
