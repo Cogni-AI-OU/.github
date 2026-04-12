@@ -84,7 +84,7 @@ echo "This is example." | ex -s -c '%s/example/test/g' -c '%p' -c 'q!' /dev/stdi
 # More examples for editing files in-place or via streams (non-interactive)
 ex -s -c '%s/127/128/g' -c 'wq' /etc/hosts
 ex -s -c '%s/olddomain\.com/newdomain.com/g' -c 'wq' /etc/nginx/nginx.conf
-printf "%s\n" "%s/olddomain\\.com/newdomain.com/ge" w q | ex -s /etc/nginx/nginx.conf
+printf '%s\n' '%s/olddomain\.com/newdomain.com/ge' w q | ex -s /etc/nginx/nginx.conf
 ex -s /etc/hosts <<< $'%s/localhost/localhost.localdomain/ge\nw\nq'
 ex -s -c 'argdo %s/old/new/ge|update' -c 'q' ./**/*.txt
 find . -type f -name '*.txt' -exec ex -s -c '%s/old/new/ge' -c 'wq' {} \;
