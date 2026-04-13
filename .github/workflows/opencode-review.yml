@@ -219,23 +219,11 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
-      - uses: actions/cache@v5.0.1
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: |
-            pre-commit|
       - uses: actions/setup-python@v6.1.0
         with:
           cache: pip
           cache-dependency-path: .devcontainer/requirements.txt
           python-version: '3.12'
-      - name: Install pre-commit
-        run: pip install pre-commit
-      - name: Run pre-commit
-        # Suppress failures intentionally: pre-commit auto-fixes and initializes files on first run.
-        # The workflow continues so the OpenCode agent can review and resolve any remaining issues.
-        run: pre-commit run -a || true
       - name: Cache installed dependencies
         id: cache-dependencies
         uses: actions/cache@v5.0.1
@@ -312,7 +300,6 @@ jobs:
                 "links*": "allow",
                 "mawk*": "allow",
                 "pipx*": "allow",
-                "pre-commit*": "allow",
                 "printf*": "allow",
                 "set*": "allow",
                 "time*": "allow",
