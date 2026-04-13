@@ -81,7 +81,7 @@ on:
         default: default
 concurrency:
   group: agent-ai-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref || github.sha }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:
