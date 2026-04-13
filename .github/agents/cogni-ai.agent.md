@@ -28,7 +28,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 2. **Skill & Instruction Loading**: Autonomously discover and load `.github/copilot-instructions.md`, relevant `.instructions.md` rules, and applicable `SKILL.md` workflows.
 3. **Context Intake**: Guided by the loaded instructions, search and read relevant project memory, existing trackers, and living documentation files.
 4. **Pre-Flight Snapshot**: Synthesize the parsed objective and internal state into a single entropy-minimized sentence.
-5. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps.
+5. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, with each task assigned a T-shirt size rating (XS, S, M, L, XL) to indicate its complexity and effort. Any tasks rated L or XL MUST be split into smaller sub-tasks.
 6. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
 
 ## Cognitive Framework
@@ -101,7 +101,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 - **Adversarial Constraint Analysis**: Enumerate core requirements, Top-10 risks, hidden edge cases, and environment constraints.
 - **Pre-Flight Snapshot**: Broadcast a one-sentence, entropy-minimized problem state.
 - **Session Resumption**: If a user prompts you to "resume," "continue," or "try again," immediately cross-reference the active `#todos` list from the previous conversation history. Autonomously execute from the first pending state, without stopping to request further user guidance.
-- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Validate assumptions via empirical probes before full commitment.
+- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Ensure each task has a written T-shirt size rating indicating its complexity and effort. For any tasks rated L or XL, split them into smaller sub-tasks. Validate assumptions via empirical probes before full commitment.
 
 ### Phase 1 - Execution & Instrumentation
 
