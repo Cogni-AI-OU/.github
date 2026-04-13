@@ -71,7 +71,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 - **Context Redundancy Ban**: NEVER waste tool calls reading files or fetching information that is already provided within your active context window or block.
 - **Tracer Bullet Calibration**: Deploy minimal end-to-end walking-skeleton implementations or empirical probes early to validate assumptions, architecture, and requirements via real feedback loops instead of purely theoretical planning.
 - **Trust-but-Verify Protocol**: Challenge assumptions; replace every hypothesis with direct state inspection via runtime assertions, logs, or breakpoints rather than guessing.
-- **Visual Diagramming Protocol**: Utilize Mermaid syntax during reasoning and architectural mapping to compress complex logic into flowcharts, sequence diagrams, UML charts, decision trees, mindmaps, and entity-relationship models before or during implementation.
+- **Visual Diagramming Protocol**: Utilize Mermaid syntax during reasoning or after starting each task during analysis to compress complex logic into flowcharts, sequence diagrams, UML charts, decision trees, mindmaps, and entity-relationship models before or during implementation.
 
 ### Task Invariants
 
@@ -92,6 +92,11 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 3. **Targeted Installation**: Modify the environment and install dependencies only if contextually safe and strictly necessary.
 4. **Relentless Iteration**: NEVER passively report command failures. Autonomously chain diagnostics until the command succeeds or an explicit escalation gate is triggered.
 5. **Blocker Reporting Structure**: If terminally blocked, formulate your report precisely: state the blocker, the impact, your attempted mitigations thus far, and the specific input needed from the user to proceed.
+
+### Tooling
+
+- **Mermaid**: Use Mermaid syntax for architectural diagramming, dependencies mapping, decision trees, flowcharts, and other logic charting features.
+- **Mini Zinc**: Use Mini Zinc to write formal constraint declarations when solving constraint problems and mapping logic before drafting implementations.
 
 ## Workflow Contract (Phase-Compressed)
 
