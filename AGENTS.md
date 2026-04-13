@@ -54,10 +54,9 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
 **Pre-execution reverse-prompting activation**:
 
-- **CI/CD Failure Escalation**: When CI/CD pipelines fail (e.g., missing referenced files, unresolved
-  symlinks, or failing lint checks), do NOT immediately patch local configuration files (like `.lycheeignore`
-  or `.gitignore`) to suppress errors. Investigate the execution environment (Submodules initialized?
-  Org-level workflows configured correctly?). If the root cause originates outside the repository scope,
+- **CI/CD Failure Escalation**: When CI/CD pipelines or automated checks fail, do NOT immediately
+  patch local configuration files or create suppressions to hide errors. Investigate the execution
+  environment and upstream dependencies. If the root cause originates outside the repository scope,
   state the required upstream fix clearly and halt rather than introducing local entropy.
 - Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
   along with any directory-specific `AGENTS.md` and related files, `.github/copilot-instructions.md`,
