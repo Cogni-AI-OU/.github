@@ -167,6 +167,13 @@ the agent MUST integrate remote changes with a merge commit workflow.
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
 
+### GitHub Runtime Decision Policy
+
+- **Default to Best Practice:** Implement the most recommended path autonomously when multiple options exist.
+- **Document Trade-offs:** Capture unresolved decisions, explicit options, and impacts in the PR description.
+- **Never Stall:** Proceed immediately with safe defaults. Request preference feedback in the PR instead of waiting.
+- **Report Defensively:** Present recommended option first; list alternatives only if they alter scope or risk.
+
 ## Required References
 
 - Project overview & install: [README.md](README.md)
