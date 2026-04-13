@@ -117,6 +117,8 @@ exist. Do not skip items just because a file already exists.
     jobs:
       check:
         uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
+        with:
+          submodules: 'false'  # Set to 'true' or 'recursive' if repository uses submodules
     ```
 
   - Customize: Add additional jobs if needed for project-specific checks
