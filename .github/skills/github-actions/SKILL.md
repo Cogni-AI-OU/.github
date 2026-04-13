@@ -1,18 +1,21 @@
 <!-- markdownlint-disable MD003 MD013 MD022 MD026 MD041 -->
 ---
 name: github-actions
-description: Diagnose GitHub Actions workflow failures by retrieving run statuses and logs using MCP tools or gh CLI.
----
+description: >-
+  Diagnose GitHub Actions workflow failures by retrieving run statuses and logs using MCP tools or gh CLI.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/github-actions/SKILL.md>
+
+---
 This skill enables autonomous diagnosis of GitHub Actions failures, preferring MCP tools for summaries and falling back to gh CLI.
 
 ## When to Activate
 
-- User reports a failing GitHub Actions workflow, CI failure, or red status check
-- User provides a GitHub Actions URL (e.g., `https://github.com/owner/repo/actions/runs/RUN_ID/job/JOB_ID`)
+- Error output references Actions job steps
 - Pull request shows failed Actions checks
 - Task requires identifying or fixing a workflow failure
-- Error output references Actions job steps
+- User provides a GitHub Actions URL (e.g., `https://github.com/owner/repo/actions/runs/RUN_ID/job/JOB_ID`)
+- User reports a failing GitHub Actions workflow, CI failure, or red status check
 
 ## Step-by-Step Process
 
@@ -137,3 +140,7 @@ When working with GitHub Actions build logs and investigating issues:
   - Fetch specific PR: `git fetch origin pull/<pr-number>/head:pr-<pr-number>`
   - Check if commit exists: `git cat-file -e <commit-sha> 2>/dev/null`
 - **Cross-reference with PR**: When user mentions a commit from a PR URL, use the PR number to fetch it first
+
+## Maintenance
+
+This file should be updated if it becomes outdated or if the steps/examples no longer work.

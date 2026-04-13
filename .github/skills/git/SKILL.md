@@ -1,11 +1,21 @@
 <!-- markdownlint-disable MD003 MD013 MD022 MD026 MD041 -->
 ---
 name: git
-description: Guide for using git
-license: MIT
----
+description: >-
+  Guide for using git.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/git/SKILL.md>
+license: MIT
+
+---
 Expert in advanced git usage for repository agents. Prioritize non-interactive, safe, reproducible operations that maintain clean history and respect repository conventions.
+
+## When to Activate
+
+- A user wants to understand repository git hooks related to their commits.
+- The agent needs to perform safe, non-interactive Git lifecycle tasks.
+- User asks for help to execute Git operations natively (committing, moving files, merging).
+- User encounters issues when amending or reverting code changes in history.
 
 ## Core Principles
 
@@ -303,3 +313,7 @@ git diff origin/dev..HEAD --stat
 - When user asks to remove files, use `git rm` instead of `rm`.
 
 Always explain proposed git operations step-by-step, quote exact commands, and confirm irreversible actions with the user.
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

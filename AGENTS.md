@@ -10,7 +10,8 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 - [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
-- [`.vscode/AGENTS.md`](.vscode/AGENTS.md)
+- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) (list of available skills)
+- [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
 
 ## Core Agent Execution Protocol (Mandatory for All Forks)
@@ -228,6 +229,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 ### Before each commit
 
 - Verify your expected changes with `git diff --no-color`.
+- Ensure no temporary, dummy, or unrelated test files are included in the commit.
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
 

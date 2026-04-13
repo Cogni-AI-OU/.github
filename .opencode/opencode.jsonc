@@ -8,24 +8,26 @@
   "agent": {
     "cogni-ai": {
       "mode": "primary",
-      "model": "opencode/gpt-5.3-codex",
+      "model": "opencode/gemini-3.1-pro",
       "prompt": "{file:../.github/agents/cogni-ai.agent.md}",
       "tools": {
         "write": true,
         "edit": true,
         "bash": true
       },
-      // Keep shell permissions aligned with .vscode/settings.json allowlist.
+      // Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
       "permission": {
         "bash": {
           "ansible": "allow",
           "ansible-galaxy": "allow",
           "ansible-playbook": "allow",
           "awk": "allow",
+          "continue": "allow",
           "cp": "allow",
           "ex": "allow",
           "gh": "allow",
           "git": "allow",
+          "hexdump": "allow",
           "links": "allow",
           "mawk": "allow",
           "pipx": "allow",
@@ -34,8 +36,8 @@
           "set": "allow",
           "time": "allow",
           "timeout": "allow",
-          "true": "allow",
           "touch": "allow",
+          "true": "allow",
           "vim": "allow"
         }
       }

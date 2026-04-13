@@ -19,7 +19,7 @@ on:
         required: false
         type: string
       model:
-        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gpt-5.3-codex' }}
+        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gemini-3.1-pro' }}
         description: Model to use for OpenCode
         required: false
         type: string
@@ -43,7 +43,7 @@ on:
         required: false
         type: choice
       model:
-        default: opencode/gpt-5.3-codex
+        default: opencode/gemini-3.1-pro
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
@@ -99,9 +99,14 @@ on:
         description: Custom prompt to override the default prompt
         required: false
         default: ''
+# Prevent concurrent runs on the same branch to avoid push conflicts.
+# When a new run is triggered, the previous pending run is cancelled.
+concurrency:
+  cancel-in-progress: true
+  group: opencode-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai
-  OPENCODE_MODEL_DEFAULT: opencode/gpt-5.3-codex
+  OPENCODE_MODEL_DEFAULT: opencode/gemini-3.1-pro
 jobs:
   opencode:
     if: |
@@ -111,9 +116,11 @@ jobs:
         && (
           contains(github.event.comment.body, ' /oc ') ||
           startsWith(github.event.comment.body, '/oc ') ||
+          endsWith(github.event.comment.body, ' /oc') ||
           github.event.comment.body == '/oc' ||
           contains(github.event.comment.body, ' /opencode ') ||
           startsWith(github.event.comment.body, '/opencode ') ||
+          endsWith(github.event.comment.body, ' /opencode') ||
           github.event.comment.body == '/opencode' ||
           contains(github.event.comment.body, '@opencode-agent') ||
           contains(github.event.comment.body, '@OpenCode-Agent')
@@ -168,11 +175,13 @@ jobs:
           } >> "$GITHUB_OUTPUT"
       - name: Run opencode
         id: opencode
-        uses: anomalyco/opencode/github@latest
+        uses: anomalyco/opencode/github@v1.4.3
         timeout-minutes: 60
         env:
+          GITHUB_EVENT_NAME: ${{ github.event_name == 'pull_request_target' && 'pull_request' || github.event_name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          # Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
           OPENCODE_PERMISSION: |-
             {
               "bash": {
@@ -181,11 +190,13 @@ jobs:
                 "ansible-galaxy*": "allow",
                 "ansible-playbook*": "allow",
                 "awk*": "allow",
+                "continue*": "allow",
                 "cp*": "allow",
                 "ex*": "allow",
                 "gh*": "allow",
                 "gh pr review*": "deny",
                 "git*": "allow",
+                "hexdump*": "allow",
                 "links*": "allow",
                 "mawk*": "allow",
                 "pipx*": "allow",

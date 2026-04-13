@@ -1,9 +1,18 @@
 ---
 name: molecule
-description: 'How to run and manage Molecule tests for Ansible roles and playbooks'
----
+description: >-
+  How to run and manage Molecule tests for Ansible roles and playbooks.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/molecule/SKILL.md>
+
+---
 # Molecule Testing
+
+## When to Activate
+
+- Agent needs to execute syntax/lint/test checks for Ansible playbooks locally.
+- Troubleshooting configuration logic inside devcontainers or codespaces.
+- User needs to run or debug Ansible role testing frameworks using Molecule.
 
 ## Commands
 
@@ -36,3 +45,7 @@ environment.
 Python but Ansible still cannot import it, check `ansible --version` to identify the interpreter in use. In
 Codespaces/devcontainers, Ansible may run from a pipx-managed environment, so install controller-side libraries there as
 well, for example with `pipx inject ansible -r .devcontainer/requirements-ansible.txt`.
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

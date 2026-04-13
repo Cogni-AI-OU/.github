@@ -1,11 +1,20 @@
 <!-- markdownlint-disable MD003 MD013 MD022 MD026 MD041 -->
 ---
 name: pre-commit
-description: Guide for using pre-commit hooks to validate code formatting, linting, and security checks before commits.
-license: MIT
----
+description: >-
+  Guide for using pre-commit hooks to validate code formatting, linting, and security checks before commits.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/pre-commit/SKILL.md>
+license: MIT
+
+---
 Expert guide for pre-commit framework usage, configuration, and custom hook development. Focus on autonomous validation, diagnostics, and fix workflows.
+
+## When to Activate
+
+- Analyzing why pre-commit validation blocked a user's local git commit.
+- Running mass syntax/lint checks on the repository proactively.
+- User needs to configure, update, or bypass a pre-commit hook (markdownlint, yamllint, etc.).
 
 ## Core Principles
 
@@ -322,3 +331,7 @@ pre-commit run yamlfix --all-files
 - Hooks run sequentially; large repos may experience slower commit times.
 - Some hooks (e.g., yamlfix) may conflict with manual formatting preferences.
 - Custom local hooks require executable scripts in repository; not portable across forks without dependencies.
+
+## Maintenance
+
+Note that this file should be updated if outdated or if steps/examples are not working.

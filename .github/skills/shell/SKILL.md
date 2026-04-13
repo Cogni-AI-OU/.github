@@ -2,18 +2,21 @@
 
 ---
 name: shell
-description: Efficient shell command handling
-license: MIT
----
+description: >-
+  Efficient shell command handling.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/shell/SKILL.md>
+license: MIT
+
+---
 # Shell Handling Skill
 
 Execute shell commands with performance monitoring and timeout protection.
 
-## When to Use
+## When to Activate
 
-- Long-running commands (builds, tests, deployments)
 - Commands that might hang indefinitely
+- Long-running commands (builds, tests, deployments)
 - Performance optimization and debugging
 
 ## Core Patterns
@@ -48,3 +51,7 @@ time timeout 300s build_script.sh
 - Set `timeout` based on expected runtime plus buffer
 - Combine with `||` for error handling fallbacks
 - `timeout --kill-after=5s 30s` for forceful termination if needed
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

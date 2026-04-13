@@ -1,13 +1,14 @@
 <!-- markdownlint-disable MD003 MD022 MD026 MD041 -->
-
 ---
 name: skill-writer
 description: >-
   When the user requests to create, update, or refine a GitHub Copilot skill,
   generate or revise a complete SKILL.md file that strictly adheres to the
   official format, validation rules, and community best practices.
----
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/skill-writer/SKILL.md>
+
+---
 # Skill Writer
 
 Generate or update SKILL.md files for GitHub Copilot coding agents, ensuring
@@ -16,16 +17,16 @@ repository standards.
 
 ## When to Activate
 
-- User explicitly asks to create or update a skill for a specific issue, topic
-  or task.
-- User requests to update, improve, or refactor an existing SKILL.md.
-- User provides new rules, examples, or feedback intended to guide skill
-  authoring.
 - Capture Agent Insights: When the agent struggles with a recurring task,
   encounters repeated failures, or discovers an effective new solution/workaround
   not already documented, update the relevant existing skill (or create a new
   one) to incorporate the insight, ensuring future activations handle the case
   more efficiently.
+- User explicitly asks to create or update a skill for a specific issue, topic
+  or task.
+- User provides new rules, examples, or feedback intended to guide skill
+  authoring.
+- User requests to update, improve, or refactor an existing SKILL.md.
 
 ## Core Process
 
@@ -71,7 +72,7 @@ When creating or updating a skill file, ensure the following format:
   must pass all repository validation and linting rules.
 
 - **Start with Lint Disable**: Always open the file with
-  `<!-- markdownlint-disable MD022 MD026 MD041 -->` to suppress common
+  `<!-- markdownlint-disable MD003 MD022 MD026 MD041 -->` to suppress common
   markdownlint warnings.
 
 - **Description Precision**: Write the `description` as a single, highly
@@ -110,3 +111,7 @@ When creating or updating a skill file, ensure the following format:
   and cross-project reusability. Provide concise examples of key commands—focus
   on complex, multi-flag, piped, or non-standard operations that require precise
   reproduction. Avoid repetitive or overly specific examples.
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

@@ -1,22 +1,25 @@
 ---
 name: context-aware-ops
-description: Intelligent resource management with size checking and filtering to preserve context window
-license: MIT
----
+description: >-
+  Intelligent resource management with size checking and filtering to preserve context window.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/context-aware-ops/SKILL.md>
+license: MIT
+
+---
 # Context-Aware Operations Skill
 
 This skill provides patterns and techniques for managing large files and command outputs
 efficiently, preventing context window exhaustion while maintaining effective problem-solving
 capabilities.
 
-## When to Use This Skill
+## When to Activate
 
-- Before reading any file in the codebase
 - Before executing commands that might produce large output
-- When working with logs, build outputs, or data files
-- When searching through codebases
+- Before reading any file in the codebase
 - When debugging issues that might involve large resources
+- When searching through codebases
+- When working with logs, build outputs, or data files
 
 ## Core Principle
 
@@ -370,3 +373,7 @@ sed -n "${current},$((current + chunk_size))p" file.txt
 - **Iterate**: You can always come back for more details if needed
 
 Your context window is precious - use it wisely!
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

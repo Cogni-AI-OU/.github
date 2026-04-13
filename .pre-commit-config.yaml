@@ -38,6 +38,7 @@ repos:
     rev: v0.46.0
     hooks:
       - id: markdownlint
+        language_version: 22.14.0
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0
     hooks:
@@ -53,9 +54,6 @@ repos:
         # Only process .yaml and .yml files (not .md files with YAML frontmatter)
         types:
           - yaml
-        # Excluded due to https://github.com/lyz-code/yamlfix/issues/310 which breaks multiline formatting.
-        # Also excluding workflows that require blank lines for readability.
-        exclude: (\.github/workflows/claude-review\.yml|\.github/workflows/claude\.yml)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -88,6 +86,7 @@ repos:
     rev: v3.14.2
     hooks:
       - id: markdown-link-check
+        language_version: 22.14.0
         args:
           - --config
           - .markdown-link-check.json

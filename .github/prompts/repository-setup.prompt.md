@@ -167,9 +167,16 @@ exist. Do not skip items just because a file already exists.
     ---
     name: OpenCode Review
     on:
+      issue_comment:
+        types: [created]
+      pull_request_review_comment:
+        types: [created]
       pull_request:
         types: [edited, opened, ready_for_review, reopened, review_requested]
+      pull_request_target:
+        types: [edited, opened, ready_for_review, reopened, review_requested]
       workflow_call:
+      workflow_dispatch:
     jobs:
       opencode-review:
         uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main
@@ -182,7 +189,8 @@ exist. Do not skip items just because a file already exists.
         secrets: inherit
     ```
 
-  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings. For fork PRs, ensure
+    `OPENCODE_API_KEY` is available (e.g., via `pull_request_target`).
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)

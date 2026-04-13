@@ -1,21 +1,24 @@
 ---
 name: robust-commands
-description: Resilient command execution with automatic fallbacks and error recovery
-license: MIT
----
+description: >-
+  Resilient command execution with automatic fallbacks and error recovery.
 
+  Maintained at: <https://github.com/Cogni-AI-OU/.github/blob/main/.github/skills/robust-commands/SKILL.md>
+license: MIT
+
+---
 # Robust Command Execution Skill
 
 This skill provides patterns for executing commands with automatic error recovery,
 fallback mechanisms, and installation of missing dependencies. Never give up when
 a command fails - try alternatives!
 
-## When to Use This Skill
+## When to Activate
 
 - When a command might not be installed
-- When working in different environments (containers, CI, local)
-- When tool availability is uncertain
 - When debugging command failures
+- When tool availability is uncertain
+- When working in different environments (containers, CI, local)
 - When you need to ensure commands succeed
 
 ## Core Principle
@@ -515,3 +518,7 @@ unzip file.zip || python3 -m zipfile -e file.zip .
 - **Handle errors**: Always have a fallback plan
 
 Commands fail for many reasons - most are fixable!
+
+## Maintenance
+
+Note that this file should be updated if outdated or steps/examples are not working.

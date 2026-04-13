@@ -1,6 +1,6 @@
 # Agent Prompts
 
-This directory contains prompt files that can be used with AI agents (Claude Code, GitHub Copilot, etc.)
+This directory contains prompt files that can be used with AI agents (OpenCode, GitHub Copilot, etc.)
 to perform standardized tasks across repositories.
 
 - For the agent-facing prompt catalog, see [AGENTS.md](AGENTS.md).
