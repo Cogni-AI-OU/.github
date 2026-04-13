@@ -120,6 +120,15 @@ runtime and as the source of required controller-side dependencies.
   Update existing tours or create new ones to reflect changes in project structure,
   workflows, or key files.
 
+## Git Operations
+
+When working with the user interactively (e.g., in an IDE like VS Code):
+
+- **Never create commits or push changes to branches** without explicit user feedback or requests.
+- Present the proposed changes, successfully save the edited files, and allow the user to review the diffs locally.
+- Let the user drive the Git staging, committing, and pushing processes,
+  or wait for them to explicitly instruct you to perform these operations.
+
 ## Troubleshooting
 
 ### Finding Build Errors
