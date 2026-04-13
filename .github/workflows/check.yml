@@ -8,7 +8,23 @@ on:
   schedule:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
   workflow_call:
+    inputs:
+      submodules:
+        default: 'false'
+        description: 'Whether to checkout submodules: true, false, or recursive'
+        required: false
+        type: string
   workflow_dispatch:
+    inputs:
+      submodules:
+        default: 'false'
+        description: 'Whether to checkout submodules: true, false, or recursive'
+        options:
+          - 'false'
+          - 'true'
+          - recursive
+        required: false
+        type: choice
   workflow_run:
     workflows:
       - OpenCode
@@ -30,6 +46,7 @@ jobs:
         with:
           # For workflow_run, checkout the head branch from the triggering workflow
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+          submodules: ${{ inputs.submodules || 'false' }}
       - name: Add Problem Matcher for actionlint
         run: |
           echo "::add-matcher::.github/actionlint-matcher.json"
@@ -45,6 +62,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+          submodules: ${{ inputs.submodules || 'false' }}
       - name: Restore lychee cache
         uses: actions/cache@v5.0.1
         with:
@@ -67,6 +85,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+          submodules: ${{ inputs.submodules || 'false' }}
       - uses: actions/cache@v5.0.1
         with:
           path: ~/.cache/pre-commit

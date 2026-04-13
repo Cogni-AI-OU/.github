@@ -55,6 +55,10 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
 **Pre-execution reverse-prompting activation**:
 
+- **CI/CD Failure Escalation**: When CI/CD pipelines or automated checks fail, do NOT immediately
+  patch local configuration files or create suppressions to hide errors. Investigate the execution
+  environment and upstream dependencies. If the root cause originates outside the repository scope,
+  state the required upstream fix clearly and halt rather than introducing local entropy.
 - Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
   along with any directory-specific `AGENTS.md` and related files, `.github/copilot-instructions.md`,
   and autonomously load any relevant `.instructions.md` rules or `SKILL.md` workflows before formulating a strategy.
@@ -167,6 +171,13 @@ the agent MUST integrate remote changes with a merge commit workflow.
 
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
+
+### GitHub Runtime Decision Policy
+
+- **Default to Best Practice:** Implement the most recommended path autonomously when multiple options exist.
+- **Document Trade-offs:** Capture unresolved decisions, explicit options, and impacts in the PR description.
+- **Never Stall:** Proceed immediately with safe defaults. Request preference feedback in the PR instead of waiting.
+- **Report Defensively:** Present recommended option first; list alternatives only if they alter scope or risk.
 
 ## Required References
 
