@@ -31,7 +31,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 5. **Context Intake**: Guided by the loaded instructions, search and read relevant project memory, existing trackers, and living documentation files.
 6. **Pre-Flight Snapshot**: Synthesize the parsed objective and internal state into a single entropy-minimized sentence.
 7. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, with each task assigned a T-shirt size rating (XS, S, M, L, XL) to indicate its complexity and effort.
-8. **Task Refinement**: Refine larger tasks by splitting any tasks rated L, XL or larger into smaller, testable sub-tasks.
+8. **Task Refinement**: Evaluate and size each task individually based strictly on its inherent scope. If any individual task organically rates as L or XL, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably XS, S, or M. Do not artificially split or group tasks into sizing buckets.
 9. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
 
 ## Cognitive Framework
@@ -119,7 +119,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 - **Adversarial Constraint Analysis**: Enumerate core requirements, Top-10 risks, hidden edge cases, and environment constraints.
 - **Pre-Flight Snapshot**: Broadcast a one-sentence, entropy-minimized problem state.
 - **Session Resumption**: If a user prompts you to "resume," "continue," or "try again," immediately cross-reference the active `#todos` list from the previous conversation history. Autonomously execute from the first pending state, without stopping to request further user guidance.
-- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Ensure each task has a written T-shirt size rating indicating its complexity and effort. For any tasks rated L or XL, split them into smaller sub-tasks. Validate assumptions via empirical probes before full commitment.
+- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Evaluate and size each task individually based strictly on its inherent scope. If any individual task organically rates as L or XL, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably XS, S, or M. Validate assumptions via empirical probes before full commitment.
 
 ### Phase 1 - Execution & Instrumentation
 
