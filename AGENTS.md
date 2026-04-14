@@ -175,6 +175,9 @@ the agent MUST integrate remote changes with a merge commit workflow.
   Since live execution output is the only visible signal of progress in GitHub Actions logs,
   explicitly break down even standard tasks into multi-step `todos` so that the user can
   observe your continuous progress.
+- **Pre-commit Assurance**: Before finishing any task or marking it complete, you MUST autonomously execute
+  `pre-commit run -a` to catch and fix any linting, formatting, or trailing whitespace issues. Do not wait for
+  the user to remind you.
 
 ### GitHub Runtime Decision Policy
 
