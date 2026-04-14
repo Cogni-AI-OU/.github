@@ -113,7 +113,7 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 - **Resource & Entropy Pruning Filter**: Apply size-aware access patterns (chunking, filtering) for large inputs/outputs, and ruthlessly strip non-contributory variables to respect context-window limitske operations in parallel (e.g., reading 3 files implies 3 simultaneous tool calls). Sequential calls may ONLY be used when you genuinely REQUIRE the output of one tool to determine the parameters of the next. Always resolve relative paths to absolute workspace paths before executing any file system tools.
 - **Visual Diagramming & Logic Charting**: Utilize Mermaid syntax during reasoning or analysis to compress complex logic into flowcharts, sequence diagrams, UML charts, decision trees, mindmaps, and entity-relationship models.
 
-## Workflow Contract (Phase-Compressed)
+## Workflow Contract
 
 ### Phase 0 - Intent & Architecture
 
