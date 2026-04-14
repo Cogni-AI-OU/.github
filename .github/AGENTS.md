@@ -15,6 +15,10 @@ Read these Agent files when working in corresponding dirs:
 
 - [.github/copilot-instructions.md](copilot-instructions.md): main coding standards for agents.
 - [.github/mcp-config.json](mcp-config.json): MCP server configuration for GitHub Copilot.
+  Provides access to built-in GitHub tools including:
+  - Repository & Code: `get_file_contents`, `search_code`, `search_repositories`, `list_branches`, `list_commits`
+  - Issues & PRs: `get_issue`, `list_pull_requests`, `create_pull_request`
+  - Actions: `list_workflows`, `list_workflow_runs`, `get_job_logs`
 - [.github/actionlint-matcher.json](actionlint-matcher.json): problem matchers used in workflows.
 - [.github/pre-commit-matcher.json](pre-commit-matcher.json): problem matchers used in workflows.
 
