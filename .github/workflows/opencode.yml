@@ -14,7 +14,7 @@ on:
   workflow_call:
     inputs:
       agent:
-        default: cogni-ai
+        default: cogni-ai-architect
         description: Agent to use.
         required: false
         type: string
@@ -35,11 +35,11 @@ on:
   workflow_dispatch:
     inputs:
       agent:
-        default: cogni-ai
+        default: cogni-ai-architect
         description: Agent to use.
         options:
           - build
-          - cogni-ai
+          - cogni-ai-architect
           - compaction
           - plan
           - summary
@@ -113,7 +113,7 @@ concurrency:
   cancel-in-progress: false
   group: opencode-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
 env:
-  OPENCODE_AGENT_DEFAULT: cogni-ai
+  OPENCODE_AGENT_DEFAULT: cogni-ai-architect
   OPENCODE_MODEL_DEFAULT: opencode/gemini-3.1-pro
 jobs:
   opencode:

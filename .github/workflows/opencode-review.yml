@@ -36,7 +36,7 @@ on:
         required: false
         type: string
       agent:
-        default: cogni-ai
+        default: cogni-ai-architect
         description: Agent to use.
         required: false
         type: string
@@ -62,11 +62,11 @@ on:
         required: false
         type: string
       agent:
-        default: cogni-ai
+        default: cogni-ai-architect
         description: Agent to use.
         options:
           - build
-          - cogni-ai
+          - cogni-ai-architect
           - compaction
           - plan
           - summary
@@ -138,7 +138,7 @@ on:
         required: false
         type: choice
 env:
-  OPENCODE_AGENT_DEFAULT: cogni-ai
+  OPENCODE_AGENT_DEFAULT: cogni-ai-architect
   OPENCODE_MODEL_DEFAULT: opencode/gpt-5.3-codex
 jobs:
   opencode-review:
