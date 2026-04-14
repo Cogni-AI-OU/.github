@@ -10,6 +10,7 @@
     "gh": true,
     "git": true,
     "hexdump": true,
+    "jq": true,
     "links": true,
     "mawk": true,
     "pipx": true,

@@ -305,6 +305,7 @@ jobs:
                 "gh pr review*": "deny",
                 "git*": "allow",
                 "hexdump*": "allow",
+                "jq*": "allow",
                 "links*": "allow",
                 "mawk*": "allow",
                 "pipx*": "allow",

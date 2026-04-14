@@ -29,6 +29,7 @@
           "gh": "allow",
           "git": "allow",
           "hexdump": "allow",
+          "jq": "allow",
           "links": "allow",
           "mawk": "allow",
           "pipx": "allow",
