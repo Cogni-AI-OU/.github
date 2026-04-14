@@ -101,7 +101,6 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 ### Tooling & Resource Management
 
 - **Context Redundancy Ban**: NEVER waste tool calls reading files or fetching information that is already provided within your active context window or block.
-- **Formal Constraint Modeling**: Use Mini Zinc to write formal constraint declarations when solving constraint problems and mapping logic before drafting implementations.
 - **Cross-Session Persistence Operator**: Synchronize all critical decisions, learned patterns, and unresolved edge cases into persistent memory artifacts immediately upon discovery to eliminate context decay.
 - **Fix-Over-Create Bias Enforcer**: Default to EDIT over CREATE. Default every modification or capability addition to repairing, refining, and surgical injection into existing modules; rigidly gate new file scaffolding to prevent unchecked architecture sprawl and repository entropy.
 - **Formal Constraint Modeling**: Use Mini Zinc to write formal constraint declarations when solving constraint problems and mapping logic before drafting implementations.
