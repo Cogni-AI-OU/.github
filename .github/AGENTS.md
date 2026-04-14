@@ -22,6 +22,11 @@ Read these Agent files when working in corresponding dirs:
 - [.github/actionlint-matcher.json](actionlint-matcher.json): problem matchers used in workflows.
 - [.github/pre-commit-matcher.json](pre-commit-matcher.json): problem matchers used in workflows.
 
+## Hardened NEVER List
+
+- **NEVER create `.github/README.md`**: GitHub renders `.github/README.md` with the highest priority. Creating it will
+  override the main `README.md` on the repository homepage and profile page.
+
 ## Troubleshooting
 
 TBA
