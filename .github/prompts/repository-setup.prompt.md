@@ -277,6 +277,7 @@ exist. Do not skip items just because a file already exists.
   - Action: Include relevant prompt files; keep formats (Markdown/YAML) as upstream
   - Available prompts:
     - `default.prompt.yml` - Default prompt for agent-ai workflow
+    - `pr-review.prompt.md` - PR review prompt
     - `repository-setup.prompt.md` - This setup prompt
     - `test.prompt.yml` - Example prompt
   - Customize: Add prompts for repository-specific tasks as needed
@@ -409,6 +410,13 @@ exist. Do not skip items just because a file already exists.
   - Content: Project overview, coding standards, formatting guidelines, troubleshooting
   - Customize: Add repository-specific standards, dependencies, build/test commands
 
+- [ ] **`.github/mcp-config.json`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/mcp-config.json`
+  - Purpose: MCP server configuration for GitHub Copilot
+  - Action: Create if missing
+  - Content: Configuration that provides access to built-in GitHub tools
+
 - [ ] **`.github/instructions/` directory**
   - Check if directory exists with language-specific instruction files
   - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/instructions`
@@ -439,10 +447,15 @@ exist. Do not skip items just because a file already exists.
     - `code-tour.agent.md` - For creating/updating `.tours/` files (always include)
     - `cogni-ai.agent.md` - Enhanced Agent with critical thinking
   - Other files:
-    - `AGENTS.md` - Instruction file with scopes for agents (always include)
     - `FIREWALL.md` - Firewall allowlist for Copilot agents (always include)
     - `README.md` - Documentation of available agents
   - Customize: Add repository-specific agents as needed
+
+- [ ] **`.github/AGENTS.md`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/AGENTS.md`
+  - Purpose: Entry point for agent work in the `.github` directory
+  - Action: Create if missing
 
 - [ ] **`.github/skills/` directory**
   - Check if directory exists with skill files
@@ -450,6 +463,7 @@ exist. Do not skip items just because a file already exists.
   - Purpose: Agent Skills for GitHub Copilot coding agent
   - Action: Create directory with README.md; optionally copy skill subdirectories
   - Required files:
+    - `AGENTS.md` - Catalog of skill files
     - `README.md` - Overview of agent skills and how to use them
     - `context-aware-ops/` - Intelligent resource management
     - `git/` - Guide for safe git operations
