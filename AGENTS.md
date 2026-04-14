@@ -183,6 +183,20 @@ the agent MUST integrate remote changes with a merge commit workflow.
 - **Never Stall:** Proceed immediately with safe defaults. Request preference feedback in the PR instead of waiting.
 - **Report Defensively:** Present recommended option first; list alternatives only if they alter scope or risk.
 
+### OpenCode (MCP)
+
+When operating via OpenCode in the GitHub Actions runtime, the following MCP tools are available and should be utilized to perform tasks effectively:
+
+- **vscode**: `getProjectSetupInfo`, `installExtension`, `memory`, `newWorkspace`, `resolveMemoryFileUri`, `runCommand`, `vscodeAPI`, `extensions`, `askQuestions`
+- **execute**: `runNotebookCell`, `testFailure`, `getTerminalOutput`, `killTerminal`, `sendToTerminal`, `createAndRunTask`, `runInTerminal`
+- **read**: `getNotebookSummary`, `problems`, `readFile`, `viewImage`, `terminalSelection`, `terminalLastCommand`
+- **edit**: `createDirectory`, `createFile`, `createJupyterNotebook`, `editFiles`, `editNotebook`, `rename`
+- **search**: `changes`, `codebase`, `fileSearch`, `listDirectory`, `textSearch`, `usages`
+- **web**: `fetch`, `githubRepo`
+- **browser**: `openBrowserPage`
+- **agent**: `runSubagent`
+- **misc**: `vscode.mermaid-chat-features/renderMermaidDiagram`, `ms-python.python/getPythonEnvironmentInfo`, `ms-python.python/getPythonExecutableCommand`, `ms-python.python/installPythonPackage`, `todo`
+
 ## Required References
 
 - Project overview & install: [README.md](README.md)
