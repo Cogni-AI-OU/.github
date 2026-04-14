@@ -9,6 +9,20 @@ on:
     - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
   workflow_call:
     inputs:
+      actionlint-matcher-path:
+        description: >
+          Path to actionlint problem matcher JSON file. If not specified,
+          uses the default from Cogni-AI-OU/.github repository.
+        required: false
+        type: string
+        default: ''
+      pre-commit-matcher-path:
+        description: >
+          Path to pre-commit problem matcher JSON file. If not specified,
+          uses the default from Cogni-AI-OU/.github repository.
+        required: false
+        type: string
+        default: ''
       submodules:
         default: 'false'
         description: 'Whether to checkout submodules: true, false, or recursive'
@@ -47,9 +61,32 @@ jobs:
           # For workflow_run, checkout the head branch from the triggering workflow
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
           submodules: ${{ inputs.submodules || 'false' }}
+      # Checkout the .github repo to access default matcher files when workflow is called
+      - name: Checkout matcher files
+        if: github.event_name == 'workflow_call' && inputs.actionlint-matcher-path == ''
+        uses: actions/checkout@v6
+        with:
+          repository: Cogni-AI-OU/.github
+          path: .github-matchers
+          sparse-checkout: |
+            .github/actionlint-matcher.json
+          sparse-checkout-cone-mode: false
       - name: Add Problem Matcher for actionlint
         run: |
-          echo "::add-matcher::.github/actionlint-matcher.json"
+          if [ "${{ github.event_name }}" = "workflow_call" ]; then
+            if [ -n "${{ inputs.actionlint-matcher-path }}" ]; then
+              MATCHER_PATH="${{ inputs.actionlint-matcher-path }}"
+            else
+              MATCHER_PATH=".github-matchers/.github/actionlint-matcher.json"
+            fi
+          else
+            MATCHER_PATH=".github/actionlint-matcher.json"
+          fi
+          if [ -f "$MATCHER_PATH" ]; then
+            echo "::add-matcher::$MATCHER_PATH"
+          else
+            echo "Warning: Matcher file not found at $MATCHER_PATH"
+          fi
         shell: bash
       - uses: reviewdog/action-actionlint@v1
   link-checker:
@@ -86,6 +123,16 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
           submodules: ${{ inputs.submodules || 'false' }}
+      # Checkout the .github repo to access default matcher files when workflow is called
+      - name: Checkout matcher files
+        if: github.event_name == 'workflow_call' && inputs.pre-commit-matcher-path == ''
+        uses: actions/checkout@v6
+        with:
+          repository: Cogni-AI-OU/.github
+          path: .github-matchers
+          sparse-checkout: |
+            .github/pre-commit-matcher.json
+          sparse-checkout-cone-mode: false
       - uses: actions/cache@v5.0.1
         with:
           path: ~/.cache/pre-commit
@@ -97,7 +144,20 @@ jobs:
           python-version: '3.12'
       - name: Add Problem Matcher for pre-commit
         run: |
-          echo "::add-matcher::.github/pre-commit-matcher.json"
+          if [ "${{ github.event_name }}" = "workflow_call" ]; then
+            if [ -n "${{ inputs.pre-commit-matcher-path }}" ]; then
+              MATCHER_PATH="${{ inputs.pre-commit-matcher-path }}"
+            else
+              MATCHER_PATH=".github-matchers/.github/pre-commit-matcher.json"
+            fi
+          else
+            MATCHER_PATH=".github/pre-commit-matcher.json"
+          fi
+          if [ -f "$MATCHER_PATH" ]; then
+            echo "::add-matcher::$MATCHER_PATH"
+          else
+            echo "Warning: Matcher file not found at $MATCHER_PATH"
+          fi
         shell: bash
       - uses: pre-commit/action@v3.0.1
         with:
