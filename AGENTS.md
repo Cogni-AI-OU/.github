@@ -10,9 +10,27 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 - [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
-- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) (list of available skills)
+- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) to discover the available
+  skill catalog before interpreting the user request
 - [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
+
+## Mandatory Skill Loading Protocol
+
+- Before any tool invocation, code delta, or execution plan, MUST read
+  [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) when present.
+- Treat [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) as the
+  authoritative catalog of available skills; follow its links to candidate
+  `SKILL.md` files.
+- Deterministically route user intent to skills in this order: exact
+  skill-name match, exact alias/tag match, normalized phrase match,
+  description/activation keyword match.
+- If multiple skills match, load all non-overlapping relevant skills ordered
+  by the routing score above; if two skills conflict, the more task-specific
+  `SKILL.md` wins.
+- If the user request includes domain terms that plausibly map to a skill,
+  MUST inspect the best-matching `SKILL.md` before proceeding.
+- If no skill matches after catalog inspection, proceed without a skill and state that no relevant skill was found.
 
 ## Core Agent Execution Protocol (Mandatory for All Forks)
 
@@ -66,6 +84,7 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Snapshot current problem state in one entropy-minimized sentence.
 - Enumerate risks against classic-mistakes matrix and Top-10 Risks List.
 - Apply noise-pruning filter + single-variable delta rule for all experiments.
+- Complete the Mandatory Skill Loading Protocol, then load the highest-confidence relevant `SKILL.md` files before execution.
 
 **Strategic vs tactical default**:
 
@@ -171,13 +190,16 @@ the agent MUST integrate remote changes with a merge commit workflow.
 
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
-- **Granular Task Visibility**: Generate and maintain a highly granular `#todos` list.
-  Since live execution output is the only visible signal of progress in GitHub Actions logs,
-  explicitly break down even standard tasks into multi-step `todos` so that the user can
-  observe your continuous progress.
-- **Pre-commit Assurance**: Before finishing any task or marking it complete, you MUST autonomously execute
-  `pre-commit run -a` to catch and fix any linting, formatting, or trailing whitespace issues. Do not wait for
-  the user to remind you.
+
+### Workspace & Syncing Invariants
+
+- **Strict File Syncing**: When syncing configuration files from an external repository or
+  template, only modify or copy the specific files requested.
+- **No Untracked Additions**: NEVER automatically commit untracked files or workspace artifacts
+  unless explicitly specified in the synchronization checklist or explicitly asked by the user.
+  Always clean up temporary files created during execution.
+- **Selective Sync**: Do not blindly copy entire directories from remote templates. Cherry-pick
+  only the files that are meant to be updated or created.
 
 ### GitHub Runtime Decision Policy
 
@@ -237,6 +259,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 
 - Verify your expected changes with `git diff --no-color`.
 - Ensure no temporary, dummy, or unrelated test files are included in the commit.
+- Never use blanket `git add .` without verifying the exact list of staged files.
 - Use the project linting/validation tools to confirm your changes meet the coding standard.
 - If the repo uses git hooks, run them to validate your changes.
 
