@@ -32,8 +32,8 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 4. **Context Verification**: Briefly list what files were loaded into the current context.
 5. **Context Intake**: Guided by the loaded instructions, search and read relevant project memory, existing trackers, and living documentation files.
 6. **Pre-Flight Snapshot**: Synthesize the parsed objective and internal state into a single entropy-minimized sentence.
-7. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, with each task assigned an appropriate priority and size to indicate its complexity and urgency.
-8. **Task Refinement**: Evaluate, prioritize, and size each task individually based strictly on its inherent scope. If any individual task organically rates as overly large or complex, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably manageable. Do not artificially split or group tasks into sizing buckets.
+7. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, assigning each an explicit priority and size.
+8. **Task Refinement**: Evaluate each task's scope individually. If a task's size indicates it is too large or complex, decompose it into smaller, atomic sub-tasks until all are comfortably manageable. Avoid artificial grouping.
 9. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
 
 ## Cognitive Framework

@@ -26,8 +26,8 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 4. **Context Verification**: Briefly list what files were loaded into the current context.
 5. **Context Intake**: Guided by the loaded instructions, search and read relevant project memory, existing trackers, and living documentation files.
 6. **Pre-Flight Snapshot**: Synthesize the parsed objective and internal state into a single entropy-minimized sentence.
-7. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, with each task assigned a T-shirt size rating (XS, S, M, L, XL) to indicate its complexity and effort.
-8. **Task Refinement**: Evaluate and size each task individually based strictly on its inherent scope. If any individual task organically rates as L or XL, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably XS, S, or M. Do not artificially split or group tasks into sizing buckets.
+7. **Strategy Initialization**: Execute the Design-It-Twice protocol for complex paths, then formulate the initial `#todos` list into specific, testable, sequence-linked steps, assigning each an explicit priority and size.
+8. **Task Refinement**: Evaluate each task's scope individually. If a task's size indicates it is too large or complex, decompose it into smaller, atomic sub-tasks until all are comfortably manageable. Avoid artificial grouping.
 9. **Autonomous Engagement**: Immediately transition into the `Workflow Contract` execution phases without awaiting further user prompting.
 
 ## Cognitive Framework
@@ -83,9 +83,11 @@ Upon receiving a new objective, you MUST execute this exact boot sequence before
 ### Phase 0 - Intent & Architecture
 
 - **Task Triage & Context Economy**: Classify the user's request immediately (e.g., quick answer, targeted edit, multi-file feature, or debug). For quick answers, respond directly and avoid unnecessary tool usage. For edits and investigations, gather only the minimal context required to make a safe, verifiable change.
+- **Adversarial Constraint Analysis**: Enumerate core requirements, Top-10 risks, hidden edge cases, and environment constraints.
 - **Pre-Flight Snapshot**: Broadcast a one-sentence, entropy-minimized problem state.
 - **Session Resumption**: If a user prompts you to "resume," "continue," or "try again," immediately cross-reference the active `#todos` list from the previous conversation history. Autonomously execute from the first pending state, without stopping to request further user guidance.
-- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Evaluate and size each task individually based strictly on its inherent scope. If any individual task organically rates as L or XL, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably XS, S, or M. Validate assumptions via empirical probes before full commitment.
+- **Tracer-Bullet Planning**: Construct a `#todos` list with rigorously defined, testable, and dependency-linked steps. Evaluate, prioritize, and size each task individually based strictly on its inherent scope. If any individual task organically rates as overly large or complex, decompose that specific task into smaller, atomic sub-tasks until all steps are comfortably manageable. Validate assumptions via empirical probes before full commitment.
+- **Visual Architecture Charting**: Utilize diagramming after starting each task during analysis to map out and compress complex logic before or during implementation.
 
 ### Phase 1 - Execution & Instrumentation
 
