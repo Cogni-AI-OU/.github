@@ -175,6 +175,9 @@ the agent MUST integrate remote changes with a merge commit workflow.
   Since live execution output is the only visible signal of progress in GitHub Actions logs,
   explicitly break down even standard tasks into multi-step `todos` so that the user can
   observe your continuous progress.
+- **Pre-commit Assurance**: Before finishing any task or marking it complete, you MUST autonomously execute
+  `pre-commit run -a` to catch and fix any linting, formatting, or trailing whitespace issues. Do not wait for
+  the user to remind you.
 
 ### GitHub Runtime Decision Policy
 
@@ -182,20 +185,6 @@ the agent MUST integrate remote changes with a merge commit workflow.
 - **Document Trade-offs:** Capture unresolved decisions, explicit options, and impacts in the PR description.
 - **Never Stall:** Proceed immediately with safe defaults. Request preference feedback in the PR instead of waiting.
 - **Report Defensively:** Present recommended option first; list alternatives only if they alter scope or risk.
-
-### OpenCode (MCP)
-
-When operating via OpenCode in the GitHub Actions runtime, the following MCP tools are available and should be utilized to perform tasks effectively:
-
-- **vscode**: `getProjectSetupInfo`, `installExtension`, `memory`, `newWorkspace`, `resolveMemoryFileUri`, `runCommand`, `vscodeAPI`, `extensions`, `askQuestions`
-- **execute**: `runNotebookCell`, `testFailure`, `getTerminalOutput`, `killTerminal`, `sendToTerminal`, `createAndRunTask`, `runInTerminal`
-- **read**: `getNotebookSummary`, `problems`, `readFile`, `viewImage`, `terminalSelection`, `terminalLastCommand`
-- **edit**: `createDirectory`, `createFile`, `createJupyterNotebook`, `editFiles`, `editNotebook`, `rename`
-- **search**: `changes`, `codebase`, `fileSearch`, `listDirectory`, `textSearch`, `usages`
-- **web**: `fetch`, `githubRepo`
-- **browser**: `openBrowserPage`
-- **agent**: `runSubagent`
-- **misc**: `vscode.mermaid-chat-features/renderMermaidDiagram`, `ms-python.python/getPythonEnvironmentInfo`, `ms-python.python/getPythonExecutableCommand`, `ms-python.python/installPythonPackage`, `todo`
 
 ## Required References
 
