@@ -1,4 +1,6 @@
 ---
+# See: <https://opencode.ai/docs>
+# Note: Keep keys and envs in alphabetical order.
 name: OpenCode
 on:
   issue_comment:
@@ -9,46 +11,45 @@ on:
     types:
       - created
       - edited
-  issues:
-    types:
-      - opened
-  pull_request_review:
-    types:
-      - submitted
   workflow_call:
     inputs:
       agent:
-        default: build
+        default: cogni-ai-architect
         description: Agent to use.
         required: false
         type: string
+      issue_number:
+        description: Issue or PR number this request relates to
+        required: false
+        type: number
       model:
         default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gemini-3.1-pro' }}
         description: Model to use for OpenCode
         required: false
         type: string
-      issue_number:
-        description: Issue or PR number for workflow_call triggers
-        required: false
-        type: number
       prompt:
+        default: ''
         description: Custom prompt to override the default prompt
         required: false
         type: string
   workflow_dispatch:
     inputs:
       agent:
-        default: cogni-ai
+        default: cogni-ai-architect
         description: Agent to use.
         options:
           - build
-          - cogni-ai
+          - cogni-ai-architect
           - compaction
           - plan
           - summary
           - title
         required: false
         type: choice
+      issue_number:
+        description: Issue or PR number this request relates to
+        required: false
+        type: number
       model:
         default: opencode/gemini-3.1-pro
         description: Model to use for OpenCode
@@ -94,28 +95,161 @@ on:
           - opencode/nemotron-3-super-free
           - opencode/qwen3-coder
           - opencode/qwen3.6-plus-free
+          # Grok models (xAI)
+          - xai/grok-4-1-fast-non-reasoning  # Fast responses, 2M context
+          - xai/grok-4-1-fast-reasoning  # Tool-calling + reasoning, 2M context
+          - xai/grok-4.20-0309-non-reasoning  # Flagship, 2M context
+          - xai/grok-4.20-0309-reasoning  # Flagship + reasoning, 2M context
+          - xai/grok-code-fast-1  # Agentic coding + reasoning, 256K context
         required: false
         type: choice
-      issue_number:
-        description: Issue or PR number for manual workflow execution
-        required: false
-        type: number
       prompt:
         description: Custom prompt to override the default prompt
         required: false
-        type: string
+        default: ''
+# Prevent concurrent runs on the same branch to avoid push conflicts.
+# When a new run is triggered, it will queue until the previous pending run completes.
+concurrency:
+  cancel-in-progress: false
+  group: opencode-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
+env:
+  OPENCODE_AGENT_DEFAULT: cogni-ai-architect
+  OPENCODE_MODEL_DEFAULT: opencode/gemini-3.1-pro
 jobs:
   opencode:
-    uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
-    with:
-      agent: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.agent }}
-      model: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.model }}
-      prompt: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.prompt }}
-      issue_number: ${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
+    if: |
+      github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || (
+        !endsWith(github.actor, '[bot]') &&
+        contains(fromJson('["COLLABORATOR","CONTRIBUTOR","MEMBER","OWNER"]'), github.event.comment.author_association)
+        && (
+          contains(github.event.comment.body, ' /oc ') ||
+          startsWith(github.event.comment.body, '/oc ') ||
+          endsWith(github.event.comment.body, ' /oc') ||
+          github.event.comment.body == '/oc' ||
+          contains(github.event.comment.body, ' /opencode ') ||
+          startsWith(github.event.comment.body, '/opencode ') ||
+          endsWith(github.event.comment.body, ' /opencode') ||
+          github.event.comment.body == '/opencode' ||
+          contains(github.event.comment.body, '@opencode-agent') ||
+          contains(github.event.comment.body, '@OpenCode-Agent')
+        )
+      )
+    name: OpenCode
+    runs-on: ubuntu-latest
     permissions:
-      actions: read
       contents: write
-      id-token: write
+      id-token: write  # Needed so opencode can request an OIDC token for GitHub API calls
       issues: write
       pull-requests: write
-    secrets: inherit  # pragma: allowlist secret
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false  # Prevents duplicate Authorization header
+      - uses: actions/cache@v5.0.1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            pre-commit|
+      - uses: actions/setup-python@v6.1.0
+        with:
+          cache: pip
+          cache-dependency-path: .devcontainer/requirements.txt
+          python-version: '3.12'
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Cache installed dependencies
+        id: cache-dependencies
+        uses: actions/cache@v5.0.1
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-pip-${{ env.pythonLocation }}-${{ hashFiles('.devcontainer/requirements.txt') }}
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: pip install -r .devcontainer/requirements.txt
+      - name: Resolve OpenCode prompt
+        id: prompt
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body || '' }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          PROMPT_INPUT: ${{ inputs.prompt }}
+        run: |
+          set -euo pipefail
+          prompt="${PROMPT_INPUT:-}"
+          if [ -z "$prompt" ]; then
+            prompt="${COMMENT_BODY:-}"
+          fi
+          if [ -n "${ISSUE_NUMBER:-}" ]; then
+            if [ -n "$prompt" ]; then
+              prompt=$(printf 'Related to issue/PR #%s\n\n%s' "$ISSUE_NUMBER" "$prompt")
+            else
+              prompt="Related to issue/PR #${ISSUE_NUMBER}"
+            fi
+          fi
+          {
+            echo 'prompt<<EOF'
+            printf '%s\n' "$prompt"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+      - name: Run opencode
+        id: opencode
+        uses: anomalyco/opencode/github@v1.4.3
+        timeout-minutes: 60
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name == 'pull_request_target' && 'pull_request' || github.event_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          # Keep shell permissions aligned with .vscode/settings.json allowlist and in alphabetical order.
+          OPENCODE_PERMISSION: |-
+            {
+              "bash": {
+                "*": "deny",
+                "ansible*": "allow",
+                "ansible-galaxy*": "allow",
+                "ansible-playbook*": "allow",
+                "awk*": "allow",
+                "continue*": "allow",
+                "cp*": "allow",
+                "ex*": "allow",
+                "gh*": "allow",
+                "gh pr review*": "deny",
+                "git*": "allow",
+                "hexdump*": "allow",
+                "jq*": "allow",
+                "links*": "allow",
+                "mawk*": "allow",
+                "pipx*": "allow",
+                "pre-commit*": "allow",
+                "printf*": "allow",
+                "sed*": "allow",
+                "set*": "allow",
+                "time*": "allow",
+                "timeout*": "allow",
+                "touch*": "allow",
+                "true*": "allow",
+                "vim*": "allow"
+              }
+            }
+        with:
+          agent: >-
+            ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
+          model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
+          prompt: ${{ steps.prompt.outputs.prompt }}
+      - name: Annotate OpenCode prompt and output
+        env:
+          OPENCODE_PROMPT: ${{ steps.prompt.outputs.prompt }}
+          OPENCODE_OUTPUT: ${{ steps.opencode.outputs.response }}
+        run: |
+          set -euo pipefail
+          escape() {
+            local value="$1"
+            value=${value//'%'/'%25'}
+            value=${value//$'\r'/'%0D'}
+            value=${value//$'\n'/'%0A'}
+            printf '%s' "$value"
+          }
+          echo "::notice title=OpenCode prompt::$(escape "$OPENCODE_PROMPT")"
+          echo "::notice title=OpenCode output::$(escape "${OPENCODE_OUTPUT:-}")"
+      - name: Print logs
+        if: failure()
+        run: grep -v INFO ~/.local/share/opencode/log/* || true

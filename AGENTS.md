@@ -8,7 +8,7 @@ For general project invariants see [README.md](README.md).
 
 Read and merge these when operating inside corresponding sub-directories (order = precedence):
 
-- `.opencode/AGENTS.md`
+- [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
 - [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) to discover the available
   skill catalog before interpreting the user request
@@ -294,7 +294,7 @@ pre-commit run yamllint -a
   performing complex regex parsing, or safely editing a few lines in-place within an automated script context.
   It is especially useful for large files where patching the whole file via MCP could take a lot of context
   processing for simple changes.
-- For detailed commands and examples, see `.github/skills/vim-ex/SKILL.md`.
+- For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
 
 ### Renaming/removing files
 
@@ -360,7 +360,7 @@ on top of the updated target branch:
 5. Verify only your changes remain
 
 **For detailed step-by-step instructions with commands**, see:
-`.github/skills/git/SKILL.md`
+[`.github/skills/git/SKILL.md`](.github/skills/git/SKILL.md)
 
 ### Key Points
 
@@ -393,7 +393,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 **Error Patterns:** `Rebasing (1/XXX)` with large numbers, `CONFLICT (content)`, session crash with `GitError`
 
 **For complete details**, see:
-`.github/skills/git/SKILL.md` - "Working with Automation Tools"
+[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools)
 
 ## References
 
