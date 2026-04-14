@@ -37,7 +37,7 @@ For a human-readable overview, see [README.md](README.md).
 ### opencode.yml
 
 - Purpose: invoke OpenCode agents via slash commands or manual triggers.
-- Inputs: `agent` (default `cogni-ai`), `model` (workflow_call default via
+- Inputs: `agent` (default `cogni-ai-architect`), `model` (workflow_call default via
   `vars.OPENCODE_MODEL_DEFAULT` with fallback `opencode/gemini-3.1-pro`; workflow_dispatch
   default `opencode/gemini-3.1-pro`), `prompt` (optional override).
 - Triggers: `workflow_dispatch`, `workflow_call`, or issue comments and PR review comments with `/oc` or `/opencode`
@@ -51,7 +51,7 @@ For a human-readable overview, see [README.md](README.md).
 ### opencode-review.yml
 
 - Purpose: OpenCode-driven PR review.
-- Inputs: agent (cogni-ai), model (workflow_call default via
+- Inputs: agent (cogni-ai-architect), model (workflow_call default via
   `vars.OPENCODE_MODEL_DEFAULT` with fallback `opencode/gpt-5.3-codex`; workflow_dispatch
   default `opencode/gpt-5.3-codex`), additional_prompt, pr_number (req for call/dispatch),
   prompt (default pr-review).

@@ -1,2 +1,2 @@
-# Always request reviews from the Cogni AI reviewer for all files.
-* @cogni-ai-ee
+# Always request reviews from the Cogni AI Architect reviewer for all files.
+* @cogni-ai-architect-ee
