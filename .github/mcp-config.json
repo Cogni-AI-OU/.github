@@ -3,8 +3,8 @@
     "github": {
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/",
-      "env": {
-        "GITHUB_TOKEN": "$GITHUB_TOKEN"
+      "headers": {
+        "Authorization": "Bearer $GITHUB_TOKEN"
       }
     }
   }
