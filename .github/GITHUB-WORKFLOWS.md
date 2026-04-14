@@ -53,6 +53,14 @@ common repository management tasks. For agent-loading guidance and catalog, see
 [prompts/AGENTS.md](prompts/AGENTS.md). For human-oriented details, see
 [prompts/README.md](prompts/README.md).
 
+## MCP Configuration
+
+The `.github/mcp-config.json` configuration provides GitHub Copilot access to built-in tools:
+
+- **Repository & Code:** `get_file_contents`, `search_code`, `search_repositories`, `list_branches`, `list_commits`
+- **Issues & PRs:** `get_issue`, `list_pull_requests`, `create_pull_request`
+- **Actions:** `list_workflows`, `list_workflow_runs`, `get_job_logs`
+
 ## Problem Matchers
 
 GitHub Actions problem matchers automatically annotate files with errors and
