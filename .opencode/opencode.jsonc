@@ -35,6 +35,7 @@
           "pipx": "allow",
           "pre-commit": "allow",
           "printf": "allow",
+          "sed": "allow",
           "set": "allow",
           "time": "allow",
           "timeout": "allow",

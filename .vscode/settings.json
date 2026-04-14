@@ -16,6 +16,7 @@
     "pipx": true,
     "pre-commit": true,
     "printf": true,
+    "sed": true,
     "set": true,
     "time": true,
     "timeout": true,
