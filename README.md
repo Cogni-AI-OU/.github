@@ -103,12 +103,6 @@ This repository provides AI agent configurations for automated development.
 | [.github/prompts/](.github/prompts/) | All | Prompt templates (`.md` for VSCode, `.yaml` for GitHub Models) |
 | [.github/instructions/](.github/instructions/) | Linters & agents | Language-specific code standards |
 
-The `.github/mcp-config.json` configuration provides GitHub Copilot access to built-in tools:
-
-- **Repository & Code:** `get_file_contents`, `search_code`, `search_repositories`, `list_branches`, `list_commits`
-- **Issues & PRs:** `get_issue`, `list_pull_requests`, `create_pull_request`
-- **Actions:** `list_workflows`, `list_workflow_runs`, `get_job_logs`
-
 See also:
 
 - [`AGENTS.md` file format specification](https://agents.md/)
@@ -131,6 +125,7 @@ contribution guidelines and expectations for issues, pull requests, and CI.
 
 ## References
 
+- [.github/GITHUB-WORKFLOWS.md](.github/GITHUB-WORKFLOWS.md)
 - [How to Use the .github Repository](https://www.freecodecamp.org/news/how-to-use-the-dot-github-repository/)
 - [Creating a Default Community Health File](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
 
