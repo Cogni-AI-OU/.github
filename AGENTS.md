@@ -171,6 +171,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 
 - **Contextual Continuity**: Maintain conversation context within the originating thread.
 - If replying to an inline comment, your response MUST appear as a reply in that same thread.
+- **Granular Task Visibility**: Generate and maintain a highly granular `#todos` list. Since live execution output is the only visible signal of progress in GitHub Actions logs, explicitly break down even standard tasks into multi-step `todos` so that the user can observe your continuous progress.
 
 ### GitHub Runtime Decision Policy
 
