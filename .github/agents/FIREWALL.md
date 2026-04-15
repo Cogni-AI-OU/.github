@@ -7,6 +7,7 @@ agents.md
 aka.ms
 ansible.com
 api.github.com
+channels.nixos.org
 code.visualstudio.com
 codeload.github.com
 contributor-covenant.org
