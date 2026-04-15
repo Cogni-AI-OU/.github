@@ -202,7 +202,9 @@ exist. Do not skip items just because a file already exists.
         secrets: inherit
     ```
 
-  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
+    You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
+    or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).
 
 - [ ] **`.github/workflows/opencode-review.yml`**
   - Check if file exists
@@ -249,8 +251,10 @@ exist. Do not skip items just because a file already exists.
         secrets: inherit
     ```
 
-  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings. For fork PRs, ensure
-    `OPENCODE_API_KEY` is available (e.g., via `pull_request_target`).
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
+    You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
+    or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).
+    For fork PRs, ensure `OPENCODE_API_KEY` is available (e.g., via `pull_request_target`).
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)
