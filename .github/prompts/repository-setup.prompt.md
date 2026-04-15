@@ -142,57 +142,10 @@ exist. Do not skip items just because a file already exists.
         types: [opened]
       pull_request_review:
         types: [submitted]
-      workflow_call:
-        inputs:
-          agent:
-            description: Agent to use.
-            required: false
-            type: string
-          model:
-            description: Model to use for OpenCode
-            required: false
-            type: string
-          issue_number:
-            description: Issue or PR number for workflow_call triggers
-            required: false
-            type: number
-          prompt:
-            description: Custom prompt to override the default prompt
-            required: false
-            type: string
       workflow_dispatch:
-        inputs:
-          agent:
-            description: Agent to use.
-            required: false
-            type: string
-          model:
-            description: Model to use for OpenCode
-            required: false
-            type: string
-          issue_number:
-            description: Issue or PR number for manual workflow execution
-            required: false
-            type: number
-          prompt:
-            description: Custom prompt to override the default prompt
-            required: false
-            type: string
     jobs:
       opencode:
         uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
-        with:
-          agent: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.agent }}
-          model: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.model }}
-          prompt: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.prompt }}
-          issue_number: >-
-            ${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
         permissions:
           actions: read
           contents: write
@@ -223,23 +176,10 @@ exist. Do not skip items just because a file already exists.
         types: [edited, opened, ready_for_review, reopened, review_requested]
       pull_request_target:
         types: [edited, opened, ready_for_review, reopened, review_requested]
-      workflow_call:
-        inputs:
-          pr_number:
-            description: Pull request number for workflow_call triggers
-            required: true
-            type: number
       workflow_dispatch:
-        inputs:
-          pr_number:
-            description: Pull request number for manual workflow execution
-            required: true
-            type: number
     jobs:
       opencode-review:
         uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main
-        with:
-          pr_number: ${{ github.event.pull_request.number || github.event.issue.number || inputs.pr_number }}
         permissions:
           actions: read
           contents: write
