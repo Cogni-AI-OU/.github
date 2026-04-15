@@ -227,7 +227,7 @@ jobs:
             pre-commit|
       - uses: actions/setup-python@v6.1.0
         with:
-          cache: pip
+          cache: ${{ hashFiles('.devcontainer/requirements.txt') != '' && 'pip' || '' }}
           cache-dependency-path: .devcontainer/requirements.txt
           python-version: '3.12'
       - name: Install pre-commit
@@ -240,7 +240,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ env.pythonLocation }}-${{ hashFiles('.devcontainer/requirements.txt') }}
       - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: pip install -r .devcontainer/requirements.txt
+        run: if [ -f .devcontainer/requirements.txt ]; then pip install -r .devcontainer/requirements.txt; fi
       - name: Load review prompt
         id: load-prompt
         env:
