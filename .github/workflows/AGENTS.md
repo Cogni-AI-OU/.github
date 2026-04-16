@@ -74,8 +74,8 @@ It must be identical in both workflow files:
 
 | File | Location |
 | ---- | -------- |
-| [opencode.yml](opencode.yml) | Line ~130 (env section) |
-| [opencode-review.yml](opencode-review.yml) | Line ~210 (env section) |
+| [opencode.yml](opencode.yml) | env section |
+| [opencode-review.yml](opencode-review.yml) | env section |
 
 ### Model options list
 
@@ -83,8 +83,8 @@ The `model` input options for `workflow_dispatch` must be identical in both work
 
 | File | Location |
 | ---- | -------- |
-| [opencode.yml](opencode.yml) | Lines ~48-90 (workflow_dispatch inputs) |
-| [opencode-review.yml](opencode-review.yml) | Lines ~67-107 (workflow_dispatch inputs) |
+| [opencode.yml](opencode.yml) | `workflow_dispatch` inputs |
+| [opencode-review.yml](opencode-review.yml) | `workflow_dispatch` inputs |
 
 ## Notes
 
