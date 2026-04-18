@@ -1,6 +1,5 @@
 ---
 name: Copilot Setup Steps
-
 # yamllint disable-line rule:truthy
 on:
   workflow_dispatch:
@@ -12,7 +11,6 @@ on:
     paths:
       - .github/workflows/copilot-setup-steps.yml
       - .devcontainer/requirements.txt
-
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
