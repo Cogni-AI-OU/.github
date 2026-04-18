@@ -111,7 +111,7 @@ See also:
 ## GitHub Actions
 
 For documentation on GitHub Actions workflows, problem matchers, and CI/CD
-configuration, see [.github/GITHUB-WORKFLOWS.md](.github/GITHUB-WORKFLOWS.md).
+configuration, see [.github/workflows/README.md](.github/workflows/README.md).
 
 ## Organization Profile
 
@@ -125,7 +125,7 @@ contribution guidelines and expectations for issues, pull requests, and CI.
 
 ## References
 
-- [.github/GITHUB-WORKFLOWS.md](.github/GITHUB-WORKFLOWS.md)
+- [.github/workflows/README.md](.github/workflows/README.md)
 - [How to Use the .github Repository](https://www.freecodecamp.org/news/how-to-use-the-dot-github-repository/)
 - [Creating a Default Community Health File](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
 

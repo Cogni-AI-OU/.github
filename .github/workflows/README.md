@@ -61,17 +61,25 @@ jobs:
 
 ### Cogni AI Agent Workflow (`cogni-ai-agent.yml`)
 
-The `cogni-ai-agent.yml` workflow provides the underlying logic to run the Cogni AI Agent. It runs on issue comments, pull request review comments, and manual triggers (`workflow_dispatch`). It installs Python dependencies from `.devcontainer/requirements.txt` and calls the `Cogni-AI-OU/cogni-ai-agent-action` to process natural language instructions and automate repository tasks using selected LLM models.
+The `cogni-ai-agent.yml` workflow provides the underlying logic to run the Cogni AI Agent. It runs on issue
+comments, pull request review comments, and manual triggers (`workflow_dispatch`). It installs Python dependencies
+from `.devcontainer/requirements.txt` and calls the `Cogni-AI-OU/cogni-ai-agent-action` to process natural language
+instructions and automate repository tasks using selected LLM models.
 
 ### Copilot Setup Steps Workflow (`copilot-setup-steps.yml`)
 
-The `copilot-setup-steps.yml` workflow is a utility workflow that checks out the repository, sets up Python 3.12, restores the Python user site cache, and installs dependencies from `.devcontainer/requirements.txt`. It is triggered on pushes and pull requests that modify the workflow file or the requirements file.
+The `copilot-setup-steps.yml` workflow is a utility workflow that checks out the repository, sets up Python 3.12,
+restores the Python user site cache, and installs dependencies from `.devcontainer/requirements.txt`. It is triggered
+on pushes and pull requests that modify the workflow file or the requirements file.
 
 ### Devcontainer CI Workflow (`devcontainer-ci.yml`)
 
 The `devcontainer-ci.yml` workflow builds and tests the development container image.
 
-**Purpose**: It ensures that all required command-line tools (e.g., `docker`, `gh`, `pre-commit`) and Python packages (e.g., `ansible-lint`, `molecule`) are properly installed and functional inside the devcontainer. It runs on changes to the `.devcontainer` directory, on a weekly schedule, and can also be used as a reusable workflow (requires `packages: write` permission for the caller).
+**Purpose**: It ensures that all required command-line tools (e.g., `docker`, `gh`, `pre-commit`) and Python packages
+(e.g., `ansible-lint`, `molecule`) are properly installed and functional inside the devcontainer. It runs on changes
+to the `.devcontainer` directory, on a weekly schedule, and can also be used as a reusable workflow (requires
+`packages: write` permission for the caller).
 
 #### Using Devcontainer CI as a Reusable Workflow
 
