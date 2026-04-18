@@ -9,7 +9,6 @@
 - Keep command permissions synchronized across all OpenCode surfaces:
   `.opencode/opencode.jsonc` (`permission.bash`),
   `.vscode/settings.json` (`chat.tools.terminal.autoApprove`), and workflow
-  `OPENCODE_PERMISSION` blocks in `.github/workflows/opencode.yml` and
-  `.github/workflows/opencode-review.yml`.
+  `OPENCODE_PERMISSION` blocks in `.github/workflows/opencode.yml`.
 - Any allow/deny command change in one surface MUST be mirrored in the other
   three in the same update.

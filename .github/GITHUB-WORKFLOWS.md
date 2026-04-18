@@ -140,57 +140,6 @@ jobs:
 You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
 or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).*
 
-### OpenCode Review Workflow
-
-The `opencode-review.yml` workflow provides automated PR review using OpenCode.
-
-#### Using OpenCode Review as a Reusable Workflow
-
-You can use the OpenCode Review workflow in your repository by referencing it via `workflow_call`:
-
-```yaml
----
-name: OpenCode Review
-on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-  pull_request:
-    types: [edited, opened, ready_for_review, reopened, review_requested]
-  pull_request_target:
-    types: [edited, opened, ready_for_review, reopened, review_requested]
-  workflow_call:
-    inputs:
-      pr_number:
-        description: Pull request number for workflow_call triggers
-        required: true
-        type: number
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: Pull request number for manual workflow execution
-        required: true
-        type: number
-jobs:
-  opencode-review:
-    uses: Cogni-AI-OU/.github/.github/workflows/opencode-review.yml@main
-    with:
-      pr_number: ${{ github.event.pull_request.number || github.event.issue.number || inputs.pr_number }}
-    permissions:
-      actions: read
-      contents: write
-      id-token: write
-      issues: write
-      pull-requests: write
-    secrets: inherit
-```
-
-*Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
-You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
-or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).
-For fork PRs, ensure `OPENCODE_API_KEY` is available (e.g., via `pull_request_target`).*
-
 ## Workflow Templates
 
 The `workflow-templates/` directory contains reference workflows that are not

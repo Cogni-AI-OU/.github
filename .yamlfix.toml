@@ -9,8 +9,7 @@ preserve_formatting = true
 
 excludes = [
     ".github/workflows/test.yml",
-    ".github/workflows/opencode.yml",
-    ".github/workflows/opencode-review.yml"
+    ".github/workflows/opencode.yml"
 ]
 
 # Force sequences to use block style (multi-line lists)
