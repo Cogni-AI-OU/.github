@@ -42,7 +42,6 @@ on:
   workflow_run:
     workflows:
       - OpenCode
-      - OpenCode Review
     types:
       - completed
 permissions:
