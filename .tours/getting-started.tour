@@ -101,7 +101,7 @@
     },
     {
       "file": ".github/agents/code-tour.agent.md",
-      "description": "## Custom Agents\n\nCustom agent configurations for specialized tasks.\n\n**code-tour.agent.md** is a custom agent designed to:\n- Create and update VS Code code tours\n- Document repository structure and workflows\n- Provide guided walkthroughs for new contributors\n\n**Other agent files:**\n- **README.md**: Overview of available agents\n- **FIREWALL.md**: Firewall configuration for agents\n\nCustom agents extend capabilities with domain-specific expertise.",
+      "description": "## Custom Agents\n\nCustom agent configurations for specialized tasks.\n\n**code-tour.agent.md** is a custom agent designed to:\n- Create and update VS Code code tours\n- Document repository structure and workflows\n- Provide guided walkthroughs for new contributors\n\n**Other agent files:**\n- **README.md**: Overview of available agents\n- **.github/FIREWALL.md**: Firewall configuration for agents\n\nCustom agents extend capabilities with domain-specific expertise.",
       "line": 1,
       "title": "Custom Agents"
     },
