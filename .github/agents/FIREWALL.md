@@ -12,6 +12,7 @@ channels.nixos.org
 code.visualstudio.com
 codeload.github.com
 contributor-covenant.org
+dl.winehq.org
 freecodecamp.org
 galaxy.ansible.com
 gh.io
