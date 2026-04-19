@@ -8,6 +8,7 @@ aka.ms
 ansible.com
 api.github.com
 archive.ubuntu.com
+cache.nixos.org
 channels.nixos.org
 code.visualstudio.com
 codeload.github.com
@@ -26,6 +27,7 @@ npm.pkg.github.com
 objects.githubusercontent.com
 pkg-containers.githubusercontent.com
 raw.githubusercontent.com
+releases.nixos.org
 registry.npmjs.org
 support.github.com
 tldrlegal.com
