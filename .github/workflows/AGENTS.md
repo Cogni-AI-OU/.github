@@ -31,6 +31,7 @@ For a human-readable overview, see [README.md](README.md).
 - Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_dispatch`.
 - Details: Installs Python dependencies from `.devcontainer/requirements.txt` and calls the
   `Cogni-AI-OU/cogni-ai-agent-action` to process instructions.
+- Concurrency: Only one run per issue/PR/branch at a time; new runs are queued (no auto-cancel).
 - Permissions: `contents: write`, `id-token: write`, `issues: write`, `pull-requests: write`.
 
 ### copilot-setup-steps.yml
@@ -60,7 +61,7 @@ For a human-readable overview, see [README.md](README.md).
   from trusted (non-bot) collaborators/members/owners.
 - Guardrail: comment-triggered runs do not populate `inputs.*`; back shared OpenCode defaults
   with workflow-level `env` values instead of hardcoding agent/model literals in steps.
-- Concurrency: Only one run per issue/PR/branch at a time; new runs cancel pending ones.
+- Concurrency: Only one run per issue/PR/branch at a time; new runs are queued (no auto-cancel).
 - Permissions: `contents: read`, `id-token: write`, `issues: write`, `pull-requests: write`.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main`.
 
