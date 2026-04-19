@@ -34,6 +34,7 @@ tldrlegal.com
 uploads.github.com
 user-images.githubusercontent.com
 yaml-multiline.info
+web.archive.org
 ```
 
 Note: Keep the list sorted alphabetically for easier maintenance.
