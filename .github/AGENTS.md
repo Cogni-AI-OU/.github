@@ -21,6 +21,7 @@ Read these Agent files when working in corresponding dirs:
   - Actions: `list_workflows`, `list_workflow_runs`, `get_job_logs`
 - [.github/actionlint-matcher.json](actionlint-matcher.json): problem matchers used in workflows.
 - [.github/pre-commit-matcher.json](pre-commit-matcher.json): problem matchers used in workflows.
+- [.github/FIREWALL.md](FIREWALL.md): firewall configuration and recommended hosts for agents.
 
 ## Hardened NEVER List
 
