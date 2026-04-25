@@ -57,6 +57,7 @@ concurrency:
       || (github.ref_name != github.event.repository.default_branch && github.ref)
       || github.run_id
     }}
+
 jobs:
   cogni-ai-agent:
     name: Run Cogni AI agent
