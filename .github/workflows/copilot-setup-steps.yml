@@ -13,19 +13,33 @@ on:
     paths:
       - .github/workflows/copilot-setup-steps.yml
       - .devcontainer/requirements.txt
+env:
+  # Pin external repositories to specific SHAs for reproducibility.
+  COGNI_AI_AGENTS_REF: 4dd196d214838dab8c925827b920723811000612  # pragma: allowlist secret
+  COGNI_AI_AGENT_INSTRUCTIONS_REF: fa06ddeac0ce66d4dcff1c451eb1fa27bd0ebc01  # pragma: allowlist secret
+  COGNI_AI_AGENT_SKILLS_REF: 8878a7b0384da7a79bc005f33bb503bdb3d9fa17  # pragma: allowlist secret
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Clone agents
-        run: git clone --depth=1 https://github.com/Cogni-AI-OU/cogni-ai-agents .github/agents
+        run: |
+          git clone https://github.com/Cogni-AI-OU/cogni-ai-agents .github/agents
+          cd .github/agents
+          git checkout "$COGNI_AI_AGENTS_REF"
       - name: Clone instructions
-        run: git clone --depth=1 https://github.com/Cogni-AI-OU/cogni-ai-agent-instructions .github/instructions
+        run: |
+          git clone https://github.com/Cogni-AI-OU/cogni-ai-agent-instructions .github/instructions
+          cd .github/instructions
+          git checkout "$COGNI_AI_AGENT_INSTRUCTIONS_REF"
       - name: Clone skills
-        run: git clone --depth=1 https://github.com/Cogni-AI-OU/cogni-ai-agent-skills .github/skills
+        run: |
+          git clone https://github.com/Cogni-AI-OU/cogni-ai-agent-skills .github/skills
+          cd .github/skills
+          git checkout "$COGNI_AI_AGENT_SKILLS_REF"
       - uses: actions/setup-python@v6.1.0
         with:
           python-version: '3.12'
