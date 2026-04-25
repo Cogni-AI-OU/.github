@@ -7,10 +7,14 @@ mindmap
       Keeper::Fact_Custody
       Reviewer::Code_Review
       Weaver::Flow_Custody
+      Docs_Writer::Technical_Docs
+      PR_Reviewer::Best_Practices
+      Security_Reviewer::Audits
     Context
       Organization::Cogni-AI-OU
       Purpose::Template_Repo
       Security::Audit_Passed
+      Firewall::Allowlisted_Hosts
     Dependencies
       Python
         PyYAML
@@ -33,6 +37,7 @@ mindmap
         Python::3.11+
       Tools
         Linters
+          actionlint
           black
           flake8
           markdownlint
@@ -44,5 +49,23 @@ mindmap
       Maintainability::A
     Automation
       GitHub_Actions
+        Workflows
+          check
+          cogni-ai-agent
+          copilot-setup-steps
+          devcontainer-ci
+          opencode
       Molecule
       Task_Orchestration
+      Skills_Catalog
+        context-aware-ops
+        git
+        git-expert
+        github
+        github-actions
+        molecule
+        pre-commit
+        robust-commands
+        shell
+        skill-writer
+        vim-ex
