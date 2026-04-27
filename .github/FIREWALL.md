@@ -26,6 +26,7 @@ hashicorp.com
 marketplace.visualstudio.com
 npm.pkg.github.com
 objects.githubusercontent.com
+opencode.ai
 pkg-containers.githubusercontent.com
 raw.githubusercontent.com
 releases.nixos.org
