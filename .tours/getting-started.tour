@@ -52,18 +52,6 @@
       "title": "Copilot Instructions"
     },
     {
-      "file": ".github/instructions/README.md",
-      "description": "## Language-Specific Instructions\n\nDetailed coding standards and formatting rules for different file types.\n\n**Available instruction files:**\n- **ansible.instructions.md**: Ansible conventions and best practices\n- **blog.instructions.md**: Blog post content standards\n- **json.instructions.md**: JSON formatting standards\n- **markdown.instructions.md**: Markdown content rules\n- **readme.instructions.md**: README-specific guidelines\n- **yaml.instructions.md**: YAML formatting standards\n\nThese files provide detailed rules that are enforced by linters and pre-commit hooks.",
-      "line": 1,
-      "title": "Instructions Directory"
-    },
-    {
-      "file": ".github/instructions/markdown.instructions.md",
-      "description": "## Markdown Standards\n\nDetailed rules for markdown content across the organization.\n\n**Key rules:**\n- Use H1-H3 headings (avoid H4+)\n- Limit lines to 120 characters\n- Always specify language in code blocks\n- Use reference-style links for repeated URLs\n- Proper list formatting with blank lines\n\n**Validation:** Run `pre-commit run markdownlint -a` to check compliance\n\nThese rules ensure consistent, readable documentation across all repositories.",
-      "line": 1,
-      "title": "Markdown Standards"
-    },
-    {
       "file": ".markdownlint.yaml",
       "description": "## Markdownlint Configuration\n\nDefines the specific markdownlint rules enforced across the organization.\n\n**Configuration details:**\n- Line length: 120 characters max\n- Heading styles and spacing rules\n- List formatting requirements\n- Code block requirements\n- Table formatting rules\n\nThis file is referenced by the pre-commit hooks and ensures all markdown files follow consistent formatting.",
       "line": 1,
@@ -100,12 +88,6 @@
       "title": "VS Code Specific Agents"
     },
     {
-      "file": ".github/agents/code-tour.agent.md",
-      "description": "## Custom Agents\n\nCustom agent configurations for specialized tasks.\n\n**code-tour.agent.md** is a custom agent designed to:\n- Create and update VS Code code tours\n- Document repository structure and workflows\n- Provide guided walkthroughs for new contributors\n\n**Other agent files:**\n- **README.md**: Overview of available agents\n- **.github/FIREWALL.md**: Firewall configuration for agents\n\nCustom agents extend capabilities with domain-specific expertise.",
-      "line": 1,
-      "title": "Custom Agents"
-    },
-    {
       "file": ".github/CONTRIBUTING.md",
       "description": "## Contributing Guidelines\n\nInstructions for how to contribute to repositories in the organization.\n\n**Covers:**\n- How to submit bug reports\n- Coding conventions (2-space indentation, readability)\n- Proposing changes via Pull Requests\n- Continuous Integration requirements\n\n**Important:** All contributions must pass CI tests (pre-commit hooks and other automated checks).\n\nThis file automatically applies to all repositories without their own contributing guide.",
       "line": 1,
@@ -119,7 +101,7 @@
     },
     {
       "directory": ".github",
-      "description": "## Summary\n\nCongratulations! You've completed the tour of the .github repository.\n\n**What you've learned:**\n- This repository provides organization-wide defaults\n- Community health files (Code of Conduct, templates)\n- Coding standards and formatting rules\n- Automated checks via pre-commit and GitHub Actions\n- Configuration for AI agents and assistants\n\n**Next steps:**\n1. Review the files most relevant to your work\n2. Run `pre-commit run -a` to understand the checks\n3. Explore the instruction files in `.github/instructions/`\n4. Check out individual repositories to see how they use these defaults\n\n**Need help?** Refer to README.md or open an issue in the repository.",
+      "description": "## Summary\n\nCongratulations! You've completed the tour of the .github repository.\n\n**What you've learned:**\n- This repository provides organization-wide defaults\n- Community health files (Code of Conduct, templates)\n- Coding standards and formatting rules\n- Automated checks via pre-commit and GitHub Actions\n- Agent configuration for AI assistants\n\n**Next steps:**\n1. Review the files most relevant to your work\n2. Run `pre-commit run -a` to understand the checks\n3. Check out individual repositories to see how they use these defaults\n\n**Need help?** Refer to README.md or open an issue in the repository.",
       "title": "Tour Complete!"
     }
   ]
