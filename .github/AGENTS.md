@@ -6,9 +6,7 @@ Use this as the entry point for agent work, and follow linked catalogs when rele
 
 Read these Agent files when working in corresponding dirs:
 
-- [`instructions/AGENTS.md`](instructions/AGENTS.md)
 - [`prompts/AGENTS.md`](prompts/AGENTS.md)
-- [`skills/AGENTS.md`](skills/AGENTS.md)
 - [`workflows/AGENTS.md`](workflows/AGENTS.md)
 
 ## Additional key files

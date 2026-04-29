@@ -10,27 +10,8 @@ Read and merge these when operating inside corresponding sub-directories (order 
 
 - [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
-- [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) to discover the available
-  skill catalog before interpreting the user request
 - [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
-
-## Mandatory Skill Loading Protocol
-
-- Before any tool invocation, code delta, or execution plan, MUST read
-  [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) when present.
-- Treat [`.github/skills/AGENTS.md`](.github/skills/AGENTS.md) as the
-  authoritative catalog of available skills; follow its links to candidate
-  `SKILL.md` files.
-- Deterministically route user intent to skills in this order: exact
-  skill-name match, exact alias/tag match, normalized phrase match,
-  description/activation keyword match.
-- If multiple skills match, load all non-overlapping relevant skills ordered
-  by the routing score above; if two skills conflict, the more task-specific
-  `SKILL.md` wins.
-- If the user request includes domain terms that plausibly map to a skill,
-  MUST inspect the best-matching `SKILL.md` before proceeding.
-- If no skill matches after catalog inspection, proceed without a skill and state that no relevant skill was found.
 
 **Maintenance invariant**:
 
@@ -85,7 +66,7 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Snapshot current problem state in one entropy-minimized sentence.
 - Enumerate risks against classic-mistakes matrix and Top-10 Risks List.
 - Apply noise-pruning filter + single-variable delta rule for all experiments.
-- Complete the Mandatory Skill Loading Protocol, then load the highest-confidence relevant `SKILL.md` files before execution.
+- Autonomously load any relevant `.instructions.md` rules or `SKILL.md` workflows before formulating a strategy.
 
 **Strategic vs tactical default**:
 
@@ -294,7 +275,6 @@ pre-commit run yamllint -a
   performing complex regex parsing, or safely editing a few lines in-place within an automated script context.
   It is especially useful for large files where patching the whole file via MCP could take a lot of context
   processing for simple changes.
-- For detailed commands and examples, see [`.github/skills/vim-ex/SKILL.md`](.github/skills/vim-ex/SKILL.md).
 
 ### Renaming/removing files
 
@@ -331,7 +311,7 @@ molecule syntax
 
 ### Updating Coding Standards
 
-- Language-specific instructions are in `.github/instructions/`
+- Language-specific instructions are in `.github/instructions/` (if present) or provided by the environment.
 - Update `.markdownlint.yaml`, `.yamllint`, or `.editorconfig` for linting rules
 - Run `pre-commit run -a` to verify changes pass all checks
 
@@ -347,7 +327,7 @@ on top of the updated target branch:
 5. Verify only your changes remain
 
 **For detailed step-by-step instructions with commands**, see:
-[`.github/skills/git/SKILL.md`](.github/skills/git/SKILL.md)
+[`.github/skills/git/SKILL.md`](.github/skills/git/SKILL.md) (if present).
 
 ### Key Points
 
@@ -380,7 +360,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 **Error Patterns:** `Rebasing (1/XXX)` with large numbers, `CONFLICT (content)`, session crash with `GitError`
 
 **For complete details**, see:
-[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools)
+[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools) (if present).
 
 ## References
 
