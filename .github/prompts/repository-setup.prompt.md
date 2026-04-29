@@ -264,15 +264,6 @@ exist. Do not skip items just because a file already exists.
   - Purpose: GitHub Actions problem matcher for pre-commit output
   - Action: Copy from reference if missing
 
-- [ ] **`.github/GITHUB-WORKFLOWS.md`**
-  - Check if file exists
-  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/GITHUB-WORKFLOWS.md`
-  - Purpose: Documentation for GitHub workflows, agents, and problem matchers
-  - Action: Copy from reference as `.github/GITHUB-WORKFLOWS.md` if missing;
-    customize for repository-specific workflows
-  - Content: Workflow templates overview, agent prompts usage, problem matchers configuration, security notes
-  - Customize: Update workflow references and add repository-specific workflow documentation
-
 - [ ] **`.github/workflows/README.md`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/README.md`
@@ -350,13 +341,12 @@ exist. Do not skip items just because a file already exists.
   - Content: Overview of repository structure, key files, development workflows
   - Format: JSON file following CodeTour schema
   - Note: Use the code-tour agent to create repository-specific tours
-  - Agent instructions: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/agents/code-tour.agent.md`
-  - The agent should be copied to `.github/agents/code-tour.agent.md` in the repository
-  - Reference the agent when creating tours: "Use the Code Tour Expert agent to create a getting-started tour"
+  - Reference: The code-tour agent documentation is available in the runtime agents catalog.
+  - Action: Reference the agent when creating tours: "Use the Code Tour Expert agent to create a getting-started tour"
 
 - [ ] **Create or update repository README.md**
   - Check if `README.md` exists
-  - Reference instructions: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/instructions/readme.instructions.md`
+  - Reference: The README instructions are available in the runtime instructions catalog.
   - Purpose: Main documentation for repository
   - Action: Ensure it follows organization standards
   - Required sections: Project overview, getting started, development, structure, contributing, license

@@ -4,13 +4,13 @@
   "instructions": [
     "AGENTS.md",
     ".github/copilot-instructions.md",
-    ".github/skills/AGENTS.md"
+    ".github/AGENTS.md"
   ],
   "agent": {
     "cogni-ai-architect": {
       "mode": "primary",
       "model": "opencode/gpt-5-codex",
-      "prompt": "{file:../.github/agents/cogni-ai-architect.agent.md}",
+      "prompt": "{file:../AGENTS.md}",
       "tools": {
         "write": true,
         "edit": true,

@@ -329,7 +329,7 @@ on top of the updated target branch:
 5. Verify only your changes remain
 
 **For detailed step-by-step instructions with commands**, see:
-[`.github/skills/git/SKILL.md`](.github/skills/git/SKILL.md) (if present) or the runtime skills catalog.
+`git/SKILL.md` (if present in the runtime skills catalog).
 
 ### Key Points
 
@@ -362,7 +362,7 @@ tries to auto-rebase (e.g., 113 commits), it encounters conflicts it cannot reso
 **Error Patterns:** `Rebasing (1/XXX)` with large numbers, `CONFLICT (content)`, session crash with `GitError`
 
 **For complete details**, see:
-[`.github/skills/git/SKILL.md` - "Working with Automation Tools"](.github/skills/git/SKILL.md#working-with-automation-tools) (if present) or the runtime skills catalog.
+`git/SKILL.md` - "Working with Automation Tools" (if present in the runtime skills catalog).
 
 ## References
 
