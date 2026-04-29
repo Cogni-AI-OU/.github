@@ -15,9 +15,9 @@ on:
       - .devcontainer/requirements.txt
 env:
   # Pin external repositories to specific SHAs for reproducibility.
-  COGNI_AI_AGENTS_REF: 4dd196d214838dab8c925827b920723811000612  # pragma: allowlist secret
-  COGNI_AI_AGENT_INSTRUCTIONS_REF: fa06ddeac0ce66d4dcff1c451eb1fa27bd0ebc01  # pragma: allowlist secret
-  COGNI_AI_AGENT_SKILLS_REF: 8878a7b0384da7a79bc005f33bb503bdb3d9fa17  # pragma: allowlist secret
+  COGNI_AI_AGENTS_REF: main
+  COGNI_AI_AGENT_INSTRUCTIONS_REF: main
+  COGNI_AI_AGENT_SKILLS_REF: main
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
