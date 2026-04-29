@@ -56,7 +56,7 @@ organization-wide defaults and standards.
 ## Creating New Tours
 
 To create or update tours, refer to the
-[code-tour.agent.md](../.github/agents/code-tour.agent.md) agent documentation,
+`code-tour.agent.md` agent documentation (available in the runtime agents catalog),
 which provides comprehensive guidance on CodeTour best practices and schema.
 
 Key considerations:
@@ -71,4 +71,4 @@ Key considerations:
 
 - [CodeTour Documentation](https://github.com/microsoft/codetour)
 - [CodeTour Schema](https://aka.ms/codetour-schema)
-- [Agent Documentation](../.github/agents/code-tour.agent.md)
+- [Agent Documentation](../AGENTS.md)
