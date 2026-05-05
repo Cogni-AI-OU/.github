@@ -30,7 +30,8 @@ For a human-readable overview, see [README.md](README.md).
 - Purpose: provides the underlying logic to run the Cogni AI Agent.
 - Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_dispatch`.
 - Details: Installs Python dependencies from `.devcontainer/requirements.txt` and calls the
-  `Cogni-AI-OU/cogni-ai-agent-action` to process instructions.
+  `Cogni-AI-OU/cogni-ai-agent-action` to process instructions. A post-run `summary` job generates
+  an AI summary of the agent's actions.
 - Concurrency: Only one run per issue/PR/branch at a time; new runs are queued (no auto-cancel).
 - Permissions: `contents: write`, `id-token: write`, `issues: write`, `pull-requests: write`.
 
@@ -59,6 +60,7 @@ For a human-readable overview, see [README.md](README.md).
   default `opencode/gpt-5-codex`), `prompt` (optional override).
 - Triggers: `workflow_dispatch`, `workflow_call`, or issue comments and PR review comments with `/oc` or `/opencode`
   from trusted (non-bot) collaborators/members/owners.
+- Details: A post-run `summary` job generates an AI summary of the agent's actions.
 - Guardrail: comment-triggered runs do not populate `inputs.*`; back shared OpenCode defaults
   with workflow-level `env` values instead of hardcoding agent/model literals in steps.
 - Concurrency: Only one run per issue/PR/branch at a time; new runs are queued (no auto-cancel).
