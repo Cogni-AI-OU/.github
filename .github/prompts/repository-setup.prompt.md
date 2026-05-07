@@ -21,6 +21,18 @@ create or update it as needed with repository-specific customizations.
 attention to items marked "**REQUIRED**" or "Action: review and update" - these must be updated even if they
 exist. Do not skip items just because a file already exists.
 
+### Content Preservation Principle
+
+**CRITICAL**: Your goal is to standardize and enhance, NOT to destructively replace.
+
+- **NEVER** delete existing files or sections that provide valuable context, project-specific documentation,
+  or specialized configuration unless they are explicitly superseded by organization standards or are
+  demonstrably incorrect/redundant.
+- **PRESERVE** existing repository-specific customizations that do not conflict with organization standards.
+- **MERGE** organization standards into existing files rather than replacing them entirely, especially for
+  files like `.gitignore`, `.pre-commit-config.yaml`, and documentation.
+- When in doubt, prefer keeping existing content and appending or integrating new standards.
+
 ## Checklist
 
 ### Phase 1: Essential Configuration Files
@@ -146,39 +158,110 @@ exist. Do not skip items just because a file already exists.
       workflow_call:
         inputs:
           agent:
+            default: cogni-ai-architect
             description: Agent to use.
             required: false
             type: string
-          model:
-            description: Model to use
-            required: false
-            type: string
           issue_number:
-            description: Issue or PR number for workflow_call triggers
+            description: Issue or PR number this request relates to
             required: false
             type: number
+          model:
+            default: opencode/gpt-5-codex
+            description: Model to use for OpenCode
+            required: false
+            type: string
           prompt:
+            default: ''
             description: Custom prompt to override the default prompt
             required: false
             type: string
       workflow_dispatch:
         inputs:
           agent:
+            default: cogni-ai-architect
             description: Agent to use.
+            options:
+              - build
+              - cogni-ai-architect
+              - compaction
+              - plan
+              - summary
+              - title
             required: false
-            type: string
-          model:
-            description: Model to use for OpenCode
-            required: false
-            type: string
+            type: choice
           issue_number:
-            description: Issue or PR number for manual workflow execution
+            description: Issue or PR number this request relates to
             required: false
             type: number
+          model:
+            default: opencode/gpt-5-codex
+            description: Model to use for OpenCode
+            options:
+              - opencode/big-pickle
+              - opencode/claude-3-5-haiku
+              - opencode/claude-haiku-4-5
+              - opencode/claude-opus-4-1
+              - opencode/claude-opus-4-5
+              - opencode/claude-opus-4-6
+              - opencode/claude-sonnet-4
+              - opencode/claude-sonnet-4-5
+              - opencode/claude-sonnet-4-6
+              - opencode/gemini-3.1-pro
+              - opencode/gemini-3-flash
+              - opencode/gemini-3-pro
+              - opencode/glm-4.6
+              - opencode/glm-4.7-free
+              - opencode/glm-5
+              - opencode/glm-5.1
+              - opencode/gpt-5
+              - opencode/gpt-5-codex
+              - opencode/gpt-5-nano
+              - opencode/gpt-5.1
+              - opencode/gpt-5.1-codex
+              - opencode/gpt-5.1-codex-max
+              - opencode/gpt-5.1-codex-mini
+              - opencode/gpt-5.2
+              - opencode/gpt-5.2-codex
+              - opencode/gpt-5.3-codex
+              - opencode/gpt-5.3-codex-spark
+              - opencode/gpt-5.4
+              - opencode/gpt-5.4-mini
+              - opencode/gpt-5.4-nano
+              - opencode/gpt-5.4-pro
+              - opencode/grok-code
+              - opencode/kimi-k2
+              - opencode/kimi-k2-thinking
+              - opencode/kimi-k2.5
+              - opencode/minimax-m2.1-free
+              - opencode/minimax-m2.5
+              - opencode/minimax-m2.5-free
+              - opencode/nemotron-3-super-free
+              - opencode/qwen3-coder
+              - opencode/qwen3.6-plus-free
+              # Grok models (xAI)
+              - xai/grok-4-1-fast-non-reasoning
+              - xai/grok-4-1-fast-reasoning
+              - xai/grok-4.20-0309-non-reasoning
+              - xai/grok-4.20-0309-reasoning
+              - xai/grok-code-fast-1
+            required: false
+            type: choice
           prompt:
             description: Custom prompt to override the default prompt
             required: false
-            type: string
+            default: ''
+
+    concurrency:
+      cancel-in-progress: false
+      group: >-
+        opencode-${{
+        (github.event.issue.pull_request && github.event.issue.number)
+        || github.event.pull_request.number
+        || (github.ref_name != github.event.repository.default_branch && github.ref)
+        || github.run_id
+        }}
+
     jobs:
       opencode:
         uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
@@ -218,30 +301,86 @@ exist. Do not skip items just because a file already exists.
     ---
     name: Cogni AI Agent
     on:
+      discussion:
+        types:
+          - created
+          - edited
+          - answered
+      discussion_comment:
+        types:
+          - created
       issue_comment:
-        types: [created]
+        types:
+          - created
+      issues:
+        types:
+          - opened
+          - edited
+      pull_request:
+        types:
+          - opened
+          - edited
       pull_request_review_comment:
-        types: [created]
+        types:
+          - created
       workflow_call:
         inputs:
           model:
             description: Model to use for OpenCode
-            required: false
+            required: true
             type: string
           prompt:
             description: Prompt for the agent
-            required: false
+            required: true
             type: string
       workflow_dispatch:
         inputs:
           model:
+            default: opencode/gemini-3-flash
             description: Model to use for OpenCode
-            required: false
-            type: string
+            options:
+              - opencode/big-pickle
+              - opencode/claude-3-5-haiku
+              - opencode/claude-haiku-4-5
+              - opencode/claude-opus-4-5
+              - opencode/claude-opus-4-6
+              - opencode/claude-sonnet-4
+              - opencode/claude-sonnet-4-5
+              - opencode/claude-sonnet-4-6
+              - opencode/gemini-3.1-pro
+              - opencode/gemini-3-flash
+              - opencode/glm-5
+              - opencode/glm-5.1
+              - opencode/gpt-5
+              - opencode/gpt-5-codex
+              - opencode/gpt-5-nano
+              - opencode/gpt-5.3-codex
+              - opencode/gpt-5.3-codex-spark
+              - opencode/gpt-5.4
+              - opencode/gpt-5.4-mini
+              - opencode/gpt-5.4-nano
+              - opencode/minimax-m2.5
+              - opencode/minimax-m2.5-free
+              - opencode/nemotron-3-super-free
+              - opencode/qwen3-coder
+              - opencode/qwen3.6-plus-free
+            required: true
+            type: choice
           prompt:
             description: Prompt for the agent
-            required: false
+            required: true
             type: string
+
+    concurrency:
+      cancel-in-progress: false
+      group: >-
+        opencode-${{
+        (github.event.issue.pull_request && github.event.issue.number)
+        || github.event.pull_request.number
+        || (github.ref_name != github.event.repository.default_branch && github.ref)
+        || github.run_id
+        }}
+
     jobs:
       cogni-ai-agent:
         uses: Cogni-AI-OU/.github/.github/workflows/cogni-ai-agent.yml@main
@@ -275,6 +414,14 @@ exist. Do not skip items just because a file already exists.
           - main
         paths:
           - .devcontainer/**
+      schedule:
+        - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
+      workflow_dispatch:
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     jobs:
       devcontainer-build:
         uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
@@ -314,8 +461,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/GITHUB-WORKFLOWS.md`
   - Purpose: Documentation for GitHub workflows, agents, and problem matchers
-  - Action: Copy from reference as `.github/GITHUB-WORKFLOWS.md` if missing;
-    customize for repository-specific workflows
+  - Action: Create if missing; if exists, **PRESERVE** existing repository-specific documentation
+    and **MERGE** missing organization-standard sections
   - Content: Workflow templates overview, agent prompts usage, problem matchers configuration, security notes
   - Customize: Update workflow references and add repository-specific workflow documentation
 
@@ -323,7 +470,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/README.md`
   - Purpose: Documentation for GitHub Actions workflows in the repository
-  - Action: Copy from reference if missing; customize for repository-specific workflows
+  - Action: Create if missing; if exists, **MERGE** organization standards while **PRESERVING**
+    existing documentation for repository-specific workflows
   - Content: Workflow descriptions, usage examples, inputs/outputs, security considerations
   - Customize: Add documentation for any custom workflows specific to the repository
 
@@ -410,7 +558,8 @@ exist. Do not skip items just because a file already exists.
   - Check if `README.md` exists
   - Reference: The README instructions are available in the runtime instructions catalog.
   - Purpose: Main documentation for repository
-  - Action: Ensure it follows organization standards
+  - Action: Ensure it follows organization standards while **PRESERVING** and **INTEGRATING**
+    with existing project-specific documentation (DO NOT delete project descriptions or usage guides)
   - Required sections: Project overview, getting started, development, structure, contributing, license
   - Badges: Add PR reviews, license (TLDRLegal link), tags, build status
   - Validation: Run `pre-commit run markdownlint -a` after updates
@@ -458,7 +607,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md`
   - Purpose: Quick reference for AI agents working in the repository
-  - Action: Create if missing, customized for repository-specific tasks
+  - Action: Create if missing; if exists, **MERGE** organization standards while **PRESERVING**
+    existing repository-specific tasks, build/test commands, and context
   - Content: Quick start, links to instructions, common tasks (linting, building, testing)
   - Customize: Include repository-specific commands, test runners, build processes
 
@@ -475,7 +625,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/copilot-instructions.md`
   - Purpose: Comprehensive coding standards for GitHub Copilot
-  - Action: Create if missing, adapted for repository language/framework
+  - Action: Create if missing; if exists, **CAREFULLY MERGE** organization standards while
+    **PRESERVING** valuable repository-specific guidelines or examples
   - Content: Project overview, coding standards, formatting guidelines, troubleshooting
   - Customize: Add repository-specific standards, dependencies, build/test commands
 
