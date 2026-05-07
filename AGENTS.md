@@ -8,7 +8,6 @@ For general project invariants see [README.md](README.md).
 
 Read and merge these when operating inside corresponding sub-directories (order = precedence):
 
-- [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
 - [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
@@ -33,24 +32,6 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Existing documentation entropy exceeds threshold, then extract & prune to peak-density form.
 - Functionality requires domain-specific knowledge that must survive context windows.
 
-**Hardened NEVER List**:
-
-- NEVER embed one-time discoveries or transient hacks.
-- NEVER duplicate code-level comments or obvious steps.
-- NEVER hardcode environment-specific values; use generic placeholders with explicit semantics.
-- NEVER include beginner exposition or obvious statements.
-- NEVER bloat with prose; enforce one-liner density + imperative syntax only.
-- If guidance is purely disciplinary, route to dedicated `SKILL.md` instead.
-
-**Writing invariants (Prodigy-Level)**:
-
-- Assume ninja-level proficiency across project spectrum.
-- Embed quantitative gates (+20% fidelity delta, <1h MTTR analog, zero ambiguity).
-- Every bullet carries measurable payload: role, then invariants, then context, then exemplars, then schema, then NEVER/MUST-NOT,
-  then verification loops.
-- Favor tables, checklists, and contract-style boundaries over linear text.
-- Zero scaffolding. Maximal information-theoretic density. Surgical imperative syntax.
-
 ## Core Agent Execution Protocol (Mandatory for All Forks)
 
 **Pre-execution reverse-prompting activation**:
@@ -62,7 +43,6 @@ Read and merge these when operating inside corresponding sub-directories (order 
 - Read, assimilate, and strictly enforce the invariants defined in the main `AGENTS.md`,
   along with any directory-specific `AGENTS.md` and related files, `.github/copilot-instructions.md`,
   and autonomously load any relevant `.instructions.md` rules or `SKILL.md` workflows before formulating a strategy.
-  *(Note: In GitHub Action runtimes, these catalogs are dynamically populated in the environment, e.g., in `~/.instructions/` and `~/.skills/` or as specified by the runtime.)*
 - Declare required inputs, missing context, edge cases, and optimal strategy before any tool invocation or code delta.
 - Snapshot current problem state in one entropy-minimized sentence.
 - Enumerate risks against classic-mistakes matrix and Top-10 Risks List.
@@ -200,45 +180,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 - Agent configuration & conventions: [.github/copilot-instructions.md](.github/copilot-instructions.md)
 - Workflow navigation: [.tours/getting-started.tour](.tours/getting-started.tour)
 - Latest org baseline: <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>
-
-## Example Structure for New/Updated AGENTS.md Files
-
-```markdown
-# AGENTS.md  (subdir-specific)
-
-## Setup & Environment Invariants
-
-- ...
-
-## Key Files & Context Injection
-
-- ...
-
-## Agent Directives (Contract Style)
-
-- Role, then invariants, then ...
-- NEVER ...
-- MUST ...
-
-## Testing & Verification Gates
-
-- ...
-
-## Troubleshooting Matrix
-
-> signature error / smell
-- root-cause vector
-- isolation steps
-- verified fix + prevention
-
-## Final Assurance Gates
-
-- Keep this file entropy-pruned and up-to-date.
-- Inject full content into every sub-agent context.
-- For latest version see:
-  <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>
 - For latest standard see: <https://agents.md/>
-
 
 ## Common Tasks
 

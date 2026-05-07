@@ -44,7 +44,8 @@ Key contents:
 
 ### JSON
 
-Follow the JSON rules in the runtime instructions catalog (dynamically populated at runtime, e.g., in `~/.instructions/`) or refer to the repository `.editorconfig` configuration.
+Follow the JSON rules in the runtime instructions catalog (dynamically populated at runtime,
+e.g., in `~/.instructions/`) or refer to the repository `.editorconfig` configuration.
 
 To test locally, use `jq` for validation or use the VS Code JSON formatter.
 
