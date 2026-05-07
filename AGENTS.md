@@ -183,7 +183,7 @@ the agent MUST integrate remote changes with a merge commit workflow.
 - Agent configuration & conventions: [.github/copilot-instructions.md](.github/copilot-instructions.md)
 - Workflow navigation: [.tours/getting-started.tour](.tours/getting-started.tour)
 - Latest org baseline: <https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md>
-- AGENTS.md writing standards & structure: [agents-md-writer skill](https://github.com/Cogni-AI-OU/cogni-ai-agent-skills/blob/main/agents-md-writer/SKILL.md)
+- For latest standard see: <https://agents.md/>
 
 ## Common Tasks
 
