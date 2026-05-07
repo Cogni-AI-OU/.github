@@ -144,160 +144,6 @@ exist. Do not skip items just because a file already exists.
 
   - Customize: Add additional jobs if needed for project-specific checks
 
-- [ ] **`.github/workflows/opencode.yml`**
-  - Check if file exists
-  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/opencode.yml`
-  - Purpose: OpenCode automation for AI-assisted development
-  - Action: Create using `workflow_call` to reference the remote workflow
-  - Implementation:
-
-    ```yaml
-    ---
-    name: OpenCode
-    # yamllint disable-line rule:truthy
-    on:
-      issue_comment:
-        types: [created, edited]
-      pull_request_review_comment:
-        types: [created, edited]
-      issues:
-        types: [opened, edited]
-      workflow_call:
-        inputs:
-          agent:
-            default: cogni-ai-architect
-            description: Agent to use.
-            required: false
-            type: string
-          model:  # @docs: <https://opencode.ai/zen/v1/models>
-            default: opencode/gpt-5-codex
-            description: Model to use for OpenCode
-            required: false
-            type: string
-          issue_number:
-            description: Issue or PR number this request relates to
-            required: false
-            type: number
-          prompt:
-            default: ''
-            description: Custom prompt to override the default prompt
-            required: false
-            type: string
-      workflow_dispatch:
-        inputs:
-          agent:
-            default: cogni-ai-architect
-            description: Agent to use.
-            options:
-              - build
-              - cogni-ai-architect
-              - compaction
-              - plan
-              - summary
-              - title
-            required: false
-            type: choice
-          issue_number:
-            description: Issue or PR number this request relates to
-            required: false
-            type: number
-          model:  # @docs: <https://opencode.ai/zen/v1/models>
-            default: opencode/gpt-5-codex
-            description: Model to use for OpenCode
-            options:
-              - opencode/big-pickle
-
-              - opencode/claude-3-5-haiku
-              - opencode/claude-haiku-4-5
-              - opencode/claude-opus-4-1
-              - opencode/claude-opus-4-5
-              - opencode/claude-opus-4-6
-              - opencode/claude-sonnet-4
-              - opencode/claude-sonnet-4-5
-              - opencode/claude-sonnet-4-6
-              - opencode/gemini-3.1-pro
-              - opencode/gemini-3-flash
-              - opencode/gemini-3-pro
-              - opencode/glm-4.6
-              - opencode/glm-4.7-free
-              - opencode/glm-5
-              - opencode/glm-5.1
-              - opencode/gpt-5
-              - opencode/gpt-5-codex
-              - opencode/gpt-5-nano
-              - opencode/gpt-5.1
-              - opencode/gpt-5.1-codex
-              - opencode/gpt-5.1-codex-max
-              - opencode/gpt-5.1-codex-mini
-              - opencode/gpt-5.2
-              - opencode/gpt-5.2-codex
-              - opencode/gpt-5.3-codex
-              - opencode/gpt-5.3-codex-spark
-              - opencode/gpt-5.4
-              - opencode/gpt-5.4-mini
-              - opencode/gpt-5.4-nano
-              - opencode/gpt-5.4-pro
-              - opencode/grok-code
-              - opencode/kimi-k2
-              - opencode/kimi-k2-thinking
-              - opencode/kimi-k2.5
-              - opencode/minimax-m2.1-free
-              - opencode/minimax-m2.5
-              - opencode/minimax-m2.5-free
-              - opencode/nemotron-3-super-free
-              - opencode/qwen3-coder
-              - opencode/qwen3.6-plus-free
-              # Grok models (xAI)
-              - xai/grok-4-1-fast-non-reasoning
-              - xai/grok-4-1-fast-reasoning
-              - xai/grok-4.20-0309-non-reasoning
-              - xai/grok-4.20-0309-reasoning
-              - xai/grok-code-fast-1
-            required: false
-            type: choice
-          prompt:
-            description: Custom prompt to override the default prompt
-            required: false
-            default: ''
-
-    concurrency:
-      cancel-in-progress: false
-      group: >-
-        opencode-${{
-        (github.event.issue.pull_request && github.event.issue.number)
-        || github.event.pull_request.number
-        || (github.ref_name != github.event.repository.default_branch && github.ref)
-        || github.run_id
-        }}
-
-    jobs:
-      opencode:
-        uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
-        with:
-          agent: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.agent }}
-          model: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.model }}
-          prompt: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.prompt }}
-          issue_number: >-
-            ${{ github.event.issue.number || github.event.pull_request.number || inputs.issue_number }}
-        permissions:
-          actions: read
-          contents: write
-          id-token: write
-          issues: write
-          pull-requests: write
-        secrets: inherit
-    ```
-
-  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
-    You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
-    or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).
-
 - [ ] **`.github/workflows/cogni-ai-agent.yml`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/cogni-ai-agent.yml`
@@ -339,7 +185,7 @@ exist. Do not skip items just because a file already exists.
       workflow_call:
         inputs:
           model:  # @docs: <https://opencode.ai/zen/v1/models>
-            description: Model to use for OpenCode
+            description: Model to use for Cogni AI Agent
             required: true
             type: string
           prompt:
@@ -350,7 +196,7 @@ exist. Do not skip items just because a file already exists.
         inputs:
           model:  # @docs: <https://opencode.ai/zen/v1/models>
             default: opencode/gemini-3-flash
-            description: Model to use for OpenCode
+            description: Model to use for Cogni AI Agent
             options:
               - opencode/big-pickle
               - opencode/claude-3-5-haiku
@@ -497,7 +343,7 @@ exist. Do not skip items just because a file already exists.
 - [ ] **`.github/prompts/` directory**
   - Check if directory exists with prompt files
   - Reference: `https://github.com/Cogni-AI-OU/.github/tree/main/.github/prompts`
-  - Purpose: Prompt templates for GitHub Models, OpenCode, and Copilot
+  - Purpose: Prompt templates for GitHub Models and Copilot
   - Action: Include relevant prompt files; keep formats (Markdown/YAML) as upstream
   - Available prompts:
     - `default.prompt.yml` - Default prompt for cogni-ai-agent workflow
@@ -757,7 +603,7 @@ When customizing:
 
 Some workflows require secrets to be configured in repository settings:
 
-- `OPENCODE_API_KEY` - Required for OpenCode workflows
+- `OPENCODE_API_KEY` - Required for Cogni AI Agent workflows
 - Add others as needed for specific integrations
 
 Document required secrets in README.md or a SECRETS.md file.
