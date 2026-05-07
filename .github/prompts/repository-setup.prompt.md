@@ -140,6 +140,8 @@ exist. Do not skip items just because a file already exists.
           submodules: 'false'  # Set to 'true' or 'recursive' if repository uses submodules
     ```
 
+  - Note: Uses the organization's reusable `check.yml` workflow to run actionlint and pre-commit checks.
+
   - Customize: Add additional jobs if needed for project-specific checks
 
 - [ ] **`.github/workflows/opencode.yml`**
@@ -152,6 +154,7 @@ exist. Do not skip items just because a file already exists.
     ```yaml
     ---
     name: OpenCode
+    # yamllint disable-line rule:truthy
     on:
       issue_comment:
         types: [created, edited]
@@ -166,15 +169,15 @@ exist. Do not skip items just because a file already exists.
             description: Agent to use.
             required: false
             type: string
-          issue_number:
-            description: Issue or PR number this request relates to
-            required: false
-            type: number
-          model:
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
             default: opencode/gpt-5-codex
             description: Model to use for OpenCode
             required: false
             type: string
+          issue_number:
+            description: Issue or PR number this request relates to
+            required: false
+            type: number
           prompt:
             default: ''
             description: Custom prompt to override the default prompt
@@ -198,11 +201,12 @@ exist. Do not skip items just because a file already exists.
             description: Issue or PR number this request relates to
             required: false
             type: number
-          model:
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
             default: opencode/gpt-5-codex
             description: Model to use for OpenCode
             options:
               - opencode/big-pickle
+
               - opencode/claude-3-5-haiku
               - opencode/claude-haiku-4-5
               - opencode/claude-opus-4-1
@@ -334,7 +338,7 @@ exist. Do not skip items just because a file already exists.
           - created
       workflow_call:
         inputs:
-          model:
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
             description: Model to use for OpenCode
             required: true
             type: string
@@ -344,7 +348,7 @@ exist. Do not skip items just because a file already exists.
             type: string
       workflow_dispatch:
         inputs:
-          model:
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
             default: opencode/gemini-3-flash
             description: Model to use for OpenCode
             options:
@@ -380,16 +384,6 @@ exist. Do not skip items just because a file already exists.
             required: true
             type: string
 
-    concurrency:
-      cancel-in-progress: false
-      group: >-
-        opencode-${{
-        (github.event.issue.pull_request && github.event.issue.number)
-        || github.event.pull_request.number
-        || (github.ref_name != github.event.repository.default_branch && github.ref)
-        || github.run_id
-        }}
-
     jobs:
       cogni-ai-agent:
         uses: Cogni-AI-OU/.github/.github/workflows/cogni-ai-agent.yml@main
@@ -400,8 +394,17 @@ exist. Do not skip items just because a file already exists.
           prompt: >-
             ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
             && inputs.prompt }}
+        permissions:
+          contents: write
+          id-token: write
+          issues: write
+          pull-requests: write
         secrets: inherit
     ```
+
+  - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
+    You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
+    or follow the [manual setup guide](https://opencode.ai/docs/github/#manual-setup).
 
 - [ ] **`.github/workflows/devcontainer-ci.yml`**
   - Check if file exists (only if `.devcontainer/` directory exists)
@@ -413,6 +416,7 @@ exist. Do not skip items just because a file already exists.
     ```yaml
     ---
     name: Development Containers (CI)
+    # yamllint disable-line rule:truthy
     on:
       pull_request:
         paths:
