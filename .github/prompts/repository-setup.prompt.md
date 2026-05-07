@@ -150,7 +150,7 @@ exist. Do not skip items just because a file already exists.
             required: false
             type: string
           model:
-            description: Model to use for OpenCode
+            description: Model to use
             required: false
             type: string
           issue_number:
