@@ -12,7 +12,7 @@ on:
   workflow_call:
     inputs:
       model:
-        description: Model to use for OpenCode
+        description: Model to use
         required: true
         type: string
       prompt:
