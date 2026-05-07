@@ -444,8 +444,9 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/pull_request_template.md`
   - Purpose: PR template (auto-applies from org .github if missing)
-  - Action: Only create if repository needs a specific PR template
-  - Note: Organization default is used if this file doesn't exist
+  - Action: **DO NOT** create this file in individual repositories
+  - Note: This file is automatically loaded from the organization's `.github` repository. Only create
+    it if a repository-specific override is strictly required.
 
 - [ ] **`.github/ISSUE_TEMPLATE/bug_report.yml`**
   - Check if `.github/ISSUE_TEMPLATE/` directory exists
