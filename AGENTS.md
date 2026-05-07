@@ -8,7 +8,6 @@ For general project invariants see [README.md](README.md).
 
 Read and merge these when operating inside corresponding sub-directories (order = precedence):
 
-- [`.opencode/AGENTS.md`](.opencode/AGENTS.md)
 - [`.github/AGENTS.md`](.github/AGENTS.md)
 - [`.vscode/AGENTS.md`](.vscode/AGENTS.md) (command permissions and tasks)
 - Any `AGENTS.md` or `SKILL.md` in ancestor, then current directory tree
