@@ -21,6 +21,18 @@ create or update it as needed with repository-specific customizations.
 attention to items marked "**REQUIRED**" or "Action: review and update" - these must be updated even if they
 exist. Do not skip items just because a file already exists.
 
+### Content Preservation Principle
+
+**CRITICAL**: Your goal is to standardize and enhance, NOT to destructively replace.
+
+- **NEVER** delete existing files or sections that provide valuable context, project-specific documentation,
+  or specialized configuration unless they are explicitly superseded by organization standards or are
+  demonstrably incorrect/redundant.
+- **PRESERVE** existing repository-specific customizations that do not conflict with organization standards.
+- **MERGE** organization standards into existing files rather than replacing them entirely, especially for
+  files like `.gitignore`, `.pre-commit-config.yaml`, and documentation.
+- When in doubt, prefer keeping existing content and appending or integrating new standards.
+
 ## Checklist
 
 ### Phase 1: Essential Configuration Files
@@ -402,6 +414,14 @@ exist. Do not skip items just because a file already exists.
           - main
         paths:
           - .devcontainer/**
+      schedule:
+        - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
+      workflow_dispatch:
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     jobs:
       devcontainer-build:
         uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
@@ -441,8 +461,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/GITHUB-WORKFLOWS.md`
   - Purpose: Documentation for GitHub workflows, agents, and problem matchers
-  - Action: Copy from reference as `.github/GITHUB-WORKFLOWS.md` if missing;
-    customize for repository-specific workflows
+  - Action: Create if missing; if exists, **PRESERVE** existing repository-specific documentation
+    and **MERGE** missing organization-standard sections
   - Content: Workflow templates overview, agent prompts usage, problem matchers configuration, security notes
   - Customize: Update workflow references and add repository-specific workflow documentation
 
@@ -450,7 +470,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/README.md`
   - Purpose: Documentation for GitHub Actions workflows in the repository
-  - Action: Copy from reference if missing; customize for repository-specific workflows
+  - Action: Create if missing; if exists, **MERGE** organization standards while **PRESERVING**
+    existing documentation for repository-specific workflows
   - Content: Workflow descriptions, usage examples, inputs/outputs, security considerations
   - Customize: Add documentation for any custom workflows specific to the repository
 
@@ -537,7 +558,8 @@ exist. Do not skip items just because a file already exists.
   - Check if `README.md` exists
   - Reference: The README instructions are available in the runtime instructions catalog.
   - Purpose: Main documentation for repository
-  - Action: Ensure it follows organization standards
+  - Action: Ensure it follows organization standards while **PRESERVING** and **INTEGRATING**
+    with existing project-specific documentation (DO NOT delete project descriptions or usage guides)
   - Required sections: Project overview, getting started, development, structure, contributing, license
   - Badges: Add PR reviews, license (TLDRLegal link), tags, build status
   - Validation: Run `pre-commit run markdownlint -a` after updates
@@ -585,7 +607,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/AGENTS.md`
   - Purpose: Quick reference for AI agents working in the repository
-  - Action: Create if missing, customized for repository-specific tasks
+  - Action: Create if missing; if exists, **MERGE** organization standards while **PRESERVING**
+    existing repository-specific tasks, build/test commands, and context
   - Content: Quick start, links to instructions, common tasks (linting, building, testing)
   - Customize: Include repository-specific commands, test runners, build processes
 
@@ -602,7 +625,8 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/copilot-instructions.md`
   - Purpose: Comprehensive coding standards for GitHub Copilot
-  - Action: Create if missing, adapted for repository language/framework
+  - Action: Create if missing; if exists, **CAREFULLY MERGE** organization standards while
+    **PRESERVING** valuable repository-specific guidelines or examples
   - Content: Project overview, coding standards, formatting guidelines, troubleshooting
   - Customize: Add repository-specific standards, dependencies, build/test commands
 
