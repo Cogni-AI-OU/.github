@@ -122,13 +122,17 @@ exist. Do not skip items just because a file already exists.
 
     ```yaml
     ---
+    # Note: Keep keys and envs in alphabetical order.
     name: Check
+    # yamllint disable-line rule:truthy
     on:
       pull_request:
       push:
       schedule:
         - cron: 0 0 * * 1  # Run every Monday at 00:00 UTC
       workflow_dispatch:
+    permissions:
+      contents: read
     jobs:
       check:
         uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
@@ -299,7 +303,12 @@ exist. Do not skip items just because a file already exists.
 
     ```yaml
     ---
+    # @docs: <https://opencode.ai/docs>
     name: Cogni AI Agent
+    concurrency:
+      cancel-in-progress: true
+      group: cogni-ai-agent-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
+    # yamllint disable-line rule:truthy
     on:
       discussion:
         types:
