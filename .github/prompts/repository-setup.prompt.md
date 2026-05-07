@@ -218,10 +218,28 @@ exist. Do not skip items just because a file already exists.
     ---
     name: Cogni AI Agent
     on:
+      discussion:
+        types:
+          - created
+          - edited
+          - answered
+      discussion_comment:
+        types:
+          - created
       issue_comment:
-        types: [created]
+        types:
+          - created
+      issues:
+        types:
+          - opened
+          - edited
+      pull_request:
+        types:
+          - opened
+          - edited
       pull_request_review_comment:
-        types: [created]
+        types:
+          - created
       workflow_call:
         inputs:
           model:
