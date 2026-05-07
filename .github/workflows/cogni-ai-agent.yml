@@ -9,6 +9,16 @@ on:
   pull_request_review_comment:
     types:
       - created
+  workflow_call:
+    inputs:
+      model:
+        description: Model to use
+        required: true
+        type: string
+      prompt:
+        description: Prompt for the agent
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       model:
