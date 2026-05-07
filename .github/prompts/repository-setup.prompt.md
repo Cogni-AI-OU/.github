@@ -437,8 +437,9 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/CONTRIBUTING.md`
   - Purpose: Contribution guidelines (auto-applies from org .github if missing)
-  - Action: Only create if repository needs specific contribution guidelines
-  - Note: Organization default is used if this file doesn't exist
+  - Action: **DO NOT** create this file in individual repositories
+  - Note: This file is automatically loaded from the organization's `.github` repository. Only create
+    it if repository-specific contribution guidelines are strictly required.
 
 - [ ] **`.github/pull_request_template.md`**
   - Check if file exists
