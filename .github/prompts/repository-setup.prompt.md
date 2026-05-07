@@ -146,39 +146,110 @@ exist. Do not skip items just because a file already exists.
       workflow_call:
         inputs:
           agent:
+            default: cogni-ai-architect
             description: Agent to use.
             required: false
             type: string
-          model:
-            description: Model to use
-            required: false
-            type: string
           issue_number:
-            description: Issue or PR number for workflow_call triggers
+            description: Issue or PR number this request relates to
             required: false
             type: number
+          model:
+            default: opencode/gpt-5-codex
+            description: Model to use for OpenCode
+            required: false
+            type: string
           prompt:
+            default: ''
             description: Custom prompt to override the default prompt
             required: false
             type: string
       workflow_dispatch:
         inputs:
           agent:
+            default: cogni-ai-architect
             description: Agent to use.
+            options:
+              - build
+              - cogni-ai-architect
+              - compaction
+              - plan
+              - summary
+              - title
             required: false
-            type: string
-          model:
-            description: Model to use for OpenCode
-            required: false
-            type: string
+            type: choice
           issue_number:
-            description: Issue or PR number for manual workflow execution
+            description: Issue or PR number this request relates to
             required: false
             type: number
+          model:
+            default: opencode/gpt-5-codex
+            description: Model to use for OpenCode
+            options:
+              - opencode/big-pickle
+              - opencode/claude-3-5-haiku
+              - opencode/claude-haiku-4-5
+              - opencode/claude-opus-4-1
+              - opencode/claude-opus-4-5
+              - opencode/claude-opus-4-6
+              - opencode/claude-sonnet-4
+              - opencode/claude-sonnet-4-5
+              - opencode/claude-sonnet-4-6
+              - opencode/gemini-3.1-pro
+              - opencode/gemini-3-flash
+              - opencode/gemini-3-pro
+              - opencode/glm-4.6
+              - opencode/glm-4.7-free
+              - opencode/glm-5
+              - opencode/glm-5.1
+              - opencode/gpt-5
+              - opencode/gpt-5-codex
+              - opencode/gpt-5-nano
+              - opencode/gpt-5.1
+              - opencode/gpt-5.1-codex
+              - opencode/gpt-5.1-codex-max
+              - opencode/gpt-5.1-codex-mini
+              - opencode/gpt-5.2
+              - opencode/gpt-5.2-codex
+              - opencode/gpt-5.3-codex
+              - opencode/gpt-5.3-codex-spark
+              - opencode/gpt-5.4
+              - opencode/gpt-5.4-mini
+              - opencode/gpt-5.4-nano
+              - opencode/gpt-5.4-pro
+              - opencode/grok-code
+              - opencode/kimi-k2
+              - opencode/kimi-k2-thinking
+              - opencode/kimi-k2.5
+              - opencode/minimax-m2.1-free
+              - opencode/minimax-m2.5
+              - opencode/minimax-m2.5-free
+              - opencode/nemotron-3-super-free
+              - opencode/qwen3-coder
+              - opencode/qwen3.6-plus-free
+              # Grok models (xAI)
+              - xai/grok-4-1-fast-non-reasoning
+              - xai/grok-4-1-fast-reasoning
+              - xai/grok-4.20-0309-non-reasoning
+              - xai/grok-4.20-0309-reasoning
+              - xai/grok-code-fast-1
+            required: false
+            type: choice
           prompt:
             description: Custom prompt to override the default prompt
             required: false
-            type: string
+            default: ''
+
+    concurrency:
+      cancel-in-progress: false
+      group: >-
+        opencode-${{
+        (github.event.issue.pull_request && github.event.issue.number)
+        || github.event.pull_request.number
+        || (github.ref_name != github.event.repository.default_branch && github.ref)
+        || github.run_id
+        }}
+
     jobs:
       opencode:
         uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main
@@ -244,22 +315,60 @@ exist. Do not skip items just because a file already exists.
         inputs:
           model:
             description: Model to use for OpenCode
-            required: false
+            required: true
             type: string
           prompt:
             description: Prompt for the agent
-            required: false
+            required: true
             type: string
       workflow_dispatch:
         inputs:
           model:
+            default: opencode/gemini-3-flash
             description: Model to use for OpenCode
-            required: false
-            type: string
+            options:
+              - opencode/big-pickle
+              - opencode/claude-3-5-haiku
+              - opencode/claude-haiku-4-5
+              - opencode/claude-opus-4-5
+              - opencode/claude-opus-4-6
+              - opencode/claude-sonnet-4
+              - opencode/claude-sonnet-4-5
+              - opencode/claude-sonnet-4-6
+              - opencode/gemini-3.1-pro
+              - opencode/gemini-3-flash
+              - opencode/glm-5
+              - opencode/glm-5.1
+              - opencode/gpt-5
+              - opencode/gpt-5-codex
+              - opencode/gpt-5-nano
+              - opencode/gpt-5.3-codex
+              - opencode/gpt-5.3-codex-spark
+              - opencode/gpt-5.4
+              - opencode/gpt-5.4-mini
+              - opencode/gpt-5.4-nano
+              - opencode/minimax-m2.5
+              - opencode/minimax-m2.5-free
+              - opencode/nemotron-3-super-free
+              - opencode/qwen3-coder
+              - opencode/qwen3.6-plus-free
+            required: true
+            type: choice
           prompt:
             description: Prompt for the agent
-            required: false
+            required: true
             type: string
+
+    concurrency:
+      cancel-in-progress: false
+      group: >-
+        opencode-${{
+        (github.event.issue.pull_request && github.event.issue.number)
+        || github.event.pull_request.number
+        || (github.ref_name != github.event.repository.default_branch && github.ref)
+        || github.run_id
+        }}
+
     jobs:
       cogni-ai-agent:
         uses: Cogni-AI-OU/.github/.github/workflows/cogni-ai-agent.yml@main
