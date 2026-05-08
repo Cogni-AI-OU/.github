@@ -131,7 +131,12 @@ jobs:
               touch*: allow
               true*: allow
               vim*: allow
-          prompt: ${{ github.event.comment.body || inputs.prompt }}
+          prompt: >-
+            ${{ github.event.comment.body ||
+            github.event.discussion.body ||
+            github.event.issue.body ||
+            github.event.pull_request.body ||
+            inputs.prompt }}
   summary:
     name: Generate Summary (post-run)
     needs: cogni-ai-agent
