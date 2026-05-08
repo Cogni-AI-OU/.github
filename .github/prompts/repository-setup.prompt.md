@@ -153,7 +153,7 @@ exist. Do not skip items just because a file already exists.
 
     ```yaml
     ---
-    # See: <https://opencode.ai/docs>
+    # @docs: <https://opencode.ai/docs>
     name: Cogni AI Agent
     # yamllint disable-line rule:truthy
     on:
@@ -165,8 +165,8 @@ exist. Do not skip items just because a file already exists.
           - created
       workflow_call:
         inputs:
-          model:
-            description: Model to use
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
+            description: Model to use for Cogni AI Agent
             required: true
             type: string
           prompt:
@@ -175,9 +175,9 @@ exist. Do not skip items just because a file already exists.
             type: string
       workflow_dispatch:
         inputs:
-          model:
+          model:  # @docs: <https://opencode.ai/zen/v1/models>
             default: opencode/gemini-3-flash
-            description: Model to use for OpenCode
+            description: Model to use for Cogni AI Agent
             options:
               - opencode/big-pickle
               - opencode/claude-3-5-haiku
