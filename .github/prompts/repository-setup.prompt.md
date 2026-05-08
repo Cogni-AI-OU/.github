@@ -149,7 +149,7 @@ exist. Do not skip items just because a file already exists.
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/cogni-ai-agent.yml`
   - Purpose: Logic for the Cogni AI Agent
   - Action: Create as a standalone workflow
-  - Implementation: Refer to the template in `.github/workflows/cogni-ai-agent.yml` in this repository.
+  - Implementation: Refer to the <https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/cogni-ai-agent.yml>.
 
   - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
     You must also install the [GitHub OpenCode app](https://github.com/apps/opencode-agent)
