@@ -148,44 +148,25 @@ exist. Do not skip items just because a file already exists.
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/cogni-ai-agent.yml`
   - Purpose: Logic for the Cogni AI Agent
-  - Action: Create using `workflow_call` to reference the remote workflow
+  - Action: Create as a standalone workflow
   - Implementation:
 
     ```yaml
     ---
-    # @docs: <https://opencode.ai/docs>
+    # See: <https://opencode.ai/docs>
     name: Cogni AI Agent
-    concurrency:
-      cancel-in-progress: true
-      group: cogni-ai-agent-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
     # yamllint disable-line rule:truthy
     on:
-      discussion:
-        types:
-          - created
-          - edited
-          - answered
-      discussion_comment:
-        types:
-          - created
       issue_comment:
         types:
           - created
-      issues:
-        types:
-          - opened
-          - edited
-      pull_request:
-        types:
-          - opened
-          - edited
       pull_request_review_comment:
         types:
           - created
       workflow_call:
         inputs:
-          model:  # @docs: <https://opencode.ai/zen/v1/models>
-            description: Model to use for Cogni AI Agent
+          model:
+            description: Model to use
             required: true
             type: string
           prompt:
@@ -194,9 +175,9 @@ exist. Do not skip items just because a file already exists.
             type: string
       workflow_dispatch:
         inputs:
-          model:  # @docs: <https://opencode.ai/zen/v1/models>
+          model:
             default: opencode/gemini-3-flash
-            description: Model to use for Cogni AI Agent
+            description: Model to use for OpenCode
             options:
               - opencode/big-pickle
               - opencode/claude-3-5-haiku
@@ -229,23 +210,98 @@ exist. Do not skip items just because a file already exists.
             description: Prompt for the agent
             required: true
             type: string
-
+    # Prevent concurrent runs on the same PR/issue to avoid conflicts.
+    # On the default branch each run gets a unique group so runs can proceed in parallel.
+    concurrency:
+      cancel-in-progress: false
+      group: >-
+        opencode-${{
+          (github.event.issue.pull_request && github.event.issue.number)
+          || github.event.pull_request.number
+          || (github.ref_name != github.event.repository.default_branch && github.ref)
+          || github.run_id
+        }}
     jobs:
       cogni-ai-agent:
-        uses: Cogni-AI-OU/.github/.github/workflows/cogni-ai-agent.yml@main
-        with:
-          model: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.model }}
-          prompt: >-
-            ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call')
-            && inputs.prompt }}
+        name: Run Cogni AI agent
+        runs-on: ubuntu-latest
         permissions:
           contents: write
           id-token: write
           issues: write
           pull-requests: write
-        secrets: inherit
+        steps:
+          - uses: actions/checkout@v6
+            with:
+              persist-credentials: false  # Prevents Duplicate header: "Authorization" error.
+          - uses: actions/setup-python@v6.1.0
+            with:
+              python-version: '3.12'
+          - name: Restore Python user site
+            id: python-user-site
+            uses: actions/cache@v5.0.1
+            with:
+              path: ~/.local
+              key: ${{ runner.os }}-pip-${{ hashFiles('.devcontainer/requirements.txt') }}
+          - name: Install Python dependencies
+            if: steps.python-user-site.outputs.cache-hit != 'true'
+            run: python -m pip install --user -r .devcontainer/requirements.txt
+          - name: Ensure local bin on PATH
+            run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          # See: <https://github.com/Cogni-AI-OU/cogni-ai-agent-action>
+          - name: Run Cogni AI Agent
+            uses: Cogni-AI-OU/cogni-ai-agent-action@main
+            with:
+              model: ${{ inputs.model }}
+              opencode-api-key: ${{ secrets.OPENCODE_API_KEY }}  # <https://opencode.ai/auth>
+              permissions: |-
+                bash:
+                  '*': deny
+                  ansible*: allow
+                  ansible-galaxy*: allow
+                  ansible-playbook*: allow
+                  awk*: allow
+                  continue*: allow
+                  cp*: allow
+                  docker*: allow
+                  ex*: allow
+                  gh*: allow
+                  gh pr review*: allow
+                  git*: allow
+                  hexdump*: allow
+                  jq*: allow
+                  links*: allow
+                  mawk*: allow
+                  molecule*: allow
+                  pipx*: allow
+                  pre-commit*: allow
+                  printf*: allow
+                  sed*: allow
+                  set*: allow
+                  time*: allow
+                  timeout*: allow
+                  touch*: allow
+                  true*: allow
+                  vim*: allow
+              prompt: ${{ github.event.comment.body || inputs.prompt }}
+      summary:
+        name: Generate Summary (post-run)
+        needs: cogni-ai-agent
+        if: always() && needs.cogni-ai-agent.result != 'skipped'
+        runs-on: ubuntu-latest
+        permissions:
+          actions: read
+          contents: read
+          id-token: write
+        steps:
+          - uses: actions/checkout@v6
+            with:
+              persist-credentials: false
+          - name: Generate Summary
+            uses: Cogni-AI-OU/cogni-ai-agent-action/ai-inference/summary@main
+            with:
+              agent_job_id: cogni-ai-agent
+              github_token: ${{ secrets.GITHUB_TOKEN }}
     ```
 
   - Note: Requires `OPENCODE_API_KEY` secret to be set in repository settings.
