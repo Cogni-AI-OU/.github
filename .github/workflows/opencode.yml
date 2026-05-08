@@ -207,8 +207,11 @@ jobs:
         id: prompt
         env:
           COMMENT_BODY: >-
-            ${{ github.event_name == 'issues' && github.event.issue.body ||
-            github.event.comment.body || '' }}
+            ${{ github.event.comment.body ||
+            github.event.discussion.body ||
+            github.event.issue.body ||
+            github.event.pull_request.body ||
+            '' }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}
           PROMPT_INPUT: ${{ inputs.prompt }}
         run: |
