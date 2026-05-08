@@ -1,5 +1,7 @@
 ---
-# See: <https://opencode.ai/docs>
+# Docs:
+# - <https://github.com/Cogni-AI-OU/cogni-ai-agent-action>
+# - <https://opencode.ai/docs>
 name: Cogni AI Agent
 # yamllint disable-line rule:truthy
 on:
