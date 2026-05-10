@@ -26,11 +26,19 @@
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    "ghcr.io/devcontainers-contrib/features/actionlint:1": {},
+    "ghcr.io/devcontainers-contrib/features/node-asdf:0": {},
+    "ghcr.io/devcontainers-extra/features/pipx-package:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/guiyomh/features/vim:0": {},
+    "ghcr.io/jungaretti/features/make:1": {},
+    "ghcr.io/jungaretti/features/ripgrep:1": {},
+    "ghcr.io/sliekens/devcontainer-features/opencode:1": {}
   },
 
-  // Pre-create directories on host before container starts (required for bind mounts)
-  "initializeCommand": "mkdir -p \"$HOME/.local/share\" \"$HOME/.config\"",
+  // Pre-create opencode directories on host before container starts (required for bind mounts)
+  "initializeCommand": "mkdir -p \"$HOME/.local/share/opencode\" \"$HOME/.config/opencode\"",
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
