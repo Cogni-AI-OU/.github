@@ -11,7 +11,6 @@ For a human-readable overview, see [README.md](README.md).
 - **[cogni-ai-agent.yml](cogni-ai-agent.yml)**: Logic for the Cogni AI Agent.
 - **[copilot-setup-steps.yml](copilot-setup-steps.yml)**: Environment setup utility.
 - **[devcontainer-ci.yml](devcontainer-ci.yml)**: Build/test devcontainer and required tools/packages.
-- **[opencode.yml](opencode.yml)**: OpenCode agent invocation via comments or manual triggers.
 
 ## Details
 
@@ -19,7 +18,7 @@ For a human-readable overview, see [README.md](README.md).
 
 - Purpose: run actionlint and pre-commit to enforce workflow and repo standards.
 - Triggers: `push`, `pull_request`, `schedule`, `workflow_call`, `workflow_dispatch`,
-  `workflow_run` (after bot workflow completions).
+  `workflow_run` (after `Cogni AI Agent` completions).
 - Bot-PR support: `workflow_run` trigger enables checks on PRs created by bots,
   since normal `pull_request` events don't trigger for bot actors.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main`.
@@ -28,7 +27,9 @@ For a human-readable overview, see [README.md](README.md).
 ### cogni-ai-agent.yml
 
 - Purpose: provides the underlying logic to run the Cogni AI Agent.
-- Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_dispatch`.
+- Inputs: `agent` (default `cogni-ai-architect`), `model`, `prompt`, `issue_number`,
+  `version_agents`, `version_instructions`, `version_skills`.
+- Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_call`, `workflow_dispatch`.
 - Details: Installs Python dependencies from `.devcontainer/requirements.txt` and calls the
   `Cogni-AI-OU/cogni-ai-agent-action` to process instructions. A post-run `summary` job generates
   an AI summary of the agent's actions.
@@ -52,42 +53,17 @@ For a human-readable overview, see [README.md](README.md).
 - Permissions: callers must grant `packages: write` when pushing images to GHCR.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main`.
 
-### opencode.yml
-
-- Purpose: invoke OpenCode agents via slash commands or manual triggers.
-- Inputs: `agent` (default `cogni-ai-architect`), `model` (workflow_call default via
-  `vars.OPENCODE_MODEL_DEFAULT` with fallback `opencode/gpt-5-codex`; workflow_dispatch
-  default `opencode/gpt-5-codex`), `prompt` (optional override).
-- Triggers: `workflow_dispatch`, `workflow_call`, or issue comments and PR review comments with `/oc` or `/opencode`
-  from trusted (non-bot) collaborators/members/owners.
-- Details: A post-run `summary` job generates an AI summary of the agent's actions.
-- Guardrail: comment-triggered runs do not populate `inputs.*`; back shared OpenCode defaults
-  with workflow-level `env` values instead of hardcoding agent/model literals in steps.
-- Concurrency: Only one run per issue/PR/branch at a time; new runs are queued (no auto-cancel).
-- Permissions: `contents: read`, `id-token: write`, `issues: write`, `pull-requests: write`.
-- Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/opencode.yml@main`.
-
 ## Synchronized Configuration
 
-The following configuration values **MUST** be kept in sync across multiple files:
-
-### OPENCODE_PERMISSION
-
-The `OPENCODE_PERMISSION` environment variable defines the bash command allowlist for OpenCode agents.
-It must be identical in the workflow file:
-
-| File | Location |
-| ---- | -------- |
-| [opencode.yml](opencode.yml) | env section |
+The following configuration values should be reviewed for consistency:
 
 ### Model options list
 
-The `model` input options for `workflow_dispatch` must be identical in the corresponding workflow files:
+The `model` input options for `workflow_dispatch` in `cogni-ai-agent.yml` define the supported AI models.
 
-| File | Location |
-| ---- | -------- |
-| [cogni-ai-agent.yml](cogni-ai-agent.yml) | `workflow_dispatch` inputs |
-| [opencode.yml](opencode.yml) | `workflow_dispatch` inputs |
+### Agent options list
+
+The `agent` input options for `workflow_dispatch` in `cogni-ai-agent.yml` define the available specialized agents.
 
 ## Notes
 
