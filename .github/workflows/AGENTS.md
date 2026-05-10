@@ -18,7 +18,7 @@ For a human-readable overview, see [README.md](README.md).
 
 - Purpose: run actionlint and pre-commit to enforce workflow and repo standards.
 - Triggers: `push`, `pull_request`, `schedule`, `workflow_call`, `workflow_dispatch`,
-  `workflow_run` (after bot workflow completions).
+  `workflow_run` (after `Cogni AI Agent` completions).
 - Bot-PR support: `workflow_run` trigger enables checks on PRs created by bots,
   since normal `pull_request` events don't trigger for bot actors.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main`.
@@ -27,8 +27,8 @@ For a human-readable overview, see [README.md](README.md).
 ### cogni-ai-agent.yml
 
 - Purpose: provides the underlying logic to run the Cogni AI Agent.
-- Inputs: `agent` (default `cogni-ai-architect`), `model`, `prompt`, `version_agents`,
-  `version_instructions`, `version_skills`.
+- Inputs: `agent` (default `cogni-ai-architect`), `model`, `prompt`, `issue_number`,
+  `version_agents`, `version_instructions`, `version_skills`.
 - Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_call`, `workflow_dispatch`.
 - Details: Installs Python dependencies from `.devcontainer/requirements.txt` and calls the
   `Cogni-AI-OU/cogni-ai-agent-action` to process instructions. A post-run `summary` job generates
@@ -55,23 +55,15 @@ For a human-readable overview, see [README.md](README.md).
 
 ## Synchronized Configuration
 
-The following configuration values **MUST** be kept in sync across multiple files:
+The following configuration values should be reviewed for consistency:
 
 ### Model options list
 
-The `model` input options for `workflow_dispatch` must be identical in the corresponding workflow files:
-
-| File | Location |
-| ---- | -------- |
-| [cogni-ai-agent.yml](cogni-ai-agent.yml) | `workflow_dispatch` inputs |
+The `model` input options for `workflow_dispatch` in `cogni-ai-agent.yml` define the supported AI models.
 
 ### Agent options list
 
-The `agent` input options for `workflow_dispatch` must be identical in the corresponding workflow files:
-
-| File | Location |
-| ---- | -------- |
-| [cogni-ai-agent.yml](cogni-ai-agent.yml) | `workflow_dispatch` inputs |
+The `agent` input options for `workflow_dispatch` in `cogni-ai-agent.yml` define the available specialized agents.
 
 ## Notes
 

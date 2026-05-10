@@ -41,7 +41,7 @@ on:
         type: choice
   workflow_run:
     workflows:
-      - OpenCode
+      - Cogni AI Agent
     types:
       - completed
 permissions:

@@ -26,6 +26,10 @@ on:
         description: Prompt for the agent
         required: true
         type: string
+      issue_number:
+        description: Issue or Pull Request number to act on
+        required: false
+        type: number
       version_agents:
         default: main
         description: Version of agents to use
@@ -101,13 +105,28 @@ on:
           - opencode/qwen3.6-plus
           - opencode/qwen3.5-plus
           # Grok models (xAI)
-          - xai/grok-4-1-fast-non-reasoning # Fast responses, 2M context
-          - xai/grok-4-1-fast-reasoning # Tool-calling + reasoning, 2M context
-          - xai/grok-4.20-0309-non-reasoning # Flagship, 2M context
-          - xai/grok-4.20-0309-reasoning # Flagship + reasoning, 2M context
-          - xai/grok-code-fast-1 # Agentic coding + reasoning, 256K context
+          - xai/grok-4-1-fast-non-reasoning  # Fast responses, 2M context
+          - xai/grok-4-1-fast-reasoning  # Tool-calling + reasoning, 2M context
+          - xai/grok-4.20-0309-non-reasoning  # Flagship, 2M context
+          - xai/grok-4.20-0309-reasoning  # Flagship + reasoning, 2M context
+          - xai/grok-code-fast-1  # Agentic coding + reasoning, 256K context
         required: true
         type: choice
+      version_agents:
+        default: main
+        description: Version of agents to use
+        required: false
+        type: string
+      version_instructions:
+        default: main
+        description: Version of instructions to use
+        required: false
+        type: string
+      version_skills:
+        default: main
+        description: Version of skills to use
+        required: false
+        type: string
       prompt:
         description: Prompt for the agent
         required: true
@@ -126,6 +145,15 @@ concurrency:
 jobs:
   cogni-ai-agent:
     name: Run Cogni AI agent
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call' ||
+      ((github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment') &&
+        github.event.sender.type != 'Bot' &&
+        (github.event.comment.author_association == 'COLLABORATOR' ||
+         github.event.comment.author_association == 'MEMBER' ||
+         github.event.comment.author_association == 'OWNER') &&
+        contains(github.event.comment.body, '/co'))
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -157,6 +185,7 @@ jobs:
           agent: ${{ inputs.agent || 'cogni-ai-architect' }}
           model: ${{ inputs.model || vars.OPENCODE_MODEL_DEFAULT || 'opencode/gemini-3-flash' }}
           opencode-api-key: ${{ secrets.OPENCODE_API_KEY }}  # <https://opencode.ai/auth>
+          issue-number: ${{ inputs.issue_number || github.event.issue.number || github.event.pull_request.number }}
           version_agents: ${{ inputs.version_agents || 'main' }}
           version_instructions: ${{ inputs.version_instructions || 'main' }}
           version_skills: ${{ inputs.version_skills || 'main' }}
@@ -190,7 +219,8 @@ jobs:
               true*: allow
               vim*: allow
           prompt: >-
-            ${{ github.event.comment.body ||
+            ${{ (inputs.issue_number && format('Address issue #{0}: {1}', inputs.issue_number, inputs.prompt)) ||
+            github.event.comment.body ||
             github.event.discussion.body ||
             github.event.issue.body ||
             github.event.pull_request.body ||

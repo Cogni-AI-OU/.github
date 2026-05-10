@@ -158,4 +158,3 @@ jobs:
 
 If these inputs are not provided, the workflow will automatically use the default
 matcher files from this repository.
-
