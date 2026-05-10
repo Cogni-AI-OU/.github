@@ -27,7 +27,7 @@ on:
         required: false
         type: number
       model:
-        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gpt-5-codex' }}
+        default: ${{ vars.OPENCODE_MODEL_DEFAULT || 'opencode/gemini-3-flash' }}
         description: Model to use for OpenCode
         required: false
         type: string
@@ -42,12 +42,13 @@ on:
         default: cogni-ai-architect
         description: Agent to use.
         options:
-          - build
           - cogni-ai-architect
-          - compaction
-          - plan
-          - summary
-          - title
+          - cogni-ai-brain-ops
+          - cogni-ai-code-reviewer
+          - cogni-ai-devops
+          - cogni-ai-manager
+          - cogni-ai-plan-reviewer
+          - default
         required: false
         type: choice
       issue_number:
@@ -55,7 +56,7 @@ on:
         required: false
         type: number
       model:
-        default: opencode/gpt-5-codex
+        default: opencode/gemini-3-flash
         description: Model to use for OpenCode
         options:
           - opencode/big-pickle
@@ -69,7 +70,6 @@ on:
           - opencode/claude-sonnet-4-6
           - opencode/gemini-3.1-pro
           - opencode/gemini-3-flash
-          - opencode/gemini-3-pro
           - opencode/glm-4.6
           - opencode/glm-4.7-free
           - opencode/glm-5
@@ -97,14 +97,14 @@ on:
           - opencode/minimax-m2.5
           - opencode/minimax-m2.5-free
           - opencode/nemotron-3-super-free
-          - opencode/qwen3-coder
-          - opencode/qwen3.6-plus-free
+          - opencode/qwen3.6-plus
+          - opencode/qwen3.5-plus
           # Grok models (xAI)
-          - xai/grok-4-1-fast-non-reasoning  # Fast responses, 2M context
-          - xai/grok-4-1-fast-reasoning  # Tool-calling + reasoning, 2M context
-          - xai/grok-4.20-0309-non-reasoning  # Flagship, 2M context
-          - xai/grok-4.20-0309-reasoning  # Flagship + reasoning, 2M context
-          - xai/grok-code-fast-1  # Agentic coding + reasoning, 256K context
+          - xai/grok-4-1-fast-non-reasoning # Fast responses, 2M context
+          - xai/grok-4-1-fast-reasoning # Tool-calling + reasoning, 2M context
+          - xai/grok-4.20-0309-non-reasoning # Flagship, 2M context
+          - xai/grok-4.20-0309-reasoning # Flagship + reasoning, 2M context
+          - xai/grok-code-fast-1 # Agentic coding + reasoning, 256K context
         required: false
         type: choice
       prompt:
@@ -124,7 +124,7 @@ concurrency:
     }}
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai-architect
-  OPENCODE_MODEL_DEFAULT: opencode/gpt-5-codex
+  OPENCODE_MODEL_DEFAULT: opencode/gemini-3-flash
 jobs:
   opencode:
     if: |
