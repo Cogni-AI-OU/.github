@@ -36,6 +36,21 @@ on:
         description: Custom prompt to override the default prompt
         required: false
         type: string
+      version_agents:
+        default: main
+        description: Version of agents to use
+        required: false
+        type: string
+      version_instructions:
+        default: main
+        description: Version of instructions to use
+        required: false
+        type: string
+      version_skills:
+        default: main
+        description: Version of skills to use
+        required: false
+        type: string
   workflow_dispatch:
     inputs:
       agent:
@@ -125,6 +140,9 @@ concurrency:
 env:
   OPENCODE_AGENT_DEFAULT: cogni-ai-architect
   OPENCODE_MODEL_DEFAULT: opencode/gemini-3-flash
+  VERSION_AGENTS_DEFAULT: main
+  VERSION_INSTRUCTIONS_DEFAULT: main
+  VERSION_SKILLS_DEFAULT: main
 jobs:
   opencode:
     if: |
@@ -275,6 +293,9 @@ jobs:
           agent: >-
             ${{ inputs.agent || env.OPENCODE_AGENT_DEFAULT }}
           model: ${{ inputs.model || env.OPENCODE_MODEL_DEFAULT }}
+          version_agents: ${{ inputs.version_agents || env.VERSION_AGENTS_DEFAULT }}
+          version_instructions: ${{ inputs.version_instructions || env.VERSION_INSTRUCTIONS_DEFAULT }}
+          version_skills: ${{ inputs.version_skills || env.VERSION_SKILLS_DEFAULT }}
           prompt: ${{ steps.prompt.outputs.prompt }}
       - name: Annotate OpenCode prompt and output
         env:

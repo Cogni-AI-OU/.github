@@ -28,7 +28,8 @@ For a human-readable overview, see [README.md](README.md).
 ### cogni-ai-agent.yml
 
 - Purpose: provides the underlying logic to run the Cogni AI Agent.
-- Inputs: `agent` (default `cogni-ai-architect`).
+- Inputs: `agent` (default `cogni-ai-architect`), `model`, `prompt`, `version_agents`,
+  `version_instructions`, `version_skills`.
 - Triggers: `issue_comment`, `pull_request_review_comment`, `workflow_call`, `workflow_dispatch`.
 - Details: Installs Python dependencies from `.devcontainer/requirements.txt` and calls the
   `Cogni-AI-OU/cogni-ai-agent-action` to process instructions. A post-run `summary` job generates
@@ -56,9 +57,10 @@ For a human-readable overview, see [README.md](README.md).
 ### opencode.yml
 
 - Purpose: invoke OpenCode agents via slash commands or manual triggers.
-- Inputs: `agent` (default `cogni-ai-architect`), `model` (workflow_call default via
-  `vars.OPENCODE_MODEL_DEFAULT` with fallback `opencode/gpt-5-codex`; workflow_dispatch
-  default `opencode/gpt-5-codex`), `prompt` (optional override).
+- Inputs: `agent` (default `cogni-ai-architect`), `issue_number`, `model` (workflow_call default via
+  `vars.OPENCODE_MODEL_DEFAULT` with fallback `opencode/gemini-3-flash`; workflow_dispatch
+  default `opencode/gemini-3-flash`), `prompt` (optional override), `version_agents`,
+  `version_instructions`, `version_skills`.
 - Triggers: `workflow_dispatch`, `workflow_call`, or issue comments and PR review comments with `/oc` or `/opencode`
   from trusted (non-bot) collaborators/members/owners.
 - Details: A post-run `summary` job generates an AI summary of the agent's actions.

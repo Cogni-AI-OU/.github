@@ -27,6 +27,21 @@ on:
         description: Prompt for the agent
         required: true
         type: string
+      version_agents:
+        default: main
+        description: Version of agents to use
+        required: false
+        type: string
+      version_instructions:
+        default: main
+        description: Version of instructions to use
+        required: false
+        type: string
+      version_skills:
+        default: main
+        description: Version of skills to use
+        required: false
+        type: string
   workflow_dispatch:
     inputs:
       agent:
@@ -140,9 +155,12 @@ jobs:
       - name: Run Cogni AI Agent
         uses: Cogni-AI-OU/cogni-ai-agent-action@main
         with:
-          agent: ${{ inputs.agent }}
-          model: ${{ inputs.model }}
+          agent: ${{ inputs.agent || 'cogni-ai-architect' }}
+          model: ${{ inputs.model || vars.OPENCODE_MODEL_DEFAULT || 'opencode/gemini-3-flash' }}
           opencode-api-key: ${{ secrets.OPENCODE_API_KEY }}  # <https://opencode.ai/auth>
+          version_agents: ${{ inputs.version_agents || 'main' }}
+          version_instructions: ${{ inputs.version_instructions || 'main' }}
+          version_skills: ${{ inputs.version_skills || 'main' }}
           permissions: |-
             bash:
               '*': deny
