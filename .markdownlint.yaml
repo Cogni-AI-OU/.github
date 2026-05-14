@@ -15,6 +15,7 @@ MD033:
     - plan_style_guide
     - reasoning
     - stopping_rules
+    - summary
     - workflow
 # MD046 code-block-style - Code block style
 MD046:
