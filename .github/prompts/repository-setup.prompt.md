@@ -52,6 +52,13 @@ exist. Do not skip items just because a file already exists.
   - Include: Cache files, environments, temporary files, compiled outputs
   - Customize: Add language/framework-specific patterns (e.g., `node_modules/`, `target/`, `*.pyc`)
 
+- [ ] **`.gitattributes`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.gitattributes`
+  - Purpose: Defines attributes for paths (e.g., line endings, merge strategies, linguistic attributes)
+  - Action: Create if missing; merge with existing if present to include standard attributes
+  - Key settings: LF line endings for text files, linguist-generated for locks, binary for assets
+
 - [ ] **`.pre-commit-config.yaml`**
   - Check if file exists in repository root
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.pre-commit-config.yaml`
