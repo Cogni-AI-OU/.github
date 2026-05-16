@@ -18,6 +18,7 @@
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "GitHub.vscode-github-actions",
+        "ms-vscode.vscode-chat-customizations-evaluations",
         "vscodevim.vim",
         "vsls-contrib.codetour",
         "xaver.clang-format"
