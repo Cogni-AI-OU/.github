@@ -21,6 +21,9 @@ For a human-readable overview, see [README.md](README.md).
   `workflow_run` (after `Cogni AI Agent` completions).
 - Bot-PR support: `workflow_run` trigger enables checks on PRs created by bots,
   since normal `pull_request` events don't trigger for bot actors.
+- actionlint scope: The workflow computes an explicit workflow-file list and skips
+  generated `*.lock.yml` / `*.lock.yaml` lockfiles before invoking reviewdog's
+  `action-actionlint`.
 - Reusable: `uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main`.
 - Jobs: `actionlint`, `link-checker`, `pre-commit`.
 
