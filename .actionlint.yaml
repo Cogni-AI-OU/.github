@@ -1,5 +1,5 @@
 ---
-# .github/actionlint.yml
+# .actionlint.yaml
 # @docs: <https://github.com/rhysd/actionlint/blob/main/docs/config.md?plain=1>
 paths:
   # Match any .lock.yml (or .lock.yaml) file inside .github/workflows/
