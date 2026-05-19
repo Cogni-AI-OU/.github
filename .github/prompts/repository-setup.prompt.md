@@ -70,6 +70,12 @@ exist. Do not skip items just because a file already exists.
 
 ### Phase 2: Linting Configuration Files
 
+- [ ] **`.ansible-lint`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.ansible-lint`
+  - Purpose: Ansible linting rules for consistent Ansible playbooks and roles
+  - Action: Create if missing; update if exists to match organization standards
+
 - [ ] **`.markdownlint.yaml`**
   - Check if file exists in repository root
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.markdownlint.yaml`
@@ -212,6 +218,12 @@ exist. Do not skip items just because a file already exists.
           required_commands: 'docker npm python3'
           required_python_packages: 'ansible pre-commit'
     ```
+
+- [ ] **`.github/actionlint.yml`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/actionlint.yml`
+  - Purpose: Configuration for actionlint to customize GitHub Actions linting
+  - Action: Create if missing; update if exists to match organization standards
 
 - [ ] **`.github/actionlint-matcher.json`**
   - Check if file exists
@@ -437,6 +449,7 @@ exist. Do not skip items just because a file already exists.
   - Ensure all YAML files are valid: `yamllint .`
   - Ensure all Markdown files are valid: `markdownlint **/*.md`
   - Ensure GitHub Actions workflows are valid: `actionlint .github/workflows/*.yml`
+  - Ensure Ansible playbooks and roles are valid: `ansible-lint` (if applicable)
 
 - [ ] **Test workflows (if possible)**
   - Create a test branch
