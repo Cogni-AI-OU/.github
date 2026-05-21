@@ -42,6 +42,7 @@ actionlint
 
 # Temporary or backup files
 *.bak
+*.old
 *.org
 *.orig
 *.swp
