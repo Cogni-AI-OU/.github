@@ -20,10 +20,10 @@ For a human-readable overview, see [README.md](README.md).
 - Purpose: provides PR feedback for failed `Check` workflow runs by extracting job annotations
   and posting them as a comment. Manages the `check-error` label.
 - Triggers: `workflow_run` (after `Check` completions), `workflow_call`.
-- Note: when invoked via `workflow_call`, callers must pass the needed `workflow_run`
-  context explicitly (or equivalent inputs), since the `workflow_run` event payload is
-  not automatically available.
-- Permissions: `actions: read`, `issues: write`, `pull-requests: write`, `checks: read`.
+- Note: when invoked via `workflow_call`, callers should pass the needed `workflow_run`
+  context explicitly via inputs (run_id, head_sha, conclusion, run_url) to ensure
+  correct behavior.
+- Permissions: `actions: read`, `checks: read`, `issues: write`, `pull-requests: write`.
 
 ### check.yml
 

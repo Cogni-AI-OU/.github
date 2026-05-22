@@ -175,12 +175,18 @@ exist. Do not skip items just because a file already exists.
         types:
           - completed
     permissions:
+      actions: read
+      checks: read
       issues: write
       pull-requests: write
-      checks: read
     jobs:
       comment:
         uses: Cogni-AI-OU/.github/.github/workflows/check-comment.yml@main
+        with:
+          conclusion: ${{ github.event.workflow_run.conclusion }}
+          head_sha: ${{ github.event.workflow_run.head_sha }}
+          run_id: ${{ github.event.workflow_run.id }}
+          run_url: ${{ github.event.workflow_run.html_url }}
     ```
 
   - Note: Manages the `check-error` label and provides detailed PR feedback for failed runs.
