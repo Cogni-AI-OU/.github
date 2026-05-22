@@ -7,7 +7,7 @@ For a human-readable overview, see [README.md](README.md).
 
 ## Workflow catalog
 
-- **[check-comment.yml](check-comment.yml)**: Extracts annotations from failed `Check` workflow runs and posts them
+- **[check-pr-comment.yml](check-pr-comment.yml)**: Extracts annotations from failed `Check` workflow runs and posts them
   as a PR comment.
 - **[check.yml](check.yml)**: Linting and quality gates via actionlint and pre-commit.
 - **[cogni-ai-agent.yml](cogni-ai-agent.yml)**: Logic for the Cogni AI Agent.
@@ -16,7 +16,7 @@ For a human-readable overview, see [README.md](README.md).
 
 ## Details
 
-### check-comment.yml
+### check-pr-comment.yml
 
 - Purpose: provides PR feedback for failed `Check` workflow runs by extracting job annotations
   and posting them as a comment. Manages the `check-error` label.
