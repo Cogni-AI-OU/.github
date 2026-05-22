@@ -7,7 +7,7 @@ For a human-readable overview, see [README.md](README.md).
 
 ## Workflow catalog
 
-- **[check-comment.yml](check-comment.yml)**: Extracts annotations from failed `check.yml` runs and posts them as a PR comment.
+- **[check-comment.yml](check-comment.yml)**: Extracts annotations from failed `Check` workflow runs and posts them as a PR comment.
 - **[check.yml](check.yml)**: Linting and quality gates via actionlint and pre-commit.
 - **[cogni-ai-agent.yml](cogni-ai-agent.yml)**: Logic for the Cogni AI Agent.
 - **[copilot-setup-steps.yml](copilot-setup-steps.yml)**: Environment setup utility.
