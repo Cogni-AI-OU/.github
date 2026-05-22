@@ -134,11 +134,31 @@ jobs:
             }
             let allAnnotations = [];
             for (const job of failedJobs) {
-              const annotations = await github.paginate(github.rest.checks.listAnnotations, {
-                owner,
-                repo,
-                check_run_id: job.id
-              });
+              let checkRunId = null;
+              try {
+                if (job.check_run_url) {
+                  const checkRunUrl = new URL(job.check_run_url);
+                  const pathParts = checkRunUrl.pathname.split('/').filter(Boolean);
+                  const candidateId = pathParts[pathParts.length - 1];
+                  if (/^\d+$/.test(candidateId)) {
+                    checkRunId = Number(candidateId);
+                  }
+                }
+              } catch (error) {
+                console.warn(`Unable to parse check_run_url for job ${job.name}:`, error);
+              }
+
+              let annotations = [];
+              if (checkRunId !== null) {
+                annotations = await github.paginate(github.rest.checks.listAnnotations, {
+                  owner,
+                  repo,
+                  check_run_id: checkRunId
+                });
+              } else {
+                console.warn(`No valid check run ID found for job ${job.name}.`);
+              }
+
               if (annotations && annotations.length > 0) {
                 for (const ann of annotations) {
                   allAnnotations.push({ ...ann, job_name: job.name });
