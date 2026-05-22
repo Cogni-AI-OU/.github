@@ -141,7 +141,6 @@ jobs:
               } catch (error) {
                 console.warn(`Unable to parse check_run_url for job ${job.name}:`, error);
               }
-
               let annotations = [];
               if (checkRunId !== null) {
                 annotations = await github.paginate(github.rest.checks.listAnnotations, {
@@ -152,7 +151,6 @@ jobs:
               } else {
                 console.warn(`No valid check run ID found for job ${job.name}.`);
               }
-
               if (annotations && annotations.length > 0) {
                 for (const ann of annotations) {
                   allAnnotations.push({ ...ann, job_name: job.name });
@@ -183,10 +181,12 @@ jobs:
               '',
               'The following job errors and annotations were found:',
               '',
-              findingsLines.join('\n'),
-              '',
-              `[View failing Workflow Run](${runUrl})`
-            ].join('\n');
+              findingsLines.join('\n')
+            ];
+            if (runUrl) {
+              body.push('', `[View failing Workflow Run](${runUrl})`);
+            }
+            const bodyText = body.join('\n');
             try {
               await github.rest.issues.createLabel({
                 owner,
@@ -225,7 +225,7 @@ jobs:
                 owner,
                 repo,
                 comment_id: existing.id,
-                body
+                body: bodyText
               });
               console.log(`Updated existing comment ${existing.id}`);
             } else {
@@ -233,7 +233,7 @@ jobs:
                 owner,
                 repo,
                 issue_number: prNumber,
-                body
+                body: bodyText
               });
               console.log(`Created new comment on PR  #${prNumber}`);
             }
