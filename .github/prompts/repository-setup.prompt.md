@@ -157,6 +157,34 @@ exist. Do not skip items just because a file already exists.
 
   - Customize: Add additional jobs if needed for project-specific checks
 
+- [ ] **`.github/workflows/check-comment.yml`**
+  - Check if file exists
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/check-comment.yml`
+  - Purpose: Extracts annotations from failed `Check` workflow runs and posts them as a PR comment
+  - Action: Create using `workflow_call` to reference the remote workflow
+  - Implementation:
+
+    ```yaml
+    ---
+    name: Check — PR Comment
+    # yamllint disable-line rule:truthy
+    on:
+      workflow_run:
+        workflows:
+          - Check
+        types:
+          - completed
+    permissions:
+      issues: write
+      pull-requests: write
+      checks: read
+    jobs:
+      comment:
+        uses: Cogni-AI-OU/.github/.github/workflows/check-comment.yml@main
+    ```
+
+  - Note: Manages the `check-error` label and provides detailed PR feedback for failed runs.
+
 - [ ] **`.github/workflows/cogni-ai-agent.yml`**
   - Check if file exists
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.github/workflows/cogni-ai-agent.yml`

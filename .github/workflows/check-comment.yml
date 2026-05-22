@@ -7,6 +7,7 @@ on:
       - Check
     types:
       - completed
+  workflow_call:
 
 permissions:
   issues: write
@@ -23,10 +24,15 @@ jobs:
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const runId = context.payload.workflow_run.id;
-            const conclusion = context.payload.workflow_run.conclusion;
+            const runId = context.payload.workflow_run?.id;
+            const conclusion = context.payload.workflow_run?.conclusion;
 
-            const headSha = context.payload.workflow_run.head_sha;
+            const headSha = context.payload.workflow_run?.head_sha;
+
+            if (!runId || !conclusion || !headSha) {
+              console.log("Missing workflow_run context. This workflow is intended to be triggered by workflow_run or called from a workflow_run event.");
+              return;
+            }
             let prNumber;
 
             if (context.payload.workflow_run.pull_requests && context.payload.workflow_run.pull_requests.length > 0) {
