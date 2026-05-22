@@ -56,22 +56,16 @@ jobs:
             if (context.payload.workflow_run?.pull_requests?.length > 0) {
               prNumber = context.payload.workflow_run.pull_requests[0].number;
             } else {
-              const { data: searchResult } = await github.rest.search.issuesAndPullRequests({
-                q: `repo:${owner}/${repo} is:pr sha:${headSha}`
+              const { data: associatedPulls } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner,
+                repo,
+                commit_sha: headSha
               });
-              if (searchResult.items.length > 0) {
-                const pr = searchResult.items[0];
-                // Verify that this PR still has the same head SHA to avoid stale updates
-                const { data: pull } = await github.rest.pulls.get({
-                  owner,
-                  repo,
-                  pull_number: pr.number
-                });
-                if (pull.head.sha === headSha) {
-                  prNumber = pr.number;
-                } else {
-                  console.log(`PR  #${pr.number} head SHA (${pull.head.sha}) differs from ${headSha}. Skipping.`);
-                }
+              const pr = associatedPulls.find((pull) => pull.state === "open" && pull.head.sha === headSha);
+              if (pr) {
+                prNumber = pr.number;
+              } else {
+                console.log(`No open PR associated with commit ${headSha} matched the current head SHA.`);
               }
             }
             if (!prNumber) {
