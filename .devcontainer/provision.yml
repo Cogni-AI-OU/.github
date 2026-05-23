@@ -19,12 +19,6 @@
       ansible.builtin.apt:
         name: '{{ apt_packages }}'
         state: present
-    - name: Install python requirements
-      ansible.builtin.pip:
-        requirements: '{{ playbook_dir }}/requirements.txt'
-        extra_args: --user
-        state: present
-      become: false
     - name: Install ansible via pipx
       ansible.builtin.command: pipx install --include-deps ansible
       args:
@@ -36,6 +30,12 @@
       register: pipx_inject
       changed_when: "'is already injected' not in pipx_inject.stderr"
       failed_when: pipx_inject.rc != 0 and 'is already injected' not in pipx_inject.stderr
+    - name: Install python requirements
+      ansible.builtin.pip:
+        requirements: '{{ playbook_dir }}/requirements.txt'
+        extra_args: --user
+        state: present
+      become: false
     - name: Install pre-commit hooks
       ansible.builtin.command: pre-commit install
       args:
