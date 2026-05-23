@@ -9,7 +9,12 @@
   tasks:
     - name: Load apt packages from file
       ansible.builtin.set_fact:
-        apt_packages: "{{ lookup('file', playbook_dir + '/apt-packages.txt').splitlines() | reject('match', '^#') | list }}"
+        apt_packages: "{{ lookup('file', playbook_dir + '/apt-packages.txt')
+                         .splitlines()
+                         | map('trim')
+                         | reject('equalto', '')
+                         | reject('match', '^#')
+                         | list }}"
 
     - name: Update apt cache
       ansible.builtin.apt:
