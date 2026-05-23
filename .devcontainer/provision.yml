@@ -27,7 +27,7 @@
           - --include-deps
           - ansible
       args:
-        creates: "{{ ansible_env.HOME }}/.local/bin/ansible"
+        creates: '{{ ansible_env.HOME }}/.local/bin/ansible'
       become: false
     - name: Inject ansible python requirements
       ansible.builtin.command:
@@ -36,7 +36,7 @@
           - inject
           - ansible
           - -r
-          - "{{ playbook_dir }}/requirements-ansible.txt"
+          - '{{ playbook_dir }}/requirements-ansible.txt'
       become: false
       register: pipx_inject
       changed_when: "'is already injected' not in pipx_inject.stderr"
@@ -53,6 +53,6 @@
           - pre-commit
           - install
       args:
-        chdir: "{{ playbook_dir }}/.."
+        chdir: '{{ playbook_dir }}/..'
         creates: .git/hooks/pre-commit
       become: false
