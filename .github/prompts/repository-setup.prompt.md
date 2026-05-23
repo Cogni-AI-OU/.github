@@ -76,6 +76,13 @@ exist. Do not skip items just because a file already exists.
   - Purpose: Ansible linting rules for consistent Ansible playbooks and roles
   - Action: Create if missing; update if exists to match organization standards
 
+- [ ] **`.codespellrc`**
+  - Check if file exists in repository root
+  - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.codespellrc`
+  - Purpose: Configuration for codespell to ignore specific words and skip files
+  - Action: Create if missing; update if exists to match organization standards
+  - Key settings: Reference `.codespellrc` for organization standards (e.g., skip `.git`, `*.pdf`, `*.svg`; ignore `AKS`)
+
 - [ ] **`.markdownlint.yaml`**
   - Check if file exists in repository root
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.markdownlint.yaml`
