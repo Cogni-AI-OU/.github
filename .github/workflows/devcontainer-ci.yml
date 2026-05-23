@@ -38,7 +38,6 @@ on:
         type: string
         default: ''
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # Keep the commands and packages in lexicographical order.
   REQUIRED_COMMANDS: >-
     ${{ inputs.required_commands != '' && inputs.required_commands || 'actionlint
@@ -75,7 +74,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}

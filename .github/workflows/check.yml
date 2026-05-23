@@ -1,8 +1,6 @@
 ---
 # Note: Keep keys and envs in alphabetical order.
 name: Check
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 # yamllint disable-line rule:truthy
 on:
   pull_request:
@@ -102,14 +100,14 @@ jobs:
           ref: ${{ github.event.workflow_run.head_branch || github.ref }}
           submodules: ${{ inputs.submodules || 'false' }}
       - name: Restore lychee cache
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.5
         with:
           key: cache-lychee-${{ github.sha }}
           path: .lycheecache
           restore-keys: |
             cache-lychee-
       - name: Link Checker
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: --cache --max-cache-age 1d --verbose --no-progress './**/*.md'
           fail: true
@@ -134,15 +132,18 @@ jobs:
           sparse-checkout: |
             .github/pre-commit-matcher.json
           sparse-checkout-cone-mode: false
-      - uses: actions/cache@v5.0.1
+      - uses: actions/cache@v5.0.5
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: |
             pre-commit|
-      - uses: actions/setup-python@v6.1.0
+      - uses: actions/setup-python@v6.2.0
         with:
           python-version: '3.12'
+          cache: pip
+      - name: Install pre-commit
+        run: pip install pre-commit
       - name: Add Problem Matcher for pre-commit
         run: |
           if [ "${{ github.event_name }}" = "workflow_call" ]; then
@@ -160,6 +161,5 @@ jobs:
             echo "Warning: Matcher file not found at $MATCHER_PATH"
           fi
         shell: bash
-      - uses: pre-commit/action@v3.0.1
-        with:
-          extra_args: --color=never
+      - name: Run pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure --color=never

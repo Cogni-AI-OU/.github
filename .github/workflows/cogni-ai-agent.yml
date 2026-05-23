@@ -138,7 +138,6 @@ on:
         required: false
         default: ''
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   GITHUB_REF_RESOLVED: >-
     ${{
       (
@@ -202,13 +201,13 @@ jobs:
         with:
           persist-credentials: false  # Prevents duplicate Authorization header
           ref: ${{ env.GITHUB_REF_RESOLVED }}
-      - uses: actions/cache@v5.0.1
+      - uses: actions/cache@v5.0.5
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: |
             pre-commit|
-      - uses: actions/setup-python@v6.1.0
+      - uses: actions/setup-python@v6.2.0
         with:
           cache: >-
             ${{ hashFiles('.devcontainer/requirements.txt', 'requirements.txt',
