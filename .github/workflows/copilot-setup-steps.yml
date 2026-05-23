@@ -3,7 +3,6 @@
 # <https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/customize-the-agent-environment>
 name: Copilot Setup Steps
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # Pin external repositories to specific SHAs for reproducibility.
   COGNI_AI_AGENTS_REF: main
   COGNI_AI_AGENT_INSTRUCTIONS_REF: main
@@ -41,7 +40,7 @@ jobs:
           git clone --branch "$COGNI_AI_AGENT_SKILLS_REF" --depth=1 \
             https://github.com/Cogni-AI-OU/cogni-ai-agent-skills \
             "$HOME/.copilot/skills"
-      - uses: actions/setup-python@v6.1.0
+      - uses: actions/setup-python@v6
         with:
           cache: >-
             ${{ hashFiles('.devcontainer/requirements.txt', 'requirements.txt',
@@ -53,7 +52,7 @@ jobs:
           python-version: '3.12'
       - name: Restore Python user site
         id: python-user-site
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5
         with:
           path: ~/.local
           key: ${{ runner.os }}-pip-${{ hashFiles('.devcontainer/requirements.txt') }}
