@@ -38,6 +38,7 @@ on:
         type: string
         default: ''
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # Keep the commands and packages in lexicographical order.
   REQUIRED_COMMANDS: >-
     ${{ inputs.required_commands != '' && inputs.required_commands || 'actionlint

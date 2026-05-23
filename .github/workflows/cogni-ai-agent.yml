@@ -138,6 +138,7 @@ on:
         required: false
         default: ''
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   GITHUB_REF_RESOLVED: >-
     ${{
       (

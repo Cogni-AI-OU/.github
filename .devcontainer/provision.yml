@@ -9,46 +9,36 @@
   tasks:
     - name: Load apt packages from file
       ansible.builtin.set_fact:
-        apt_packages: "{{ lookup('file', playbook_dir + '/apt-packages.txt')
-                         .splitlines()
-                         | map('trim')
-                         | reject('equalto', '')
-                         | reject('match', '^#')
-                         | list }}"
-
+        apt_packages: >-
+          {{ lookup('file', playbook_dir + '/apt-packages.txt').splitlines()
+          | map('trim') | reject('equalto', '') | reject('match', '^#') | list }}
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: true
-
     - name: Install apt packages
       ansible.builtin.apt:
-        name: "{{ apt_packages }}"
+        name: '{{ apt_packages }}'
         state: present
-
     - name: Install python requirements
       ansible.builtin.pip:
-        requirements: "{{ playbook_dir }}/requirements.txt"
+        requirements: '{{ playbook_dir }}/requirements.txt'
         extra_args: --user
         state: present
       become: false
-
     - name: Install ansible via pipx
-      ansible.builtin.command: pipx install --include-deps --force ansible
+      ansible.builtin.command: pipx install --include-deps ansible
+      args:
+        creates: ~/.local/bin/ansible
       become: false
-      register: pipx_install
-      changed_when: "'already installed' not in pipx_install.stderr"
-      failed_when: pipx_install.rc != 0 and 'already installed' not in pipx_install.stderr
-
     - name: Inject ansible python requirements
-      ansible.builtin.command: "pipx inject ansible -r {{ playbook_dir }}/requirements-ansible.txt"
+      ansible.builtin.command: pipx inject ansible -r {{ playbook_dir }}/requirements-ansible.txt
       become: false
       register: pipx_inject
       changed_when: "'is already injected' not in pipx_inject.stderr"
       failed_when: pipx_inject.rc != 0 and 'is already injected' not in pipx_inject.stderr
-
     - name: Install pre-commit hooks
       ansible.builtin.command: pre-commit install
       args:
-        chdir: "{{ playbook_dir }}/.."
+        chdir: '{{ playbook_dir }}/..'
         creates: .git/hooks/pre-commit
       become: false

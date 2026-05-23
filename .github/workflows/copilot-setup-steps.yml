@@ -3,6 +3,7 @@
 # <https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/customize-the-agent-environment>
 name: Copilot Setup Steps
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # Pin external repositories to specific SHAs for reproducibility.
   COGNI_AI_AGENTS_REF: main
   COGNI_AI_AGENT_INSTRUCTIONS_REF: main
