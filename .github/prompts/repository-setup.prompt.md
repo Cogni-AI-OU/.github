@@ -155,7 +155,9 @@ exist. Do not skip items just because a file already exists.
       contents: read
     jobs:
       check:
-        if: (github.event_name == 'pull_request' && github.event.pull_request.draft == false) || github.event_name != 'pull_request'
+        if: >-
+          (github.event_name == 'pull_request' && github.event.pull_request.draft == false) ||
+          github.event_name != 'pull_request'
         uses: Cogni-AI-OU/.github/.github/workflows/check.yml@main
         with:
           submodules: 'false'  # Set to 'true' or 'recursive' if repository uses submodules
