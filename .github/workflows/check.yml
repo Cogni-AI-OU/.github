@@ -45,7 +45,7 @@ on:
     types:
       - completed
 env:
-  ORG_REPO: Cogni-AI-OU/.github
+  ORG_REPO: ${{ github.repository_owner }}/.github
 permissions:
   contents: read
 jobs:
@@ -76,10 +76,13 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. .github/ path, 3. Root path, 4. Fallback path
-          for p in "${{ inputs.actionlint-matcher-path }}" \
-                   ".github/actionlint-matcher.json" \
-                   "actionlint-matcher.json" \
-                   ".github-matchers/.github/actionlint-matcher.json"; do
+          CANDIDATES=(
+            "${{ inputs.actionlint-matcher-path }}"
+            ".github/actionlint-matcher.json"
+            "actionlint-matcher.json"
+            ".github-matchers/.github/actionlint-matcher.json"
+          )
+          for p in "${CANDIDATES[@]}"; do
             if [ -n "$p" ] && [ -f "$p" ]; then
               MATCHER_PATH="$p"
               break
@@ -88,7 +91,7 @@ jobs:
           if [ -n "$MATCHER_PATH" ]; then
             echo "::add-matcher::$MATCHER_PATH"
           else
-            echo "Warning: No actionlint problem matcher found in searched paths."
+            echo "Warning: No actionlint problem matcher found. Searched: ${CANDIDATES[*]}"
           fi
         shell: bash
       - uses: reviewdog/action-actionlint@v1
@@ -153,10 +156,13 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. .github/ path, 3. Root path, 4. Fallback path
-          for p in "${{ inputs.pre-commit-matcher-path }}" \
-                   ".github/pre-commit-matcher.json" \
-                   "pre-commit-matcher.json" \
-                   ".github-matchers/.github/pre-commit-matcher.json"; do
+          CANDIDATES=(
+            "${{ inputs.pre-commit-matcher-path }}"
+            ".github/pre-commit-matcher.json"
+            "pre-commit-matcher.json"
+            ".github-matchers/.github/pre-commit-matcher.json"
+          )
+          for p in "${CANDIDATES[@]}"; do
             if [ -n "$p" ] && [ -f "$p" ]; then
               MATCHER_PATH="$p"
               break
@@ -165,7 +171,7 @@ jobs:
           if [ -n "$MATCHER_PATH" ]; then
             echo "::add-matcher::$MATCHER_PATH"
           else
-            echo "Warning: No pre-commit problem matcher found in searched paths."
+            echo "Warning: No pre-commit problem matcher found. Searched: ${CANDIDATES[*]}"
           fi
         shell: bash
       - name: Run pre-commit
