@@ -74,7 +74,9 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. Local path, 3. Fallback path
-          for path in "${{ inputs.actionlint-matcher-path }}" ".github/actionlint-matcher.json" ".github-matchers/.github/actionlint-matcher.json"; do
+          for path in "${{ inputs.actionlint-matcher-path }}" \
+                      ".github/actionlint-matcher.json" \
+                      ".github-matchers/.github/actionlint-matcher.json"; do
             if [ -n "$path" ] && [ -f "$path" ]; then
               MATCHER_PATH="$path"
               break
@@ -149,7 +151,9 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. Local path, 3. Fallback path
-          for path in "${{ inputs.pre-commit-matcher-path }}" ".github/pre-commit-matcher.json" ".github-matchers/.github/pre-commit-matcher.json"; do
+          for path in "${{ inputs.pre-commit-matcher-path }}" \
+                      ".github/pre-commit-matcher.json" \
+                      ".github-matchers/.github/pre-commit-matcher.json"; do
             if [ -n "$path" ] && [ -f "$path" ]; then
               MATCHER_PATH="$path"
               break
