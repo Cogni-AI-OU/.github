@@ -62,7 +62,7 @@ jobs:
           submodules: ${{ inputs.submodules || 'false' }}
       # Checkout the .github repo to access default matcher files when workflow is called
       - name: Checkout matcher files
-        if: github.repository != 'Cogni-AI-OU/.github' && inputs.actionlint-matcher-path == ''
+        if: github.repository != 'Cogni-AI-OU/.github' && !inputs.actionlint-matcher-path
         uses: actions/checkout@v6
         with:
           repository: Cogni-AI-OU/.github
@@ -74,15 +74,15 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. Local path, 3. Fallback path
-          for path in "${{ inputs.actionlint-matcher-path }}" \
-                      ".github/actionlint-matcher.json" \
-                      ".github-matchers/.github/actionlint-matcher.json"; do
-            if [ -n "$path" ] && [ -f "$path" ]; then
-              MATCHER_PATH="$path"
+          for p in "${{ inputs.actionlint-matcher-path }}" \
+                   ".github/actionlint-matcher.json" \
+                   "actionlint-matcher.json" \
+                   ".github-matchers/.github/actionlint-matcher.json"; do
+            if [ -n "$p" ] && [ -f "$p" ]; then
+              MATCHER_PATH="$p"
               break
             fi
           done
-
           if [ -n "$MATCHER_PATH" ]; then
             echo "::add-matcher::$MATCHER_PATH"
           else
@@ -126,7 +126,7 @@ jobs:
           submodules: ${{ inputs.submodules || 'false' }}
       # Checkout the .github repo to access default matcher files when workflow is called
       - name: Checkout matcher files
-        if: github.repository != 'Cogni-AI-OU/.github' && inputs.pre-commit-matcher-path == ''
+        if: github.repository != 'Cogni-AI-OU/.github' && !inputs.pre-commit-matcher-path
         uses: actions/checkout@v6
         with:
           repository: Cogni-AI-OU/.github
@@ -151,15 +151,15 @@ jobs:
         run: |
           MATCHER_PATH=""
           # Precedence: 1. Input path, 2. Local path, 3. Fallback path
-          for path in "${{ inputs.pre-commit-matcher-path }}" \
-                      ".github/pre-commit-matcher.json" \
-                      ".github-matchers/.github/pre-commit-matcher.json"; do
-            if [ -n "$path" ] && [ -f "$path" ]; then
-              MATCHER_PATH="$path"
+          for p in "${{ inputs.pre-commit-matcher-path }}" \
+                   ".github/pre-commit-matcher.json" \
+                   "pre-commit-matcher.json" \
+                   ".github-matchers/.github/pre-commit-matcher.json"; do
+            if [ -n "$p" ] && [ -f "$p" ]; then
+              MATCHER_PATH="$p"
               break
             fi
           done
-
           if [ -n "$MATCHER_PATH" ]; then
             echo "::add-matcher::$MATCHER_PATH"
           else
