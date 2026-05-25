@@ -45,7 +45,7 @@ on:
     types:
       - completed
 env:
-  ORG_REPO: ${{ github.repository_owner }}/.github
+  ORG_REPO: Cogni-AI-OU/.github
 permissions:
   contents: read
 jobs:
