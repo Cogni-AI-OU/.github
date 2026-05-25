@@ -12,14 +12,14 @@ on:
       actionlint-matcher-path:
         description: >
           Path to actionlint problem matcher JSON file. If not specified,
-          uses the default from Cogni-AI-OU/.github repository.
+          uses the default from the organization's .github repository.
         required: false
         type: string
         default: ''
       pre-commit-matcher-path:
         description: >
           Path to pre-commit problem matcher JSON file. If not specified,
-          uses the default from Cogni-AI-OU/.github repository.
+          uses the default from the organization's .github repository.
         required: false
         type: string
         default: ''
@@ -75,11 +75,10 @@ jobs:
       - name: Add Problem Matcher for actionlint
         run: |
           MATCHER_PATH=""
-          # Precedence: 1. Input path, 2. .github/ path, 3. Root path, 4. Fallback path
+          # Precedence: 1. Input path, 2. .github/ path, 3. Fallback path
           CANDIDATES=(
             "${{ inputs.actionlint-matcher-path }}"
             ".github/actionlint-matcher.json"
-            "actionlint-matcher.json"
             ".github-matchers/.github/actionlint-matcher.json"
           )
           for p in "${CANDIDATES[@]}"; do
@@ -155,11 +154,10 @@ jobs:
       - name: Add Problem Matcher for pre-commit
         run: |
           MATCHER_PATH=""
-          # Precedence: 1. Input path, 2. .github/ path, 3. Root path, 4. Fallback path
+          # Precedence: 1. Input path, 2. .github/ path, 3. Fallback path
           CANDIDATES=(
             "${{ inputs.pre-commit-matcher-path }}"
             ".github/pre-commit-matcher.json"
-            "pre-commit-matcher.json"
             ".github-matchers/.github/pre-commit-matcher.json"
           )
           for p in "${CANDIDATES[@]}"; do
