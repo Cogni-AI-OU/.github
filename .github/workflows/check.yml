@@ -87,7 +87,32 @@ jobs:
             echo "Warning: Matcher file not found at $MATCHER_PATH"
           fi
         shell: bash
+      - name: Collect workflow files for actionlint
+        id: actionlint-files
+        run: |
+          set -euo pipefail
+          mapfile -d '' files < <(
+            find .github/workflows -type f \
+              \( -name '*.yml' -o -name '*.yaml' \) \
+              ! -name '*.lock.yml' \
+              ! -name '*.lock.yaml' \
+              -print0 | sort -z
+          )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo 'has-files=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            echo 'has-files=true'
+            echo 'flags<<EOF'
+            printf '%s\n' "${files[@]}"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
       - uses: reviewdog/action-actionlint@v1
+        if: steps.actionlint-files.outputs.has-files == 'true'
+        with:
+          actionlint_flags: ${{ steps.actionlint-files.outputs.flags }}
   link-checker:
     name: Link Checker
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
