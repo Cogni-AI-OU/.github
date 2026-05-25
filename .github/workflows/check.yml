@@ -44,6 +44,8 @@ on:
       - Cogni AI Agent
     types:
       - completed
+env:
+  CENTRAL_REPO: Cogni-AI-OU/.github
 permissions:
   contents: read
 jobs:
@@ -62,10 +64,10 @@ jobs:
           submodules: ${{ inputs.submodules || 'false' }}
       # Checkout the .github repo to access default matcher files when workflow is called
       - name: Checkout matcher files
-        if: github.repository != 'Cogni-AI-OU/.github' && !inputs.actionlint-matcher-path
+        if: github.repository != env.CENTRAL_REPO && !inputs.actionlint-matcher-path
         uses: actions/checkout@v6
         with:
-          repository: Cogni-AI-OU/.github
+          repository: ${{ env.CENTRAL_REPO }}
           path: .github-matchers
           sparse-checkout: |
             .github/actionlint-matcher.json
@@ -126,10 +128,10 @@ jobs:
           submodules: ${{ inputs.submodules || 'false' }}
       # Checkout the .github repo to access default matcher files when workflow is called
       - name: Checkout matcher files
-        if: github.repository != 'Cogni-AI-OU/.github' && !inputs.pre-commit-matcher-path
+        if: github.repository != env.CENTRAL_REPO && !inputs.pre-commit-matcher-path
         uses: actions/checkout@v6
         with:
-          repository: Cogni-AI-OU/.github
+          repository: ${{ env.CENTRAL_REPO }}
           path: .github-matchers
           sparse-checkout: |
             .github/pre-commit-matcher.json
