@@ -27,7 +27,11 @@
         "vscodevim.vim",
         "vsls-contrib.codetour",
         "xaver.clang-format"
-      ]
+      ],
+      "settings": {
+        "go.lintTool": "golangci-lint",
+        "go.lintFlags": ["--fast"]
+      }
     }
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
