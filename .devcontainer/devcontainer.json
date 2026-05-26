@@ -14,7 +14,12 @@
     "vscode": {
       "extensions": [
         "bierner.markdown-mermaid",
+        "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
+        "github.vscode-pull-request-github",
+        "mads-hartmann.bash-ide-vscode",
         "DavidAnson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "GitHub.vscode-github-actions",
