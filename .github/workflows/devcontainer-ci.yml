@@ -7,7 +7,7 @@ on:
     paths:
       - .devcontainer/**
       - .github/workflows/devcontainer-ci.yml
-    types: [ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches:
       - dev
