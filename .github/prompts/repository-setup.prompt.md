@@ -240,7 +240,6 @@ exist. Do not skip items just because a file already exists.
 
     jobs:
       devcontainer-build:
-        if: github.event_name != 'pull_request' || !github.event.pull_request.draft
         uses: Cogni-AI-OU/.github/.github/workflows/devcontainer-ci.yml@main
         permissions:
           contents: read
