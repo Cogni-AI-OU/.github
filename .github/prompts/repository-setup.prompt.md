@@ -225,6 +225,7 @@ exist. Do not skip items just because a file already exists.
         paths:
           - .devcontainer/**
           - .github/workflows/devcontainer-ci.yml
+        types: [ready_for_review]
       push:
         branches:
           - main
