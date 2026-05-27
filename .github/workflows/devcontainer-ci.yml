@@ -7,6 +7,11 @@ on:
     paths:
       - .devcontainer/**
       - .github/workflows/devcontainer-ci.yml
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
   push:
     branches:
       - dev
@@ -63,6 +68,7 @@ permissions:
   packages: write
 jobs:
   devcontainer-build:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     name: Build & Test
     permissions:
       contents: read
