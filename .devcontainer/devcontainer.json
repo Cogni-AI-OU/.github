@@ -84,7 +84,8 @@
     "GH_TOKEN": "${localEnv:GH_TOKEN}",
     "GIT_USER_NAME": "${containerEnv:GIT_USER_NAME}",
     "GIT_USER_EMAIL": "${containerEnv:GIT_USER_EMAIL}",
-    "GITHUB_PAT": "${localEnv:GITHUB_PAT}"
+    "GITHUB_PAT": "${localEnv:GITHUB_PAT}",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
 
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
