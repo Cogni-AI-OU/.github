@@ -94,7 +94,7 @@
 
   "postCreateCommand": {
     "bat": "eget sharkdp/bat --asset=musl",
-    "btop": "eget aristocratos/btop --asset=x86_64-linux-musl.tbz",
+    "btop": "eget aristocratos/btop --asset=btop-x86_64-unknown-linux-musl.tar.gz",
     "duf": "eget muesli/duf --asset=linux_amd64.deb",
     "exa": "eget ogham/exa --asset=linux-x86_64-musl-v",
     "fd": "eget sharkdp/fd --asset=x86_64-unknown-linux-musl",
