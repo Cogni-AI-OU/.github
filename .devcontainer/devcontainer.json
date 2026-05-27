@@ -76,8 +76,8 @@
 
   "onCreateCommand": "sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ansible && ansible-playbook .devcontainer/provision.yml",
 
-  "postCreateCommand": [
+  "postCreateCommand": {
     "jq": "eget -t 1.7.1 -a linux64 --to=/go/bin/ jqlang/jq",
     "yq": "eget -t v4.45.1 -a ^.tar.gz --to=/go/bin/ mikefarah/yq"
-  ]
+  }
 }
