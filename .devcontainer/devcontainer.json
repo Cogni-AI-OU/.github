@@ -61,6 +61,10 @@
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
 
+  "containerEnv": {
+    "EGET_CONFIG": "${containerWorkspaceFolder}/.devcontainer/.eget.toml"
+  },
+
   // @docs: <https://code.visualstudio.com/remote/advancedcontainers/environment-variables>
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}",
