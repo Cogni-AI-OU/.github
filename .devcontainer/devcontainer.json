@@ -9,6 +9,7 @@
   // },
 
   "containerEnv": {
+    "DEBIAN_FRONTEND": "noninteractive",
     "EGET_CONFIG": "${containerWorkspaceFolder}/.devcontainer/.eget.toml"
   },
 
