@@ -45,7 +45,6 @@
     "ghcr.io/devcontainers/features/python:1": {},
     "ghcr.io/guiyomh/features/vim:0": {},
     "ghcr.io/jungaretti/features/make:1": {},
-    "ghcr.io/jungaretti/features/ripgrep:1": {},
     "ghcr.io/sliekens/devcontainer-features/opencode:1": {}
   },
 
@@ -74,7 +73,10 @@
   "onCreateCommand": "sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ansible && ansible-playbook .devcontainer/provision.yml",
 
   "postCreateCommand": {
+    "exa": "eget ogham/exa",
+    "fd": "eget sharkdp/fd",
     "jq": "eget -t 1.7.1 -a linux64 jqlang/jq",
+    "rg": "eget BurntSushi/ripgrep",
     "yq": "eget -t v4.45.1 -a ^.tar.gz mikefarah/yq"
   }
 }
