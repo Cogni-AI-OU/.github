@@ -30,8 +30,6 @@
         "xaver.clang-format"
       ],
       "settings": {
-        "go.lintTool": "golangci-lint",
-        "go.lintFlags": ["--fast"]
       }
     }
   },
