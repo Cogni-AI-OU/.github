@@ -13,15 +13,15 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "bierner.markdown-mermaid",
         "DavidAnson.vscode-markdownlint",
         "EditorConfig.EditorConfig",
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
-        "GitHub.vscode-github-actions",
-        "bierner.markdown-mermaid",
         "esbenp.prettier-vscode",
         "foxundermoon.shell-format",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
         "github.vscode-pull-request-github",
+        "GitHub.vscode-github-actions",
         "golang.go",
         "mads-hartmann.bash-ide-vscode",
         "ms-vscode.vscode-chat-customizations-evaluations",
