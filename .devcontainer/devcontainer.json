@@ -10,7 +10,8 @@
 
   "containerEnv": {
     "DEBIAN_FRONTEND": "noninteractive",
-    "EGET_CONFIG": "${containerWorkspaceFolder}/.devcontainer/.eget.toml"
+    "EGET_CONFIG": "${containerWorkspaceFolder}/.devcontainer/.eget.toml",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
 
   // Configure tool-specific properties.
@@ -34,7 +35,19 @@
         "vsls-contrib.codetour",
         "xaver.clang-format"
       ],
+      "mcp": {
+        "servers": {
+          "github": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"],
+            "env": {
+              "GITHUB_PERSONAL_ACCESS_TOKEN": "${containerEnv:GITHUB_PAT}"
+            }
+          }
+        }
+      },
       "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
   },
@@ -69,7 +82,9 @@
   // @docs: <https://code.visualstudio.com/remote/advancedcontainers/environment-variables>
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}",
-    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+    "GIT_USER_NAME": "${containerEnv:GIT_USER_NAME}",
+    "GIT_USER_EMAIL": "${containerEnv:GIT_USER_EMAIL}",
+    "GITHUB_PAT": "${localEnv:GITHUB_PAT}"
   },
 
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
