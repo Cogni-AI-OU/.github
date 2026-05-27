@@ -84,7 +84,7 @@
     "exa": "eget ogham/exa",
     "fd": "eget sharkdp/fd",
     "jq": "eget -t 1.7.1 -a linux64 jqlang/jq",
-    "pandoc": "eget jgm/pandoc",
+    // "pandoc": "eget jgm/pandoc",
     "rg": "eget BurntSushi/ripgrep",
     "tealdeer": "eget dbrgn/tealdeer",
     "vale": "eget errata-ai/vale",
