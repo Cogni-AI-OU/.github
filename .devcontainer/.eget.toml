@@ -1,2 +1,4 @@
 [global]
 target = /usr/local/bin
+upgrade_only = true
+  
