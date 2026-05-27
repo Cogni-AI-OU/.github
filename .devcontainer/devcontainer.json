@@ -93,16 +93,16 @@
   "onCreateCommand": "sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ansible && ansible-playbook .devcontainer/provision.yml",
 
   "postCreateCommand": {
-    "bat": "eget sharkdp/bat --asset ^musl",
-    "btop": "eget aristocratos/btop",
-    "duf": "eget muesli/duf",
-    "exa": "eget ogham/exa",
-    "fd": "eget sharkdp/fd",
-    "jq": "eget -t 1.7.1 -a linux64 jqlang/jq",
-    // "pandoc": "eget jgm/pandoc",
-    "rg": "eget BurntSushi/ripgrep",
-    "tealdeer": "eget dbrgn/tealdeer",
-    "vale": "eget errata-ai/vale",
-    "yq": "eget -t v4.45.1 -a ^.tar.gz mikefarah/yq"
+    "bat": "eget sharkdp/bat --asset=musl",
+    "btop": "eget aristocratos/btop --asset=x86_64-linux-musl.tbz",
+    "duf": "eget muesli/duf --asset=linux_amd64",
+    "exa": "eget ogham/exa --asset=linux-x86_64-musl-v",
+    "fd": "eget sharkdp/fd --asset=x86_64-unknown-linux-musl",
+    "jq": "eget -t jq-1.7.1 -a linux64 jqlang/jq",
+    "pandoc": "eget jgm/pandoc --asset=linux-amd64.tar.gz",
+    "rg": "eget BurntSushi/ripgrep --asset=x86_64-unknown-linux-musl",
+    "tealdeer": "eget dbrgn/tealdeer --asset=linux-musl-amd64",
+    "vale": "eget errata-ai/vale --asset=Linux_64-bit.tar.gz",
+    "yq": "eget -t v4.45.1 -a linux_amd64.tar.gz mikefarah/yq"
   }
 }
