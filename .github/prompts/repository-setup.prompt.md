@@ -331,7 +331,7 @@ exist. Do not skip items just because a file already exists.
   - Reference: `https://github.com/Cogni-AI-OU/.github/blob/main/.devcontainer/.eget.toml`
   - Purpose: Configuration for eget to customize tool installation
   - Action: Create if missing
-  - Key settings: target = /usr/local/bin
+  - Key settings: target = ~/.local/bin
 
 - [ ] **`.devcontainer/requirements.txt`**
   - Check if file exists (if `.devcontainer/` exists)
