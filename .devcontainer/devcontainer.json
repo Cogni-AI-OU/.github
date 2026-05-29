@@ -11,10 +11,7 @@
   "containerEnv": {
     "DEBIAN_FRONTEND": "noninteractive",
     "EGET_CONFIG": "${containerWorkspaceFolder}/.devcontainer/.eget.toml",
-    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
-    "GITHUB_PAT": "${localEnv:GITHUB_PAT}",
-    "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}",
-    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}"
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
 
   // Configure tool-specific properties.
@@ -95,5 +92,17 @@
 
   "onCreateCommand": "sudo apt-get update && sudo apt-get install -y ansible && ansible-playbook .devcontainer/provision.yml",
 
-  "postCreateCommand": "eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/bat && eget -a btop-x86_64-unknown-linux-musl.tar.gz aristocratos/btop && eget -a linux_x86_64.tar.gz muesli/duf && eget -a linux-x86_64 -a musl ogham/exa && eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/fd && eget -a linux64 jqlang/jq && eget -a linux-amd64.tar.gz jgm/pandoc && eget -a x86_64-unknown-linux-musl.tar.gz BurntSushi/ripgrep && eget -a tealdeer-linux-x86_64-musl dbrgn/tealdeer && eget -a Linux_64-bit.tar.gz errata-ai/vale && eget -a yq_linux_amd64.tar.gz mikefarah/yq"
+  "postCreateCommand": {
+    "bat": "eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/bat",
+    "btop": "eget -a btop-x86_64-unknown-linux-musl.tar.gz aristocratos/btop",
+    "duf": "eget -a linux_x86_64.tar.gz muesli/duf",
+    "exa": "eget -a linux-x86_64 -a musl ogham/exa",
+    "fd": "eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/fd",
+    "jq": "eget -a linux64 jqlang/jq",
+    "pandoc": "eget -a linux-amd64.tar.gz jgm/pandoc",
+    "rg": "eget -a x86_64-unknown-linux-musl.tar.gz BurntSushi/ripgrep",
+    "tealdeer": "eget -a tealdeer-linux-x86_64-musl dbrgn/tealdeer",
+    "vale": "eget -a Linux_64-bit.tar.gz errata-ai/vale",
+    "yq": "eget -a yq_linux_amd64.tar.gz mikefarah/yq"
+  }
 }
