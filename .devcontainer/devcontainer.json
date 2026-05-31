@@ -99,6 +99,7 @@
     "exa": "eget -a linux-x86_64 -a ^musl ogham/exa",
     "fd": "eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/fd",
     "jq": "eget -a linux64 jqlang/jq",
+    "minizinc": "eget -a bundle-linux-x86_64.tgz --tag 2.9.7 --file */bin/minizinc MiniZinc/MiniZincIDE",
     "pandoc": "eget -a linux-amd64.tar.gz jgm/pandoc",
     "rg": "eget -a x86_64-unknown-linux-musl.tar.gz BurntSushi/ripgrep",
     "rga": "eget -a ripgrep_all -a x86_64-unknown-linux-musl -a tar.gz --file rga phiresky/ripgrep-all",
