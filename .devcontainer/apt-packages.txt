@@ -7,4 +7,5 @@ links
 mawk
 sed
 time
+ugrep
 vim
