@@ -1,6 +1,9 @@
 ---
 # Note: Keep keys and envs in alphabetical order.
 name: Development Containers (CI)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 # yamllint disable-line rule:truthy
 on:
   pull_request:
