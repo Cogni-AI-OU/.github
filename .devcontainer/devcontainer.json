@@ -103,7 +103,7 @@
     "rg": "eget -a x86_64-unknown-linux-musl.tar.gz BurntSushi/ripgrep",
     "rga": "eget -a ripgrep_all -a x86_64-unknown-linux-musl -a tar.gz --file rga phiresky/ripgrep-all",
     "tealdeer": "eget -a tealdeer-linux-x86_64-musl -a ^sha256 dbrgn/tealdeer",
-    "minizinc": "eget -a bundle-linux-x86_64.tgz --file bin/minizinc --file bin/mzn2fzn --file bin/solns2out MiniZinc/MiniZincIDE",
+    "minizinc": "which minizinc >/dev/null || eget -a bundle-linux-x86_64.tgz --tag 2.9.7 --file bin/minizinc MiniZinc/MiniZincIDE",
     "vale": "eget -a Linux_64-bit.tar.gz errata-ai/vale",
     "yq": "eget -a ^.tar.gz mikefarah/yq"
   }
