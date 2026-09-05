@@ -39,12 +39,13 @@
           - '{{ playbook_dir }}/requirements-ansible.txt'
       become: false
       register: pipx_inject
-      changed_when: "'is already injected' not in pipx_inject.stderr"
-      failed_when: pipx_inject.rc != 0 and 'is already injected' not in pipx_inject.stderr
+      changed_when: >-
+        'already' not in (pipx_inject.stdout + pipx_inject.stderr | lower)
+      failed_when: pipx_inject.rc != 0
     - name: Install python requirements
       ansible.builtin.pip:
         requirements: '{{ playbook_dir }}/requirements.txt'
-        extra_args: --user
+        extra_args: --break-system-packages --user
         state: present
       become: false
     - name: Install pre-commit hooks
@@ -56,3 +57,30 @@
         chdir: '{{ playbook_dir }}/..'
         creates: .git/hooks/pre-commit
       become: false
+
+    - name: Install all Cogni AI skills
+      ansible.builtin.command:
+        argv:
+          - gh
+          - skill
+          - install
+          - Cogni-AI-OU/cogni-ai-agent-skills
+          - --all
+          - --force
+          - --scope
+          - user
+      become: false
+      register: skills_install
+      changed_when: >-
+        'already installed' not in ((skills_install.stdout + skills_install.stderr) | lower)
+      failed_when: skills_install.rc != 0
+
+    - name: Ensure ~/.local/bin is in PATH for user-installed CLIs (pre-commit, uv, etc.)
+      ansible.builtin.lineinfile:
+        path: '{{ ansible_env.HOME }}/.bashrc'
+        line: 'export PATH="$HOME/.local/bin:$PATH"'
+        state: present
+        insertafter: EOF
+        create: true
+      become: false
+      when: ansible_env.HOME is defined
