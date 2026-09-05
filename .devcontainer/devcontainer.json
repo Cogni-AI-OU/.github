@@ -91,8 +91,9 @@
   "remoteUser": "vscode",
 
   // Bootstrap ansible via pipx (avoids apt conflicts with python feature/pipx-package; provision.yml tasks are idempotent).
-  // PATH for ~/.local/bin (pre-commit and other user pip installs) is configured in provision.yml.
-  "onCreateCommand": "sudo apt-get update -qq && PATH=\"${HOME}/.local/bin:$PATH\" pipx install --include-deps ansible && PATH=\"${HOME}/.local/bin:$PATH\" pipx inject ansible -r .devcontainer/requirements-ansible.txt && PATH=\"${HOME}/.local/bin:$PATH\" ansible-playbook .devcontainer/provision.yml",
+  // PATH for ~/.local/bin (pre-commit and other user pip installs) is configured in provision.yml + dedicated task.
+  // (inject moved to provision.yml for idempotency and to avoid -r parse errors in chained command).
+  "onCreateCommand": "sudo apt-get update -qq && PATH=\"${HOME}/.local/bin:$PATH\" pipx install --include-deps ansible && PATH=\"${HOME}/.local/bin:$PATH\" ansible-playbook .devcontainer/provision.yml",
 
   "postCreateCommand": {
     "bat": "eget -a x86_64-unknown-linux-gnu -a tar.gz sharkdp/bat",
