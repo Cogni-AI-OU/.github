@@ -11,7 +11,8 @@ ensure code quality and correctness.
 
 Jobs:
 
-- **actionlint**: Validates GitHub Actions workflow files
+- **actionlint**: Validates GitHub Actions workflow files except generated
+  `*.lock.yml` and `*.lock.yaml` workflow lockfiles
 - **link-checker**: Checks for broken links in Markdown files using Lychee
 - **pre-commit**: Runs pre-commit hooks for code formatting and linting
 
