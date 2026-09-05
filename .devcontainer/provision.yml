@@ -48,6 +48,15 @@
         extra_args: --break-system-packages --user
         state: present
       become: false
+    - name: Ensure ~/.local/bin is in PATH for user-installed CLIs (pre-commit, uv, etc.)
+      ansible.builtin.lineinfile:
+        path: '{{ ansible_env.HOME }}/.bashrc'
+        line: 'export PATH="$HOME/.local/bin:$PATH"'
+        state: present
+        insertafter: EOF
+        create: true
+      become: false
+      when: ansible_env.HOME is defined
     - name: Install pre-commit hooks
       ansible.builtin.command:
         argv:
@@ -74,13 +83,3 @@
       changed_when: >-
         'already installed' not in ((skills_install.stdout + skills_install.stderr) | lower)
       failed_when: skills_install.rc != 0
-
-    - name: Ensure ~/.local/bin is in PATH for user-installed CLIs (pre-commit, uv, etc.)
-      ansible.builtin.lineinfile:
-        path: '{{ ansible_env.HOME }}/.bashrc'
-        line: 'export PATH="$HOME/.local/bin:$PATH"'
-        state: present
-        insertafter: EOF
-        create: true
-      become: false
-      when: ansible_env.HOME is defined
