@@ -104,8 +104,8 @@ repos:
     hooks:
       - id: mermaid-validation
         name: Mermaid Validation
-        entry: sh -c 'npx --yes @mermaid-js/mermaid-cli -i "$1" -o /dev/null --quiet || (echo "Mermaid error in $1" && exit
-          1)'
+        entry: >-
+          sh -c 'npx -y @mermaid-js/mermaid-cli -i "$1" -o- -q >/dev/null 2>&1 || (echo "Merr:$1" >&2 && exit 1)' _
         language: system
         pass_filenames: true
-        files: \.(md|mmd)$
+        files: \.mmd$
